@@ -1,0 +1,58 @@
+:root {
+  /* --- Light theme --- */
+  --sidebar-bg: #f3f3f3;
+  --sidebar-text: #333;
+  --sidebar-text-muted: #6b6b6b;
+  --sidebar-hover-bg: #e5e5e5;
+  --sidebar-hover-text: #000;
+  --sidebar-active-bg: #eaeaea;
+  --sidebar-active-text: #202020;
+
+  --text-color: #202020;
+  --icon-color: #555;
+  --btn-hover-bg: #efefef;
+  --border-color: #e0e0e0;
+  --button-border-color: #d6d6d6;
+  --content-bg: #f9f9f9;
+  --content-border: #e6e6e6;
+  --transition-speed: 0.25s;
+
+  --toast-bg: #f0f0f0;
+  --toast-text: #222;
+}
+
+/* --- Dark theme --- */
+[data-theme="dark"] {
+  --sidebar-bg: #202020;
+  --sidebar-text: #c0c0c0;
+  --sidebar-text-muted: #9aa0aa;
+  --sidebar-hover-bg: #303030;
+  --sidebar-hover-text: #ffffff;
+  --sidebar-active-bg: #2d2d2d;
+  --sidebar-active-text: #ffffff;
+
+  --text-color: #f3f3f3;
+  --icon-color: #b0b8c1;
+  --btn-hover-bg: #2b2b2b;
+  --border-color: #333;
+  --button-border-color: #505050;
+  --content-bg: #272727;
+  --content-border: #3a3a3a;
+
+  --toast-bg: #2a2a2a;
+  --toast-text: #ffffff;
+}
+
+/* --- True Black mode --- */
+[data-theme="dark"][data-true-black="true"] {
+  --sidebar-bg: #000;
+  --content-bg: #000;
+  --sidebar-hover-bg: #111;
+  --sidebar-active-bg: #0d0d0d;
+  --btn-hover-bg: #111111;
+  --border-color: #111;
+  --button-border-color: #000000;
+
+  --toast-bg: #000;
+  --toast-text: #ffffff;
+}

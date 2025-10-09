@@ -1,28 +1,24 @@
-import { useState } from 'react';
-import logo from './assets/images/logo-universal.png';
-import './App.css';
-import { Greet } from "../wailsjs/go/main/App";
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
+import MainLayout from './layout/MainLayout';
+import Accounts from './pages/Accounts';
+import Manage from './pages/Manage';
+import HowItWorks from './pages/HowItWorks';
+import Settings from './pages/Settings';
 
 function App() {
-  const [resultText, setResultText] = useState("Please enter your name below 👇");
-  const [name, setName] = useState('');
-  const updateName = (e) => setName(e.target.value);
-  const updateResultText = (result) => setResultText(result);
-
-  function greet() {
-    Greet(name).then(updateResultText);
-  }
-
   return (
-    <div id="App">
-      <img src={logo} id="logo" alt="logo" />
-      <div id="result" className="result">{resultText}</div>
-      <div id="input" className="input-box">
-        <input id="name" className="input" onChange={updateName} autoComplete="off" name="input" type="text" />
-        <button className="btn" onClick={greet}>Greet</button>
-      </div>
-    </div>
-  )
+    <Router>
+      <MainLayout>
+        <Routes>
+          <Route path="/" element={<Navigate to="/accounts" replace />} />
+          <Route path="/accounts" element={<Accounts />} />
+          <Route path="/manage" element={<Manage />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
+          <Route path="/settings" element={<Settings />} />
+        </Routes>
+      </MainLayout>
+    </Router>
+  );
 }
 
-export default App
+export default App;

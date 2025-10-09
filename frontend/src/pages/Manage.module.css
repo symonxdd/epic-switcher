@@ -1,0 +1,72 @@
+.emptyState {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: var(--text-color);
+  background-color: var(--content-bg);
+  padding: 16px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+}
+
+.listContainer {
+  max-height: 70vh;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.listItem {
+  background: var(--content-bg);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 8px;
+  border: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.originalName {
+  font-weight: 500;
+  color: var(--text-color);
+}
+
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.aliasInput {
+  flex: 1;
+  padding: 8px 36px 8px 12px;
+  font-size: 1rem;
+  border: 1px solid var(--button-border-color);
+  border-radius: 6px;
+  background-color: var(--content-bg);
+  color: var(--text-color);
+}
+
+.aliasInput::placeholder {
+  color: var(--sidebar-text-muted);
+}
+
+.clearBtn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+  transition: background var(--transition-speed) ease, color var(--transition-speed) ease;
+}
+
+.clearBtn:hover {
+  background-color: var(--btn-hover-bg);
+  color: var(--sidebar-active-text);
+}

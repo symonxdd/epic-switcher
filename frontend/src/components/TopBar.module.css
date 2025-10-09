@@ -1,0 +1,73 @@
+/* Base top bar */
+.topBar {
+  height: 50px;
+  width: 100%;
+  background-color: var(--background-secondary);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 6px 0.75rem 0 0.75rem;
+  user-select: none;
+  --wails-draggable: drag;
+}
+
+.title {
+  font-size: 0.9rem;
+  color: var(--text-color);
+  pointer-events: none;
+  margin-top: 2px;
+}
+
+.winControls {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  margin-top: 2px;
+  --wails-draggable: no-drag;
+}
+
+.winBtn {
+  width: 12px;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  border: 0.5px solid rgba(0, 0, 0, 0.1);
+  cursor: default;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s ease, filter 0.2s ease, box-shadow 0.2s ease;
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.15);
+  /* subtle inner depth */
+}
+
+/* Softer, modern colors */
+.minimize {
+  background-color: #e0c65f;
+  /* muted yellow */
+}
+
+.maximize {
+  background-color: #57b868;
+  /* muted green */
+}
+
+.close {
+  background-color: #e37c79;
+  /* muted red */
+}
+
+/* Modern subtle hover effect */
+.winBtn:hover {
+  filter: brightness(1.08);
+  /* gentle brighten */
+  box-shadow: inset 0 0 1px rgba(0, 0, 0, 0.25), 0 1px 3px rgba(0, 0, 0, 0.1);
+  /* slight elevation */
+  transform: none;
+  /* remove scaling for minimalism */
+}
+
+/* Close button hover */
+.close:hover {
+  background-color: #d75f5b;
+  /* slightly stronger red on hover */
+}

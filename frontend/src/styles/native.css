@@ -1,0 +1,28 @@
+/* --- Make UI feel native (non-selectable) --- */
+html,
+body,
+#root {
+  user-select: none;
+  /* Disable text selection */
+  -webkit-user-select: none;
+  /* Safari/WebKit */
+  -webkit-app-region: drag;
+  /* Draggable region for Wails */
+  cursor: default;
+}
+
+/* Allow text input fields to be selectable */
+input,
+textarea {
+  user-select: text;
+  -webkit-user-select: text;
+  -webkit-app-region: no-drag;
+}
+
+/* Disable image dragging */
+img {
+  -webkit-user-drag: none;
+  user-drag: none;
+  pointer-events: none;
+  /* optional: prevents accidental selection/clicks */
+}

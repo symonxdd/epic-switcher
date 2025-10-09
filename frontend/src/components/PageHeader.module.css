@@ -1,0 +1,16 @@
+.pageHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+  /* border-bottom: 1px solid var(--border-color); */
+  /* padding-bottom: 1rem; */
+}
+
+.pageHeaderTitle {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: var(--text-color);
+  line-height: 1.2;
+}

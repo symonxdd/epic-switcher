@@ -1,0 +1,71 @@
+.noAccountMessage {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: var(--sidebar-text-muted);
+}
+
+.listContainer {
+  max-height: 70vh;
+  overflow-y: auto;
+  margin-top: 20px;
+}
+
+.listItem {
+  background: var(--sidebar-hover-bg);
+  padding: 12px 16px;
+  border-radius: 6px;
+  margin-bottom: 6px;
+  cursor: pointer;
+  transition: background var(--transition-speed) ease;
+  border: 1px solid var(--border-color);
+}
+
+.listItem:hover {
+  background: var(--sidebar-active-bg);
+}
+
+/* username above */
+.username {
+  font-weight: 500;
+  color: var(--text-color);
+  display: block;
+  /* ✅ block forces it onto its own line */
+  width: fit-content;
+  /* hover area only wraps text */
+  cursor: default;
+  user-select: none;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+/* userId below */
+.userId {
+  font-size: 0.8em;
+  color: var(--sidebar-text-muted);
+  display: block;
+  /* ✅ same here */
+  width: fit-content;
+  cursor: default;
+  user-select: none;
+  padding: 2px 6px;
+  border-radius: 6px;
+  transition: background 0.15s ease;
+}
+
+/* theme-aware hover colors */
+.username:hover,
+.userId:hover {
+  background: var(--hover-bg);
+}
+
+:root {
+  --hover-bg: rgba(0, 0, 0, 0.08);
+  /* light mode fallback */
+}
+
+[data-theme='dark'] {
+  --hover-bg: rgba(255, 255, 255, 0.1);
+  /* dark mode */
+}

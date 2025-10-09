@@ -1,0 +1,13 @@
+/* --- Focus outline tweaks for native feel --- */
+button,
+input,
+select {
+  outline: none;
+}
+
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--focus-color, #8e44ad);
+  /* optional custom focus color */
+  outline-offset: 2px;
+}
