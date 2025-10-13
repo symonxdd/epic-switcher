@@ -25,6 +25,8 @@ function MainLayout({ children }) {
             borderRadius: '6px',
             padding: '10px 14px',
             fontSize: '0.95rem',
+            whiteSpace: 'nowrap',
+            maxWidth: 'none',
           },
         }}
       />

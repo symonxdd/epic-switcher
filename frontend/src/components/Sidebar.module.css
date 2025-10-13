@@ -28,6 +28,7 @@
   font-weight: 500;
   font-size: 0.95rem;
   border-radius: 8px;
+  cursor: default;
 }
 
 .sidebar-item:hover {

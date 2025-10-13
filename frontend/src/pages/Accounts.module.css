@@ -1,71 +1,368 @@
-.noAccountMessage {
+.noSessionsMessage {
   text-align: center;
   margin-top: 50px;
   font-size: 1.2rem;
   color: var(--sidebar-text-muted);
 }
 
+.subtitleRow {
+  display: flex;
+  align-items: center;
+  /* 👈 centers vertically */
+  justify-content: space-between;
+  min-height: 36px;
+  /* 👈 fixed minimum height */
+}
+
+.subtitle {
+  color: var(--text-color);
+}
+
+/* ---- View Toggle ---- */
+.viewToggle {
+  display: flex;
+  gap: 4px;
+}
+
+.toggleBtn {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--sidebar-text-muted);
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.toggleBtn:hover {
+  background: var(--hover-bg);
+  color: var(--text-color);
+  border-color: color-mix(in srgb, var(--border-color) 80%, var(--hover-bg) 20%);
+}
+
+.activeToggle {
+  color: var(--text-color);
+  /* 👈 neutral active color */
+  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+/* ---- Container Views ---- */
 .listContainer {
   max-height: 70vh;
   overflow-y: auto;
-  margin-top: 20px;
+  margin-top: 10px;
 }
 
+.listView {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.gridView {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 12px;
+}
+
+/* ---- List Item ---- */
 .listItem {
-  background: var(--sidebar-hover-bg);
-  padding: 12px 16px;
-  border-radius: 6px;
-  margin-bottom: 6px;
-  cursor: pointer;
-  transition: background var(--transition-speed) ease;
-  border: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--list-item-bg);
+  border: 1px solid color-mix(in srgb, var(--border-color) 60%, var(--hover-bg) 40%);
+  border-radius: 8px;
+  transition: background 0.2s ease, border 0.2s ease;
+  position: relative;
 }
 
 .listItem:hover {
-  background: var(--sidebar-active-bg);
+  background: var(--list-item-bg-hover);
+  border: 1px solid var(--border-color);
 }
 
-/* username above */
-.username {
+/* ---- Avatar ---- */
+.avatarWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  background: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  user-select: none;
+}
+
+/* ---- Checkmark ---- */
+.tooltipWrapper {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.activeIcon {
+  color: #22c55e;
+  font-size: 1.15rem;
+  background: var(--content-bg);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--list-item-bg);
+  transition: transform 0.2s ease;
+}
+
+/* ---- Tooltip ---- */
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  white-space: normal;
+  text-align: left;
+  width: max-content;
+  z-index: 9999;
+  margin-left: 4px;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+/* ---- Text Block ---- */
+.textBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  overflow: hidden;
+}
+
+.inlineRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.displayName {
   font-weight: 500;
   color: var(--text-color);
-  display: block;
-  /* ✅ block forces it onto its own line */
-  width: fit-content;
-  /* hover area only wraps text */
-  cursor: default;
-  user-select: none;
-  padding: 2px 6px;
-  border-radius: 6px;
-  transition: background 0.15s ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-/* userId below */
-.userId {
-  font-size: 0.8em;
+.metaLine {
+  font-size: 0.8rem;
   color: var(--sidebar-text-muted);
-  display: block;
-  /* ✅ same here */
-  width: fit-content;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Copy Icon ---- */
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  padding: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, background 0.2s ease, transform 0.2s ease;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.iconButton:hover {
+  /* background: var(--hover-bg); */
+  color: var(--text-color);
+  /* transform: scale(1.1); */
+  /* subtle zoom on hover */
+}
+
+/* ---- Modal Overlay ---- */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+  --wails-draggable: drag;
+}
+
+/* ---- Modal ---- */
+.modal {
+  background: var(--content-bg);
+  color: var(--text-color);
+  padding: 0 0 1.75rem 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--content-border);
+  transform: translateY(20px);
+  animation: slideUp 0.25s ease forwards;
+  max-width: 460px;
+  width: 90%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.modal h3 {
+  margin: 0;
+  background: var(--sidebar-bg);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.modalNote,
+.modalUsername,
+.modalUserId {
+  font-size: 0.9rem;
+  color: var(--sidebar-text-muted);
+  text-align: left;
+  padding: 0 45px;
+}
+
+.modalNote {
+  font-size: 0.96rem;
+  margin-top: 1.10rem;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+/* ---- Modal Buttons ---- */
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0 45px;
+}
+
+.modalButtonRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.modalButtons button {
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
   cursor: default;
-  user-select: none;
-  padding: 2px 6px;
-  border-radius: 6px;
-  transition: background 0.15s ease;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease,
+    transform var(--transition-speed) ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* theme-aware hover colors */
-.username:hover,
-.userId:hover {
-  background: var(--hover-bg);
+.primaryButton {
+  background: var(--primary-button-bg);
+  color: var(--primary-button-text);
+  border: none;
 }
 
-:root {
-  --hover-bg: rgba(0, 0, 0, 0.08);
-  /* light mode fallback */
+.primaryButton:hover {
+  background: var(--primary-button-hover);
+  transform: translateY(-1px);
 }
 
-[data-theme='dark'] {
-  --hover-bg: rgba(255, 255, 255, 0.1);
-  /* dark mode */
+.secondaryButton {
+  background: var(--btn-hover-bg);
+  color: var(--text-color);
+  border: 1px solid var(--button-border-color);
+}
+
+.secondaryButton:hover {
+  background-color: var(--sidebar-hover-bg);
+  transform: translateY(-1px);
+}
+
+.ghostButton {
+  background-color: transparent;
+  border: none;
+  color: var(--sidebar-text-muted);
+  opacity: 0.8;
+  width: auto;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.7rem 1rem;
+}
+
+.ghostButton:hover {
+  opacity: 1;
+  color: var(--text-color);
+  background-color: transparent;
+}
+
+/* ---- Animations ---- */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }

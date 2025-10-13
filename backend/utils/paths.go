@@ -13,7 +13,7 @@ func GetAppDataPath() string {
 	return filepath.Join(localAppData, AppFolderName)
 }
 
-// GetEpicLoginSessionPath returns the path to the Epic Games Launcher session file.
+// Returns the path to the Epic Games Launcher session file.
 func GetEpicLoginSessionPath() string {
 	localAppData := os.Getenv("LOCALAPPDATA")
 	if localAppData == "" {
@@ -23,7 +23,7 @@ func GetEpicLoginSessionPath() string {
 	return filepath.Join(localAppData, "EpicGamesLauncher", "Saved", "Config", "Windows", "GameUserSettings.ini")
 }
 
-// GetEpicLogsPath returns the path to the Epic Games Launcher log directory
+// Returns the path to the Epic Games Launcher log directory
 func GetEpicLogsPath() string {
 	userDir, _ := os.UserHomeDir()
 	return filepath.Join(userDir, "AppData", "Local", "EpicGamesLauncher", "Saved", "Logs")

@@ -1,0 +1,38 @@
+.container {
+  color: var(--text-color);
+}
+
+.section {
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+/* Paragraph text */
+.paragraph {
+  font-size: 1rem;
+  line-height: 1.2;
+  color: var(--sidebar-text-muted);
+}
+
+/* inline filename highlight */
+.file {
+  font-family: monospace;
+  color: var(--primary-color);
+  font-weight: bold;
+}
+
+/* subtle divider line */
+.divider {
+  border: none;
+  border-top: 1px solid var(--border-color);
+  margin: 24px 0;
+  opacity: 0.5;
+}
+
+/* note under the divider */
+.note {
+  font-size: 0.95rem;
+  color: var(--sidebar-text-muted);
+  text-align: center;
+}

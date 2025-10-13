@@ -139,3 +139,47 @@ func (l *LogReaderService) SyncUsernames(isDeepSearch bool) (bool, error) {
 	fmt.Println("ℹ️ No usernames updated.")
 	return false, nil
 }
+
+func (l *LogReaderService) GetUsernameForUserID(userID string) (string, error) {
+	logFiles, _ := filepath.Glob(filepath.Join(l.LogsDir, "*EpicGamesLauncher*.log"))
+	if len(logFiles) == 0 {
+		return "", fmt.Errorf("no log files found")
+	}
+
+	sort.Slice(logFiles, func(i, j int) bool {
+		fi, _ := os.Stat(logFiles[i])
+		fj, _ := os.Stat(logFiles[j])
+		return fi.ModTime().After(fj.ModTime())
+	})
+
+	// Only scan a few recent logs (optional)
+	if len(logFiles) > maxRecentLogFiles {
+		logFiles = logFiles[:maxRecentLogFiles]
+	}
+
+	usernamePattern := regexp.MustCompile(`-epicusername="([^"]+)"`)
+	userIdPattern := regexp.MustCompile(`-epicuserid=([a-f0-9]+)`)
+
+	for _, path := range logFiles {
+		file, err := os.Open(path)
+		if err != nil {
+			continue
+		}
+		defer file.Close()
+
+		scanner := bufio.NewScanner(file)
+		for scanner.Scan() {
+			line := scanner.Text()
+			if !strings.Contains(line, epicLaunchMarker) {
+				continue
+			}
+			unameMatch := usernamePattern.FindStringSubmatch(line)
+			uidMatch := userIdPattern.FindStringSubmatch(line)
+			if len(unameMatch) > 1 && len(uidMatch) > 1 && uidMatch[1] == userID {
+				return unameMatch[1], nil
+			}
+		}
+	}
+
+	return "", fmt.Errorf("username not found for userID %s", userID)
+}

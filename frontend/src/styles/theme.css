@@ -1,5 +1,15 @@
 :root {
   /* --- Light theme --- */
+  --primary-color: #008eec;
+  --primary-color-hover: #a81e11;
+
+  --primary-button-bg: #333;
+  --primary-button-hover: #111;
+  --primary-button-text: #fff;
+
+  --list-item-bg: #F0F0F0;
+  --list-item-bg-hover: #F0F0F0;
+
   --sidebar-bg: #f3f3f3;
   --sidebar-text: #333;
   --sidebar-text-muted: #6b6b6b;
@@ -19,10 +29,22 @@
 
   --toast-bg: #f0f0f0;
   --toast-text: #222;
+
+  --hover-bg: rgba(0, 0, 0, 0.08);
 }
 
 /* --- Dark theme --- */
 [data-theme="dark"] {
+  --primary-color: #ce9d15;
+  --primary-color-hover: #a81e11;
+
+  --primary-button-bg: #212121;
+  --primary-button-hover: #121212;
+  --primary-button-text: #b9b9b9;
+
+  --list-item-bg: #343434;
+  --list-item-bg-hover: #343434;
+
   --sidebar-bg: #202020;
   --sidebar-text: #c0c0c0;
   --sidebar-text-muted: #9aa0aa;
@@ -35,12 +57,14 @@
   --icon-color: #b0b8c1;
   --btn-hover-bg: #2b2b2b;
   --border-color: #333;
-  --button-border-color: #505050;
+  --button-border-color: #3d3d3d;
   --content-bg: #272727;
   --content-border: #3a3a3a;
 
   --toast-bg: #2a2a2a;
   --toast-text: #ffffff;
+
+  --hover-bg: rgba(255, 255, 255, 0.1);
 }
 
 /* --- True Black mode --- */
@@ -52,6 +76,9 @@
   --btn-hover-bg: #111111;
   --border-color: #111;
   --button-border-color: #000000;
+
+  --list-item-bg: #000000;
+  --list-item-bg-hover: #000000;
 
   --toast-bg: #000;
   --toast-text: #ffffff;

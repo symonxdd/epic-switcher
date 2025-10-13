@@ -1,5 +1,4 @@
 import { createContext, useState, useEffect } from 'react';
-import { SyncCurrentLoginSession } from '../../wailsjs/go/services/AuthService';
 import { SyncUsernames } from '../../wailsjs/go/services/LogReaderService';
 import { LoadSessions, UpdateAlias } from '../../wailsjs/go/services/SessionStore';
 
@@ -13,17 +12,14 @@ export function SessionProvider({ children }) {
   useEffect(() => {
     async function initSessions() {
       try {
-        console.log("🔑 1. Syncing current Epic login...");
-        await SyncCurrentLoginSession();
-
-        console.log("🧭 2. Filling usernames from logs...");
+        console.log("🧭 A. Filling usernames from logs...");
         await SyncUsernames(false);
 
-        console.log("📦 3. Loading sessions...");
+        console.log("📦 B. Loading sessions...");
         const loaded = await LoadSessions();
         setSessions(loaded || []);
 
-        console.log(`✅ Loaded ${loaded.length} sessions.`);
+        console.log(`✅ Loaded ${loaded?.length} sessions.`);
         console.log(`Sessions:`, loaded);
       } catch (err) {
         console.error("❌ Failed to init sessions:", err);
@@ -40,11 +36,13 @@ export function SessionProvider({ children }) {
     async function handleFocus() {
       try {
         const updated = await SyncUsernames(false);
-        if (updated) {
-          const loaded = await LoadSessions();
-          setSessions(loaded || []);
-          console.log("🔄 Sessions updated after window focus.");
-        }
+        const loaded = await LoadSessions();
+        setSessions(loaded || []);
+        // if (updated) {
+        // const loaded = await LoadSessions();
+        // setSessions(loaded || []);
+        // console.log("🔄 JSON store changed; executed LoadSessions on window focus.");
+        // }
       } catch (err) {
         console.error("❌ Failed to sync usernames on focus:", err);
       }

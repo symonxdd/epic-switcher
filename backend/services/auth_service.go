@@ -18,61 +18,102 @@ func NewAuthService() *AuthService {
 	return &AuthService{}
 }
 
-// SyncCurrentLoginSession checks if someone is logged in,
-// extracts token & UserID from Epic's session file, and
-// stores/updates it in our SessionStore (login_sessions.json).
-func (a *AuthService) SyncCurrentLoginSession() error {
-	// 1. Get the path to Epic Games' internal session file
+// AuthService.go
+
+// GetCurrentLoginSession reads Epic's session file and returns
+// the active session if someone is logged in, otherwise nil.
+func (a *AuthService) GetCurrentLoginSession() (*models.LoginSession, error) {
 	path := utils.GetEpicLoginSessionPath()
 	if path == "" {
-		return fmt.Errorf("session file not found")
+		return nil, fmt.Errorf("session (.ini) file not found")
 	}
 
-	// 2. Read the contents of the .ini file
 	data, err := os.ReadFile(path)
 	if err != nil {
-		return fmt.Errorf("cannot read session file: %w", err)
+		return nil, fmt.Errorf("cannot read session file: %w", err)
 	}
 	content := string(data)
 
-	// 3. Extract login token (the part after "Data=")
 	re := regexp.MustCompile(`Data=([^\r\n]+)`)
 	match := re.FindStringSubmatch(content)
 	if len(match) < 2 {
-		return fmt.Errorf("no token found")
+		return nil, fmt.Errorf("no token found")
 	}
 	loginToken := strings.TrimSpace(match[1])
-
-	// 4. If token length is too short, likely not logged in
 	if len(loginToken) < 1000 {
-		return fmt.Errorf("no valid login token found (user likely logged out)")
+		return nil, fmt.Errorf("no valid login token found (user likely logged out)")
 	}
 
-	// 5. Extract UserID from section header like [<UserID>_General]
 	reID := regexp.MustCompile(`\[(.+?)_General\]`)
 	matchID := reID.FindStringSubmatch(content)
-	var userID string
-	if len(matchID) >= 2 {
-		userID = strings.TrimSpace(matchID[1])
+	if len(matchID) < 2 {
+		return nil, fmt.Errorf("could not extract user ID")
 	}
+	userID := strings.TrimSpace(matchID[1])
 
-	if userID == "" {
-		return fmt.Errorf("could not extract user ID")
-	}
-
-	// 6. Create a LoginSession object (other fields can be empty initially)
-	session := models.LoginSession{
+	return &models.LoginSession{
 		UserID:     userID,
 		LoginToken: loginToken,
+	}, nil
+}
+
+// DetectNewLoginSession checks if the current login session is new or ignored.
+func (a *AuthService) DetectNewLoginSession() (*models.LoginSession, error) {
+	session, err := a.GetCurrentLoginSession()
+	if err != nil || session == nil {
+		return nil, err // means no user is logged in or invalid token
 	}
 
-	// 7. Add or update session in JSON store
+	// --- Check ignored list early ---
+	ignoreStore := NewIgnoreListStore()
+	ignored, _ := ignoreStore.IsIgnored(session.UserID)
+	if ignored {
+		fmt.Println("ℹ️ User is in ignore list, skipping prompt.")
+		return nil, nil
+	}
+
+	// --- Check against stored sessions ---
+	store := NewSessionStore()
+	sessions, _ := store.LoadSessions()
+	for _, s := range sessions {
+		if s.UserID == session.UserID {
+			// Already known → no need to prompt
+			return nil, nil
+		}
+	}
+
+	// Return new session
+	return session, nil
+}
+
+func (a *AuthService) CheckIfSessionIsNew(userID string) (bool, error) {
+	ignoreStore := NewIgnoreListStore()
+	ignored, _ := ignoreStore.IsIgnored(userID)
+	if ignored {
+		return false, nil
+	}
+
+	store := NewSessionStore()
+	sessions, _ := store.LoadSessions()
+	for _, s := range sessions {
+		if s.UserID == userID {
+			return false, nil // already known
+		}
+	}
+
+	return true, nil
+}
+
+func (a *AuthService) AddDetectedSession(session models.LoginSession) error {
 	store := NewSessionStore()
 	if err := store.addOrUpdate(session); err != nil {
 		return fmt.Errorf("failed to persist session: %w", err)
 	}
-
-	// 8. Success!
-	fmt.Println("✅ Current Epic login session synced:", userID)
+	fmt.Println("✅ User accepted and session added:", session.UserID)
 	return nil
+}
+
+func (a *AuthService) IgnoreDetectedSession(userID string) error {
+	ignoreStore := NewIgnoreListStore()
+	return ignoreStore.Add(userID)
 }
