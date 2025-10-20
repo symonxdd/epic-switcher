@@ -215,7 +215,7 @@ export default function Accounts() {
                         </div>
                       </div>
 
-                      {viewMode === 'list' && index < sessions.length - 1 && <ListSeparator />}
+                      {/* {viewMode === 'list' && index < sessions.length - 1 && <ListSeparator />} */}
                     </>
                   );
                 })}
