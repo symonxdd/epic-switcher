@@ -125,7 +125,6 @@ export default function Manage() {
                           />
                         </div>
                       </div>
-                      {viewMode === 'list' && index < sessions.length - 1 && <ListSeparator />}
                     </>
                   );
                 })}
