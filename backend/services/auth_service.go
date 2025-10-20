@@ -3,8 +3,11 @@ package services
 import (
 	"fmt"
 	"os"
+	"os/exec"
 	"regexp"
 	"strings"
+	"syscall"
+	"time"
 
 	"epic-games-account-switcher/backend/models"
 	"epic-games-account-switcher/backend/utils"
@@ -116,4 +119,101 @@ func (a *AuthService) AddDetectedSession(session models.LoginSession) error {
 func (a *AuthService) IgnoreDetectedSession(userID string) error {
 	ignoreStore := NewIgnoreListStore()
 	return ignoreStore.Add(userID)
+}
+
+// MoveAsideActiveSession stops the Epic Games Launcher, clears its login session,
+// and re-launches it for the user to sign in again.
+func (a *AuthService) MoveAsideActiveSession() error {
+	fmt.Println("🔹 Attempting to close Epic Games Launcher...")
+
+	// 1️⃣ Kill the Epic Games Launcher process
+	killCmd := exec.Command("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
+	if err := killCmd.Run(); err != nil {
+		// It's okay if it wasn't running — only fail if something else went wrong
+		if !strings.Contains(err.Error(), "not found") {
+			return fmt.Errorf("failed to close Epic Games Launcher: %w", err)
+		}
+		fmt.Println("ℹ️ Epic Games Launcher was not running.")
+	} else {
+		fmt.Println("✅ Epic Games Launcher closed successfully.")
+	}
+
+	// 2️⃣ Confirm process is actually gone (poll until no longer found)
+	const maxWait = 8 * time.Second
+	start := time.Now()
+
+	for {
+		checkCmd := exec.Command("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
+		output, _ := checkCmd.Output()
+		if !strings.Contains(string(output), "EpicGamesLauncher.exe") {
+			break // fully stopped
+		}
+		if time.Since(start) > maxWait {
+			return fmt.Errorf("timeout waiting for Epic Games Launcher to close")
+		}
+		time.Sleep(250 * time.Millisecond)
+	}
+
+	fmt.Println("✅ Confirmed Epic Games Launcher process has exited.")
+
+	// 3️⃣ Clear the contents of the login session file
+	iniPath := utils.GetEpicLoginSessionPath()
+	if iniPath == "" {
+		return fmt.Errorf("could not find Epic Games session path")
+	}
+
+	fmt.Println("🔹 Clearing session file at:", iniPath)
+	if err := os.WriteFile(iniPath, []byte(""), 0644); err != nil {
+		return fmt.Errorf("failed to clear session file: %w", err)
+	}
+	fmt.Println("✅ Session file cleared.")
+
+	// 4️⃣ Re-launch the Epic Games Launcher
+	launcherPath := utils.GetEpicLauncherPath()
+	fmt.Println("🔹 Launching Epic Games Launcher:", launcherPath)
+
+	startCmd := exec.Command(launcherPath)
+	startCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true} // optional: hide console window
+	startCmd.Stdout = os.Stdout
+	startCmd.Stderr = os.Stderr
+
+	if err := startCmd.Start(); err != nil {
+		return fmt.Errorf("failed to launch Epic Games Launcher: %w", err)
+	}
+
+	fmt.Println("✅ Epic Games Launcher started successfully.")
+	return nil
+}
+
+// Compares the current session token with the stored one,
+// and updates it in login_sessions.json if it's different.
+func (a *AuthService) CheckAndRenewLoginToken() (bool, error) {
+	session, err := a.GetCurrentLoginSession()
+	if err != nil || session == nil {
+		return false, err
+	}
+
+	store := NewSessionStore()
+	sessions, _ := store.LoadSessions()
+
+	for i, s := range sessions {
+		if s.UserID == session.UserID {
+			// same user found
+			if s.LoginToken != session.LoginToken {
+				// token changed → update it
+				sessions[i].LoginToken = session.LoginToken
+				sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
+
+				if err := store.SaveSessions(sessions); err != nil {
+					return false, fmt.Errorf("failed to update session token: %w", err)
+				}
+
+				fmt.Println("🔄 Login token renewed for:", session.UserID)
+				return true, nil
+			}
+			return false, nil // token same → nothing to do
+		}
+	}
+
+	return false, nil // not stored, so nothing to renew
 }

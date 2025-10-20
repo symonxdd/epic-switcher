@@ -1,0 +1,127 @@
+.hintBox {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  max-width: 720px;
+  width: calc(100% - 32px);
+  display: flex;
+  align-items: center;
+  /* vertically center icon + text + dismiss */
+  justify-content: space-between;
+  background-color: var(--sidebar-bg);
+  border: 1px solid var(--border-color);
+  color: var(--text-color);
+  padding: 12px 14px;
+  border-radius: 10px;
+  /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); */
+  transition: background-color 0.2s ease, border 0.2s ease, opacity 0.25s ease;
+  z-index: 10;
+}
+
+.leftSection {
+  display: flex;
+  align-items: center;
+  gap: 19px;
+  flex: 1;
+  min-width: 0;
+}
+
+.icon {
+  color: var(--icon-color);
+  font-size: 1.4rem;
+  flex-shrink: 0;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+  min-width: 0;
+}
+
+.title {
+  font-weight: 600;
+  color: var(--text-color);
+  line-height: 1.3;
+}
+
+.message {
+  font-size: 0.9rem;
+  color: var(--sidebar-text);
+  line-height: 1.4;
+  white-space: normal;
+}
+
+.dismissButton {
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  cursor: default;
+  font-size: 1.2rem;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.dismissButton:hover {
+  color: var(--text-color);
+  background: var(--hover-bg);
+}
+
+.closeTooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tooltip box */
+.closeTooltipWrapper .tooltip {
+  position: absolute;
+  top: 50%;
+  right: 120%;
+  /* appears to the left */
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  white-space: normal;
+  text-align: left;
+  width: max-content;
+  z-index: 9999;
+  margin-right: 4px;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  max-width: 260px;
+}
+
+/* Invisible hover bridge so tooltip doesn't flicker */
+.closeTooltipWrapper .tooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: -8px;
+  width: 8px;
+  height: 100%;
+}
+
+/* Show tooltip on hover of wrapper */
+.closeTooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+/* Optional: subtle color on hover for dismiss button */
+.closeTooltipWrapper:hover .dismissButton {
+  color: var(--text-color);
+  background: var(--hover-bg);
+}

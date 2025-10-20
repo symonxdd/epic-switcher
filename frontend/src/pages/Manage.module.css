@@ -180,7 +180,7 @@
 .listView {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* gap: 8px; */
 }
 
 .gridView {
@@ -195,16 +195,15 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  background: var(--list-item-bg);
-  border: 1px solid color-mix(in srgb, var(--border-color) 60%, var(--hover-bg) 40%);
+  border: 1px solid transparent;
   border-radius: 8px;
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
 }
 
 .listItem:hover {
-  background: var(--list-item-bg-hover);
-  border: 1px solid var(--border-color);
+  /* background-color: var(--list-item-bg-hover);
+  border: 1px solid var(--border-color); */
 }
 
 /* Avatar */

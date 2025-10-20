@@ -4,6 +4,8 @@ import {models} from '../models';
 
 export function AddDetectedSession(arg1:models.LoginSession):Promise<void>;
 
+export function CheckAndRenewLoginToken():Promise<boolean>;
+
 export function CheckIfSessionIsNew(arg1:string):Promise<boolean>;
 
 export function DetectNewLoginSession():Promise<models.LoginSession>;
@@ -11,3 +13,5 @@ export function DetectNewLoginSession():Promise<models.LoginSession>;
 export function GetCurrentLoginSession():Promise<models.LoginSession>;
 
 export function IgnoreDetectedSession(arg1:string):Promise<void>;
+
+export function MoveAsideActiveSession():Promise<void>;

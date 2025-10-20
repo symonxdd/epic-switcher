@@ -22,13 +22,6 @@
   margin-bottom: 10px;
 }
 
-.labelSubtext {
-  display: block;
-  font-size: 0.8rem;
-  color: var(--secondary-text-color);
-  margin-bottom: 10px;
-}
-
 .btnGroup {
   display: flex;
   gap: 10px;
@@ -70,11 +63,38 @@
   color: var(--text-color);
 }
 
+/* --- Accounts Page Toggles --- */
+.accountsPageGroup {
+  background-color: var(--background-secondary);
+  border-radius: 12px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+.hideUserIdsToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+}
+
+.hideCopyButtonsToggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  color: var(--text-color);
+  margin-top: 10px;
+  /* 👈 spacing only between these two toggles */
+}
+
 .toggleLabel {
   font-weight: 500;
 }
 
-/* --- Material 3 switch --- */
+/* --- Switch Control (Material 3 style) --- */
 .switch {
   position: relative;
   display: inline-block;
@@ -104,26 +124,49 @@
   content: "";
   position: absolute;
   height: 18px;
-  /* knob size */
   width: 18px;
   left: 2px;
-  /* inside track */
   top: 2px;
-  /* vertically center */
   background-color: var(--sidebar-bg);
-  /* Knob color */
   border-radius: 50%;
-  /* round knob */
   transition: transform 0.3s, background-color 0.3s;
 }
 
-/* Checked state */
 .switch input:checked + .slider {
   background-color: #8e44ad;
-  /* track color when active */
 }
 
 .switch input:checked + .slider::before {
   transform: translateX(18px);
-  /* move knob */
+}
+
+/* --- Hints Section --- */
+.hintResetGroup {
+  background-color: var(--background-secondary);
+  border-radius: 12px;
+  margin-top: 24px;
+  width: fit-content;
+  display: flex;
+  flex-direction: column;
+}
+
+/* --- Reset Button --- */
+.resetButton {
+  background-color: var(--background-tertiary, transparent);
+  color: var(--text-color);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.resetButton:hover {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--button-border-color);
+}
+
+.resetButton:active {
+  opacity: 0.8;
 }

@@ -18,6 +18,44 @@
   color: var(--text-color);
 }
 
+.subtitleWithIcon {
+  display: flex;
+  align-items: center;
+}
+
+.addIcon {
+  font-size: 1.15rem;
+  color: var(--sidebar-text-muted);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: color 0.15s ease, transform 0.12s ease;
+}
+
+.addTooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 6px;
+}
+
+.addTooltipWrapper .tooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 8px;
+  height: 100%;
+}
+
+.addTooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+.addTooltipWrapper:hover .addIcon {
+  color: var(--text-color);
+}
+
 /* ---- View Toggle ---- */
 .viewToggle {
   display: flex;
@@ -61,7 +99,7 @@
 .listView {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* gap: 8px; */
 }
 
 .gridView {
@@ -76,16 +114,26 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  background: var(--list-item-bg);
-  border: 1px solid color-mix(in srgb, var(--border-color) 60%, var(--hover-bg) 40%);
+  border: 1px solid transparent;
   border-radius: 8px;
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
 }
 
 .listItem:hover {
-  background: var(--list-item-bg-hover);
+  background-color: var(--list-item-bg-hover);
   border: 1px solid var(--border-color);
+  /* box-shadow: var(--list-item-shadow-hover); */
+}
+
+.activeItem {
+  /* background-color: var(--list-item-active-bg); */
+  /* border: 1px solid var(--border-color); */
+}
+
+.activeItem:hover {
+  background-color: transparent;
+  border: 1px solid transparent;
 }
 
 /* ---- Avatar ---- */
@@ -152,6 +200,7 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+/* show check tooltip on hover of wrapper */
 .tooltipWrapper:hover .tooltip {
   display: block;
 }
@@ -260,17 +309,21 @@
 .modalNote,
 .modalUsername,
 .modalUserId {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   color: var(--sidebar-text-muted);
   text-align: left;
   padding: 0 45px;
+  line-height: 1.4;
 }
 
 .modalNote {
-  font-size: 0.96rem;
-  margin-top: 1.10rem;
+  font-size: 0.88rem;
+  margin-top: 1rem;
   margin-bottom: 1rem;
-  line-height: 1.2;
+}
+
+.modalNote p {
+  margin: 0.4rem 0;
 }
 
 /* ---- Modal Buttons ---- */
@@ -342,6 +395,12 @@
   opacity: 1;
   color: var(--text-color);
   background-color: transparent;
+}
+
+.extraMessage {
+  /* font-weight: 500; */
+  /* font-size: 0.95rem; */
+  /* color: var(--sidebar-text-muted); */
 }
 
 /* ---- Animations ---- */

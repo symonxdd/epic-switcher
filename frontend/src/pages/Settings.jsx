@@ -1,9 +1,32 @@
+import { useState, useEffect } from "react";
 import { useTheme } from "../context/ThemeContext";
 import PageHeader from '../components/PageHeader';
 import styles from "./Settings.module.css";
+import { STORAGE_KEYS } from "../constants/storageKeys";
+import toast from "react-hot-toast";
 
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
+  const [hideUserIds, setHideUserIds] = useState(false);
+  const [hideCopyButtons, setHideCopyButtons] = useState(false);
+
+  // Load settings from localStorage on mount
+  useEffect(() => {
+    const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
+    if (storedHideUserIds === "true") setHideUserIds(true);
+
+    const storedHideCopyButtons = localStorage.getItem(STORAGE_KEYS.HIDE_COPY_BUTTONS);
+    if (storedHideCopyButtons === "true") setHideCopyButtons(true);
+  }, []);
+
+  // Persist settings
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.HIDE_USER_IDS, hideUserIds);
+  }, [hideUserIds]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.HIDE_COPY_BUTTONS, hideCopyButtons);
+  }, [hideCopyButtons]);
 
   return (
     <div className={styles.settingsContainer}>
@@ -39,6 +62,65 @@ function Settings() {
             <span className={styles.toggleLabel}>Enable True Black</span>
           </div>
         )}
+      </div>
+
+      {/* --- Accounts Page Settings --- */}
+      <div className={styles.accountsPageGroup}>
+        <h5 className={styles.labelHeading}>Accounts page</h5>
+
+        {/* Hide User IDs */}
+        <div className={styles.hideUserIdsToggle}>
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              checked={hideUserIds}
+              onChange={(e) => {
+                setHideUserIds(e.target.checked);
+                toast.success(
+                  e.target.checked
+                    ? "User IDs hidden on Accounts page"
+                    : "User IDs visible"
+                );
+              }}
+            />
+            <span className={styles.slider}></span>
+          </label>
+          <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
+        </div>
+
+        {/* Hide Copy Buttons */}
+        <div className={styles.hideCopyButtonsToggle}>
+          <label className={styles.switch}>
+            <input
+              type="checkbox"
+              checked={hideCopyButtons}
+              onChange={(e) => {
+                setHideCopyButtons(e.target.checked);
+                toast.success(
+                  e.target.checked
+                    ? "Copy buttons hidden on Accounts page"
+                    : "Copy buttons visible"
+                );
+              }}
+            />
+            <span className={styles.slider}></span>
+          </label>
+          <span className={styles.toggleLabel}>Hide copy buttons on Accounts page</span>
+        </div>
+      </div>
+
+      {/* --- Reset Hints --- */}
+      <div className={styles.hintResetGroup}>
+        <h5 className={styles.labelHeading}>Hints</h5>
+        <button
+          className={styles.resetButton}
+          onClick={() => {
+            localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
+            toast.success("Hints have been reset!");
+          }}
+        >
+          Reset hints
+        </button>
       </div>
     </div>
   );

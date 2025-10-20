@@ -4,11 +4,17 @@ import PageHeader from '../components/PageHeader';
 import { AuthContext } from '../context/AuthContext';
 import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
-import { AddDetectedSession, IgnoreDetectedSession } from '../../wailsjs/go/services/AuthService';
+import { AddDetectedSession, IgnoreDetectedSession, MoveAsideActiveSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
-import { HiOutlineClipboardCopy, HiOutlineCheckCircle, HiViewGrid, HiViewList } from 'react-icons/hi';
+import { HiOutlineClipboardCopy, HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus } from 'react-icons/hi';
 import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
+import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
+import AddAccountModal from "../components/modals/AddAccountModal";
+import NewAccountModal from "../components/modals/NewAccountModal";
+import HintMessage from "../components/HintMessage";
+import ListSeparator from '../components/ListSeparator';
+import { STORAGE_KEYS } from "../constants/storageKeys";
 
 export default function Accounts() {
   const location = useLocation();
@@ -22,10 +28,21 @@ export default function Accounts() {
   } = useContext(AuthContext);
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
+  const [showAddModal, setShowAddModal] = useState(false);
+  const [hideUserIds, setHideUserIds] = useState(false);
+  const [hideCopyButtons, setHideCopyButtons] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
   }, [location.pathname, checkLoginStatus]);
+
+  useEffect(() => {
+    const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
+    setHideUserIds(storedHideUserIds === "true");
+
+    const storedHideCopyButtons = localStorage.getItem(STORAGE_KEYS.HIDE_COPY_BUTTONS);
+    setHideCopyButtons(storedHideCopyButtons === "true");
+  }, []);
 
   async function handleAccept() {
     const sessionToSave = { ...newLoginSession, username: newLoginUsername || "" };
@@ -53,7 +70,32 @@ export default function Accounts() {
     } catch (err) {
       toast.error('Failed to copy');
     }
-  };
+  }
+
+  async function handleAddMainAction() {
+    try {
+      await MoveAsideActiveSession()
+      toast.success("Epic Games Launcher restarted — log in with your other account.")
+      setShowAddModal(false)
+    } catch (err) {
+      console.error(err)
+      toast.error("Failed to move aside active session.")
+    }
+  }
+
+  function handleAddCancel() {
+    setShowAddModal(false);
+  }
+
+  async function handleSwitchAccount(session) {
+    try {
+      await SwitchAccount(session)
+      toast.success(`Switched to account: ${session.username || session.userId}`)
+    } catch (err) {
+      console.error(err)
+      toast.error("Failed to switch account.")
+    }
+  }
 
   const activeUserId = activeLoginSession?.userId || null;
 
@@ -65,12 +107,25 @@ export default function Accounts() {
         <>
           {sessions.length === 0 ? (
             <div className={styles.noSessionsMessage}>
-              No saved sessions found
+              {activeLoginSession ? (
+                <div>No saved sessions found</div>
+              ) : (
+                <div className={styles.extraMessage}>
+                  Log in to Epic Games Launcher to get started
+                </div>
+              )}
             </div>
           ) : (
             <>
               <div className={styles.subtitleRow}>
-                <div className={styles.subtitle}>Select account</div>
+                <div className={styles.subtitleWithIcon}>
+                  <div className={styles.subtitle}>Select account</div>
+                  <div className={styles.addTooltipWrapper}>
+                    <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
+                    <div className={styles.tooltip}>Add new account</div>
+                  </div>
+                </div>
+
                 <div className={styles.viewToggle}>
                   <button
                     className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
@@ -91,57 +146,77 @@ export default function Accounts() {
                 className={`${styles.listContainer} ${viewMode === 'grid' ? styles.gridView : styles.listView
                   }`}
               >
-                {sessions.map((session) => {
+                {sessions.map((session, index) => {
                   const displayName = session.alias || session.username || session.userId;
                   const isActive = session.userId === activeUserId;
 
                   return (
-                    <div
-                      key={session.userId}
-                      className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
-                    >
-                      <div className={styles.avatarWrapper}>
-                        <div className={styles.avatar}>
-                          {displayName[0].toUpperCase()}
-                        </div>
-                        {isActive && (
-                          <div className={styles.tooltipWrapper}>
-                            <HiOutlineCheckCircle className={styles.activeIcon} />
-                            <div className={styles.tooltip}>
-                              This is the active session.
+                    <>
+                      <div
+                        key={session.userId}
+                        className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
+                        onClick={() => {
+                          if (!isActive) {
+                            handleSwitchAccount(session);
+                          }
+                        }}
+                      >
+                        <div className={styles.avatarWrapper}>
+                          <div className={styles.avatar}>{displayName[0].toUpperCase()}</div>
+                          {isActive && (
+                            <div className={styles.tooltipWrapper}>
+                              <HiOutlineCheckCircle className={styles.activeIcon} />
+                              <div className={styles.tooltip}>
+                                This is the active session.
+                              </div>
                             </div>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className={styles.textBlock}>
-                        <div className={styles.inlineRow}>
-                          <div className={styles.displayName}>
-                            {displayName}
-                          </div>
-                          <button
-                            className={styles.iconButton}
-                            title="Copy username"
-                            onClick={() => copyToClipboard(displayName)}
-                          >
-                            <HiOutlineClipboardCopy />
-                          </button>
+                          )}
                         </div>
 
-                        <div className={styles.inlineRow}>
-                          <div className={styles.metaLine}>
-                            {session.userId}
+                        <div className={styles.textBlock}>
+                          <div className={styles.inlineRow}>
+                            <div className={styles.displayName}>{displayName}</div>
+                            {!hideCopyButtons && (
+                              <button
+                                type="button"
+                                className={styles.iconButton}
+                                title="Copy username"
+                                aria-label={`Copy username ${displayName}`}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  copyToClipboard(displayName);
+                                }}
+                              >
+                                <HiOutlineClipboardCopy />
+                              </button>
+                            )}
                           </div>
-                          <button
-                            className={styles.iconButton}
-                            title="Copy ID"
-                            onClick={() => copyToClipboard(session.userId)}
-                          >
-                            <HiOutlineClipboardCopy />
-                          </button>
+
+                          {!hideUserIds && (
+                            <div className={styles.inlineRow}>
+                              <div className={styles.metaLine}>{session.userId}</div>
+                              {!hideCopyButtons && (
+                                <button
+                                  type="button"
+                                  className={styles.iconButton}
+                                  title="Copy ID"
+                                  aria-label={`Copy ID ${session.userId}`}
+                                  onClick={(e) => {
+                                    e.stopPropagation();
+                                    copyToClipboard(session.userId);
+                                  }}
+                                >
+                                  <HiOutlineClipboardCopy />
+                                </button>
+                              )}
+
+                            </div>
+                          )}
                         </div>
                       </div>
-                    </div>
+
+                      {viewMode === 'list' && index < sessions.length - 1 && <ListSeparator />}
+                    </>
                   );
                 })}
               </div>
@@ -151,41 +226,23 @@ export default function Accounts() {
       )}
 
       {newLoginSession && (
-        <div className={styles.modalOverlay}>
-          <div
-            className={styles.modal}
-            onClick={(e) => e.stopPropagation()}
-          >
-            <h3>New Account Detected</h3>
-            <div className={styles.modalNote}>
-              This is the account that's logged in at the moment in the Epic Games Launcher.
-            </div>
-
-            {newLoginUsername && (
-              <div className={styles.modalUsername}>
-                Username: {newLoginUsername}
-              </div>
-            )}
-            <div className={styles.modalUserId}>
-              User ID: {newLoginSession.userId}
-            </div>
-
-            <div className={styles.modalButtons}>
-              <div className={styles.modalButtonRow}>
-                <button className={styles.primaryButton} onClick={handleAccept}>
-                  Add Account
-                </button>
-                <button className={styles.secondaryButton} onClick={handleDismiss}>
-                  Not now
-                </button>
-              </div>
-              <button className={styles.ghostButton} onClick={handleIgnore}>
-                Don't ask again
-              </button>
-            </div>
-          </div>
-        </div>
+        <NewAccountModal
+          newLoginUsername={newLoginUsername}
+          newLoginSession={newLoginSession}
+          onAccept={handleAccept}
+          onIgnore={handleIgnore}
+          onDismiss={handleDismiss}
+        />
       )}
+
+      {showAddModal && (
+        <AddAccountModal
+          onMoveAside={handleAddMainAction}
+          onCancel={handleAddCancel}
+        />
+      )}
+
+      {sessions.length > 0 && <HintMessage />}
     </>
   );
 }

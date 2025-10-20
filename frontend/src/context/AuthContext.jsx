@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect, useCallback } from 'react';
-import { GetCurrentLoginSession, DetectNewLoginSession, CheckIfSessionIsNew } from '../../wailsjs/go/services/AuthService';
+import { GetCurrentLoginSession, DetectNewLoginSession, CheckIfSessionIsNew, CheckAndRenewLoginToken } from '../../wailsjs/go/services/AuthService';
 import { GetUsernameForUserID } from '../../wailsjs/go/services/LogReaderService';
 
 export const AuthContext = createContext();
@@ -14,9 +14,16 @@ export function AuthProvider({ children }) {
     try {
       console.log("🔑 Checking Epic login state...");
 
-      // 1. Always detect current session for active state
+      // renew token if user is logged in
       const currentSession = await GetCurrentLoginSession();
-      if (currentSession && currentSession.userId) {
+
+      // 0. renew login token if needed
+      if (currentSession?.userId) {
+        await CheckAndRenewLoginToken();
+      }
+
+      // 1. detect current session
+      if (currentSession?.userId) {
         setActiveLoginSession(currentSession);
         setIsLoggedIn(true);
 
@@ -28,15 +35,12 @@ export function AuthProvider({ children }) {
         setNewLoginSession(null);
       }
 
-      // 2. Then detect if it's a *new* login
+      // 2. detect if new login occurred
       const newSession = await DetectNewLoginSession();
-      if (newSession && newSession.userId) {
-        setNewLoginSession(newSession);
-      } else {
-        setNewLoginSession(null);
-      }
+      setNewLoginSession(newSession?.userId ? newSession : null);
+
     } catch (err) {
-      console.error("❌ Login detection error:", err);
+      console.log("ℹ️ Login detection info:", err);
       setIsLoggedIn(false);
       setActiveLoginSession(null);
       setNewLoginSession(null);
@@ -44,8 +48,11 @@ export function AuthProvider({ children }) {
   }, []);
 
   useEffect(() => {
+    const handleFocus = async () => {
+      await checkLoginStatus();
+    };
+
     checkLoginStatus();
-    const handleFocus = () => checkLoginStatus();
     window.addEventListener('focus', handleFocus);
     return () => window.removeEventListener('focus', handleFocus);
   }, [checkLoginStatus]);

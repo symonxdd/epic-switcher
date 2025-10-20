@@ -8,6 +8,7 @@
   --primary-button-text: #fff;
 
   --list-item-bg: #F0F0F0;
+  --list-item-active-bg: #F0F0F0;
   --list-item-bg-hover: #F0F0F0;
 
   --sidebar-bg: #f3f3f3;
@@ -31,6 +32,8 @@
   --toast-text: #222;
 
   --hover-bg: rgba(0, 0, 0, 0.08);
+
+  --list-item-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.08);
 }
 
 /* --- Dark theme --- */
@@ -42,8 +45,9 @@
   --primary-button-hover: #121212;
   --primary-button-text: #b9b9b9;
 
-  --list-item-bg: #343434;
-  --list-item-bg-hover: #343434;
+  --list-item-bg: #202020;
+  --list-item-active-bg: #161616;
+  --list-item-bg-hover: #2f2f2f;
 
   --sidebar-bg: #202020;
   --sidebar-text: #c0c0c0;
@@ -65,6 +69,8 @@
   --toast-text: #ffffff;
 
   --hover-bg: rgba(255, 255, 255, 0.1);
+
+  --list-item-shadow-hover: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
 
 /* --- True Black mode --- */

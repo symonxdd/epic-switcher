@@ -20,27 +20,6 @@ func NewSessionStore() *SessionStore {
 	return &SessionStore{filePath: path}
 }
 
-// Ensure JSON file exists
-func (s *SessionStore) ensureFile() error {
-	dir := filepath.Dir(s.filePath)
-
-	// Create the directory if missing
-	if _, err := os.Stat(dir); os.IsNotExist(err) {
-		if err := os.MkdirAll(dir, 0755); err != nil {
-			return err
-		}
-	}
-
-	// Now safely create the file if missing
-	if _, err := os.Stat(s.filePath); os.IsNotExist(err) {
-		empty := []models.LoginSession{}
-		data, _ := json.MarshalIndent(empty, "", "  ")
-		return os.WriteFile(s.filePath, data, 0644)
-	}
-
-	return nil
-}
-
 func (s *SessionStore) LoadSessions() ([]models.LoginSession, error) {
 	s.ensureFile()
 	data, err := os.ReadFile(s.filePath)
@@ -112,4 +91,25 @@ func (s *SessionStore) addOrUpdate(session models.LoginSession) error {
 
 	// 7. Save everything back to JSON
 	return s.SaveSessions(sessions)
+}
+
+// Ensure JSON file exists
+func (s *SessionStore) ensureFile() error {
+	dir := filepath.Dir(s.filePath)
+
+	// Create the directory if missing
+	if _, err := os.Stat(dir); os.IsNotExist(err) {
+		if err := os.MkdirAll(dir, 0755); err != nil {
+			return err
+		}
+	}
+
+	// Now safely create the file if missing
+	if _, err := os.Stat(s.filePath); os.IsNotExist(err) {
+		empty := []models.LoginSession{}
+		data, _ := json.MarshalIndent(empty, "", "  ")
+		return os.WriteFile(s.filePath, data, 0644)
+	}
+
+	return nil
 }

@@ -21,4 +21,5 @@
   padding: 2rem;
   overflow-y: auto;
   transition: background 0.3s, border 0.3s;
+  position: relative;
 }

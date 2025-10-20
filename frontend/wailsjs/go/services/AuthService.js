@@ -6,6 +6,10 @@ export function AddDetectedSession(arg1) {
   return window['go']['services']['AuthService']['AddDetectedSession'](arg1);
 }
 
+export function CheckAndRenewLoginToken() {
+  return window['go']['services']['AuthService']['CheckAndRenewLoginToken']();
+}
+
 export function CheckIfSessionIsNew(arg1) {
   return window['go']['services']['AuthService']['CheckIfSessionIsNew'](arg1);
 }
@@ -20,4 +24,8 @@ export function GetCurrentLoginSession() {
 
 export function IgnoreDetectedSession(arg1) {
   return window['go']['services']['AuthService']['IgnoreDetectedSession'](arg1);
+}
+
+export function MoveAsideActiveSession() {
+  return window['go']['services']['AuthService']['MoveAsideActiveSession']();
 }

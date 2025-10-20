@@ -1,0 +1,155 @@
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeIn 0.25s ease forwards;
+  --wails-draggable: drag;
+}
+
+.modal {
+  background: var(--content-bg);
+  color: var(--text-color);
+  padding: 0 0 1.75rem 0;
+  border-radius: 14px;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--content-border);
+  transform: translateY(20px);
+  animation: slideUp 0.25s ease forwards;
+  max-width: 460px;
+  width: 90%;
+  text-align: center;
+  overflow: hidden;
+}
+
+.modal h3 {
+  margin: 0;
+  background: var(--sidebar-bg);
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  border-top-left-radius: 14px;
+  border-top-right-radius: 14px;
+}
+
+.modalNote,
+.modalUsername,
+.modalUserId {
+  font-size: 0.85rem;
+  color: var(--sidebar-text-muted);
+  text-align: left;
+  padding: 0 45px;
+  line-height: 1.4;
+}
+
+.modalNote {
+  font-size: 0.88rem;
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.modalNote p {
+  margin: 0.4rem 0;
+}
+
+.modalButtons {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  padding: 0 45px;
+}
+
+.modalButtonRow {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.modalButtons button {
+  width: 100%;
+  font-size: 0.9rem;
+  font-weight: 400;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  cursor: default;
+  transition:
+    background-color var(--transition-speed) ease,
+    color var(--transition-speed) ease,
+    border-color var(--transition-speed) ease,
+    transform var(--transition-speed) ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.primaryButton {
+  background: var(--primary-button-bg);
+  color: var(--primary-button-text);
+  border: none;
+}
+
+.primaryButton:hover {
+  background: var(--primary-button-hover);
+  transform: translateY(-1px);
+}
+
+.secondaryButton {
+  background: var(--btn-hover-bg);
+  color: var(--text-color);
+  border: 1px solid var(--button-border-color);
+}
+
+.secondaryButton:hover {
+  background-color: var(--sidebar-hover-bg);
+  transform: translateY(-1px);
+}
+
+.ghostButton {
+  background-color: transparent;
+  border: none;
+  color: var(--sidebar-text-muted);
+  opacity: 0.8;
+  width: auto;
+  display: inline-block;
+  margin: 0 auto;
+  padding: 0.7rem 1rem;
+}
+
+.ghostButton:hover {
+  opacity: 1;
+  color: var(--text-color);
+  background-color: transparent;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0.9;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}

@@ -1,0 +1,10 @@
+.separator {
+  width: 97%;
+  height: 1px;
+  background-color: var(--border-color);
+  margin: 0 auto;
+  /* space between items */
+  flex-shrink: 0;
+  opacity: 0.7;
+  /* subtle */
+}
