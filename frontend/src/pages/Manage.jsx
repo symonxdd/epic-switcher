@@ -1,36 +1,63 @@
-import { useContext, useState } from 'react';
-import PageHeader from '../components/PageHeader';
-import { SessionContext } from '../context/SessionContext';
-import { AuthContext } from '../context/AuthContext';
-import toast from 'react-hot-toast';
-import {
-  HiOutlineLightBulb,
-  HiViewGrid,
-  HiViewList,
-  HiOutlineCheckCircle,
-  HiOutlineClipboardCopy,
-} from 'react-icons/hi';
-import styles from './Manage.module.css';
-import { ViewModeContext } from '../context/ViewModeContext';
+import { useContext, useState } from "react";
+import PageHeader from "../components/PageHeader";
+import { SessionContext } from "../context/SessionContext";
+import { AuthContext } from "../context/AuthContext";
+import toast from "react-hot-toast";
+import TabBar from "../components/tabs/TabBar";
+import AliasesTab from "../components/tabs/AliasesTab";
+import IgnoredSessionsTab from "../components/tabs/IgnoredSessionsTab";
+import DeleteSessionTab from "../components/tabs/DeleteSessionTab";
 import HintMessage from "../components/HintMessage";
-import ListSeparator from '../components/ListSeparator';
-import AliasInput from '../components/AliasInput';
+import styles from "./Manage.module.css";
 
 export default function Manage() {
   const { sessions, isLoading, onAliasChange } = useContext(SessionContext);
   const { activeLoginSession } = useContext(AuthContext);
-  const { viewMode, setViewMode } = useContext(ViewModeContext);
+  const activeUserId = activeLoginSession?.userId || null;
+  const [activeTab, setActiveTab] = useState("aliases");
 
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
       toast.success(`Copied: ${text}`);
-    } catch (err) {
-      toast.error('Failed to copy');
+    } catch {
+      toast.error("Failed to copy");
     }
   };
 
-  const activeUserId = activeLoginSession?.userId || null;
+  const tabs = [
+    { id: "aliases", label: "Aliases" },
+    { id: "ignored", label: "Ignored Sessions" },
+    { id: "delete", label: "Delete Session" },
+  ];
+
+  const renderTabContent = () => {
+    switch (activeTab) {
+      case "aliases":
+        return (
+          <AliasesTab
+            sessions={sessions}
+            isLoading={isLoading}
+            activeLoginSession={activeLoginSession}
+            activeUserId={activeUserId}
+            onAliasChange={onAliasChange}
+            copyToClipboard={copyToClipboard}
+          />
+        );
+      case "ignored":
+        return (
+          <IgnoredSessionsTab
+            sessions={sessions}
+            isLoading={isLoading}
+            activeLoginSession={activeLoginSession}
+          />
+        );
+      case "delete":
+        return <DeleteSessionTab />;
+      default:
+        return null;
+    }
+  };
 
   return (
     <>
@@ -38,99 +65,8 @@ export default function Manage() {
 
       {!isLoading && (
         <>
-          {sessions.length === 0 ? (
-            <div className={styles.noSessionsMessage}>
-              {activeLoginSession ? (
-                <div>No saved sessions found</div>
-              ) : (
-                <div className={styles.extraMessage}>
-                  Log in to Epic Games Launcher to get started
-                </div>
-              )}
-            </div>
-          ) : (
-            <>
-              <div className={styles.subtitleRow}>
-                <div className={styles.subtitleWithIcon}>
-                  <div className={styles.subtitle}>Create an alias</div>
-                  <div className={styles.infoTooltipWrapper}>
-                    <HiOutlineLightBulb className={styles.infoIcon} />
-                    <div className={styles.tooltip}>
-                      Aliases are only used within this app — they don't affect your Epic Games account.<br />
-                      Changes are auto-saved 😌
-                    </div>
-                  </div>
-                </div>
-
-                <div className={styles.viewToggle}>
-                  <button
-                    className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
-                    onClick={() => setViewMode('list')}
-                    title="List view"
-                  >
-                    <HiViewList />
-                  </button>
-                  <button
-                    className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
-                    onClick={() => setViewMode('grid')}
-                    title="Grid view"
-                  >
-                    <HiViewGrid />
-                  </button>
-                </div>
-              </div>
-
-              <div
-                className={`${styles.listContainer} ${viewMode === 'grid' ? styles.gridView : styles.listView
-                  }`}
-              >
-                {sessions.map((session, index) => {
-                  const displayName = session.alias || session.username || session.userId;
-                  const isActive = session.userId === activeUserId;
-
-                  return (
-                    <div
-                      key={session.userId}
-                      className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
-                    >
-                      {/* Avatar removed - checkmark moved next to display name */}
-                      <div className={styles.textBlock}>
-                        <div className={styles.inlineRow}>
-                          {/* displayNameWrapper holds the absolutely-positioned check icon */}
-                          <div className={styles.displayNameWrapper}>
-                            {isActive && (
-                              <div className={styles.checkTooltipWrapper}>
-                                <HiOutlineCheckCircle className={styles.activeIcon} />
-                                <div className={styles.tooltip}>
-                                  This is the active session.
-                                </div>
-                              </div>
-                            )}
-
-                            <div className={styles.displayName}>{session.username || session.userId}</div>
-                          </div>
-
-                          <button
-                            className={styles.iconButton}
-                            title="Copy username"
-                            onClick={() => copyToClipboard(session.username || session.userId)}
-                          >
-                            <HiOutlineClipboardCopy />
-                          </button>
-                        </div>
-
-                        <AliasInput
-                          userId={session.userId}
-                          alias={session.alias}
-                          onAliasChange={onAliasChange}
-                        />
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
-            </>
-          )}
+          <TabBar tabs={tabs} defaultTab="aliases" onTabChange={setActiveTab} />
+          {renderTabContent()}
         </>
       )}
 

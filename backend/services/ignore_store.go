@@ -74,3 +74,40 @@ func (s *IgnoreListStore) IsIgnored(userID string) (bool, error) {
 	}
 	return false, nil
 }
+
+// Unignore removes a userID from the ignored_sessions.json list and saves the file.
+func (s *IgnoreListStore) Unignore(userID string) error {
+	// Ensure file exists before operating
+	if err := s.ensureFile(); err != nil {
+		return err
+	}
+
+	// Load current list
+	list, err := s.Load()
+	if err != nil {
+		return err
+	}
+
+	// Build updated list without the target ID
+	updated := make([]string, 0, len(list))
+	found := false
+	for _, id := range list {
+		if id == userID {
+			found = true
+			continue
+		}
+		updated = append(updated, id)
+	}
+
+	// If not found, nothing to do
+	if !found {
+		return nil
+	}
+
+	// Save updated list
+	if err := s.Save(updated); err != nil {
+		return err
+	}
+
+	return nil
+}

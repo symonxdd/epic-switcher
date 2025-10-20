@@ -1,0 +1,318 @@
+.noSessionsMessage {
+  text-align: center;
+  margin-top: 50px;
+  font-size: 1.2rem;
+  color: var(--sidebar-text-muted);
+}
+
+.extraMessage {
+  color: var(--sidebar-text-muted);
+  font-size: 1rem;
+}
+
+/* Header */
+.subtitleRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 36px;
+  margin-top: 20px;
+}
+
+.subtitleWithIcon {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.subtitle {
+  color: var(--text-color);
+}
+
+/* Info (bulb) icon + tooltip */
+.infoIcon {
+  font-size: 1.2rem;
+  color: var(--sidebar-text-muted);
+  cursor: default;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  white-space: normal;
+  text-align: left;
+  width: max-content;
+  z-index: 9999;
+  margin-left: 4px;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: auto;
+  max-width: 430px;
+}
+
+.infoTooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.infoTooltipWrapper .tooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 8px;
+  height: 100%;
+}
+
+.infoTooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+.infoTooltipWrapper:hover .infoIcon {
+  color: var(--text-color);
+}
+
+/* Display name + check icon */
+.displayNameWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  vertical-align: middle;
+  overflow: visible;
+  min-width: 0;
+}
+
+.checkTooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+.checkTooltipWrapper .tooltip {
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+}
+
+.checkTooltipWrapper .tooltip::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -8px;
+  width: 8px;
+  height: 100%;
+}
+
+.checkTooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+.activeIcon {
+  color: #22c55e;
+  font-size: 1.1rem;
+  background: var(--content-bg);
+  border-radius: 50%;
+  z-index: 30;
+  flex-shrink: 0;
+}
+
+/* View Toggle */
+.viewToggle {
+  display: flex;
+  gap: 4px;
+}
+
+.toggleBtn {
+  background: none;
+  border: 1px solid var(--border-color);
+  color: var(--sidebar-text-muted);
+  padding: 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  font-size: 0.9rem;
+}
+
+.toggleBtn:hover {
+  background: var(--hover-bg);
+  color: var(--text-color);
+  border-color: color-mix(in srgb, var(--border-color) 80%, var(--hover-bg) 20%);
+}
+
+.activeToggle {
+  color: var(--text-color);
+  border-color: var(--border-color);
+  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+}
+
+/* Containers (GRID vs LIST) */
+.listContainer {
+  max-width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  margin-top: 5px;
+  display: grid;
+  gap: 16px;
+}
+
+.gridView {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.listView {
+  justify-content: start;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.listView .listItem {
+  grid-column: 1 / 2;
+}
+
+@media (max-width: 700px) {
+  .gridView {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* List Item */
+.listItem {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: var(--list-item-bg);
+  transition: background 0.2s ease, border 0.2s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Text Block */
+.textBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.inlineRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.displayName {
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1;
+  min-width: 0;
+  flex: 1;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  padding: 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+  font-size: 0.95rem;
+  flex-shrink: 0;
+}
+
+.iconButton:hover {
+  color: var(--text-color);
+}
+
+/* Alias Input (for AliasInput component inside tab) */
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.aliasInput {
+  flex: 1;
+  padding: 8px 36px 8px 12px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--content-bg);
+  color: var(--text-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+}
+
+.aliasInput::placeholder {
+  color: var(--sidebar-text-muted);
+}
+
+.aliasInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 25%, transparent);
+  outline: none;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clearBtn:hover {
+  color: var(--text-color);
+}
+
+/* Scrollbar */
+.listContainer::-webkit-scrollbar {
+  width: 6px;
+}
+
+.listContainer::-webkit-scrollbar-thumb {
+  background: var(--border-color);
+  border-radius: 3px;
+}

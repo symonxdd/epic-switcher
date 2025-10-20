@@ -1,0 +1,51 @@
+.centered {
+  text-align: center;
+  margin-top: 40px;
+  font-size: 1.1rem;
+  color: var(--text-color);
+}
+
+.emptyMessage {
+  text-align: center;
+  color: var(--sidebar-text-muted);
+  margin-top: 40px;
+}
+
+.aliasList {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.listItem {
+  background-color: var(--list-item-bg);
+  padding: 12px 14px;
+  border-radius: 8px;
+}
+
+.textBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.inlineRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.displayName {
+  font-weight: 500;
+}
+
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  cursor: pointer;
+}
+
+.iconButton:hover {
+  color: var(--text-color);
+}

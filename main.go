@@ -20,6 +20,7 @@ func main() {
 	sessionStore := services.NewSessionStore()
 	logReader := services.NewLogReaderService()
 	switchService := services.NewSwitchService()
+	ignoreService := services.NewIgnoreListStore()
 
 	err := wails.Run(&options.App{
 		Title:     "Epic Switcher",
@@ -37,6 +38,7 @@ func main() {
 			sessionStore,
 			logReader,
 			switchService,
+			ignoreService,
 		},
 	})
 
