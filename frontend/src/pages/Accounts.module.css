@@ -93,13 +93,21 @@
 .listContainer {
   max-height: 70vh;
   overflow-y: auto;
-  margin-top: 10px;
+  /* margin-top: 10px; */
 }
 
 .listView {
-  display: flex;
-  flex-direction: column;
-  /* gap: 8px; */
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  /* same sizing as gridView */
+  gap: 12px;
+  justify-content: start;
+  /* keeps items aligned like first column */
+}
+
+.listView .listItem {
+  grid-column: 1 / 2;
+  /* forces each item to use the first column only */
 }
 
 .gridView {
@@ -116,6 +124,7 @@
   padding: 12px 14px;
   border: 1px solid transparent;
   border-radius: 8px;
+  /* background-color: var(--list-item-bg); */
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
 }
@@ -127,13 +136,13 @@
 }
 
 .activeItem {
-  /* background-color: var(--list-item-active-bg); */
+  background-color: var(--list-item-active-bg);
   /* border: 1px solid var(--border-color); */
 }
 
 .activeItem:hover {
-  background-color: transparent;
-  border: 1px solid transparent;
+  background-color: var(--list-item-active-bg);
+  /* border: 1px solid transparent; */
 }
 
 /* ---- Avatar ---- */

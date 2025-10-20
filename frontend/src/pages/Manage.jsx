@@ -89,43 +89,43 @@ export default function Manage() {
                   const isActive = session.userId === activeUserId;
 
                   return (
-                    <>
-                      <div
-                        key={session.userId}
-                        className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
-                      >
-                        <div className={styles.avatarWrapper}>
-                          <div className={styles.avatar}>{displayName[0].toUpperCase()}</div>
-                          {isActive && (
-                            <div className={styles.checkTooltipWrapper}>
-                              <HiOutlineCheckCircle className={styles.activeIcon} />
-                              <div className={styles.tooltip}>
-                                This is the active session.
+                    <div
+                      key={session.userId}
+                      className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
+                    >
+                      {/* Avatar removed - checkmark moved next to display name */}
+                      <div className={styles.textBlock}>
+                        <div className={styles.inlineRow}>
+                          {/* displayNameWrapper holds the absolutely-positioned check icon */}
+                          <div className={styles.displayNameWrapper}>
+                            {isActive && (
+                              <div className={styles.checkTooltipWrapper}>
+                                <HiOutlineCheckCircle className={styles.activeIcon} />
+                                <div className={styles.tooltip}>
+                                  This is the active session.
+                                </div>
                               </div>
-                            </div>
-                          )}
-                        </div>
+                            )}
 
-                        <div className={styles.textBlock}>
-                          <div className={styles.inlineRow}>
                             <div className={styles.displayName}>{session.username || session.userId}</div>
-                            <button
-                              className={styles.iconButton}
-                              title="Copy username"
-                              onClick={() => copyToClipboard(session.username || session.userId)}
-                            >
-                              <HiOutlineClipboardCopy />
-                            </button>
                           </div>
 
-                          <AliasInput
-                            userId={session.userId}
-                            alias={session.alias}
-                            onAliasChange={onAliasChange}
-                          />
+                          <button
+                            className={styles.iconButton}
+                            title="Copy username"
+                            onClick={() => copyToClipboard(session.username || session.userId)}
+                          >
+                            <HiOutlineClipboardCopy />
+                          </button>
                         </div>
+
+                        <AliasInput
+                          userId={session.userId}
+                          alias={session.alias}
+                          onAliasChange={onAliasChange}
+                        />
                       </div>
-                    </>
+                    </div>
                   );
                 })}
               </div>

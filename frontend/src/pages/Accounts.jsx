@@ -146,77 +146,73 @@ export default function Accounts() {
                 className={`${styles.listContainer} ${viewMode === 'grid' ? styles.gridView : styles.listView
                   }`}
               >
-                {sessions.map((session, index) => {
+                {sessions.map((session) => {
                   const displayName = session.alias || session.username || session.userId;
                   const isActive = session.userId === activeUserId;
 
                   return (
-                    <>
-                      <div
-                        key={session.userId}
-                        className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
-                        onClick={() => {
-                          if (!isActive) {
-                            handleSwitchAccount(session);
-                          }
-                        }}
-                      >
-                        <div className={styles.avatarWrapper}>
-                          <div className={styles.avatar}>{displayName[0].toUpperCase()}</div>
-                          {isActive && (
-                            <div className={styles.tooltipWrapper}>
-                              <HiOutlineCheckCircle className={styles.activeIcon} />
-                              <div className={styles.tooltip}>
-                                This is the active session.
-                              </div>
+                    <div
+                      key={session.userId}
+                      className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
+                      onClick={() => {
+                        if (!isActive) {
+                          handleSwitchAccount(session);
+                        }
+                      }}
+                    >
+                      <div className={styles.avatarWrapper}>
+                        <div className={styles.avatar}>{displayName[0].toUpperCase()}</div>
+                        {isActive && (
+                          <div className={styles.tooltipWrapper}>
+                            <HiOutlineCheckCircle className={styles.activeIcon} />
+                            <div className={styles.tooltip}>
+                              This is the active session.
                             </div>
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styles.textBlock}>
+                        <div className={styles.inlineRow}>
+                          <div className={styles.displayName}>{displayName}</div>
+                          {!hideCopyButtons && (
+                            <button
+                              type="button"
+                              className={styles.iconButton}
+                              title="Copy username"
+                              aria-label={`Copy username ${displayName}`}
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                copyToClipboard(displayName);
+                              }}
+                            >
+                              <HiOutlineClipboardCopy />
+                            </button>
                           )}
                         </div>
 
-                        <div className={styles.textBlock}>
+                        {!hideUserIds && (
                           <div className={styles.inlineRow}>
-                            <div className={styles.displayName}>{displayName}</div>
+                            <div className={styles.metaLine}>{session.userId}</div>
                             {!hideCopyButtons && (
                               <button
                                 type="button"
                                 className={styles.iconButton}
-                                title="Copy username"
-                                aria-label={`Copy username ${displayName}`}
+                                title="Copy ID"
+                                aria-label={`Copy ID ${session.userId}`}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  copyToClipboard(displayName);
+                                  copyToClipboard(session.userId);
                                 }}
                               >
                                 <HiOutlineClipboardCopy />
                               </button>
                             )}
+
                           </div>
-
-                          {!hideUserIds && (
-                            <div className={styles.inlineRow}>
-                              <div className={styles.metaLine}>{session.userId}</div>
-                              {!hideCopyButtons && (
-                                <button
-                                  type="button"
-                                  className={styles.iconButton}
-                                  title="Copy ID"
-                                  aria-label={`Copy ID ${session.userId}`}
-                                  onClick={(e) => {
-                                    e.stopPropagation();
-                                    copyToClipboard(session.userId);
-                                  }}
-                                >
-                                  <HiOutlineClipboardCopy />
-                                </button>
-                              )}
-
-                            </div>
-                          )}
-                        </div>
+                        )}
                       </div>
-
-                      {/* {viewMode === 'list' && index < sessions.length - 1 && <ListSeparator />} */}
-                    </>
+                    </div>
                   );
                 })}
               </div>

@@ -1,9 +1,3 @@
-/* -----------------------------------------
-   Manage.module.css — matches Accounts styles
-   Tooltip hover-bridge + bulb hover color
-   Checkmark positioned like Accounts
-   ----------------------------------------- */
-
 .noSessionsMessage {
   text-align: center;
   margin-top: 50px;
@@ -42,7 +36,6 @@
 /* ---------------------
    Tooltip (generic)
    --------------------- */
-/* tooltip base kept identical to Accounts */
 .tooltip {
   position: absolute;
   top: 50%;
@@ -66,11 +59,6 @@
   max-width: 430px;
 }
 
-/* --------------------------------------------------
-   Info tooltip wrapper — used for bulb (title area)
-   Uses the "hover bridge" pseudo-element like your original
-   so the tooltip remains visible when moving from icon -> tooltip
-   -------------------------------------------------- */
 .infoTooltipWrapper {
   position: relative;
   display: inline-flex;
@@ -78,7 +66,6 @@
   justify-content: center;
 }
 
-/* invisible hover bridge so cursor can enter tooltip without it disappearing */
 .infoTooltipWrapper .tooltip::before {
   content: "";
   position: absolute;
@@ -88,32 +75,41 @@
   height: 100%;
 }
 
-/* show tooltip on hover of wrapper (icon OR tooltip) */
 .infoTooltipWrapper:hover .tooltip {
   display: block;
 }
 
-/* make bulb icon brighten on hover (same behavior as earlier) */
 .infoTooltipWrapper:hover .infoIcon {
   color: var(--text-color);
 }
 
 /* --------------------------------------------------
-   Checkmark tooltip wrapper — used inside avatarWrapper
-   matches Accounts positioning (top: -5px; right: -5px)
-   and also has the hover-bridge so tooltip remains hoverable
+   Display name + check icon
    -------------------------------------------------- */
+.displayNameWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  vertical-align: middle;
+  overflow: visible;
+  min-width: 0;
+}
+
 .checkTooltipWrapper {
-  position: absolute;
-  top: -5px;
-  right: -5px;
+  position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  z-index: 10;
+  z-index: 20;
 }
 
-/* invisible hover bridge to allow mouse to move from check icon -> tooltip */
+.checkTooltipWrapper .tooltip {
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+}
+
 .checkTooltipWrapper .tooltip::before {
   content: "";
   position: absolute;
@@ -123,19 +119,17 @@
   height: 100%;
 }
 
-/* show check tooltip on hover of wrapper */
 .checkTooltipWrapper:hover .tooltip {
   display: block;
 }
 
-/* Active check icon styling (same as Accounts) */
 .activeIcon {
   color: #22c55e;
-  font-size: 1.15rem;
+  font-size: 1.1rem;
   background: var(--content-bg);
   border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--list-item-bg);
-  transition: transform 0.2s ease;
+  z-index: 30;
+  flex-shrink: 0;
 }
 
 /* View Toggle */
@@ -170,71 +164,69 @@
   background: color-mix(in srgb, var(--text-color) 10%, transparent);
 }
 
-/* Container Views */
+/* ---------------------------------------
+   Containers (GRID vs LIST)
+   --------------------------------------- */
 .listContainer {
-  max-height: 70vh;
+  max-width: 100%;
+  overflow-x: hidden;
   overflow-y: auto;
-  margin-top: 10px;
-}
-
-.listView {
-  display: flex;
-  flex-direction: column;
-  /* gap: 8px; */
+  margin-top: 5px;
+  display: grid;
+  gap: 16px;
 }
 
 .gridView {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(2, 1fr);
+  /* 2 per row */
 }
 
-/* List Item (Accounts style) */
+.listView {
+  justify-content: start;
+  grid-template-columns: repeat(2, 1fr);
+  /* same as grid view */
+}
+
+.listView .listItem {
+  grid-column: 1 / 2;
+  /* force items to stay in the first column */
+}
+
+@media (max-width: 700px) {
+  .gridView {
+    grid-template-columns: 1fr;
+    /* stack on smaller screens */
+  }
+}
+
+/* ---------------------------------------
+   List Item — fixed width per column
+   --------------------------------------- */
 .listItem {
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid transparent;
   border-radius: 8px;
+  border: 1px solid transparent;
+  background-color: var(--list-item-bg);
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
+  overflow: hidden;
 }
 
-.listItem:hover {
-  /* background-color: var(--list-item-bg-hover);
-  border: 1px solid var(--border-color); */
-}
-
-/* Avatar */
-.avatarWrapper {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.avatar {
-  background: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
-  color: var(--text-color);
-  font-weight: 600;
-  font-size: 0.9rem;
-  width: 36px;
-  height: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  user-select: none;
-}
-
-/* Text Block */
+/* ---------------------------------------
+   Text Block
+   --------------------------------------- */
 .textBlock {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  overflow: hidden;
+  gap: 7px;
+  min-width: 0;
 }
 
 .inlineRow {
@@ -250,9 +242,11 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  line-height: 1;
+  min-width: 0;
+  flex: 1;
 }
 
-/* Copy Icon identical to Accounts */
 .iconButton {
   background: none;
   border: none;
@@ -272,7 +266,9 @@
   color: var(--text-color);
 }
 
-/* Alias Input */
+/* ---------------------------------------
+   Alias Input
+   --------------------------------------- */
 .inputWrapper {
   display: flex;
   align-items: center;
@@ -288,6 +284,7 @@
   background-color: var(--content-bg);
   color: var(--text-color);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
 }
 
 .aliasInput::placeholder {
