@@ -171,6 +171,7 @@
   border-radius: 6px;
   white-space: normal;
   width: max-content;
+  max-width: 337px;
   z-index: 9999;
   margin-left: 4px;
   display: none;

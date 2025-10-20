@@ -97,6 +97,21 @@ export default function Accounts() {
     }
   }
 
+  function getFirstVisibleChar(str) {
+    if (!str) return "";
+
+    // Create a segmenter that splits text into user-visible characters (graphemes)
+    const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
+
+    // Get the first grapheme (this safely handles emojis, flags, skin tones, etc.)
+    const firstSegment = [...segmenter.segment(str)][0]?.segment || "";
+
+    // If it's an emoji, don't uppercase it; if it's text, you can.
+    const isEmoji = /\p{Emoji}/u.test(firstSegment);
+    return isEmoji ? firstSegment : firstSegment.toUpperCase();
+  }
+
+
   const activeUserId = activeLoginSession?.userId || null;
 
   return (
@@ -161,7 +176,9 @@ export default function Accounts() {
                       }}
                     >
                       <div className={styles.avatarWrapper}>
-                        <div className={styles.avatar}>{displayName[0].toUpperCase()}</div>
+                        <div className={styles.avatar}>
+                          {getFirstVisibleChar(displayName)}
+                        </div>
                         {isActive && (
                           <div className={styles.tooltipWrapper}>
                             <HiOutlineCheckCircle className={styles.activeIcon} />

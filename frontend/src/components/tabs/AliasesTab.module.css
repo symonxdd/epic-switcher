@@ -53,12 +53,12 @@
   white-space: normal;
   text-align: left;
   width: max-content;
+  max-width: 430px;
   z-index: 9999;
   margin-left: 4px;
   display: none;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   pointer-events: auto;
-  max-width: 430px;
 }
 
 .infoTooltipWrapper {

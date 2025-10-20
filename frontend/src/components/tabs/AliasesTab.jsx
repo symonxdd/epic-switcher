@@ -76,7 +76,6 @@ export default function AliasesTab({
         </div>
       </div>
 
-      {/* Sessions list/grid */}
       <div
         className={`${styles.listContainer} ${viewMode === "grid" ? styles.gridView : styles.listView
           }`}

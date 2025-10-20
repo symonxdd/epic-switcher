@@ -39,6 +39,22 @@ func (s *SessionStore) SaveSessions(sessions []models.LoginSession) error {
 	return os.WriteFile(s.filePath, data, 0644)
 }
 
+func (s *SessionStore) DeleteSession(userID string) error {
+	sessions, err := s.LoadSessions()
+	if err != nil {
+		return err
+	}
+
+	updated := []models.LoginSession{}
+	for _, sess := range sessions {
+		if sess.UserID != userID {
+			updated = append(updated, sess)
+		}
+	}
+
+	return s.SaveSessions(updated)
+}
+
 func (s *SessionStore) UpdateAlias(userID string, alias string) error {
 	sessions, _ := s.LoadSessions()
 

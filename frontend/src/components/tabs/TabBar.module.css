@@ -23,6 +23,10 @@
 }
 
 .activeTab {
-  background-color: var(--list-item-bg);
+  background-color: var(--sidebar-active-bg);
   border: 1px solid var(--border-color);
+}
+
+.activeTab:hover {
+  background-color: var(--sidebar-active-bg);
 }

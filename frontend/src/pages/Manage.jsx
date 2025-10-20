@@ -53,7 +53,9 @@ export default function Manage() {
           />
         );
       case "delete":
-        return <DeleteSessionTab />;
+        return <DeleteSessionTab
+          isLoading={isLoading}
+          activeUserId={activeUserId} />;
       default:
         return null;
     }
