@@ -79,7 +79,7 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 	launcherPath := utils.GetEpicLauncherPath()
 	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
 
-	startCmd := exec.Command(launcherPath)
+	startCmd := exec.Command(launcherPath, "-silent")
 	startCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
 	startCmd.Stdout = os.Stdout
 	startCmd.Stderr = os.Stderr

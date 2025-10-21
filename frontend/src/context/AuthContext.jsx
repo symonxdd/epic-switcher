@@ -80,6 +80,7 @@ export function AuthProvider({ children }) {
       value={{
         isLoggedIn,
         activeLoginSession,
+        setActiveLoginSession,
         newLoginSession,
         setNewLoginSession,
         newLoginUsername,

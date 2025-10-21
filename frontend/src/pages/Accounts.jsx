@@ -21,6 +21,7 @@ export default function Accounts() {
   const { sessions, setSessions, isLoading } = useContext(SessionContext);
   const {
     activeLoginSession,
+    setActiveLoginSession,
     newLoginSession,
     setNewLoginSession,
     newLoginUsername,
@@ -91,6 +92,7 @@ export default function Accounts() {
     try {
       await SwitchAccount(session)
       toast.success(`Switched to account: ${session.username || session.userId}`)
+      setActiveLoginSession(session);
     } catch (err) {
       console.error(err)
       toast.error("Failed to switch account.")
@@ -110,7 +112,6 @@ export default function Accounts() {
     const isEmoji = /\p{Emoji}/u.test(firstSegment);
     return isEmoji ? firstSegment : firstSegment.toUpperCase();
   }
-
 
   const activeUserId = activeLoginSession?.userId || null;
 
@@ -165,6 +166,21 @@ export default function Accounts() {
                   const displayName = session.alias || session.username || session.userId;
                   const isActive = session.userId === activeUserId;
 
+                  const copyDisplayNameValue = session.alias
+                    ? session.alias
+                    : (session.username || session.userId);
+
+                  const copyDisplayNameTitle = session.alias
+                    ? `Copy alias`
+                    : (session.username
+                      ? `Copy username`
+                      : `Copy ID`);
+
+                  const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
+                  const metaLineTitle = session.alias
+                    ? (session.username ? `Copy username` : `Copy ID`)
+                    : `Copy ID`;
+
                   return (
                     <div
                       key={session.userId}
@@ -196,11 +212,11 @@ export default function Accounts() {
                             <button
                               type="button"
                               className={styles.iconButton}
-                              title="Copy username"
-                              aria-label={`Copy username ${displayName}`}
+                              title={copyDisplayNameTitle}
+                              aria-label={copyDisplayNameTitle}
                               onClick={(e) => {
                                 e.stopPropagation();
-                                copyToClipboard(displayName);
+                                copyToClipboard(copyDisplayNameValue);
                               }}
                             >
                               <HiOutlineClipboardCopy />
@@ -210,28 +226,28 @@ export default function Accounts() {
 
                         {!hideUserIds && (
                           <div className={styles.inlineRow}>
-                            <div className={styles.metaLine}>{session.userId}</div>
+                            <div className={styles.metaLine}>{metaLineValue}</div>
                             {!hideCopyButtons && (
                               <button
                                 type="button"
                                 className={styles.iconButton}
-                                title="Copy ID"
-                                aria-label={`Copy ID ${session.userId}`}
+                                title={metaLineTitle}
+                                aria-label={metaLineTitle}
                                 onClick={(e) => {
                                   e.stopPropagation();
-                                  copyToClipboard(session.userId);
+                                  copyToClipboard(metaLineValue);
                                 }}
                               >
                                 <HiOutlineClipboardCopy />
                               </button>
                             )}
-
                           </div>
                         )}
                       </div>
                     </div>
                   );
                 })}
+
               </div>
             </>
           )}

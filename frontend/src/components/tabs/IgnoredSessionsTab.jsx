@@ -15,7 +15,6 @@ export default function IgnoredSessionsTab({ isLoading, activeLoginSession }) {
     async function fetchIgnored() {
       try {
         const loaded = await Load();
-        console.log("Loaded ignored IDs:", loaded);
         setIgnoredIds(loaded || []);
       } catch (err) {
         console.error("Failed to load ignored sessions:", err);
