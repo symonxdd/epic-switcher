@@ -18,7 +18,8 @@ export default function TabBar({ tabs, defaultTab, onTabChange }) {
             }`}
           onClick={() => handleTabClick(tab.id)}
         >
-          {tab.label}
+          {tab.icon && <span className={styles.icon}>{tab.icon}</span>}
+          <span>{tab.label}</span>
         </button>
       ))}
     </div>

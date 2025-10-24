@@ -32,8 +32,8 @@
   --toast-text: #222;
 
   --hover-bg: rgba(0, 0, 0, 0.08);
-
   --list-item-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --tab-bar-bg: #f3f3f3;
 }
 
 /* --- Dark theme --- */
@@ -69,8 +69,8 @@
   --toast-text: #ffffff;
 
   --hover-bg: rgba(255, 255, 255, 0.1);
-
   --list-item-shadow-hover: 0 4px 12px rgba(255, 255, 255, 0.05);
+  --tab-bar-bg: #202020;
 }
 
 /* --- True Black mode --- */
@@ -89,4 +89,6 @@
 
   --toast-bg: #000;
   --toast-text: #ffffff;
+
+  --tab-bar-bg: #000;
 }

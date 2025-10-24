@@ -1,17 +1,33 @@
 .tabBar {
   display: flex;
-  gap: 6px;
+  justify-content: center;
+  /* ⬅️ Center horizontally */
   align-items: center;
+  /* ⬅️ Vertically center the items */
+  background-color: var(--tab-bar-bg);
+  /* ⬅️ Theme-aware background */
+  border-radius: 10px;
+  padding: 10px;
+  gap: 8px;
   margin-top: 20px;
   margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  /* ⬅️ Subtle depth */
+  width: max-content;
 }
 
 .tabButton {
+  display: flex;
+  /* 👈 Ensures icon + text inline */
+  align-items: center;
+  /* 👈 Vertically centers icon + text */
+  gap: 6px;
+  /* 👈 Space between icon and text */
   border: 1px solid transparent;
   border-radius: 8px;
   background: none;
   color: var(--text-color);
-  padding: 6px 16px;
+  padding: 8px 14px;
   font-size: 0.95rem;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -29,4 +45,10 @@
 
 .activeTab:hover {
   background-color: var(--sidebar-active-bg);
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  font-size: 1.1rem;
 }

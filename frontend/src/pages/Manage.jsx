@@ -9,6 +9,7 @@ import IgnoredSessionsTab from "../components/tabs/IgnoredSessionsTab";
 import DeleteSessionTab from "../components/tabs/DeleteSessionTab";
 import HintMessage from "../components/HintMessage";
 import styles from "./Manage.module.css";
+import { TbTags, TbUserOff, TbTrash } from "react-icons/tb";
 
 export default function Manage() {
   const { sessions, isLoading, onAliasChange } = useContext(SessionContext);
@@ -26,9 +27,9 @@ export default function Manage() {
   };
 
   const tabs = [
-    { id: "aliases", label: "Aliases" },
-    { id: "ignored", label: "Ignored Sessions" },
-    { id: "delete", label: "Delete Session" },
+    { id: "aliases", label: "Aliases", icon: <TbTags /> },
+    { id: "ignored", label: "Ignored", icon: <TbUserOff /> },
+    { id: "delete", label: "Delete", icon: <TbTrash /> },
   ];
 
   const renderTabContent = () => {
