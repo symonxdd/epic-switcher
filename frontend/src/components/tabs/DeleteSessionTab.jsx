@@ -26,12 +26,12 @@ export default function DeleteSessionTab({ isLoading, activeUserId }) {
   async function handleDelete(userId) {
     try {
       await DeleteSession(userId);
-      toast.success("Session deleted successfully");
+      toast.success("Session deleted successfully", { id: "delete-session" });
       setSessions((prev) => prev.filter((s) => s.userId !== userId));
       setSelectedSession(null);
     } catch (err) {
       console.error("Failed to delete session:", err);
-      toast.error("Failed to delete session");
+      toast.error("Failed to delete session", { id: "delete-session-error" });
     }
   }
 

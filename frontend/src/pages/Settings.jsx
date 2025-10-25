@@ -32,95 +32,96 @@ function Settings() {
     <div className={styles.settingsContainer}>
       <PageHeader title="Settings" />
 
-      {/* --- Theme Selector --- */}
-      <div className={styles.themeSettingGroup}>
-        <h5 className={styles.labelHeading}>Theme</h5>
+      <div className={styles.settingsGrid}>
+        {/* --- Accounts Page Settings --- */}
+        <div className={styles.settingsGroup}>
+          <h5 className={styles.labelHeading}>Accounts page</h5>
 
-        <div className={styles.btnGroup}>
-          {["light", "dark", "system"].map((option) => (
-            <button
-              key={option}
-              className={`${styles.btn} ${theme === option ? styles.active : ""}`}
-              onClick={() => setTheme(option)}
-            >
-              {option.charAt(0).toUpperCase() + option.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        {/* --- True Black Toggle --- */}
-        {currentTheme === "dark" && (
-          <div className={styles.trueBlackToggle}>
+          {/* Hide User IDs */}
+          <div className={styles.toggleRow}>
             <label className={styles.switch}>
               <input
                 type="checkbox"
-                checked={trueBlack}
-                onChange={(e) => setTrueBlack(e.target.checked)}
+                checked={hideUserIds}
+                onChange={(e) => {
+                  setHideUserIds(e.target.checked);
+                  toast.success(
+                    e.target.checked
+                      ? "User IDs hidden on Accounts page"
+                      : "User IDs visible"
+                    , { id: "hide-user-ids" });
+                }}
               />
               <span className={styles.slider}></span>
             </label>
-            <span className={styles.toggleLabel}>Enable True Black</span>
+            <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
           </div>
-        )}
-      </div>
 
-      {/* --- Accounts Page Settings --- */}
-      <div className={styles.accountsPageGroup}>
-        <h5 className={styles.labelHeading}>Accounts page</h5>
-
-        {/* Hide User IDs */}
-        <div className={styles.hideUserIdsToggle}>
-          <label className={styles.switch}>
-            <input
-              type="checkbox"
-              checked={hideUserIds}
-              onChange={(e) => {
-                setHideUserIds(e.target.checked);
-                toast.success(
-                  e.target.checked
-                    ? "User IDs hidden on Accounts page"
-                    : "User IDs visible"
-                );
-              }}
-            />
-            <span className={styles.slider}></span>
-          </label>
-          <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
+          {/* Hide Copy Buttons */}
+          <div className={styles.toggleRow}>
+            <label className={styles.switch}>
+              <input
+                type="checkbox"
+                checked={hideCopyButtons}
+                onChange={(e) => {
+                  setHideCopyButtons(e.target.checked);
+                  toast.success(
+                    e.target.checked
+                      ? "Copy buttons hidden on Accounts page"
+                      : "Copy buttons visible"
+                    , { id: "hide-copy-buttons" });
+                }}
+              />
+              <span className={styles.slider}></span>
+            </label>
+            <span className={styles.toggleLabel}>Hide copy buttons on Accounts page</span>
+          </div>
         </div>
 
-        {/* Hide Copy Buttons */}
-        <div className={styles.hideCopyButtonsToggle}>
-          <label className={styles.switch}>
-            <input
-              type="checkbox"
-              checked={hideCopyButtons}
-              onChange={(e) => {
-                setHideCopyButtons(e.target.checked);
-                toast.success(
-                  e.target.checked
-                    ? "Copy buttons hidden on Accounts page"
-                    : "Copy buttons visible"
-                );
-              }}
-            />
-            <span className={styles.slider}></span>
-          </label>
-          <span className={styles.toggleLabel}>Hide copy buttons on Accounts page</span>
-        </div>
-      </div>
+        {/* --- Theme Selector --- */}
+        <div className={styles.settingsGroup}>
+          <h5 className={styles.labelHeading}>Theme</h5>
 
-      {/* --- Reset Hints --- */}
-      <div className={styles.hintResetGroup}>
-        <h5 className={styles.labelHeading}>Hints</h5>
-        <button
-          className={styles.resetButton}
-          onClick={() => {
-            localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
-            toast.success("Hints have been reset!");
-          }}
-        >
-          Reset hints
-        </button>
+          <div className={styles.btnGroup}>
+            {["light", "dark", "system"].map((option) => (
+              <button
+                key={option}
+                className={`${styles.btn} ${theme === option ? styles.active : ""}`}
+                onClick={() => setTheme(option)}
+              >
+                {option.charAt(0).toUpperCase() + option.slice(1)}
+              </button>
+            ))}
+          </div>
+
+          {currentTheme === "dark" && (
+            <div className={styles.trueBlackToggle}>
+              <label className={styles.switch}>
+                <input
+                  type="checkbox"
+                  checked={trueBlack}
+                  onChange={(e) => setTrueBlack(e.target.checked)}
+                />
+                <span className={styles.slider}></span>
+              </label>
+              <span className={styles.toggleLabel}>Enable True Black</span>
+            </div>
+          )}
+        </div>
+
+        {/* --- Reset Hints --- */}
+        <div className={styles.settingsGroup}>
+          <h5 className={styles.labelHeading}>Hints</h5>
+          <button
+            className={styles.resetButton}
+            onClick={() => {
+              localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
+              toast.success("Hints have been reset!", { id: "reset-hints" });
+            }}
+          >
+            Reset hints
+          </button>
+        </div>
       </div>
     </div>
   );

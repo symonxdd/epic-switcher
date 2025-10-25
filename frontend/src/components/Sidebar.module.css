@@ -1,5 +1,5 @@
 .sidebar {
-  width: 192px;
+  width: 230px;
   background-color: var(--sidebar-bg);
   display: flex;
   flex-direction: column;
@@ -27,6 +27,7 @@
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
+  border: 1px solid transparent;
   border-radius: 8px;
   cursor: default;
 
@@ -36,11 +37,13 @@
 .sidebar-item:hover {
   background: var(--sidebar-hover-bg);
   color: var(--sidebar-hover-text);
+  border: 1px solid var(--border-color);
 }
 
 .sidebar-item.active {
   background: var(--sidebar-active-bg);
   color: var(--sidebar-active-text);
+  border: 1px solid var(--border-color);
 }
 
 .icon {

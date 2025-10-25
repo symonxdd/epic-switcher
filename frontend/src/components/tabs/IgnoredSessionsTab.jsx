@@ -26,12 +26,12 @@ export default function IgnoredSessionsTab({ isLoading, activeLoginSession }) {
   async function handleUnignore(userId) {
     try {
       await Unignore(userId);
-      toast.success("Account un-ignored successfully");
+      toast.success("Account un-ignored successfully", { id: "unignore-account" });
       setIgnoredIds((prev) => prev.filter((id) => id !== userId));
       setSelectedId(null);
     } catch (err) {
       console.error("Failed to un-ignore account:", err);
-      toast.error("Failed to un-ignore account");
+      toast.error("Failed to un-ignore account", { id: "unignore-account-error" });
     }
   }
 

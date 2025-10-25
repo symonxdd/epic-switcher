@@ -4,14 +4,29 @@
   flex-direction: column;
   height: 100%;
   color: var(--text-color);
+  /* padding: 1rem; */
 }
 
-/* --- Theming Section --- */
-.themeSettingGroup {
-  background-color: var(--background-secondary);
+/* --- Responsive Layout for Groups --- */
+.settingsGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+/* --- Shared Group Styling --- */
+.settingsGroup {
+  padding: 0.95rem;
+  background-color: var(--list-item-bg);
   border-radius: 12px;
-  margin-bottom: 20px;
+  flex: 0 1 auto;
+  /* 👈 don't grow, only shrink if needed */
   width: fit-content;
+  /* 👈 shrink to content width */
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .labelHeading {
@@ -19,9 +34,9 @@
   font-size: 0.95rem;
   font-weight: 600;
   color: var(--text-color);
-  margin-bottom: 10px;
 }
 
+/* --- Buttons --- */
 .btnGroup {
   display: flex;
   gap: 10px;
@@ -53,45 +68,14 @@
   color: #b75edd;
 }
 
-/* --- True Black Toggle --- */
+/* --- Toggles --- */
+.toggleRow,
 .trueBlackToggle {
   display: flex;
   align-items: center;
   gap: 10px;
-  margin-top: 16px;
   font-size: 0.9rem;
   color: var(--text-color);
-}
-
-/* --- Accounts Page Toggles --- */
-.accountsPageGroup {
-  background-color: var(--background-secondary);
-  border-radius: 12px;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-}
-
-.hideUserIdsToggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--text-color);
-}
-
-.hideCopyButtonsToggle {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 0.9rem;
-  color: var(--text-color);
-  margin-top: 10px;
-  /* 👈 spacing only between these two toggles */
-}
-
-.toggleLabel {
-  font-weight: 500;
 }
 
 /* --- Switch Control (Material 3 style) --- */
@@ -140,16 +124,6 @@
   transform: translateX(18px);
 }
 
-/* --- Hints Section --- */
-.hintResetGroup {
-  background-color: var(--background-secondary);
-  border-radius: 12px;
-  margin-top: 24px;
-  width: fit-content;
-  display: flex;
-  flex-direction: column;
-}
-
 /* --- Reset Button --- */
 .resetButton {
   background-color: var(--background-tertiary, transparent);
@@ -169,4 +143,11 @@
 
 .resetButton:active {
   opacity: 0.8;
+}
+
+/* --- Responsive behavior --- */
+@media (max-width: 768px) {
+  .settingsGrid {
+    flex-direction: column;
+  }
 }

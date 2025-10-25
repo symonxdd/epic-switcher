@@ -50,13 +50,13 @@ export default function Accounts() {
     await AddDetectedSession(sessionToSave);
     const loaded = await LoadSessions();
     setSessions(loaded || []);
-    toast.success("Account added!");
+    toast.success("Account added!", { id: "add-account" });
     setNewLoginSession(null);
   }
 
   async function handleIgnore() {
     await IgnoreDetectedSession(newLoginSession.userId);
-    toast.success("Will not ask again for this account.");
+    toast.success("Will not ask again for this account.", { id: "ignore-account" });
     setNewLoginSession(null);
   }
 
@@ -67,20 +67,20 @@ export default function Accounts() {
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast.success(`Copied: ${text}`);
+      toast.success(`Copied: ${text}`, { id: "copy-to-clipboard" });
     } catch (err) {
-      toast.error('Failed to copy');
+      toast.error('Failed to copy', { id: "copy-error" });
     }
   }
 
   async function handleAddMainAction() {
     try {
       await MoveAsideActiveSession()
-      toast.success("Epic Games Launcher restarted — log in with your other account.")
+      toast.success("Epic Games Launcher restarted — log in with your other account.", { id: "move-aside-active-session" })
       setShowAddModal(false)
     } catch (err) {
       console.error(err)
-      toast.error("Failed to move aside active session.")
+      toast.error("Failed to move aside active session.", { id: "move-aside-error" })
     }
   }
 
@@ -91,11 +91,11 @@ export default function Accounts() {
   async function handleSwitchAccount(session) {
     try {
       await SwitchAccount(session)
-      toast.success(`Switched to account: ${session.username || session.userId}`)
+      toast.success(`Switched to account: ${session.username || session.userId}`, { id: "switch-account" })
       setActiveLoginSession(session);
     } catch (err) {
       console.error(err)
-      toast.error("Failed to switch account.")
+      toast.error("Failed to switch account.", { id: "switch-account-error" })
     }
   }
 

@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "react-hot-toast": "^2.6.0",
-    "zustand": "^5.0.8"
-  }
-}

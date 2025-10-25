@@ -100,7 +100,7 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   /* same sizing as gridView */
-  gap: 12px;
+  gap: 2px;
   justify-content: start;
   /* keeps items aligned like first column */
 }
@@ -113,7 +113,7 @@
 .gridView {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 12px;
+  gap: 2px;
 }
 
 /* ---- List Item ---- */

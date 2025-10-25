@@ -1,28 +1,27 @@
 .container {
   color: var(--text-color);
+  background-color: var(--list-item-bg);
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+  max-width: 720px;
+  margin: 0 auto;
 }
 
 .section {
-  max-width: 720px;
-  margin: 0 auto;
   text-align: left;
 }
 
-/* Paragraph text */
 .paragraph {
-  font-size: 1rem;
-  line-height: 1.2;
+  font-size: 0.92rem;
+  line-height: 1.5;
   color: var(--sidebar-text-muted);
 }
 
-/* inline filename highlight */
 .file {
-  font-family: monospace;
   color: var(--primary-color);
-  font-weight: bold;
+  font-weight: 600;
 }
 
-/* subtle divider line */
 .divider {
   border: none;
   border-top: 1px solid var(--border-color);
@@ -30,9 +29,102 @@
   opacity: 0.5;
 }
 
-/* note under the divider */
 .note {
   font-size: 0.95rem;
   color: var(--sidebar-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.offlineNotice {
   text-align: center;
+  margin-top: 0.5rem;
+  color: var(--sidebar-text-muted);
+}
+
+.offlineLine {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  font-size: 0.95rem;
+}
+
+.offlineSubtext {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  color: var(--sidebar-text-muted);
+  line-height: 1.4;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon {
+  font-size: 1.1rem;
+  position: relative;
+  top: 1px;
+}
+
+.directoriesSection {
+  margin-top: 1.5rem;
+  text-align: left;
+}
+
+.directoriesTitle {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  color: var(--text-color);
+}
+
+.directoriesList {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.directoriesList span {
+  display: inline-flex;
+  /* keep items inline but allow flex alignment */
+  align-items: center;
+  /* vertically center icon + text */
+  gap: 0.35rem;
+  /* spacing between text and icon */
+  background-color: var(--sidebar-active-bg);
+  border: 1px solid var(--border-color);
+  padding: 0.2rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  color: var(--sidebar-text-muted);
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+  /* cursor: pointer; */
+  /* clickable affordance */
+  line-height: 1;
+  /* avoid any extra inline vertical offsets */
+}
+
+.directoriesList span:hover {
+  background-color: var(--list-item-bg);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+.directoryIcon {
+  font-size: 0.9rem;
+  opacity: 0.6;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  display: inline-block;
+  /* ensure predictable box-model for transforms */
+  vertical-align: middle;
+  /* safe fallback */
+  margin-left: 0;
+  /* spacing handled by gap on the container */
+}
+
+.directoriesList span:hover .directoryIcon {
+  opacity: 1;
 }

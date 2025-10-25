@@ -20,9 +20,9 @@ export default function Manage() {
   const copyToClipboard = async (text) => {
     try {
       await navigator.clipboard.writeText(text);
-      toast.success(`Copied: ${text}`);
+      toast.success(`Copied: ${text}`, { id: "copy-to-clipboard" });
     } catch {
-      toast.error("Failed to copy");
+      toast.error("Failed to copy", { id: "copy-error" });
     }
   };
 

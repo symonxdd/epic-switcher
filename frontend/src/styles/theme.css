@@ -34,6 +34,8 @@
   --hover-bg: rgba(0, 0, 0, 0.08);
   --list-item-shadow-hover: 0 4px 8px rgba(0, 0, 0, 0.08);
   --tab-bar-bg: #f3f3f3;
+
+  --header-title-text-color: #5b5b5b;
 }
 
 /* --- Dark theme --- */
@@ -71,6 +73,8 @@
   --hover-bg: rgba(255, 255, 255, 0.1);
   --list-item-shadow-hover: 0 4px 12px rgba(255, 255, 255, 0.05);
   --tab-bar-bg: #202020;
+
+  --header-title-text-color: #b3b3b3;
 }
 
 /* --- True Black mode --- */

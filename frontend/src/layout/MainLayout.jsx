@@ -29,6 +29,7 @@ function MainLayout({ children }) {
             maxWidth: 'none',
           },
         }}
+      // limit={3}
       />
     </div>
   );
