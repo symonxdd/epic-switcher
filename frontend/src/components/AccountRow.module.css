@@ -1,0 +1,203 @@
+/* ---- List Item ---- */
+.listItem {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border 0.2s ease;
+  position: relative;
+}
+
+.listItem:hover {
+  border: 1px solid var(--border-color);
+}
+
+/* ---- Alternating rows ---- */
+.altRowLight {
+  background-color: var(--list-item-bg);
+}
+
+.altRowDark {
+  /* slightly darker, less “bright” than before */
+  background-color: color-mix(in srgb, var(--list-item-bg) 85%, black 15%);
+}
+
+/* ---- Avatar ---- */
+.avatarWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar {
+  background: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
+  color: var(--text-color);
+  font-weight: 600;
+  font-size: 0.9rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  user-select: none;
+}
+
+/* ---- Active Check ---- */
+.tooltipWrapper {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.activeIcon {
+  color: #22c55e;
+  font-size: 1.1rem;
+  background: var(--content-bg);
+  border-radius: 50%;
+  box-shadow: 0 0 0 2px var(--list-item-bg);
+}
+
+.tooltip {
+  position: absolute;
+  top: 50%;
+  left: 120%;
+  transform: translateY(-50%);
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  white-space: normal;
+  display: none;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.tooltipWrapper:hover .tooltip {
+  display: block;
+}
+
+/* ---- Text ---- */
+.textBlock {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.inlineRow {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.displayName {
+  font-weight: 500;
+  color: var(--text-color);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.metaLine {
+  font-size: 0.8rem;
+  color: var(--sidebar-text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ---- Actions ---- */
+.actionsWrapper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  position: relative;
+}
+
+/* ---- Icon Buttons ---- */
+.iconButton {
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease, transform 0.1s ease;
+  font-size: 1rem;
+}
+
+.iconButton:hover {
+  color: var(--text-color);
+  transform: scale(1.05);
+}
+
+/* ---- Alias Input ---- */
+.aliasInputContainer {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  transform-origin: top;
+  opacity: 0;
+  transform: translateY(10px) scaleY(0.8);
+  transition: all 0.18s cubic-bezier(0.25, 0.8, 0.25, 1);
+  z-index: 20;
+}
+
+.aliasInputContainer.slideUp {
+  opacity: 1;
+  transform: translateY(-2px) scaleY(1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 4px;
+}
+
+/* ---- Ignored Items ---- */
+.ignoredRow {
+  /* keeps same layout as listItem */
+  opacity: 0.9;
+}
+
+.ignoredPill {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1;
+  background: linear-gradient(180deg,
+      rgba(255, 193, 7, 0.14),
+      rgba(255, 193, 7, 0.06));
+  color: var(--primary-color);
+  border: 1px solid rgba(255, 193, 7, 0.18);
+  margin-right: 8px;
+  align-self: center;
+  user-select: none;
+  pointer-events: none;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.ignoredIconButton {
+  /* same appearance as regular icon buttons */
+}

@@ -8,25 +8,17 @@ import toast from "react-hot-toast";
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
   const [hideUserIds, setHideUserIds] = useState(false);
-  const [hideCopyButtons, setHideCopyButtons] = useState(false);
 
   // Load settings from localStorage on mount
   useEffect(() => {
     const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
     if (storedHideUserIds === "true") setHideUserIds(true);
-
-    const storedHideCopyButtons = localStorage.getItem(STORAGE_KEYS.HIDE_COPY_BUTTONS);
-    if (storedHideCopyButtons === "true") setHideCopyButtons(true);
   }, []);
 
   // Persist settings
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.HIDE_USER_IDS, hideUserIds);
   }, [hideUserIds]);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.HIDE_COPY_BUTTONS, hideCopyButtons);
-  }, [hideCopyButtons]);
 
   return (
     <div className={styles.settingsContainer}>
@@ -55,26 +47,6 @@ function Settings() {
               <span className={styles.slider}></span>
             </label>
             <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
-          </div>
-
-          {/* Hide Copy Buttons */}
-          <div className={styles.toggleRow}>
-            <label className={styles.switch}>
-              <input
-                type="checkbox"
-                checked={hideCopyButtons}
-                onChange={(e) => {
-                  setHideCopyButtons(e.target.checked);
-                  toast.success(
-                    e.target.checked
-                      ? "Copy buttons hidden on Accounts page"
-                      : "Copy buttons visible"
-                    , { id: "hide-copy-buttons" });
-                }}
-              />
-              <span className={styles.slider}></span>
-            </label>
-            <span className={styles.toggleLabel}>Hide copy buttons on Accounts page</span>
           </div>
         </div>
 
