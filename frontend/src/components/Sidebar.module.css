@@ -51,3 +51,19 @@
   color: var(--icon-color);
   transition: color var(--transition-speed);
 }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1;
+  background-color: var(--badge-bg);
+  color: var(--badge-text);
+  transition: background var(--transition-speed), transform 0.2s ease;
+}

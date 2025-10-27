@@ -50,6 +50,20 @@ function Settings() {
           </div>
         </div>
 
+        {/* --- Reset Hints --- */}
+        <div className={styles.settingsGroup}>
+          <h5 className={styles.labelHeading}>Hints</h5>
+          <button
+            className={styles.resetButton}
+            onClick={() => {
+              localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
+              toast.success("Hints have been reset!", { id: "reset-hints" });
+            }}
+          >
+            Reset hints
+          </button>
+        </div>
+
         {/* --- Theme Selector --- */}
         <div className={styles.settingsGroup}>
           <h5 className={styles.labelHeading}>Theme</h5>
@@ -79,20 +93,6 @@ function Settings() {
               <span className={styles.toggleLabel}>Enable True Black</span>
             </div>
           )}
-        </div>
-
-        {/* --- Reset Hints --- */}
-        <div className={styles.settingsGroup}>
-          <h5 className={styles.labelHeading}>Hints</h5>
-          <button
-            className={styles.resetButton}
-            onClick={() => {
-              localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
-              toast.success("Hints have been reset!", { id: "reset-hints" });
-            }}
-          >
-            Reset hints
-          </button>
         </div>
       </div>
     </div>

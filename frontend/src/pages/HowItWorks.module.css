@@ -17,6 +17,10 @@
   color: var(--sidebar-text-muted);
 }
 
+.paragraph + .paragraph {
+  margin-top: 0.7rem;
+}
+
 .file {
   color: var(--primary-color);
   font-weight: 600;
@@ -94,7 +98,7 @@
   /* vertically center icon + text */
   gap: 0.35rem;
   /* spacing between text and icon */
-  background-color: var(--sidebar-active-bg);
+  background-color: var(--list-item-bg);
   border: 1px solid var(--border-color);
   padding: 0.2rem 0.6rem;
   border-radius: 4px;

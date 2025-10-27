@@ -119,10 +119,10 @@
   border-radius: 8px;
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
+  background-color: var(--list-item-bg);
 }
 
 .listItem:hover {
-  background-color: var(--list-item-bg-hover);
   border: 1px solid var(--border-color);
 }
 
@@ -132,6 +132,7 @@
 
 .activeItem:hover {
   background-color: var(--list-item-active-bg);
+  border: 1px solid transparent;
 }
 
 /* ---- Avatar ---- */
@@ -154,6 +155,13 @@
   justify-content: center;
   border-radius: 50%;
   user-select: none;
+}
+
+.listItem.activeItem .avatar {
+  background: var(--avatar-active-bg);
+  /* solid blue, or any color you want */
+  /* color: #fff; */
+  /* white text for contrast */
 }
 
 /* ---- Checkmark ---- */

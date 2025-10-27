@@ -59,16 +59,16 @@ function HowItWorks() {
       </div>
 
       <div className={styles.directoriesSection}>
-        <strong className={styles.directoriesTitle}>Accessed directories:</strong>
+        <strong className={styles.directoriesTitle}>Accessed directories</strong>
         <div className={styles.directoriesList}>
           <span onClick={() => handleOpen('appData')}>
             This app's data <FiArrowUpRight className={styles.directoryIcon} />
           </span>
           <span onClick={() => handleOpen('sessionFile')}>
-            Epic Games Launcher active session file <FiArrowUpRight className={styles.directoryIcon} />
+            Epic active session file <FiArrowUpRight className={styles.directoryIcon} />
           </span>
           <span onClick={() => handleOpen('logs')}>
-            Epic Games Launcher logs <FiArrowUpRight className={styles.directoryIcon} />
+            Epic logs <FiArrowUpRight className={styles.directoryIcon} />
           </span>
         </div>
       </div>

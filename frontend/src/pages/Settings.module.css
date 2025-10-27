@@ -11,8 +11,10 @@
 .settingsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 9px 18px;
+  /* row gap, column gap */
   align-items: flex-start;
+  justify-content: flex-start;
 }
 
 /* --- Shared Group Styling --- */
@@ -20,13 +22,12 @@
   padding: 0.95rem;
   background-color: var(--list-item-bg);
   border-radius: 12px;
-  flex: 0 1 auto;
-  /* 👈 don't grow, only shrink if needed */
-  width: fit-content;
-  /* 👈 shrink to content width */
+  flex: 0 1 300px;
+  /* 👈 base width: allows 2-3 to fit neatly per row */
   display: flex;
   flex-direction: column;
   gap: 10px;
+  box-sizing: border-box;
 }
 
 .labelHeading {
@@ -149,5 +150,9 @@
 @media (max-width: 768px) {
   .settingsGrid {
     flex-direction: column;
+  }
+
+  .settingsGroup {
+    flex: 1 1 auto;
   }
 }

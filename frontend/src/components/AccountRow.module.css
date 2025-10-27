@@ -10,20 +10,21 @@
   border: 1px solid transparent;
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
+  overflow: visible;
+  background-color: var(--list-item-bg);
 }
 
 .listItem:hover {
   border: 1px solid var(--border-color);
 }
 
-/* ---- Alternating rows ---- */
 .altRowLight {
-  background-color: var(--list-item-bg);
+  /* background-color: var(--list-item-bg); */
 }
 
 .altRowDark {
-  /* slightly darker, less “bright” than before */
-  background-color: color-mix(in srgb, var(--list-item-bg) 85%, black 15%);
+  /* slightly darker */
+  /* background-color: color-mix(in srgb, var(--list-item-bg) 85%, black 15%); */
 }
 
 /* ---- Avatar ---- */
@@ -68,6 +69,7 @@
 }
 
 .tooltip {
+  width: 180px;
   position: absolute;
   top: 50%;
   left: 120%;
@@ -149,13 +151,13 @@
 /* ---- Alias Input ---- */
 .aliasInputContainer {
   position: absolute;
-  top: 100%;
-  right: 0;
-  transform-origin: top;
+  top: -11px;
+  right: 62px;
+  transform-origin: top right;
   opacity: 0;
   transform: translateY(10px) scaleY(0.8);
   transition: all 0.18s cubic-bezier(0.25, 0.8, 0.25, 1);
-  z-index: 20;
+  z-index: 9999;
 }
 
 .aliasInputContainer.slideUp {
@@ -171,7 +173,8 @@
 /* ---- Ignored Items ---- */
 .ignoredRow {
   /* keeps same layout as listItem */
-  opacity: 0.9;
+  /* opacity: 0.7; */
+  /* background-color: red; */
 }
 
 .ignoredPill {
@@ -180,11 +183,11 @@
   border-radius: 999px;
   font-size: 12px;
   line-height: 1;
-  background: linear-gradient(180deg,
-      rgba(255, 193, 7, 0.14),
-      rgba(255, 193, 7, 0.06));
-  color: var(--primary-color);
-  border: 1px solid rgba(255, 193, 7, 0.18);
+  background: var(--ignored-pill-bg);
+  /* subtle transparent blue */
+  color: var(--ignored-pill-text);
+  /* solid text color */
+  border: 1px solid var(--ignored-pill-border);
   margin-right: 8px;
   align-self: center;
   user-select: none;
@@ -194,10 +197,15 @@
 .rightControls {
   display: flex;
   align-items: center;
-  gap: 6px;
+  gap: 35px;
   justify-content: flex-end;
 }
 
 .ignoredIconButton {
   /* same appearance as regular icon buttons */
+}
+
+.selectableText {
+  user-select: text;
+  cursor: text;
 }

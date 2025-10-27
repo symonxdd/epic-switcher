@@ -1,0 +1,50 @@
+/* Alias Input (for AliasInput component inside tab) */
+.inputWrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.aliasInput {
+  flex: 1;
+  padding: 8px 36px 8px 12px;
+  font-size: 0.95rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--content-bg);
+  color: var(--text-color);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  min-width: 0;
+}
+
+.aliasInput::placeholder {
+  color: var(--sidebar-text-muted);
+}
+
+.aliasInput:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 25%, transparent);
+  outline: none;
+}
+
+.clearBtn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: var(--sidebar-text-muted);
+  font-weight: bold;
+  cursor: pointer;
+  padding: 0 6px;
+  line-height: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.clearBtn:hover {
+  color: var(--text-color);
+}

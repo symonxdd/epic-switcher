@@ -20,6 +20,8 @@ export default function Manage() {
   const [selectedIgnoredId, setSelectedIgnoredId] = useState(null);
   const [deleteTarget, setDeleteTarget] = useState(null);
 
+  const [editingAliasForId, setEditingAliasForId] = useState(null);
+
   // Load ignored IDs on mount
   useEffect(() => {
     async function fetchIgnored() {
@@ -75,6 +77,13 @@ export default function Manage() {
                   isAltRow={idx % 2 === 1}
                   onAliasChange={onAliasChange}
                   onDeleteSession={() => setDeleteTarget(session)}
+                  isEditing={editingAliasForId === session.userId}
+                  onEditToggle={() =>
+                    setEditingAliasForId(prev =>
+                      prev === session.userId ? null : session.userId
+                    )
+                  }
+                  onCloseEdit={() => setEditingAliasForId(null)}
                 />
               ))}
 

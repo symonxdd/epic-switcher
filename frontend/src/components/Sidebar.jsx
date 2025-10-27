@@ -1,8 +1,14 @@
+import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle } from 'react-icons/fa';
+import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 
 function Sidebar() {
+  const { sessions, isLoading } = useContext(SessionContext);
+
+  const sessionCount = sessions?.length ?? 0;
+
   return (
     <aside className={styles.sidebar}>
       <div className={styles["sidebar-top"]}>
@@ -14,7 +20,11 @@ function Sidebar() {
               : styles["sidebar-item"]
           }
         >
-          <FaUserAlt className={styles.icon} /> Accounts
+          <FaUserAlt className={styles.icon} />
+          <span>Accounts</span>
+          {!isLoading && sessionCount > 0 && (
+            <span className={styles.badge}>{sessionCount}</span>
+          )}
         </NavLink>
 
         <NavLink

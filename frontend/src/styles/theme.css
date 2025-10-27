@@ -8,7 +8,7 @@
   --primary-button-text: #fff;
 
   --list-item-bg: #F0F0F0;
-  --list-item-active-bg: #F0F0F0;
+  --list-item-active-bg: #D7D7D7;
   --list-item-bg-hover: #F0F0F0;
 
   --sidebar-bg: #f3f3f3;
@@ -36,6 +36,15 @@
   --tab-bar-bg: #f3f3f3;
 
   --header-title-text-color: #5b5b5b;
+
+  --avatar-active-bg: #F0F0F0;
+
+  --badge-bg: #555555;
+  --badge-text: #fff;
+
+  --ignored-pill-bg: rgba(0, 142, 236, 0.1);
+  --ignored-pill-border: rgba(0, 142, 236, 0.3);
+  --ignored-pill-text: var(--primary-color);
 }
 
 /* --- Dark theme --- */
@@ -75,6 +84,15 @@
   --tab-bar-bg: #202020;
 
   --header-title-text-color: #b3b3b3;
+
+  --avatar-active-bg: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
+
+  --badge-bg: #434343;
+  --badge-text: #bfbfbf;
+
+  --ignored-pill-bg: rgba(255, 193, 7, 0.14);
+  --ignored-pill-border: rgba(255, 193, 7, 0.18);
+  --ignored-pill-text: var(--primary-color);
 }
 
 /* --- True Black mode --- */
@@ -83,6 +101,8 @@
   --content-bg: #000;
   --sidebar-hover-bg: #111;
   --sidebar-active-bg: #0d0d0d;
+  --sidebar-active-text: #e5e5e5;
+  --sidebar-hover-text: #e5e5e5;
   --btn-hover-bg: #111111;
   --border-color: #111;
   --button-border-color: #000000;
@@ -95,4 +115,13 @@
   --toast-text: #ffffff;
 
   --tab-bar-bg: #000;
+
+  --avatar-active-bg: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
+  ;
+
+  --badge-bg: transparent;
+
+  --ignored-pill-bg: rgba(255, 193, 7, 0.14);
+  --ignored-pill-border: rgba(255, 193, 7, 0.18);
+  --ignored-pill-text: var(--primary-color);
 }

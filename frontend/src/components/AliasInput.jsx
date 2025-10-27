@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import styles from '../pages/Manage.module.css';
+import styles from './AliasInput.module.css';
 
 export default function AliasInput({ userId, alias, onAliasChange }) {
   // local state so the input DOM node remains stable

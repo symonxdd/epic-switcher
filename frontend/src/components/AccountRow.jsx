@@ -1,13 +1,11 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import {
-  HiOutlineClipboardCopy,
   HiOutlineCheckCircle,
   HiOutlinePencil,
+  HiOutlineXCircle,
   HiOutlineTrash,
-  HiOutlineLightBulb,
 } from "react-icons/hi";
 import AliasInput from "../components/AliasInput";
-import toast from "react-hot-toast";
 import styles from "./AccountRow.module.css";
 
 export default function AccountRow({
@@ -19,19 +17,19 @@ export default function AccountRow({
   onAliasChange,
   onDeleteSession,
   onUnignoreClick,
+  isEditing = false,
+  onEditToggle,
+  onCloseEdit,
 }) {
-  const [isEditing, setIsEditing] = useState(false);
   const inputRef = useRef(null);
 
   const displayName =
     session?.alias || session?.username || session?.userId || userId;
-  const copyDisplayNameValue =
-    session?.alias || session?.username || session?.userId || userId;
+
   const metaLineValue = session?.alias
     ? session?.username || session?.userId
     : session?.userId || userId;
 
-  // Handle clicking outside alias input
   useEffect(() => {
     function handleClickOutside(e) {
       if (
@@ -39,21 +37,12 @@ export default function AccountRow({
         !inputRef.current.contains(e.target) &&
         !e.target.closest(`.${styles.aliasIconButton}`)
       ) {
-        setIsEditing(false);
+        onCloseEdit?.();
       }
     }
     document.addEventListener("mousedown", handleClickOutside);
     return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
-  const copyToClipboard = async (text) => {
-    try {
-      await navigator.clipboard.writeText(text);
-      toast.success(`Copied: ${text}`, { id: "copy-to-clipboard" });
-    } catch {
-      toast.error("Failed to copy", { id: "copy-error" });
-    }
-  };
+  }, [onCloseEdit]);
 
   function getFirstVisibleChar(str) {
     if (!str) return "";
@@ -65,7 +54,7 @@ export default function AccountRow({
 
   const handleAliasEdit = (e) => {
     e.stopPropagation();
-    setIsEditing((prev) => !prev);
+    onEditToggle?.();
   };
 
   const handleDelete = (e) => {
@@ -84,7 +73,6 @@ export default function AccountRow({
         ${isIgnored ? styles.ignoredRow : ""}
         ${isAltRow ? styles.altRowDark : styles.altRowLight}`}
     >
-      {/* Avatar */}
       <div className={styles.avatarWrapper}>
         <div className={styles.avatar}>{getFirstVisibleChar(displayName)}</div>
 
@@ -96,40 +84,16 @@ export default function AccountRow({
         )}
       </div>
 
-      {/* Text block */}
       <div className={styles.textBlock}>
         <div className={styles.inlineRow}>
-          <div className={styles.displayName}>{displayName}</div>
-          <button
-            type="button"
-            className={styles.iconButton}
-            title="Copy display name"
-            onClick={(e) => {
-              e.stopPropagation();
-              copyToClipboard(copyDisplayNameValue);
-            }}
-          >
-            <HiOutlineClipboardCopy />
-          </button>
+          <div className={`${styles.displayName} ${styles.selectableText}`}>{displayName}</div>
         </div>
 
         <div className={styles.inlineRow}>
-          <div className={styles.metaLine}>{metaLineValue}</div>
-          <button
-            type="button"
-            className={styles.iconButton}
-            title="Copy ID"
-            onClick={(e) => {
-              e.stopPropagation();
-              copyToClipboard(metaLineValue);
-            }}
-          >
-            <HiOutlineClipboardCopy />
-          </button>
+          <div className={`${styles.metaLine} ${styles.selectableText}`}>{metaLineValue}</div>
         </div>
       </div>
 
-      {/* Actions */}
       <div className={styles.actionsWrapper}>
         {!isIgnored ? (
           <>
@@ -173,7 +137,7 @@ export default function AccountRow({
               title="Un-ignore"
               onClick={handleUnignore}
             >
-              <HiOutlineLightBulb />
+              <HiOutlineXCircle />
             </button>
           </div>
         )}
