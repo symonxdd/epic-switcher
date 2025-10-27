@@ -11,9 +11,8 @@
 .settingsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 9px 18px;
-  /* row gap, column gap */
-  align-items: flex-start;
+  gap: 18px 18px;
+  /* align-items: flex-start; */
   justify-content: flex-start;
 }
 
@@ -131,9 +130,9 @@
   color: var(--text-color);
   border: 1px solid var(--border-color);
   border-radius: 8px;
-  padding: 6px 14px;
-  font-size: 0.9rem;
-  cursor: pointer;
+  padding: 8px 14px;
+  font-size: 0.96rem;
+  font-family: Nunito, sans-serif;
   transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 

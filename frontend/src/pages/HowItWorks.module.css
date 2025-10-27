@@ -28,9 +28,9 @@
 
 .divider {
   border: none;
-  border-top: 1px solid var(--border-color);
-  margin: 24px 0;
-  opacity: 0.5;
+  /* border-top: 1px solid var(--border-color); */
+  /* margin: 24px 0; */
+  margin-top: 1.75rem;
 }
 
 .note {
@@ -42,7 +42,7 @@
   gap: 0.4rem;
 }
 
-.offlineNotice {
+.privacyNotice {
   text-align: center;
   margin-top: 0.5rem;
   color: var(--sidebar-text-muted);
@@ -57,6 +57,7 @@
 }
 
 .offlineSubtext {
+  font-weight: bold;
   margin-top: 1rem;
   font-size: 0.85rem;
   color: var(--sidebar-text-muted);
@@ -67,9 +68,28 @@
 }
 
 .icon {
-  font-size: 1.1rem;
   position: relative;
-  top: 1px;
+  font-size: 1.1rem;
+  top: 0;
+  /* reset any offset */
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  vertical-align: middle;
+  /* important */
+}
+
+.lockIcon {
+  position: relative;
+  top: -1px;
+}
+
+.offlineLine,
+.note {
+  display: inline-flex;
+  align-items: center;
+  /* vertical centering */
+  gap: 0.4rem;
 }
 
 .directoriesSection {
@@ -105,10 +125,6 @@
   font-size: 0.85rem;
   color: var(--sidebar-text-muted);
   transition: background-color 0.2s ease, border-color 0.2s ease;
-  /* cursor: pointer; */
-  /* clickable affordance */
-  line-height: 1;
-  /* avoid any extra inline vertical offsets */
 }
 
 .directoriesList span:hover {

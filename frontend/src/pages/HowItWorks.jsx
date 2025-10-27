@@ -41,16 +41,16 @@ function HowItWorks() {
 
           <hr className={styles.divider} />
 
-          <div className={styles.note}>
-            <FaInfoCircle className={styles.icon} />
-            <strong>This app will not affect your accounts in any way</strong>
-          </div>
-
-          <div className={styles.offlineNotice}>
+          <div className={styles.privacyNotice}>
             <div className={styles.offlineLine}>
-              <FaLock className={styles.icon} />
-              <strong>It works completely offline</strong>
+              <FaLock className={`${styles.icon} ${styles.lockIcon}`} />
+              <strong>This app works completely offline</strong>
             </div>
+            <div className={styles.note}>
+              <FaInfoCircle className={styles.icon} />
+              <strong>This app will not affect your accounts in any way</strong>
+            </div>
+
             <div className={styles.offlineSubtext}>
               No data is collected or shared. It only stores your login sessions locally on your device.
             </div>

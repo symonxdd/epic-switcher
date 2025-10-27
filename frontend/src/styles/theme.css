@@ -19,10 +19,11 @@
   --sidebar-active-bg: #eaeaea;
   --sidebar-active-text: #202020;
 
-  --text-color: #202020;
+  /* --text-color: #202020; */
+  --text-color: #373737;
   --icon-color: #555;
   --btn-hover-bg: #efefef;
-  --border-color: #e0e0e0;
+  --border-color: #d1d1d1;
   --button-border-color: #d6d6d6;
   --content-bg: #f9f9f9;
   --content-border: #e6e6e6;
@@ -39,7 +40,7 @@
 
   --avatar-active-bg: #F0F0F0;
 
-  --badge-bg: #555555;
+  --badge-bg: #757575;
   --badge-text: #fff;
 
   --ignored-pill-bg: rgba(0, 142, 236, 0.1);
@@ -83,7 +84,7 @@
   --list-item-shadow-hover: 0 4px 12px rgba(255, 255, 255, 0.05);
   --tab-bar-bg: #202020;
 
-  --header-title-text-color: #b3b3b3;
+  --header-title-text-color: #e9e9e9;
 
   --avatar-active-bg: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
 
