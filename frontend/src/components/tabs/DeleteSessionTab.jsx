@@ -89,7 +89,6 @@ export default function DeleteSessionTab({ isLoading, activeUserId }) {
               onClick={() => setSelectedSession(session)}
             >
               <div className={styles.textBlock}>
-                {/* ✅ Inline row: checkmark + displayName */}
                 <div className={styles.inlineRow}>
                   {isActive && (
                     <div className={styles.tooltipWrapper}>

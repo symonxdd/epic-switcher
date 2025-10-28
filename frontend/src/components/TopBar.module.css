@@ -12,7 +12,7 @@
 
 .title {
   font-size: 0.85rem;
-  color: var(--text-color);
+  color: var(--sidebar-text-muted);
   pointer-events: none;
   margin-top: 2px;
 }

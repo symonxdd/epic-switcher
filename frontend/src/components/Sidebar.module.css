@@ -4,10 +4,37 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  /* padding-top: 1.5rem; */
-  padding-top: 6rem;
-  padding-bottom: 0.5rem;
+  padding: 0.5rem 0;
   transition: background var(--transition-speed);
+}
+
+.logoContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* change to flex-start or flex-end easily */
+  gap: 10px;
+  padding: 1.5rem 1.25rem 2rem 1.25rem
+}
+
+.logoImage {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+}
+
+.logoText {
+  font-size: 1.2rem;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--sidebar-text);
+  white-space: nowrap;
+  transition: letter-spacing 0.3s ease, color 0.3s ease;
+}
+
+.logoText:hover {
+  letter-spacing: 1px;
+  color: var(--accent-color);
 }
 
 .sidebar-top,
@@ -30,7 +57,6 @@
   border: 1px solid transparent;
   border-radius: 8px;
   cursor: default;
-
   -webkit-user-drag: none;
 }
 
@@ -66,4 +92,11 @@
   background-color: var(--badge-bg);
   color: var(--badge-text);
   transform: translateY(-0.5px);
+}
+
+.topGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  /* controls spacing between logo + links */
 }
