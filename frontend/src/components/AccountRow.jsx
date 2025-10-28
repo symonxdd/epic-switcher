@@ -132,14 +132,16 @@ export default function AccountRow({
         ) : (
           <div className={styles.rightControls}>
             <div className={styles.ignoredPill}>ignored</div>
-            <button
-              type="button"
-              className={`${styles.iconButton} ${styles.ignoredIconButton}`}
-              title="Un-ignore"
-              onClick={handleUnignore}
-            >
-              <HiOutlineXCircle />
-            </button>
+            <div className={styles.tooltipWrapperLeft}>
+              <button
+                type="button"
+                className={`${styles.iconButton} ${styles.ignoredIconButton}`}
+                onClick={handleUnignore}
+              >
+                <HiOutlineXCircle />
+              </button>
+              <div className={styles.tooltipLeft}>Un-ignore this account</div>
+            </div>
           </div>
         )}
       </div>
