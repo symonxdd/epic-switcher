@@ -1,13 +1,17 @@
-/* Alias Input (for AliasInput component inside tab) */
+/* Wrapper */
 .inputWrapper {
   display: flex;
   align-items: center;
   position: relative;
+  gap: 8px;
+  /* spacing between bulb, input, and clear button */
 }
 
+/* Input field */
 .aliasInput {
   flex: 1;
   padding: 8px 36px 8px 12px;
+  /* right padding for clear button */
   font-size: 0.95rem;
   border: 1px solid var(--border-color);
   border-radius: 8px;
@@ -27,6 +31,7 @@
   outline: none;
 }
 
+/* Clear button */
 .clearBtn {
   position: absolute;
   right: 8px;
@@ -47,4 +52,42 @@
 
 .clearBtn:hover {
   color: var(--text-color);
+}
+
+/* Lightbulb icon wrapper */
+.infoTooltipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  cursor: default;
+}
+
+.infoIcon {
+  font-size: 1.2rem;
+  color: var(--sidebar-text-muted);
+  transition: color 0.15s ease;
+}
+
+.infoTooltipWrapper:hover .infoIcon {
+  color: var(--text-color);
+}
+
+/* Tooltip */
+.tooltip {
+  padding: 8px 12px;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  color: var(--text-color);
+  background: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  white-space: normal;
+  text-align: left;
+  width: max-content;
+  max-width: 269px;
+  z-index: 9999;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
 }

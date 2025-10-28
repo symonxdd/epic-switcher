@@ -124,6 +124,7 @@ export default function AccountRow({
                   userId={session.userId}
                   alias={session.alias}
                   onAliasChange={onAliasChange}
+                  autoFocus={true}
                 />
               </div>
             )}
