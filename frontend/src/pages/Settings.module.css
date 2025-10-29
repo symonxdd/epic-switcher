@@ -12,7 +12,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: 18px 18px;
-  /* align-items: flex-start; */
   justify-content: flex-start;
 }
 
@@ -22,7 +21,6 @@
   background-color: var(--list-item-bg);
   border-radius: 12px;
   flex: 0 1 300px;
-  /* 👈 base width: allows 2-3 to fit neatly per row */
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -154,4 +152,46 @@
   .settingsGroup {
     flex: 1 1 auto;
   }
+}
+
+/* --- Footer Section --- */
+.appFooter {
+  margin-top: auto;
+  /* smaller spacing at bottom */
+  /* text-align: center; */
+  font-size: 0.8rem;
+  color: var(--sidebar-text-muted);
+  background-color: var(--background-secondary, transparent);
+  display: flex;
+  flex-direction: column;
+  /* gap: 4px; */
+  /* slightly tighter vertical gap */
+}
+
+.footerTop {
+  font-weight: 500;
+  /* color: var(--text-color); */
+}
+
+.footerBottom {
+  /* color: var(--secondary-text-color); */
+}
+
+/* --- Tech name colors (no hover) --- */
+.reactText {
+  color: #36c4e3;
+  font-weight: 600;
+  /* React blue */
+}
+
+.goText {
+  color: #00add8;
+  font-weight: 600;
+  /* Go cyan */
+}
+
+.wailsText {
+  color: #df0000;
+  font-weight: 600;
+  /* Wails red */
 }

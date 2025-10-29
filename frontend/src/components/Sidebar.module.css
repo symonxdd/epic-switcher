@@ -33,7 +33,6 @@
 }
 
 .logoText:hover {
-  letter-spacing: 1px;
   color: var(--accent-color);
 }
 

@@ -170,3 +170,17 @@
 .sourceSection {
   margin-top: 1rem;
 }
+
+.madeWith {
+  font-size: 0.77rem;
+  color: var(--sidebar-text-muted);
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.heart {
+  color: var(--primary-color);
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  padding: 0 2px;
+}

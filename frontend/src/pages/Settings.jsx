@@ -95,6 +95,20 @@ function Settings() {
           )}
         </div>
       </div>
+
+      <div className={styles.appFooter}>
+        <div className={styles.footerTop}>
+          v
+          {typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0"} (
+          {import.meta.env.MODE === "development" ? "dev" : "release"})
+        </div>
+
+        <div className={styles.footerBottom}>
+          Powered by <span className={styles.reactText}>React</span>,{" "}
+          <span className={styles.goText}>Go</span> &{" "}
+          <span className={styles.wailsText}>Wails</span>
+        </div>
+      </div>
     </div>
   );
 }
