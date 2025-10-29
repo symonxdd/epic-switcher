@@ -1,13 +1,9 @@
 import PageHeader from '../components/PageHeader';
 import styles from './HowItWorks.module.css';
-import { FaInfoCircle, FaLock } from 'react-icons/fa';
+import { FaInfoCircle, FaLock, FaGithub } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { OpenDirectory } from '../../wailsjs/go/services/SystemService';
-
-// pull version/env dynamically
-const appVersion = import.meta.env.VITE_APP_VERSION || 'v1.0.0';
-const environment =
-  import.meta.env.MODE === 'development' ? '(dev)' : '(release)';
+import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 function HowItWorks() {
   const handleOpen = async (key) => {
@@ -18,12 +14,24 @@ function HowItWorks() {
     }
   }
 
+  const handleOpenGithub = () => {
+    try {
+      BrowserOpenURL('https://github.com/symonxdd/epic-games-account-switcher');
+    } catch (err) {
+      console.error('Failed to open GitHub link in default browser:', err);
+    }
+  }
+
   return (
     <>
       <PageHeader title="How it works" />
 
       <div className={styles.container}>
         <div className={styles.section}>
+          <div className={styles.offlineSubtext}>
+            No data is collected or shared. It only stores your login sessions locally on your device.
+          </div>
+
           <div className={styles.paragraph}>
             The Epic Games Launcher persists the active login session to a file called
             <span className={styles.file}> GameUserSettings.ini</span>.
@@ -42,17 +50,16 @@ function HowItWorks() {
           <hr className={styles.divider} />
 
           <div className={styles.privacyNotice}>
-            <div className={styles.offlineLine}>
-              <FaLock className={`${styles.icon} ${styles.lockIcon}`} />
-              <strong>This app works completely offline</strong>
-            </div>
-            <div className={styles.note}>
-              <FaInfoCircle className={styles.icon} />
-              <strong>This app will not affect your accounts in any way</strong>
-            </div>
-
-            <div className={styles.offlineSubtext}>
-              No data is collected or shared. It only stores your login sessions locally on your device.
+            {/* merged offline + note line */}
+            <div className={styles.offlineAndNote}>
+              <div className={styles.inlineItem}>
+                <FaLock className={`${styles.icon} ${styles.lockIcon}`} />
+                <strong>This app works completely offline</strong>
+              </div>
+              <div className={styles.inlineItem}>
+                <FaInfoCircle className={styles.icon} />
+                <strong>This app will not affect your accounts in any way</strong>
+              </div>
             </div>
           </div>
         </div>
@@ -71,9 +78,19 @@ function HowItWorks() {
             Epic logs <FiArrowUpRight className={styles.directoryIcon} />
           </span>
         </div>
+
+        <div className={styles.sourceSection}>
+          <strong className={styles.directoriesTitle}>Source code</strong>
+          <div className={styles.directoriesList}>
+            <span onClick={handleOpenGithub}>
+              <FaGithub className={styles.directoryIcon} />
+              View on GitHub
+            </span>
+          </div>
+        </div>
       </div>
     </>
-  );
+  )
 }
 
 export default HowItWorks;

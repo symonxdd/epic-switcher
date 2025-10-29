@@ -12,8 +12,9 @@
 }
 
 .paragraph {
-  font-size: 0.92rem;
-  line-height: 1.5;
+  /* font-size: 0.92rem; */
+  font-size: 0.87rem;
+  /* line-height: 1.5; */
   color: var(--sidebar-text-muted);
 }
 
@@ -58,13 +59,9 @@
 
 .offlineSubtext {
   font-weight: bold;
-  margin-top: 1rem;
+  margin-bottom: 0.75rem;
   font-size: 0.85rem;
-  color: var(--sidebar-text-muted);
-  line-height: 1.4;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
+  color: var(--sidebar-text);
 }
 
 .icon {
@@ -147,4 +144,29 @@
 
 .directoriesList span:hover .directoryIcon {
   opacity: 1;
+}
+
+.offlineAndNote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  /* spacing between the two info chunks */
+  flex-wrap: wrap;
+  margin-top: 0.6rem;
+}
+
+.inlineItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.83rem;
+  /* smaller text */
+  color: var(--sidebar-text-muted);
+  white-space: nowrap;
+  /* prevents awkward wrapping within one label */
+}
+
+.sourceSection {
+  margin-top: 1rem;
 }
