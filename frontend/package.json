@@ -1,6 +1,5 @@
 {
   "name": "frontend",
-  "private": true,
   "version": "0.0.67",
   "type": "module",
   "scripts": {
@@ -11,6 +10,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-hot-toast": "^2.6.0",
     "react-icons": "^5.5.0",
     "react-router-dom": "^7.9.3"
   },

@@ -3,12 +3,11 @@ package services
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"regexp"
 	"strings"
-	"syscall"
 	"time"
 
+	"epic-games-account-switcher/backend/helper"
 	"epic-games-account-switcher/backend/models"
 	"epic-games-account-switcher/backend/utils"
 )
@@ -127,7 +126,7 @@ func (a *AuthService) MoveAsideActiveSession() error {
 	fmt.Println("🔹 Attempting to close Epic Games Launcher...")
 
 	// 1️⃣ Kill the Epic Games Launcher process
-	killCmd := exec.Command("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
+	killCmd := helper.NewCommand("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
 	if err := killCmd.Run(); err != nil {
 		// It's okay if it wasn't running — only fail if something else went wrong
 		if !strings.Contains(err.Error(), "not found") {
@@ -143,7 +142,7 @@ func (a *AuthService) MoveAsideActiveSession() error {
 	start := time.Now()
 
 	for {
-		checkCmd := exec.Command("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
+		checkCmd := helper.NewCommand("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
 		output, _ := checkCmd.Output()
 		if !strings.Contains(string(output), "EpicGamesLauncher.exe") {
 			break // fully stopped
@@ -172,8 +171,7 @@ func (a *AuthService) MoveAsideActiveSession() error {
 	launcherPath := utils.GetEpicLauncherPath()
 	fmt.Println("🔹 Launching Epic Games Launcher:", launcherPath)
 
-	startCmd := exec.Command(launcherPath)
-	startCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true} // optional: hide console window
+	startCmd := helper.NewCommand(launcherPath)
 	startCmd.Stdout = os.Stdout
 	startCmd.Stderr = os.Stderr
 

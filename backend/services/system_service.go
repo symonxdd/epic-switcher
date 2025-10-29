@@ -6,6 +6,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"epic-games-account-switcher/backend/helper"
 	"epic-games-account-switcher/backend/utils"
 )
 
@@ -42,14 +43,12 @@ func (s *SystemService) OpenDirectory(name string) error {
 	case "windows":
 		// If it's a file, highlight it. Otherwise open the folder.
 		if filepath.Ext(targetPath) == "" {
-			cmd = exec.Command("explorer", targetPath)
+			cmd = helper.NewCommand("explorer", targetPath)
 		} else {
-			cmd = exec.Command("explorer", "/select,", targetPath)
+			cmd = helper.NewCommand("explorer", "/select,", targetPath)
 		}
 	case "darwin":
-		cmd = exec.Command("open", "-R", targetPath)
-	default: // Linux
-		cmd = exec.Command("xdg-open", filepath.Dir(targetPath))
+		cmd = helper.NewCommand("open", "-R", targetPath)
 	}
 
 	return cmd.Start()

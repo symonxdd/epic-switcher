@@ -3,11 +3,10 @@ package services
 import (
 	"fmt"
 	"os"
-	"os/exec"
 	"strings"
-	"syscall"
 	"time"
 
+	"epic-games-account-switcher/backend/helper"
 	"epic-games-account-switcher/backend/models"
 	"epic-games-account-switcher/backend/utils"
 )
@@ -26,7 +25,7 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 	fmt.Println("🔹 Closing Epic Games Launcher before switching accounts...")
 
 	// 1️⃣ Kill the Epic Games Launcher
-	killCmd := exec.Command("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
+	killCmd := helper.NewCommand("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
 	err := killCmd.Run()
 	launcherWasRunning := true
 	if err != nil {
@@ -56,7 +55,7 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 			case <-timeout:
 				return fmt.Errorf("timeout waiting for Epic Games Launcher to close")
 			case <-ticker.C:
-				checkCmd := exec.Command("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
+				checkCmd := helper.NewCommand("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
 				output, _ := checkCmd.Output()
 				if !strings.Contains(string(output), "EpicGamesLauncher.exe") {
 					break waitLoop
@@ -79,8 +78,7 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 	launcherPath := utils.GetEpicLauncherPath()
 	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
 
-	startCmd := exec.Command(launcherPath, "-silent")
-	startCmd.SysProcAttr = &syscall.SysProcAttr{HideWindow: true}
+	startCmd := helper.NewCommand(launcherPath, "-silent")
 	startCmd.Stdout = os.Stdout
 	startCmd.Stderr = os.Stderr
 

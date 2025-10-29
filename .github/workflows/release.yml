@@ -1,0 +1,99 @@
+name: Wails build
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+env:
+  NODE_OPTIONS: "--max-old-space-size=4096"
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build Wails (Windows)
+        uses: dAppServer/wails-build-action@main
+        id: build
+        with:
+          build-name: epic-switcher.exe
+          build-platform: windows/amd64
+          package: false
+          go-version: "1.24.2"
+
+      - name: Rename Windows Build
+        run: |
+          $TAG = "${{ github.ref_name }}"
+          Rename-Item -Path "build\\bin\\epic-switcher.exe" -NewName "Epic Switcher $TAG.exe"
+
+      - name: Upload build artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Windows-build
+          path: build/bin/*
+
+  release:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+
+      - name: Prepare release file
+        run: |
+          TAG="${{ github.ref_name }}"
+          mkdir release
+          mv "artifacts/Windows-build/Epic Switcher $TAG.exe" "release/Epic Switcher $TAG.exe"
+
+      - name: Create GitHub release
+        uses: actions/github-script@v7
+        id: create_release
+        with:
+          result-encoding: string
+          script: |
+            const release = await github.rest.repos.createRelease({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              tag_name: context.ref.replace("refs/tags/", ""),
+              name: `Epic Switcher ${context.ref.replace("refs/tags/", "")}`,
+              body: `⚡ New Windows version released: ${context.ref.replace("refs/tags/", "")}`,
+              draft: false,
+              prerelease: false
+            });
+            return release.data.upload_url;
+
+      - name: Upload Windows release asset
+        uses: actions/github-script@v7
+        env:
+          UPLOAD_URL: ${{ steps.create_release.outputs.result }}
+        with:
+          script: |
+            const fs = require('fs');
+            const path = require('path');
+
+            const filePath = 'release/Epic Switcher ' + process.env.GITHUB_REF_NAME + '.exe';
+            const name = path.basename(filePath);
+            const content = fs.readFileSync(filePath);
+
+            await github.rest.repos.uploadReleaseAsset({
+              url: process.env.UPLOAD_URL,
+              headers: {
+                'content-type': 'application/octet-stream',
+                'content-length': content.length
+              },
+              name,
+              label: `Epic Switcher ${process.env.GITHUB_REF_NAME} for Windows (.exe)`,
+              data: content
+            });
