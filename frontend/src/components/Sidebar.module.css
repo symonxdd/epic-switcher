@@ -17,6 +17,24 @@
   padding: 1.5rem 1.25rem 2rem 1.25rem
 }
 
+.logoContainer:hover {
+  animation: pulseGlow 3s ease-in-out infinite;
+}
+
+@keyframes pulseGlow {
+
+  0%,
+  100% {
+    transform: scale(1);
+    filter: brightness(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+  }
+}
+
 .logoImage {
   width: 32px;
   height: 32px;
@@ -25,7 +43,7 @@
 
 .logoText {
   font-size: 1.2rem;
-  font-weight: 600;
+  font-weight: 500;
   letter-spacing: 0.5px;
   color: var(--sidebar-text);
   white-space: nowrap;
@@ -33,7 +51,7 @@
 }
 
 .logoText:hover {
-  color: var(--accent-color);
+  /* color: var(--accent-color); */
 }
 
 .sidebar-top,
