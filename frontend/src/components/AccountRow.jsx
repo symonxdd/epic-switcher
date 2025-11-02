@@ -99,7 +99,7 @@ export default function AccountRow({
           <>
             <button
               type="button"
-              className={`${styles.iconButton} ${styles.aliasIconButton}`}
+              className={`${styles.iconButton} ${session.alias ? styles.hasAlias : ""}`}
               title="Edit alias"
               onClick={handleAliasEdit}
             >

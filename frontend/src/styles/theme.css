@@ -46,6 +46,8 @@
   --ignored-pill-bg: rgba(0, 142, 236, 0.1);
   --ignored-pill-border: rgba(0, 142, 236, 0.3);
   --ignored-pill-text: var(--primary-color);
+
+  --alias-badge-color: #F14144;
 }
 
 /* --- Dark theme --- */

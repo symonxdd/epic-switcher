@@ -135,6 +135,25 @@
   transform: scale(1.05);
 }
 
+/* ---- Alias Badge ---- */
+.iconButton.hasAlias {
+  position: relative;
+}
+
+.iconButton.hasAlias::after {
+  content: "";
+  position: absolute;
+  top: -6px;
+  right: -7px;
+  width: 8px;
+  height: 8px;
+  background-color: var(--alias-badge-color);
+  border-radius: 50%;
+  border: 2px solid var(--list-item-bg);
+  /* keeps it clean against any background */
+  box-sizing: content-box;
+}
+
 /* ---- Alias Input ---- */
 .aliasInputContainer {
   position: absolute;
