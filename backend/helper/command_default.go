@@ -9,6 +9,6 @@ import (
 	"os/exec"
 )
 
-func NewCommand(name string, arg ...string) *Command {
+func NewCommand(name string, arg ...string) *exec.Cmd {
 	return exec.Command(name, arg...)
 }

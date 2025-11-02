@@ -16,7 +16,7 @@ function HowItWorks() {
 
   const handleOpenGithub = () => {
     try {
-      BrowserOpenURL('https://github.com/symonxdd/epic-games-account-switcher');
+      BrowserOpenURL('https://github.com/symonxdd/epic-switcher');
     } catch (err) {
       console.error('Failed to open GitHub link in default browser:', err);
     }
