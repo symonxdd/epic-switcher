@@ -1,23 +1,230 @@
-# README
+<div align="center">
+  <a href='' target="_blank">
+    <img src="./build/appicon.png" alt="Project Icon" width="100" style="pointer-events: none;">
+  </a>
+  <h1>Epic Switcher</h1>
+</div>
 
-## About
+- Epic Switcher is designed to facilitate switching between accounts in the Epic Games Launcher  
+- Currently only for Windows
 
-This is the official Wails React template.
+<br/>
 
-You can configure the project by editing `wails.json`. More information about the project settings can be found
-here: https://wails.io/docs/reference/project-config
+<div align="center">
+  <img src="./docs/screens/accounts-page.png" alt="Main screen" width="869">
+</div>
 
-## Live Development
+## 📥 Downloads
+- Grab the latest version from the [**Releases page**](https://github.com/symonxdd/epic-switcher/releases/latest)  
+- No install required
 
-To run in live development mode, run `wails dev` in the project directory. This will run a Vite development
-server that will provide very fast hot reload of your frontend changes. If you want to develop in a browser
-and have access to your Go methods, there is also a dev server that runs on http://localhost:34115. Connect
-to this in your browser, and you can call your Go code from devtools.
+<br/>
 
-## Building
+> [!TIP]
+> GitHub 'Releases' is GitHub jargon for downloads.
 
-To build a redistributable, production mode package, use `wails build`.
+<br/>
 
-### Credits
-Logo by [Author Name] from [SVGRepo](https://www.svgrepo.com/), 
-licensed under [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/).
+<details>
+<summary>
+<strong>⚠️ What's the "Windows protected your PC" message?</strong>
+</summary>
+
+### ⚠️ Windows SmartScreen Warning
+When you run the app for the first time on Windows, you might see a warning like this:
+
+<div>
+  <img src="./docs/screens/smartscreen-warning-a.png" alt="SmartScreen Warning Screenshot a" width="600">
+  <br/><br/>
+  <img src="./docs/screens/smartscreen-warning-b.png" alt="SmartScreen Warning Screenshot b" width="600">
+</div>
+
+### 🧠 What's actually happening?
+
+This warning appears because the app is **new** and **hasn't yet built trust** with Microsoft SmartScreen, **not because the app is malicious**.
+
+According to [Microsoft's official documentation](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/), SmartScreen determines whether to show this warning based on:
+
+- Whether the file matches a **known list of malicious apps** or is from a **known malicious site**
+- Whether the file is **well-known and frequently downloaded**
+- Whether the app is **digitally signed** with a costly trusted certificate
+
+This is **just a generic warning** — many indie or open-source apps trigger it until they build trust or pay for expensive certificates.
+
+### ✅ How to dismiss and run
+
+1. Click **"More info"**
+2. Click **"Run anyway"**
+
+### 🤨 Why not prevent the warning
+
+To fully avoid SmartScreen warnings on Windows, developers are expected to:
+
+- Buy and use an **EV (Extended Validation) Code Signing Certificate**  
+- Have enough users download the app over time to build a strong **reputation score**
+
+These certificates can cost **hundreds of dollars per year**, which isn't always feasible for solo developers or small open-source projects.  
+We're focused on keeping this tool free and accessible.  
+> For full details on how SmartScreen works, check out [Microsoft's official documentation](https://learn.microsoft.com/en-us/windows/security/operating-system-security/virus-and-threat-protection/microsoft-defender-smartscreen/)
+
+Thanks for supporting open-source software! 💙
+
+</details>
+
+<br/>
+
+## 💡 Motivation
+`throw new NotImplementedException();`
+
+<br/>
+
+## 📸 Screens  
+
+### Accounts page
+![accounts-page](./docs/screens/accounts-page.png)
+
+<br/>
+
+### Add Session modal
+![add-account-modal](./docs/screens/add-account-modal.png)
+
+<br/>
+
+### Manage page
+![manage-page](./docs/screens/manage-page.png) 
+
+<br/>
+
+### Manage page (alias feature)
+![manage-page-alias-feature](./docs/screens/manage-page-alias-feature.png) 
+
+<br/>
+
+### Delete Session modal
+![delete-session-modal](./docs/screens/delete-session-modal.png) 
+
+<br/>
+
+### How it Works page
+![/how-it-works](./docs/screens/how-it-works.png) 
+
+<br/>
+
+### Settings page
+![settings-page](./docs/screens/settings-page.png) 
+
+<br/>
+
+> [!NOTE]
+> **Developer section below:** The following content is intended for developers interested in the inner workings of Epic Switcher.
+
+<br/>
+
+## 🗂️ Project Layout
+Here's a quick overview of the main files and folders:
+```
+epic-switcher/
+├── .github/
+│   └── workflows/
+│       └── release.yml         # GitHub Actions workflow for cross-platform builds + releases
+│
+├── backend/                    # Go backend logic
+│   ├── helper/                 # Cross-platform utilities and command wrappers
+│   │   ├── command_default.go  # Default command runner (used on non-Windows)
+│   │   └── command_windows.go  # Windows-specific command runner (hides terminal window)
+│   ├── models/                 # Data structures (LoginSession)
+│   └── app.go                  # Main backend bindings exposed to the frontend
+│
+├── build/                      # App icons, packaging resources, and Wails build outputs
+│   └── appicon.png             # Icon used for the app window and release packages
+│
+├── frontend/                   # Vue 3 frontend (served with Vite)
+│   ├── src/
+│   │   ├── main.jsx            # React app entry point
+│   │   └── App.jsx             # Root React component
+│   └── index.html              # HTML entry point
+│
+├── go.mod                      # Go dependencies (the Go module manifest)
+├── go.sum                      # Go dependency checksums
+├── main.go                     # App entry point (launches Wails)
+├── release.js                  # Script to automate version bumping and pushing a new release
+├── wails.json                  # Wails project configuration
+└── README.md                   # You're reading it ✨
+```
+
+> [!NOTE]
+> The two files at `app/helper/command_*.go` are **OS-specific** and use [Go build tags](https://pkg.go.dev/go/build#hdr-Build_Constraints) to automatically select the correct one during build time. This ensures clean handling of platform quirks without any runtime checks.
+
+<br/>
+
+## 🔧 Dev Prerequisites
+- To build or run in dev mode, follow the [official Wails installation guide](https://wails.io/docs/gettingstarted/installation).  
+- You'll need Go installed, along with Node and a package manager like `npm`, `yarn`, or `pnpm`.
+
+<br/>
+
+## ⚙️ Live Development
+To start the app in dev mode:
+```bash
+wails dev
+```
+
+<br/>
+
+## 📦 Release Build
+To generate a production-ready, standalone binary:
+```bash
+wails build
+```
+This compiles the app and outputs a native executable, ready to distribute.
+
+<br/>
+
+## 🚀 Release Workflow
+Epic Switcher uses a fully automated release pipeline powered by **GitHub Actions** and a helper script.
+
+To create a new release, I run the release script:
+```bash
+npm run release
+```
+
+This will:
+
+1. Prompt to select the version type (`Patch`, `Minor`, or `Major`)
+2. Bump the version in `frontend/package.json`
+3. Commit the version bump and create a Git tag
+4. Push the commit and tag to GitHub
+
+> [!NOTE]
+> The version bump uses a clear commit message like: `chore: bumped version to v1.2.3`
+
+When a `v*` tag is pushed, the [`release.yml`](.github/workflows/release.yml) GitHub Actions workflow is triggered.
+
+- 🔧 Builds a native binary for Windows (.exe).
+- 🗃 Renames and organizes the build artifacts.
+- 📝 Creates a new GitHub Release and uploads the binary with an OS-specific label.
+
+💡 The release process can be viewed under the repo's **Actions** tab
+
+<br/>
+
+> [!NOTE]
+> _Thanks to my previous work on my other project (AVD Launcher), I already had a release pipeline ready. It only required minor adjustments to fit this project._
+
+<br/>
+
+## Built with ❤️
+This project is built with passion using:
+- [Wails](https://wails.io/)
+- [Go](https://go.dev/)
+- [React](https://react.dev/)
+
+### 🖼️ Assets & Credits
+Logo by [Epicons](https://www.svgrepo.com/svg/355688/user-a-solid) from [SVGRepo](https://www.svgrepo.com/)
+
+<div align="center">
+  <sub>Made with 💛 by Symon from Belgium</sub>
+</div>
+<div align="center">
+  <sub>Powered by <a href="https://wails.io/">Wails</a></sub>
+</div>
