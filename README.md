@@ -196,7 +196,7 @@ This will:
 4. Push the commit and tag to GitHub
 
 > [!NOTE]
-> The version bump uses a clear commit message like: `chore: bumped version to v1.2.3`
+> The version bump uses a clear commit message like: `chore: bump version to v1.2.3`
 
 When a `v*` tag is pushed, the [`release.yml`](.github/workflows/release.yml) GitHub Actions workflow is triggered.
 

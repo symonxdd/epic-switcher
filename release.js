@@ -21,7 +21,7 @@ const prompts = require('prompts');
   }
 
   try {
-    const cmd = `npm --prefix frontend version ${response.versionType} -m "chore: bumped version to %s"`;
+    const cmd = `npm --prefix frontend version ${response.versionType} -m "chore: bump version to %s"`;
     console.log(`🏗 Running: ${cmd}`);
     execSync(cmd, { stdio: 'inherit' });
 
