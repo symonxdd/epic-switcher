@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"regexp"
 	"strings"
 	"time"
@@ -19,8 +20,6 @@ type AuthService struct{}
 func NewAuthService() *AuthService {
 	return &AuthService{}
 }
-
-// AuthService.go
 
 // GetCurrentLoginSession reads Epic's session file and returns
 // the active session if someone is logged in, otherwise nil.
@@ -46,12 +45,10 @@ func (a *AuthService) GetCurrentLoginSession() (*models.LoginSession, error) {
 		return nil, fmt.Errorf("no valid login token found (user likely logged out)")
 	}
 
-	reID := regexp.MustCompile(`\[(.+?)_General\]`)
-	matchID := reID.FindStringSubmatch(content)
-	if len(matchID) < 2 {
-		return nil, fmt.Errorf("could not extract user ID")
+	userID, err := getCurrentUserIDFromDataFolder()
+	if err != nil {
+		return nil, fmt.Errorf("failed to get user ID from Data folder: %w", err)
 	}
-	userID := strings.TrimSpace(matchID[1])
 
 	return &models.LoginSession{
 		UserID:     userID,
@@ -214,4 +211,52 @@ func (a *AuthService) CheckAndRenewLoginToken() (bool, error) {
 	}
 
 	return false, nil // not stored, so nothing to renew
+}
+
+// Finds the most recent file inside Epic's Data folder
+// and extracts the filename (without extension). If it starts with "OC_", that prefix is removed.
+func getCurrentUserIDFromDataFolder() (string, error) {
+	dataPath := utils.GetEpicDataPath()
+	if dataPath == "" {
+		return "", fmt.Errorf("could not resolve Epic Data path")
+	}
+
+	entries, err := os.ReadDir(dataPath)
+	if err != nil {
+		return "", fmt.Errorf("cannot read Epic Data folder: %w", err)
+	}
+
+	var latestFile os.DirEntry
+	var latestModTime time.Time
+
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue // skip directories
+		}
+
+		info, err := entry.Info()
+		if err != nil {
+			continue
+		}
+		if info.ModTime().After(latestModTime) {
+			latestFile = entry
+			latestModTime = info.ModTime()
+		}
+	}
+
+	if latestFile == nil {
+		return "", fmt.Errorf("no files found in Epic Data folder")
+	}
+
+	filename := latestFile.Name()
+	ext := filepath.Ext(filename)
+	nameOnly := strings.TrimSuffix(filename, ext)
+
+	nameOnly = strings.TrimPrefix(nameOnly, "OC_")
+
+	if nameOnly == "" {
+		return "", fmt.Errorf("could not extract user ID from file: %s", filename)
+	}
+
+	return nameOnly, nil
 }

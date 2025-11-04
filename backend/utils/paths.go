@@ -37,3 +37,9 @@ func GetEpicLauncherPath() string {
 	}
 	return filepath.Join(programFiles, "Epic Games", "Launcher", "Portal", "Binaries", "Win32", "EpicGamesLauncher.exe")
 }
+
+// Returns the path to the Epic Games Launcher Data folder.
+func GetEpicDataPath() string {
+	userDir, _ := os.UserHomeDir()
+	return filepath.Join(userDir, "AppData", "Local", "EpicGamesLauncher", "Saved", "Data")
+}

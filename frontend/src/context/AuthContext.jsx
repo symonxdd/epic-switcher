@@ -14,7 +14,6 @@ export function AuthProvider({ children }) {
     try {
       console.log("🔑 Checking Epic login state...");
 
-      // renew token if user is logged in
       const currentSession = await GetCurrentLoginSession();
 
       // 0. renew login token if needed
