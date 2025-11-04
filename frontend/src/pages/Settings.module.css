@@ -92,7 +92,6 @@
 
 .slider {
   position: absolute;
-  cursor: pointer;
   top: 0;
   left: 0;
   right: 0;
@@ -141,6 +140,37 @@
 
 .resetButton:active {
   opacity: 0.8;
+}
+
+/* --- Generic Action Buttons (like View on GitHub) --- */
+.actionButton {
+  background-color: var(--background-tertiary, transparent);
+  color: var(--text-color);
+  border: 1px solid var(--button-border-color);
+  border-radius: 8px;
+  padding: 8px 14px;
+  font-size: 0.96rem;
+  font-family: Nunito, sans-serif;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out, opacity 0.2s;
+}
+
+.actionButton:hover {
+  background-color: var(--btn-hover-bg);
+  border-color: var(--button-border-color);
+}
+
+.actionButton:active {
+  opacity: 0.8;
+}
+
+/* --- Icon inside button --- */
+.actionButton svg {
+  font-size: 1rem;
+  vertical-align: middle;
 }
 
 /* --- Responsive behavior --- */

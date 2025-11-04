@@ -77,7 +77,7 @@ export default function Accounts() {
   async function handleSwitchAccount(session) {
     try {
       await SwitchAccount(session);
-      toast.success(`Switched to account: ${session.username || session.userId}`, { id: "switch-account" });
+      toast.success(`Switched to account: ${session.alias || session.username || session.userId}`, { id: "switch-account" });
       setActiveLoginSession(session);
     } catch (err) {
       console.error(err);

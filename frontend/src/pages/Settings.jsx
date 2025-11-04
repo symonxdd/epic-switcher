@@ -4,10 +4,19 @@ import PageHeader from '../components/PageHeader';
 import styles from "./Settings.module.css";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import toast from "react-hot-toast";
+import { FaGithub } from "react-icons/fa";
+import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
+import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
   const [hideUserIds, setHideUserIds] = useState(false);
+
+  const [latestVersion, setLatestVersion] = useState(null);
+  const [latestUrl, setLatestUrl] = useState(null);
+
+  // const currentVersion = typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0";
+  const currentVersion = "1.0.0";
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -19,6 +28,46 @@ function Settings() {
   useEffect(() => {
     localStorage.setItem(STORAGE_KEYS.HIDE_USER_IDS, hideUserIds);
   }, [hideUserIds]);
+
+  // --- Fetch latest GitHub version ---
+  useEffect(() => {
+    const checkForUpdate = async () => {
+      try {
+        const release = await GetLatestVersion();
+        if (!release?.tag_name) return;
+        const cleanTag = release.tag_name.startsWith("v")
+          ? release.tag_name.slice(1)
+          : release.tag_name;
+        if (isVersionNewer(cleanTag, currentVersion)) {
+          setLatestVersion(cleanTag);
+          setLatestUrl(release.html_url);
+        }
+      } catch (err) {
+        console.warn("Version check failed:", err);
+      }
+    };
+
+    checkForUpdate();
+  }, [currentVersion]);
+
+  // Compare versions semantically
+  function isVersionNewer(remote, local) {
+    const parse = (v) => v.split(".").map(Number);
+    const [r1, r2, r3] = parse(remote);
+    const [l1, l2, l3] = parse(local);
+    if (r1 > l1) return true;
+    if (r1 === l1 && r2 > l2) return true;
+    if (r1 === l1 && r2 === l2 && r3 > l3) return true;
+    return false;
+  }
+
+  const handleOpenNewGithubRelease = () => {
+    try {
+      BrowserOpenURL(latestUrl);
+    } catch (err) {
+      console.error('Failed to open GitHub link in default browser:', err);
+    }
+  }
 
   return (
     <div className={styles.settingsContainer}>
@@ -94,12 +143,27 @@ function Settings() {
             </div>
           )}
         </div>
+
+        {/* --- Update Available Notice --- */}
+        {latestVersion && (
+          <div className={styles.settingsGroup}>
+            <h5 className={styles.labelHeading}>
+              New update ready (v{latestVersion})
+            </h5>
+            <button
+              className={styles.actionButton}
+              onClick={handleOpenNewGithubRelease}
+            >
+              <FaGithub />
+              View on GitHub
+            </button>
+          </div>
+        )}
       </div>
 
       <div className={styles.appFooter}>
         <div className={styles.footerTop}>
-          v
-          {typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0"} (
+          v{currentVersion} (
           {import.meta.env.MODE === "development" ? "dev" : "release"})
         </div>
 
