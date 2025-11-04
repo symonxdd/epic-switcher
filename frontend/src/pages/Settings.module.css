@@ -25,6 +25,8 @@
   flex-direction: column;
   gap: 10px;
   box-sizing: border-box;
+  justify-content: space-between;
+  align-items: baseline;
 }
 
 .labelHeading {
@@ -135,7 +137,7 @@
 
 .resetButton:hover {
   background-color: var(--btn-hover-bg);
-  border-color: var(--button-border-color);
+  border-color: var(--border-color-hover);
 }
 
 .resetButton:active {
@@ -160,7 +162,7 @@
 
 .actionButton:hover {
   background-color: var(--btn-hover-bg);
-  border-color: var(--button-border-color);
+  border-color: var(--border-color-hover);
 }
 
 .actionButton:active {
@@ -171,6 +173,19 @@
 .actionButton svg {
   font-size: 1rem;
   vertical-align: middle;
+}
+
+/* --- Smaller muted subtext for version number --- */
+.versionSubtext {
+  display: block;
+  /* forces it to appear on its own line */
+  font-size: 0.8rem;
+  font-weight: 500;
+  margin-top: 2px;
+  color: var(--text-muted, var(--sidebar-text-muted, #999));
+  /* theme-aware fallback */
+  opacity: 0.85;
+  /* slight fade for subtlety */
 }
 
 /* --- Responsive behavior --- */

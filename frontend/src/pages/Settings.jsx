@@ -15,8 +15,7 @@ function Settings() {
   const [latestVersion, setLatestVersion] = useState(null);
   const [latestUrl, setLatestUrl] = useState(null);
 
-  // const currentVersion = typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0";
-  const currentVersion = "1.0.0";
+  const currentVersion = typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0";
 
   // Load settings from localStorage on mount
   useEffect(() => {
@@ -78,7 +77,7 @@ function Settings() {
         <div className={styles.settingsGroup}>
           <h5 className={styles.labelHeading}>Accounts page</h5>
 
-          {/* Hide User IDs */}
+          {/* Hide User IDs / (Usernames, if alias set) */}
           <div className={styles.toggleRow}>
             <label className={styles.switch}>
               <input
@@ -148,7 +147,8 @@ function Settings() {
         {latestVersion && (
           <div className={styles.settingsGroup}>
             <h5 className={styles.labelHeading}>
-              New update ready (v{latestVersion})
+              New update ready
+              <span className={styles.versionSubtext}>v{latestVersion}</span>
             </h5>
             <button
               className={styles.actionButton}
