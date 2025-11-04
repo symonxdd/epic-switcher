@@ -11,9 +11,8 @@ import { BrowserOpenURL } from '../../wailsjs/runtime';
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
   const [hideUserIds, setHideUserIds] = useState(false);
-
-  const [latestVersion, setLatestVersion] = useState(null);
-  const [latestUrl, setLatestUrl] = useState(null);
+  const [remoteVersion, setRemoteVersion] = useState(null);
+  const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
   const currentVersion = typeof __APP_VERSION__ !== "undefined" ? __APP_VERSION__ : "1.0.0";
 
@@ -34,13 +33,13 @@ function Settings() {
       try {
         const release = await GetLatestVersion();
         if (!release?.tag_name) return;
+
         const cleanTag = release.tag_name.startsWith("v")
           ? release.tag_name.slice(1)
           : release.tag_name;
-        if (isVersionNewer(cleanTag, currentVersion)) {
-          setLatestVersion(cleanTag);
-          setLatestUrl(release.html_url);
-        }
+
+        setRemoteVersion(cleanTag);
+        setRemoteReleaseUrl(release.html_url);
       } catch (err) {
         console.warn("Version check failed:", err);
       }
@@ -49,8 +48,8 @@ function Settings() {
     checkForUpdate();
   }, [currentVersion]);
 
-  // Compare versions semantically
-  function isVersionNewer(remote, local) {
+  // --- Compare versions semantically ---
+  function isRemoteVersionNewer(remote, local) {
     const parse = (v) => v.split(".").map(Number);
     const [r1, r2, r3] = parse(remote);
     const [l1, l2, l3] = parse(local);
@@ -60,9 +59,14 @@ function Settings() {
     return false;
   }
 
-  const handleOpenNewGithubRelease = () => {
+  function isUpToDate() {
+    if (!remoteVersion) return true; // assume up-to-date until we know
+    return !isRemoteVersionNewer(remoteVersion, currentVersion);
+  }
+
+  const handleOpenGithubRelease = () => {
     try {
-      BrowserOpenURL(latestUrl);
+      BrowserOpenURL(remoteReleaseUrl);
     } catch (err) {
       console.error('Failed to open GitHub link in default browser:', err);
     }
@@ -144,15 +148,15 @@ function Settings() {
         </div>
 
         {/* --- Update Available Notice --- */}
-        {latestVersion && (
+        {remoteVersion && isRemoteVersionNewer(remoteVersion, currentVersion) && (
           <div className={styles.settingsGroup}>
             <h5 className={styles.labelHeading}>
               New update ready
-              <span className={styles.versionSubtext}>v{latestVersion}</span>
+              <span className={styles.versionSubtext}>v{remoteVersion}</span>
             </h5>
             <button
               className={styles.actionButton}
-              onClick={handleOpenNewGithubRelease}
+              onClick={handleOpenGithubRelease}
             >
               <FaGithub />
               View on GitHub
@@ -164,7 +168,13 @@ function Settings() {
       <div className={styles.appFooter}>
         <div className={styles.footerTop}>
           v{currentVersion} (
-          {import.meta.env.MODE === "development" ? "dev" : "release"})
+          {import.meta.env.MODE === "development" ? "dev" : "release"}
+          {remoteVersion
+            ? isUpToDate()
+              ? ", latest"
+              : ", update available"
+            : ""}
+          )
         </div>
 
         <div className={styles.footerBottom}>
