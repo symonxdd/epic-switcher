@@ -20,7 +20,7 @@ func GetEpicLoginSessionPath() string {
 		return ""
 	}
 
-	return filepath.Join(localAppData, "EpicGamesLauncher", "Saved", "Config", "Windows", "GameUserSettings.ini")
+	return filepath.Join(localAppData, "EpicGamesLauncher", "Saved", "Config", "WindowsEditor", "GameUserSettings.ini")
 }
 
 // Returns the path to the Epic Games Launcher log directory
