@@ -1,7 +1,7 @@
 .separator {
   width: 97%;
   height: 1px;
-  background-color: var(--border-color);
+  background-color: var(--border-subtle);
   margin: 0 auto;
   /* space between items */
   flex-shrink: 0;

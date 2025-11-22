@@ -2,7 +2,7 @@
   text-align: center;
   margin-top: 50px;
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .subtitleRow {
@@ -13,7 +13,7 @@
 }
 
 .subtitle {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .subtitleWithIcon {
@@ -23,7 +23,7 @@
 
 .addIcon {
   font-size: 1.15rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   cursor: pointer;
   flex-shrink: 0;
   transition: color 0.15s ease, transform 0.12s ease;
@@ -51,7 +51,7 @@
 }
 
 .addTooltipWrapper:hover .addIcon {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* ---- View Toggle ---- */
@@ -62,8 +62,8 @@
 
 .toggleBtn {
   background: none;
-  border: 1px solid var(--border-color);
-  color: var(--sidebar-text-muted);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   padding: 4px;
   border-radius: 6px;
   cursor: pointer;
@@ -75,15 +75,15 @@
 }
 
 .toggleBtn:hover {
-  background: var(--hover-bg);
-  color: var(--text-color);
-  border-color: color-mix(in srgb, var(--border-color) 80%, var(--hover-bg) 20%);
+  background: var(--btn-ghost-hover);
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--border-subtle) 80%, var(--btn-ghost-hover) 20%);
 }
 
 .activeToggle {
-  color: var(--text-color);
-  border-color: var(--border-color);
-  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
 
 /* ---- Container Views ---- */
@@ -119,19 +119,19 @@
   border-radius: 8px;
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
-  background-color: var(--list-item-bg);
+  background-color: var(--bg-card);
 }
 
 .listItem:hover {
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
 }
 
 .activeItem {
-  background-color: var(--list-item-active-bg);
+  background-color: var(--bg-card-active);
 }
 
 .activeItem:hover {
-  background-color: var(--list-item-active-bg);
+  background-color: var(--bg-card-active);
   border: 1px solid transparent;
 }
 
@@ -144,8 +144,8 @@
 }
 
 .avatar {
-  background: color-mix(in srgb, var(--text-color) 12%, var(--list-item-bg));
-  color: var(--text-color);
+  background: color-mix(in srgb, var(--text-primary) 12%, var(--bg-card));
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 0.9rem;
   width: 36px;
@@ -158,7 +158,7 @@
 }
 
 .listItem.activeItem .avatar {
-  background: var(--avatar-active-bg);
+  background: var(--bg-avatar-active);
   /* solid blue, or any color you want */
   /* color: #fff; */
   /* white text for contrast */
@@ -178,9 +178,9 @@
 .activeIcon {
   color: #22c55e;
   font-size: 1.15rem;
-  background: var(--content-bg);
+  background: var(--bg-surface);
   border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--list-item-bg);
+  box-shadow: 0 0 0 2px var(--bg-card);
   transition: transform 0.2s ease;
 }
 
@@ -193,9 +193,9 @@
   padding: 8px 12px;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--text-color);
-  background: var(--content-bg);
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   white-space: normal;
   text-align: left;
@@ -228,7 +228,7 @@
 
 .displayName {
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -236,14 +236,14 @@
 
 .metaLine {
   font-size: 0.8rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
 }
 
 .extraMessage {
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 /* ---- Animations ---- */

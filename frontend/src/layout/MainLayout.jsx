@@ -20,8 +20,8 @@ function MainLayout({ children }) {
         toastOptions={{
           duration: 2500,
           style: {
-            background: 'var(--toast-bg)',
-            color: 'var(--toast-text)',
+            background: 'var(--bg-toast)',
+            color: 'var(--text-inverse)',
             borderRadius: '6px',
             padding: '10px 14px',
             fontSize: '0.95rem',

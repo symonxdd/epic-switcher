@@ -9,9 +9,9 @@
   align-items: center;
   /* vertically center icon + text + dismiss */
   justify-content: space-between;
-  background-color: var(--sidebar-bg);
-  border: 1px solid var(--border-color);
-  color: var(--text-color);
+  background-color: var(--bg-app);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
   padding: 12px 14px;
   border-radius: 10px;
   /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); */
@@ -28,7 +28,7 @@
 }
 
 .icon {
-  color: var(--icon-color);
+  color: var(--text-secondary);
   font-size: 1.4rem;
   flex-shrink: 0;
 }
@@ -43,13 +43,13 @@
 
 .title {
   font-weight: 600;
-  color: var(--text-color);
+  color: var(--text-primary);
   line-height: 1.3;
 }
 
 .message {
   font-size: 0.9rem;
-  color: var(--sidebar-text);
+  color: var(--text-primary);
   line-height: 1.4;
   white-space: normal;
 }
@@ -57,7 +57,7 @@
 .dismissButton {
   background: none;
   border: none;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   cursor: default;
   font-size: 1.2rem;
   padding: 4px;
@@ -69,8 +69,8 @@
 }
 
 .dismissButton:hover {
-  color: var(--text-color);
-  background: var(--hover-bg);
+  color: var(--text-primary);
+  background: var(--btn-ghost-hover);
 }
 
 .closeTooltipWrapper {
@@ -90,9 +90,9 @@
   padding: 8px 12px;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--text-color);
-  background: var(--content-bg);
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   white-space: normal;
   text-align: left;
@@ -122,6 +122,6 @@
 
 /* Optional: subtle color on hover for dismiss button */
 .closeTooltipWrapper:hover .dismissButton {
-  color: var(--text-color);
-  background: var(--hover-bg);
+  color: var(--text-primary);
+  background: var(--btn-ghost-hover);
 }

@@ -1,7 +1,7 @@
 .sidebar {
   width: 230px;
-  /* background-color: var(--sidebar-bg); */
-  background-color: var(--sidebar-bg);
+  /* background-color: var(--bg-app); */
+  background-color: var(--bg-app);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,21 +45,6 @@
 .logoText {
   font-size: 1.2rem;
   font-weight: 500;
-  letter-spacing: 0.5px;
-  color: var(--sidebar-text);
-  white-space: nowrap;
-  transition: letter-spacing 0.3s ease, color 0.3s ease;
-}
-
-.logoText:hover {
-  /* color: var(--accent-color); */
-}
-
-.sidebar-top,
-.sidebar-bottom {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
 }
 
 .sidebar-item {
@@ -68,7 +53,7 @@
   gap: 12px;
   padding: 10px 20px;
   margin: 0 8px 0;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   text-decoration: none;
   font-weight: 500;
   font-size: 0.95rem;
@@ -79,20 +64,20 @@
 }
 
 .sidebar-item:hover {
-  background: var(--sidebar-hover-bg);
-  color: var(--sidebar-hover-text);
-  border: 1px solid var(--border-color);
+  background: var(--btn-ghost-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
 }
 
 .sidebar-item.active {
-  background: var(--sidebar-active-bg);
-  color: var(--sidebar-active-text);
-  border: 1px solid var(--border-color);
+  background: var(--bg-card-active);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
 }
 
 .icon {
   font-size: 18px;
-  color: var(--icon-color);
+  color: var(--text-secondary);
   transition: color var(--transition-speed);
 }
 
@@ -107,8 +92,8 @@
   font-size: 0.75rem;
   font-weight: 600;
   line-height: 1;
-  background-color: var(--badge-bg);
-  color: var(--badge-text);
+  background-color: var(--bg-badge);
+  color: var(--text-inverse);
   transform: translateY(-0.5px);
 }
 

@@ -16,12 +16,12 @@
 }
 
 .modal {
-  background: var(--content-bg);
-  color: var(--text-color);
+  background: var(--bg-surface);
+  color: var(--text-primary);
   padding: 0 0 1.75rem 0;
   border-radius: 14px;
   box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--content-border);
+  border: 1px solid var(--border-subtle);
   transform: translateY(20px);
   animation: slideUp 0.25s ease forwards;
   max-width: 460px;
@@ -32,7 +32,7 @@
 
 .modal h3 {
   margin: 0;
-  background: var(--sidebar-bg);
+  background: var(--bg-app);
   padding: 1rem;
   display: flex;
   align-items: center;
@@ -46,7 +46,7 @@
 .modalUsername,
 .modalUserId {
   font-size: 0.85rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   text-align: left;
   padding: 0 45px;
   line-height: 1.4;
@@ -94,31 +94,31 @@
 }
 
 .primaryButton {
-  background: var(--primary-button-bg);
-  color: var(--primary-button-text);
+  background: var(--btn-primary-bg);
+  color: var(--text-inverse);
   border: none;
 }
 
 .primaryButton:hover {
-  background: var(--primary-button-hover);
+  background: var(--btn-primary-hover);
   transform: translateY(-1px);
 }
 
 .secondaryButton {
-  background: var(--btn-hover-bg);
-  color: var(--text-color);
-  border: 1px solid var(--button-border-color);
+  background: var(--btn-ghost-hover);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
 }
 
 .secondaryButton:hover {
-  background-color: var(--sidebar-hover-bg);
+  background-color: var(--btn-ghost-hover);
   transform: translateY(-1px);
 }
 
 .ghostButton {
   background-color: transparent;
   border: none;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   opacity: 0.8;
   width: auto;
   display: inline-block;
@@ -128,7 +128,7 @@
 
 .ghostButton:hover {
   opacity: 1;
-  color: var(--text-color);
+  color: var(--text-primary);
   background-color: transparent;
 }
 

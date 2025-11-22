@@ -13,21 +13,21 @@
   padding: 8px 36px 8px 12px;
   /* right padding for clear button */
   font-size: 0.95rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  background-color: var(--content-bg);
-  color: var(--text-color);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   min-width: 0;
 }
 
 .aliasInput::placeholder {
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .aliasInput:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 25%, transparent);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
   outline: none;
 }
 
@@ -39,7 +39,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   font-weight: bold;
   cursor: pointer;
   padding: 0 6px;
@@ -51,7 +51,7 @@
 }
 
 .clearBtn:hover {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Lightbulb icon wrapper */
@@ -66,12 +66,12 @@
 
 .infoIcon {
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   transition: color 0.15s ease;
 }
 
 .infoTooltipWrapper:hover .infoIcon {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Tooltip */
@@ -79,9 +79,9 @@
   padding: 8px 12px;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--text-color);
-  background: var(--content-bg);
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   white-space: normal;
   text-align: left;

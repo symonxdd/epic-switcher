@@ -2,11 +2,11 @@
   text-align: center;
   margin-top: 50px;
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .extraMessage {
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   font-size: 1rem;
 }
 
@@ -26,13 +26,13 @@
 }
 
 .subtitle {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Info (bulb) icon + tooltip */
 .infoIcon {
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   cursor: default;
   flex-shrink: 0;
   transition: color 0.15s ease;
@@ -46,9 +46,9 @@
   padding: 8px 12px;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--text-color);
-  background: var(--content-bg);
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   white-space: normal;
   text-align: left;
@@ -82,7 +82,7 @@
 }
 
 .infoTooltipWrapper:hover .infoIcon {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Display name + check icon */
@@ -126,7 +126,7 @@
 .activeIcon {
   color: #22c55e;
   font-size: 1.1rem;
-  background: var(--content-bg);
+  background: var(--bg-surface);
   border-radius: 50%;
   z-index: 30;
   flex-shrink: 0;
@@ -140,8 +140,8 @@
 
 .toggleBtn {
   background: none;
-  border: 1px solid var(--border-color);
-  color: var(--sidebar-text-muted);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   padding: 4px;
   border-radius: 6px;
   cursor: pointer;
@@ -153,15 +153,15 @@
 }
 
 .toggleBtn:hover {
-  background: var(--hover-bg);
-  color: var(--text-color);
-  border-color: color-mix(in srgb, var(--border-color) 80%, var(--hover-bg) 20%);
+  background: var(--btn-ghost-hover);
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--border-subtle) 80%, var(--btn-ghost-hover) 20%);
 }
 
 .activeToggle {
-  color: var(--text-color);
-  border-color: var(--border-color);
-  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
 
 /* Containers (GRID vs LIST) */
@@ -204,7 +204,7 @@
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid transparent;
-  background-color: var(--list-item-bg);
+  background-color: var(--bg-card);
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -228,7 +228,7 @@
 
 .displayName {
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -240,7 +240,7 @@
 .iconButton {
   background: none;
   border: none;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   padding: 2px;
   border-radius: 4px;
   cursor: pointer;
@@ -253,7 +253,7 @@
 }
 
 .iconButton:hover {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Alias Input (for AliasInput component inside tab) */
@@ -267,21 +267,21 @@
   flex: 1;
   padding: 8px 36px 8px 12px;
   font-size: 0.95rem;
-  border: 1px solid var(--border-color);
+  border: 1px solid var(--border-subtle);
   border-radius: 8px;
-  background-color: var(--content-bg);
-  color: var(--text-color);
+  background-color: var(--bg-surface);
+  color: var(--text-primary);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
   min-width: 0;
 }
 
 .aliasInput::placeholder {
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .aliasInput:focus {
-  border-color: var(--primary-color);
-  box-shadow: 0 0 0 2px color-mix(in srgb, var(--primary-color) 25%, transparent);
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px color-mix(in srgb, var(--color-primary) 25%, transparent);
   outline: none;
 }
 
@@ -292,7 +292,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   font-weight: bold;
   cursor: pointer;
   padding: 0 6px;
@@ -304,7 +304,7 @@
 }
 
 .clearBtn:hover {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Scrollbar */
@@ -313,6 +313,6 @@
 }
 
 .listContainer::-webkit-scrollbar-thumb {
-  background: var(--border-color);
+  background: var(--border-subtle);
   border-radius: 3px;
 }

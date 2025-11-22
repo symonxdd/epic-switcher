@@ -2,7 +2,7 @@
   text-align: center;
   margin-top: 50px;
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 /* Header */
@@ -21,13 +21,13 @@
 }
 
 .subtitle {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* Info (bulb) icon */
 .addIcon {
   font-size: 1.2rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   cursor: default;
   flex-shrink: 0;
   transition: color 0.15s ease;
@@ -54,7 +54,7 @@
 }
 
 .addTooltipWrapper:hover .addIcon {
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 /* View Toggle */
@@ -65,8 +65,8 @@
 
 .toggleBtn {
   background: none;
-  border: 1px solid var(--border-color);
-  color: var(--sidebar-text-muted);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   padding: 4px;
   border-radius: 6px;
   cursor: pointer;
@@ -78,15 +78,15 @@
 }
 
 .toggleBtn:hover {
-  background: var(--hover-bg);
-  color: var(--text-color);
-  border-color: color-mix(in srgb, var(--border-color) 80%, var(--hover-bg) 20%);
+  background: var(--btn-ghost-hover);
+  color: var(--text-primary);
+  border-color: color-mix(in srgb, var(--border-subtle) 80%, var(--btn-ghost-hover) 20%);
 }
 
 .activeToggle {
-  color: var(--text-color);
-  border-color: var(--border-color);
-  background: color-mix(in srgb, var(--text-color) 10%, transparent);
+  color: var(--text-primary);
+  border-color: var(--border-subtle);
+  background: color-mix(in srgb, var(--text-primary) 10%, transparent);
 }
 
 /* Containers */
@@ -129,7 +129,7 @@
   padding: 12px 14px;
   border-radius: 8px;
   border: 1px solid transparent;
-  background-color: var(--list-item-bg);
+  background-color: var(--bg-card);
   transition: background 0.2s ease, border 0.2s ease;
   position: relative;
   overflow: hidden;
@@ -137,8 +137,8 @@
 }
 
 .listItem:hover {
-  background-color: var(--list-item-bg-hover);
-  border: 1px solid var(--border-color);
+  background-color: var(--bg-card-hover);
+  border: 1px solid var(--border-subtle);
 }
 
 /* Active session checkmark */
@@ -165,9 +165,9 @@
   padding: 8px 12px;
   font-size: 0.85rem;
   line-height: 1.4;
-  color: var(--text-color);
-  background: var(--content-bg);
-  border: 1px solid var(--border-color);
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
   border-radius: 6px;
   white-space: normal;
   width: max-content;
@@ -202,7 +202,7 @@
 
 .displayName {
   font-weight: 500;
-  color: var(--text-color);
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -212,7 +212,7 @@
 
 .metaLine {
   font-size: 0.8rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

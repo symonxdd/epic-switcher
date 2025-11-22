@@ -4,7 +4,7 @@
   /* ⬅️ Center horizontally */
   align-items: center;
   /* ⬅️ Vertically center the items */
-  background-color: var(--tab-bar-bg);
+  background-color: var(--bg-tab-bar);
   /* ⬅️ Theme-aware background */
   border-radius: 10px;
   padding: 10px;
@@ -26,7 +26,7 @@
   border: 1px solid transparent;
   border-radius: 8px;
   background: none;
-  color: var(--text-color);
+  color: var(--text-primary);
   padding: 8px 14px;
   font-size: 0.95rem;
   cursor: pointer;
@@ -34,17 +34,17 @@
 }
 
 .tabButton:hover {
-  background-color: var(--list-item-bg-hover);
-  border: 1px solid var(--border-color);
+  background-color: var(--bg-card-hover);
+  border: 1px solid var(--border-subtle);
 }
 
 .activeTab {
-  background-color: var(--sidebar-active-bg);
-  border: 1px solid var(--border-color);
+  background-color: var(--bg-card-active);
+  border: 1px solid var(--border-subtle);
 }
 
 .activeTab:hover {
-  background-color: var(--sidebar-active-bg);
+  background-color: var(--bg-card-active);
 }
 
 .icon {

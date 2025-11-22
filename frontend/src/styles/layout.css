@@ -5,8 +5,8 @@ body {
   padding: 0;
   height: 100%;
   font-family: "Nunito", "Segoe UI", "Roboto", sans-serif;
-  background-color: var(--sidebar-bg);
-  color: var(--text-color);
+  background-color: var(--bg-app);
+  color: var(--text-primary);
   transition: background 0.3s, color 0.3s;
 }
 

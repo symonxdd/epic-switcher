@@ -1,6 +1,6 @@
 .container {
-  color: var(--text-color);
-  background-color: var(--list-item-bg);
+  color: var(--text-primary);
+  background-color: var(--bg-card);
   border-radius: 10px;
   padding: 1rem 1.5rem;
   max-width: 720px;
@@ -15,7 +15,7 @@
   /* font-size: 0.92rem; */
   font-size: 0.87rem;
   /* line-height: 1.5; */
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .paragraph + .paragraph {
@@ -23,20 +23,20 @@
 }
 
 .file {
-  color: var(--primary-color);
+  color: var(--color-primary);
   font-weight: 600;
 }
 
 .divider {
   border: none;
-  /* border-top: 1px solid var(--border-color); */
+  /* border-top: 1px solid var(--border-subtle); */
   /* margin: 24px 0; */
   margin-top: 1.75rem;
 }
 
 .note {
   font-size: 0.95rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -46,7 +46,7 @@
 .privacyNotice {
   text-align: center;
   margin-top: 0.5rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
 }
 
 .offlineLine {
@@ -61,7 +61,7 @@
   font-weight: bold;
   margin-bottom: 0.75rem;
   font-size: 0.85rem;
-  color: var(--sidebar-text);
+  color: var(--text-primary);
 }
 
 .icon {
@@ -99,7 +99,7 @@
   font-size: 0.9rem;
   font-weight: 700;
   margin-bottom: 0.5rem;
-  color: var(--text-color);
+  color: var(--text-primary);
 }
 
 .directoriesList {
@@ -115,19 +115,19 @@
   /* vertically center icon + text */
   gap: 0.35rem;
   /* spacing between text and icon */
-  background-color: var(--list-item-bg);
-  border: 1px solid var(--border-color);
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   padding: 0.2rem 0.6rem;
   border-radius: 4px;
   font-size: 0.85rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   transition: background-color 0.2s ease, border-color 0.2s ease;
 }
 
 .directoriesList span:hover {
-  background-color: var(--list-item-bg);
-  border-color: var(--primary-color);
-  color: var(--primary-color);
+  background-color: var(--bg-card);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
 }
 
 .directoryIcon {
@@ -162,7 +162,7 @@
   gap: 0.35rem;
   font-size: 0.83rem;
   /* smaller text */
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   white-space: nowrap;
   /* prevents awkward wrapping within one label */
 }
@@ -173,14 +173,14 @@
 
 .madeWith {
   font-size: 0.77rem;
-  color: var(--sidebar-text-muted);
+  color: var(--text-secondary);
   display: flex;
   justify-content: center;
   align-items: flex-end;
 }
 
 .heart {
-  color: var(--primary-color);
+  color: var(--color-primary);
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   padding: 0 2px;
 }
