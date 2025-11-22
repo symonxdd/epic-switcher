@@ -60,11 +60,13 @@
   --primary-button-hover: #121212;
   --primary-button-text: #b9b9b9;
 
-  --list-item-bg: #202020;
+  /* --list-item-bg: #202020; */
+  --list-item-bg: #101010;
   --list-item-active-bg: #161616;
   --list-item-bg-hover: #2f2f2f;
 
-  --sidebar-bg: #202020;
+  /* --sidebar-bg: #202020; */
+  --sidebar-bg: #101010;
   --sidebar-text: #c0c0c0;
   --sidebar-text-muted: #9aa0aa;
   --sidebar-hover-bg: #303030;
@@ -75,10 +77,12 @@
   --text-color: #f3f3f3;
   --icon-color: #b0b8c1;
   --btn-hover-bg: #2b2b2b;
-  --border-color: #333;
+  /* --border-color: #333; */
+  --border-color: #232323;
   --border-color-hover: #3d3d3d;
   --button-border-color: #3d3d3d;
-  --content-bg: #272727;
+  /* --content-bg: #272727; */
+  --content-bg: #0A0A0A;
   --content-border: #3a3a3a;
 
   --toast-bg: #2a2a2a;

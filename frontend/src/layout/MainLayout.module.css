@@ -14,12 +14,13 @@
 
 .content {
   flex: 1;
-  background: var(--content-bg);
+  /* background-color: var(--content-bg); */
+  background-color: var(--content-bg);
   border-top-left-radius: 16px;
   border-left: 1px solid var(--border-color);
   border-top: 1px solid var(--border-color);
   padding: 2rem;
   overflow-y: auto;
-  transition: background 0.3s, border 0.3s;
+  transition: background-color 0.3s, border 0.3s;
   position: relative;
 }
