@@ -28,10 +28,6 @@ function HowItWorks() {
 
       <div className={styles.container}>
         <div className={styles.section}>
-          <div className={styles.offlineSubtext}>
-            No data is collected or shared. It only stores your login sessions locally on your device.
-          </div>
-
           <div className={styles.paragraph}>
             The Epic Games Launcher persists the active login session to a file called
             <span className={styles.file}> GameUserSettings.ini</span>.
@@ -50,15 +46,14 @@ function HowItWorks() {
           <hr className={styles.divider} />
 
           <div className={styles.privacyNotice}>
-            {/* merged offline + note line */}
             <div className={styles.offlineAndNote}>
               <div className={styles.inlineItem}>
                 <FaLock className={`${styles.icon} ${styles.lockIcon}`} />
-                <strong>This app works completely offline</strong>
+                <strong>Works offline</strong>
               </div>
               <div className={styles.inlineItem}>
                 <FaInfoCircle className={styles.icon} />
-                <strong>This app will not affect your accounts in any way</strong>
+                <strong>No data is collected or shared</strong>
               </div>
             </div>
           </div>

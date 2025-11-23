@@ -77,12 +77,13 @@ function Settings() {
       <PageHeader title="Settings" />
 
       <div className={styles.settingsGrid}>
-        {/* --- Accounts Page Settings --- */}
+        {/* --- General Settings --- */}
         <div className={styles.settingsGroup}>
-          <h5 className={styles.labelHeading}>Accounts page</h5>
+          <h5 className={styles.labelHeading}>General</h5>
 
           {/* Hide User IDs / (Usernames, if alias set) */}
           <div className={styles.toggleRow}>
+            <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
             <label className={styles.switch}>
               <input
                 type="checkbox"
@@ -98,13 +99,8 @@ function Settings() {
               />
               <span className={styles.slider}></span>
             </label>
-            <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
           </div>
-        </div>
 
-        {/* --- Reset Hints --- */}
-        <div className={styles.settingsGroup}>
-          <h5 className={styles.labelHeading}>Hints</h5>
           <button
             className={styles.resetButton}
             onClick={() => {
@@ -134,6 +130,7 @@ function Settings() {
 
           {currentTheme === "dark" && (
             <div className={styles.trueBlackToggle}>
+              <span className={styles.toggleLabel}>Enable True Black</span>
               <label className={styles.switch}>
                 <input
                   type="checkbox"
@@ -142,7 +139,6 @@ function Settings() {
                 />
                 <span className={styles.slider}></span>
               </label>
-              <span className={styles.toggleLabel}>Enable True Black</span>
             </div>
           )}
         </div>

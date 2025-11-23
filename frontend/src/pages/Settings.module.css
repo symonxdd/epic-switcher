@@ -4,42 +4,50 @@
   flex-direction: column;
   height: 100%;
   color: var(--text-primary);
-  /* padding: 1rem; */
+  padding: 0;
 }
 
 /* --- Responsive Layout for Groups --- */
 .settingsGrid {
   display: flex;
   flex-wrap: wrap;
-  gap: 18px 18px;
+  gap: 16px;
   justify-content: flex-start;
+  padding-bottom: 24px;
 }
 
 /* --- Shared Group Styling --- */
 .settingsGroup {
-  padding: 0.95rem;
+  padding: 20px;
   background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  flex: 0 1 300px;
+  flex: 0 1 calc(50% - 8px);
+  min-width: 280px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 16px;
   box-sizing: border-box;
-  justify-content: space-between;
-  align-items: baseline;
+  transition: transform 0.2s ease, border-color 0.2s ease;
+}
+
+.settingsGroup:hover {
+  transform: scale(1.02);
+  border-color: var(--border-strong);
 }
 
 .labelHeading {
   margin: 0;
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   color: var(--text-primary);
+  letter-spacing: -0.01em;
 }
 
 /* --- Buttons --- */
 .btnGroup {
   display: flex;
-  gap: 10px;
+  gap: 8px;
   flex-wrap: wrap;
 }
 
@@ -73,17 +81,25 @@
 .trueBlackToggle {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 12px;
   font-size: 0.9rem;
   color: var(--text-primary);
+}
+
+.toggleLabel {
+  font-weight: 500;
+  user-select: none;
+  cursor: pointer;
 }
 
 /* --- Switch Control (Material 3 style) --- */
 .switch {
   position: relative;
   display: inline-block;
-  width: 40px;
-  height: 22px;
+  width: 44px;
+  height: 24px;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .switch input {
@@ -100,27 +116,34 @@
   bottom: 0;
   background-color: #515151;
   border-radius: 999px;
-  transition: background-color 0.3s;
+  transition: background-color 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
 }
 
 .slider::before {
   content: "";
   position: absolute;
-  height: 18px;
-  width: 18px;
+  height: 20px;
+  width: 20px;
   left: 2px;
   top: 2px;
-  background-color: var(--bg-app);
+  background-color: #ffffff;
   border-radius: 50%;
-  transition: transform 0.3s, background-color 0.3s;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
 .switch input:checked + .slider {
-  background-color: #8e44ad;
+  background: linear-gradient(135deg, #8e44ad 0%, #b75edd 100%);
+  box-shadow: 0 0 8px rgba(142, 68, 173, 0.3);
 }
 
 .switch input:checked + .slider::before {
-  transform: translateX(18px);
+  transform: translateX(20px);
+}
+
+.switch:hover .slider {
+  opacity: 0.9;
 }
 
 /* --- Reset Button --- */
@@ -178,14 +201,12 @@
 /* --- Smaller muted subtext for version number --- */
 .versionSubtext {
   display: block;
-  /* forces it to appear on its own line */
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   font-weight: 500;
-  margin-top: 2px;
+  margin-top: 4px;
   color: var(--text-secondary);
-  /* theme-aware fallback */
-  opacity: 0.85;
-  /* slight fade for subtlety */
+  opacity: 0.8;
+  letter-spacing: 0.02em;
 }
 
 /* --- Responsive behavior --- */
@@ -196,33 +217,43 @@
 
   .settingsGroup {
     flex: 1 1 auto;
+    min-width: 100%;
   }
 }
 
 /* --- Footer Section --- */
 .appFooter {
   margin-top: auto;
-  /* smaller spacing at bottom */
-  /* text-align: center; */
-  font-size: 0.8rem;
+  padding: 20px 0 16px;
+  font-size: 0.85rem;
   color: var(--text-secondary);
-  background-color: var(--background-secondary, transparent);
   display: flex;
   flex-direction: column;
-  /* gap: 4px; */
-  /* slightly tighter vertical gap */
+  gap: 4px;
 }
 
+.footerTop {
+  font-weight: 500;
+  opacity: 0.9;
+  letter-spacing: 0.01em;
+}
 
+.footerBottom {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.reactText {
+  color: #61dafb;
+  font-weight: 600;
+}
 
 .goText {
   color: #00add8;
   font-weight: 600;
-  /* Go cyan */
 }
 
 .wailsText {
   color: #df0000;
   font-weight: 600;
-  /* Wails red */
 }

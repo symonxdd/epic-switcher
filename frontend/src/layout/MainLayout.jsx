@@ -21,7 +21,7 @@ function MainLayout({ children }) {
           duration: 2500,
           style: {
             background: 'var(--bg-toast)',
-            color: 'var(--text-inverse)',
+            color: 'var(--text-primary)',
             borderRadius: '6px',
             padding: '10px 14px',
             fontSize: '0.95rem',
