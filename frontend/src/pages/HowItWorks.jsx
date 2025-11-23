@@ -34,7 +34,7 @@ function HowItWorks() {
   }
 
   return (
-    <>
+    <div className={styles.pageWrapper}>
       <PageHeader title="How it works" />
 
       <div className={styles.container}>
@@ -112,12 +112,12 @@ function HowItWorks() {
             </span>
           </div>
         </div>
-
-        <div className={styles.madeWith}>
-          Meticulously engineered with<span className={styles.heart}>❤️‍🩹</span> by Symon from Belgium
-        </div>
       </div>
-    </>
+
+      <div className={styles.madeWith}>
+        Meticulously engineered with<span className={styles.heart}>❤️‍🩹</span> by Symon from Belgium
+      </div>
+    </div>
   )
 }
 

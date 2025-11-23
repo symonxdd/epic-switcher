@@ -1,3 +1,9 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100%;
+}
+
 .container {
   color: var(--text-primary);
   background-color: var(--bg-card);
@@ -218,6 +224,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-end;
+  margin-top: auto;
+  /* padding-top: 2rem; */
 }
 
 .heart {
