@@ -38,6 +38,28 @@
   font-weight: 600;
 }
 
+/* File reference that triggers session file button hover */
+.fileSessionRef {
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.fileSessionRef:hover {
+  opacity: 0.8;
+}
+
+/* File reference for JSON file - uses primary color (blue in light, yellow in dark) */
+.fileAppDataRef {
+  color: var(--color-primary);
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.fileAppDataRef:hover {
+  opacity: 0.8;
+}
+
 .divider {
   border: none;
   /* border-top: 1px solid var(--border-subtle); */
@@ -132,13 +154,25 @@
   border-radius: 4px;
   font-size: 0.85rem;
   color: var(--text-secondary);
-  transition: background-color 0.2s ease, border-color 0.2s ease;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .directoriesList span:hover {
   background-color: var(--bg-card);
   border-color: var(--color-primary);
   color: var(--color-primary);
+}
+
+/* Applied via JavaScript when file references are hovered */
+.directoriesList span.hovered {
+  background-color: var(--bg-card);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.directoriesList span:hover .directoryIcon,
+.directoriesList span.hovered .directoryIcon {
+  opacity: 1;
 }
 
 .directoryIcon {
@@ -151,10 +185,6 @@
   /* safe fallback */
   margin-left: 0;
   /* spacing handled by gap on the container */
-}
-
-.directoriesList span:hover .directoryIcon {
-  opacity: 1;
 }
 
 .offlineAndNote {

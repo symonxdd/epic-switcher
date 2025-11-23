@@ -32,7 +32,7 @@
   /* Interactive Elements */
   --btn-primary-bg: #333;
   --btn-primary-hover: #111;
-  --btn-ghost-hover: #efefef;
+  --btn-ghost-hover: #e0e0e0;
 
   /* Misc */
   --shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.08);

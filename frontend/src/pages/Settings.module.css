@@ -33,7 +33,7 @@
 
 .settingsGroup:hover {
   transform: scale(1.02);
-  border-color: var(--border-strong);
+  /* border-color: var(--border-strong); */
 }
 
 .labelHeading {
@@ -63,11 +63,12 @@
   font-family: Nunito, sans-serif;
   border-radius: 8px;
   border: 1px solid var(--border-subtle);
-  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
 
 .btn:hover {
   background-color: var(--btn-ghost-hover);
+  border-color: var(--border-strong);
 }
 
 .btn.active {

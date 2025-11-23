@@ -22,6 +22,17 @@ function HowItWorks() {
     }
   }
 
+  const handleFileRefHover = (buttonId, isHovering) => {
+    const button = document.getElementById(buttonId);
+    if (button) {
+      if (isHovering) {
+        button.classList.add(styles.hovered);
+      } else {
+        button.classList.remove(styles.hovered);
+      }
+    }
+  }
+
   return (
     <>
       <PageHeader title="How it works" />
@@ -31,17 +42,33 @@ function HowItWorks() {
           <ul className={styles.bulletList}>
             <li className={styles.paragraph}>
               The Epic Games Launcher persists the active login session to a file called
-              <span className={styles.file}> GameUserSettings.ini</span>.
+              <span
+                className={`${styles.file} ${styles.fileSessionRef}`}
+                onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+              > GameUserSettings.ini</span>.
             </li>
 
             <li className={styles.paragraph}>
               Epic Switcher reads this file, extracts the session key (and User ID), and saves it
-              in a local JSON file which allows subsequent accounts to be saved.
+              to a local <span
+                className={styles.fileAppDataRef}
+                onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
+                onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
+              >JSON file</span> which allows subsequent accounts to be saved.
             </li>
 
             <li className={styles.paragraph}>
               When Epic Switcher swaps accounts, it overwrites the session key from
-              <span className={styles.file}> GameUserSettings.ini</span> with the correct one from the JSON file.
+              <span
+                className={`${styles.file} ${styles.fileSessionRef}`}
+                onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+              > GameUserSettings.ini</span> with the correct one from the <span
+                className={styles.fileAppDataRef}
+                onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
+                onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
+              >JSON file</span>.
             </li>
           </ul>
 
@@ -65,10 +92,10 @@ function HowItWorks() {
       <div className={styles.directoriesSection}>
         <strong className={styles.directoriesTitle}>Accessed directories</strong>
         <div className={styles.directoriesList}>
-          <span onClick={() => handleOpen('appData')}>
+          <span id="appDataBtn" onClick={() => handleOpen('appData')}>
             This app's data <FiArrowUpRight className={styles.directoryIcon} />
           </span>
-          <span onClick={() => handleOpen('sessionFile')}>
+          <span id="sessionFileBtn" onClick={() => handleOpen('sessionFile')}>
             Epic active session file <FiArrowUpRight className={styles.directoryIcon} />
           </span>
           <span onClick={() => handleOpen('logs')}>
