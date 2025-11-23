@@ -1,22 +1,16 @@
 .hintBox {
-  position: absolute;
-  bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  max-width: 720px;
-  width: calc(100% - 32px);
+  margin-top: auto;
+  margin-bottom: 0;
+  width: 100%;
   display: flex;
   align-items: center;
-  /* vertically center icon + text + dismiss */
   justify-content: space-between;
   background-color: var(--bg-app);
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   padding: 12px 14px;
   border-radius: 10px;
-  /* box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12); */
   transition: background-color 0.2s ease, border 0.2s ease, opacity 0.25s ease;
-  z-index: 10;
 }
 
 .leftSection {
@@ -49,7 +43,7 @@
 
 .message {
   font-size: 0.9rem;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   line-height: 1.4;
   white-space: normal;
 }

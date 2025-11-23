@@ -96,7 +96,7 @@ export default function Accounts() {
   const activeUserId = activeLoginSession?.userId || null;
 
   return (
-    <>
+    <div className={styles.pageWrapper}>
       <PageHeader title="Accounts" />
 
       {!isLoading && (
@@ -201,6 +201,6 @@ export default function Accounts() {
       )}
 
       {sessions.length > 0 && <HintMessage />}
-    </>
+    </div>
   );
 }

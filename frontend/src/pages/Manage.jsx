@@ -60,7 +60,7 @@ export default function Manage() {
   }
 
   return (
-    <>
+    <div className={styles.pageWrapper}>
       <PageHeader title="Manage" />
 
       {!isLoading && (
@@ -119,6 +119,6 @@ export default function Manage() {
           onCancel={() => setSelectedIgnoredId(null)}
         />
       )}
-    </>
+    </div>
   );
 }

@@ -1,3 +1,10 @@
+.pageWrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 100%;
+}
+
 .noSessionsMessage {
   text-align: center;
   margin-top: 50px;
