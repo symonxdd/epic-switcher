@@ -225,36 +225,19 @@
 /* --- Footer Section --- */
 .appFooter {
   margin-top: auto;
-  padding: 20px 0 16px;
-  font-size: 0.85rem;
-  color: var(--text-secondary);
+  padding: 20px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 2px;
 }
 
-.footerTop {
-  font-weight: 500;
-  opacity: 0.9;
-  letter-spacing: 0.01em;
-}
-
+.footerTop,
 .footerBottom {
+  font-size: 0.77rem;
+  color: var(--text-secondary);
   font-weight: 400;
-  opacity: 0.8;
-}
-
-.reactText {
-  color: #61dafb;
-  font-weight: 600;
-}
-
-.goText {
-  color: #00add8;
-  font-weight: 600;
-}
-
-.wailsText {
-  color: #df0000;
-  font-weight: 600;
+  opacity: 1;
+  letter-spacing: normal;
 }

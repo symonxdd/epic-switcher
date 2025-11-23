@@ -174,9 +174,7 @@ function Settings() {
         </div>
 
         <div className={styles.footerBottom}>
-          Powered by <span className={styles.reactText}>React</span>,{" "}
-          <span className={styles.goText}>Go</span> &{" "}
-          <span className={styles.wailsText}>Wails</span>
+          Powered by React, Go & Wails
         </div>
       </div>
     </div>
