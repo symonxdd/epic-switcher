@@ -41,7 +41,8 @@ function Sidebar() {
                 : styles['sidebar-item']
             }
           >
-            <FaLayerGroup className={styles.icon} /> Manage
+            <FaLayerGroup className={styles.icon} />
+            <span>Manage</span>
           </NavLink>
         </div>
       </div>
@@ -55,7 +56,8 @@ function Sidebar() {
               : styles['sidebar-item']
           }
         >
-          <FaInfoCircle className={styles.icon} /> How it works
+          <FaInfoCircle className={styles.icon} />
+          <span>How it works</span>
         </NavLink>
 
         <NavLink
@@ -66,7 +68,8 @@ function Sidebar() {
               : styles['sidebar-item']
           }
         >
-          <FaCog className={styles.icon} /> Settings
+          <FaCog className={styles.icon} />
+          <span>Settings</span>
         </NavLink>
       </div>
     </aside>

@@ -61,6 +61,18 @@
   border-radius: 8px;
   cursor: default;
   -webkit-user-drag: none;
+  position: relative;
+  transition: background 0.2s ease, color 0.2s ease, border 0.2s ease;
+}
+
+.sidebar-item > .icon,
+.sidebar-item > span:not(.badge) {
+  transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1), color 0.2s ease;
+}
+
+.sidebar-item:hover > .icon,
+.sidebar-item:hover > span:not(.badge) {
+  transform: translateX(4px);
 }
 
 .sidebar-item:hover {
@@ -78,7 +90,6 @@
 .icon {
   font-size: 18px;
   color: var(--text-secondary);
-  transition: color var(--transition-speed);
 }
 
 .badge {
@@ -94,7 +105,9 @@
   line-height: 1;
   background-color: var(--bg-badge);
   color: var(--text-inverse);
-  transform: translateY(-0.5px);
+  position: absolute;
+  right: 20px;
+  transition: none;
 }
 
 .topGroup {
