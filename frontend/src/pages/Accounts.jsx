@@ -107,7 +107,7 @@ export default function Accounts() {
                 <div>No saved sessions found</div>
               ) : (
                 <div className={styles.extraMessage}>
-                  Log in to Epic Games Launcher to get started
+                  Log into Epic Games Launcher to get started
                 </div>
               )}
             </div>
