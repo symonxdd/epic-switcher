@@ -12,15 +12,25 @@
   text-align: left;
 }
 
+.bulletList {
+  list-style-position: outside;
+  padding-left: 1.25rem;
+  margin: 0;
+}
+
+.bulletList li {
+  margin-bottom: 0.5rem;
+}
+
+.bulletList li:last-child {
+  margin-bottom: 0;
+}
+
 .paragraph {
   /* font-size: 0.92rem; */
   font-size: 0.87rem;
   /* line-height: 1.5; */
   color: var(--text-secondary);
-}
-
-.paragraph + .paragraph {
-  margin-top: 0.5rem;
 }
 
 .file {

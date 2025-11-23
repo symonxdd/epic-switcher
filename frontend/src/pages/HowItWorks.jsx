@@ -28,20 +28,22 @@ function HowItWorks() {
 
       <div className={styles.container}>
         <div className={styles.section}>
-          <div className={styles.paragraph}>
-            The Epic Games Launcher persists the active login session to a file called
-            <span className={styles.file}> GameUserSettings.ini</span>.
-          </div>
+          <ul className={styles.bulletList}>
+            <li className={styles.paragraph}>
+              The Epic Games Launcher persists the active login session to a file called
+              <span className={styles.file}> GameUserSettings.ini</span>.
+            </li>
 
-          <div className={styles.paragraph}>
-            Epic Switcher reads this file, extracts the session key (and User ID), and saves it
-            in a local JSON file which allows subsequent accounts to be saved.
-          </div>
+            <li className={styles.paragraph}>
+              Epic Switcher reads this file, extracts the session key (and User ID), and saves it
+              in a local JSON file which allows subsequent accounts to be saved.
+            </li>
 
-          <div className={styles.paragraph}>
-            When Epic Switcher swaps accounts, it overwrites the session key from
-            <span className={styles.file}> GameUserSettings.ini</span> with the correct one from the JSON file.
-          </div>
+            <li className={styles.paragraph}>
+              When Epic Switcher swaps accounts, it overwrites the session key from
+              <span className={styles.file}> GameUserSettings.ini</span> with the correct one from the JSON file.
+            </li>
+          </ul>
 
           <hr className={styles.divider} />
 
