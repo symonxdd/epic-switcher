@@ -11,7 +11,6 @@ import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import AddAccountModal from "../components/modals/AddAccountModal";
-import NewAccountModal from "../components/modals/NewAccountModal";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
@@ -100,6 +99,9 @@ export default function Accounts() {
     ? sessions.find(s => s.userId === activeUserId) || activeLoginSession
     : null;
 
+  // Check if the currently active session is the new detected session
+  const isNewSession = newLoginSession && activeLoginSession && newLoginSession.userId === activeLoginSession.userId;
+
   return (
     <div className={styles.pageWrapper}>
       <PageHeader title="Accounts" />
@@ -117,16 +119,7 @@ export default function Accounts() {
               {/* Active Account Section */}
               {activeSession && (
                 <div className={styles.activeAccountSection}>
-                  <div
-                    className={styles.activeAccountCard}
-                    onMouseMove={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const x = e.clientX - rect.left;
-                      const y = e.clientY - rect.top;
-                      e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
-                      e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
-                    }}
-                  >
+                  <div className={styles.activeAccountCard}>
                     <div className={styles.activeAccountAvatar}>
                       {getFirstVisibleChar(
                         activeSession.alias || activeSession.username || activeSession.userId
@@ -144,9 +137,22 @@ export default function Accounts() {
                         </div>
                       )}
                     </div>
-                    <div className={styles.activeAccountBadge}>
-                      <HiOutlineCheckCircle />
-                      <span>Active</span>
+
+                    <div className={styles.activeAccountRight}>
+                      {isNewSession && (
+                        <button
+                          className={styles.addDetectedButton}
+                          onClick={handleAccept}
+                          title="Add this account to your list"
+                        >
+                          <HiPlus />
+                          <span>Add</span>
+                        </button>
+                      )}
+                      <div className={styles.activeAccountBadge}>
+                        <HiOutlineCheckCircle />
+                        <span>Active</span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -234,16 +240,6 @@ export default function Accounts() {
             </>
           )}
         </>
-      )}
-
-      {newLoginSession && (
-        <NewAccountModal
-          newLoginUsername={newLoginUsername}
-          newLoginSession={newLoginSession}
-          onAccept={handleAccept}
-          onIgnore={handleIgnore}
-          onDismiss={handleDismiss}
-        />
       )}
 
       {showAddModal && (
