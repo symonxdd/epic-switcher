@@ -95,92 +95,142 @@ export default function Accounts() {
 
   const activeUserId = activeLoginSession?.userId || null;
 
+  // Merge activeLoginSession with session data to get username/alias
+  const activeSession = activeUserId
+    ? sessions.find(s => s.userId === activeUserId) || activeLoginSession
+    : null;
+
   return (
     <div className={styles.pageWrapper}>
       <PageHeader title="Accounts" />
 
       {!isLoading && (
         <>
-          {sessions.length === 0 ? (
-            <div className={styles.noSessionsMessage}>
-              {activeLoginSession ? (
-                <div>No saved sessions found</div>
-              ) : (
-                <div className={styles.extraMessage}>
-                  Log into Epic Games Launcher to get started
-                </div>
-              )}
+          {sessions.length === 0 && !activeLoginSession ? (
+            <div className={styles.noActiveAccountMessage}>
+              <div className={styles.noActiveAccountText}>
+                Log into Epic Games Launcher to get started
+              </div>
             </div>
           ) : (
             <>
-              <div className={styles.subtitleRow}>
-                <div className={styles.subtitleWithIcon}>
-                  <div className={styles.subtitle}>Select account</div>
+              {/* Active Account Section */}
+              {activeSession && (
+                <div className={styles.activeAccountSection}>
+                  <div
+                    className={styles.activeAccountCard}
+                    onMouseMove={(e) => {
+                      const rect = e.currentTarget.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+                      e.currentTarget.style.setProperty('--mouse-x', `${x}px`);
+                      e.currentTarget.style.setProperty('--mouse-y', `${y}px`);
+                    }}
+                  >
+                    <div className={styles.activeAccountAvatar}>
+                      {getFirstVisibleChar(
+                        activeSession.alias || activeSession.username || activeSession.userId
+                      )}
+                    </div>
+                    <div className={styles.activeAccountInfo}>
+                      <div className={styles.activeAccountName}>
+                        {activeSession.alias || activeSession.username || activeSession.userId}
+                      </div>
+                      {!hideUserIds && (
+                        <div className={styles.activeAccountMeta}>
+                          {activeSession.alias
+                            ? activeSession.username || activeSession.userId
+                            : activeSession.userId}
+                        </div>
+                      )}
+                    </div>
+                    <div className={styles.activeAccountBadge}>
+                      <HiOutlineCheckCircle />
+                      <span>Active</span>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              {/* Non-Active Accounts List */}
+              {sessions.filter(s => s.userId !== activeUserId).length > 0 && (
+                <>
+                  <div className={styles.subtitleRow}>
+                    <div className={styles.subtitleWithIcon}>
+                      <div className={styles.subtitle}>Switch to another account</div>
+                      <div className={styles.addTooltipWrapper}>
+                        <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
+                        <div className={styles.tooltip}>Add new account</div>
+                      </div>
+                    </div>
+
+                    <div className={styles.viewToggle}>
+                      <button
+                        className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
+                        onClick={() => setViewMode('list')}
+                      >
+                        <HiViewList />
+                      </button>
+                      <button
+                        className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
+                        onClick={() => setViewMode('grid')}
+                      >
+                        <HiViewGrid />
+                      </button>
+                    </div>
+                  </div>
+
+                  <div
+                    className={`${styles.listContainer} ${viewMode === 'grid' ? styles.gridView : styles.listView}`}
+                  >
+                    {sessions
+                      .filter(s => s.userId !== activeUserId)
+                      .map((session) => {
+                        const displayName = session.alias || session.username || session.userId;
+                        const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
+
+                        return (
+                          <div
+                            key={session.userId}
+                            className={styles.listItem}
+                            onClick={() => handleSwitchAccount(session)}
+                          >
+                            <div className={styles.avatarWrapper}>
+                              <div className={styles.avatar}>
+                                {getFirstVisibleChar(displayName)}
+                              </div>
+                            </div>
+
+                            <div className={styles.textBlock}>
+                              <div className={styles.inlineRow}>
+                                <div className={styles.displayName}>{displayName}</div>
+                              </div>
+
+                              {!hideUserIds && (
+                                <div className={styles.inlineRow}>
+                                  <div className={styles.metaLine}>{metaLineValue}</div>
+                                </div>
+                              )}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
+                </>
+              )}
+
+              {/* Only Active Account, No Others */}
+              {sessions.length > 0 && sessions.filter(s => s.userId !== activeUserId).length === 0 && (
+                <div className={styles.noOtherAccountsMessage}>
                   <div className={styles.addTooltipWrapper}>
                     <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
                     <div className={styles.tooltip}>Add new account</div>
                   </div>
+                  <div className={styles.noOtherAccountsText}>
+                    No other accounts available. Click the + icon to add one.
+                  </div>
                 </div>
-
-                <div className={styles.viewToggle}>
-                  <button
-                    className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
-                    onClick={() => setViewMode('list')}
-                  >
-                    <HiViewList />
-                  </button>
-                  <button
-                    className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
-                    onClick={() => setViewMode('grid')}
-                  >
-                    <HiViewGrid />
-                  </button>
-                </div>
-              </div>
-
-              <div
-                className={`${styles.listContainer} ${viewMode === 'grid' ? styles.gridView : styles.listView}`}
-              >
-                {sessions.map((session) => {
-                  const displayName = session.alias || session.username || session.userId;
-                  const isActive = session.userId === activeUserId;
-                  const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
-
-                  return (
-                    <div
-                      key={session.userId}
-                      className={`${styles.listItem} ${isActive ? styles.activeItem : ''}`}
-                      onClick={() => {
-                        if (!isActive) handleSwitchAccount(session);
-                      }}
-                    >
-                      <div className={styles.avatarWrapper}>
-                        <div className={styles.avatar}>
-                          {getFirstVisibleChar(displayName)}
-                        </div>
-                        {isActive && (
-                          <div className={styles.tooltipWrapper}>
-                            <HiOutlineCheckCircle className={styles.activeIcon} />
-                            <div className={styles.tooltip}>This is the active session.</div>
-                          </div>
-                        )}
-                      </div>
-
-                      <div className={styles.textBlock}>
-                        <div className={styles.inlineRow}>
-                          <div className={styles.displayName}>{displayName}</div>
-                        </div>
-
-                        {!hideUserIds && (
-                          <div className={styles.inlineRow}>
-                            <div className={styles.metaLine}>{metaLineValue}</div>
-                          </div>
-                        )}
-                      </div>
-                    </div>
-                  );
-                })}
-              </div>
+              )}
             </>
           )}
         </>

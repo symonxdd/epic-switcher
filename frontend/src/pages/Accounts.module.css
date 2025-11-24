@@ -5,10 +5,170 @@
   min-height: 100%;
 }
 
-.noSessionsMessage {
+/* ---- Active Account Section ---- */
+.activeAccountSection {
+  margin-bottom: 28px;
+}
+
+.activeAccountCard {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 18px 22px;
+  background: var(--bg-card);
+  border-radius: 14px;
+  overflow: hidden;
+  cursor: default;
+  transition: transform 0.2s ease, border-color 0.3s ease;
+  border: 1px solid transparent;
+}
+
+.activeAccountCard::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(135deg,
+      rgba(168, 85, 247, 0.18),
+      rgba(236, 72, 153, 0.18),
+      rgba(59, 130, 246, 0.18),
+      rgba(6, 182, 212, 0.18),
+      rgba(168, 85, 247, 0.18));
+  background-size: 300% 300%;
+  animation: gradientShift 8s ease infinite;
+  opacity: 1;
+  pointer-events: none;
+  z-index: 0;
+}
+
+@keyframes gradientShift {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.activeAccountCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+      rgba(168, 85, 247, 0.12),
+      rgba(59, 130, 246, 0.08),
+      transparent 40%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.activeAccountCard:hover {
+  transform: translateY(-2px);
+  border-color: var(--border-subtle);
+}
+
+.activeAccountCard:hover::before {
+  opacity: 1;
+}
+
+.activeAccountAvatar {
+  position: relative;
+  background: linear-gradient(135deg, #a855f7 0%, #ec4899 50%, #3b82f6 100%);
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.3rem;
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  user-select: none;
+  flex-shrink: 0;
+  z-index: 2;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+}
+
+.activeAccountInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 2;
+  min-width: 0;
+}
+
+.activeAccountName {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activeAccountMeta {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activeAccountBadge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 24px;
+  color: #a855f7;
+  font-size: 0.85rem;
+  font-weight: 600;
+  flex-shrink: 0;
+  z-index: 2;
+}
+
+.activeAccountBadge svg {
+  font-size: 1.1rem;
+}
+
+/* ---- No Active Account Message ---- */
+.noActiveAccountMessage {
   text-align: center;
-  margin-top: 50px;
-  font-size: 1.2rem;
+  margin-top: 80px;
+}
+
+.noActiveAccountText {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ---- No Other Accounts Message ---- */
+.noOtherAccountsMessage {
+  text-align: center;
+  margin-top: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+}
+
+.noOtherAccountsText {
+  font-size: 0.95rem;
   color: var(--text-secondary);
 }
 
@@ -97,6 +257,7 @@
 .listContainer {
   max-height: 70vh;
   overflow-y: auto;
+  padding-top: 2px;
 }
 
 .listView {
@@ -124,13 +285,15 @@
   padding: 12px 14px;
   border: 1px solid transparent;
   border-radius: 8px;
-  transition: background 0.2s ease, border 0.2s ease;
+  transition: background 0.2s ease, border 0.2s ease, transform 0.15s ease;
   position: relative;
   background-color: var(--bg-card);
+  cursor: pointer;
 }
 
 .listItem:hover {
   border: 1px solid var(--border-subtle);
+  transform: translateY(-1px);
 }
 
 .activeItem {
@@ -162,33 +325,6 @@
   justify-content: center;
   border-radius: 50%;
   user-select: none;
-}
-
-.listItem.activeItem .avatar {
-  background: var(--bg-avatar-active);
-  /* solid blue, or any color you want */
-  /* color: #fff; */
-  /* white text for contrast */
-}
-
-/* ---- Checkmark ---- */
-.tooltipWrapper {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.activeIcon {
-  color: #22c55e;
-  font-size: 1.15rem;
-  background: var(--bg-surface);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--bg-card);
-  transition: transform 0.2s ease;
 }
 
 /* ---- Tooltip ---- */
