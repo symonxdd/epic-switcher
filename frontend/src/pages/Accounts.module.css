@@ -16,17 +16,20 @@
   align-items: center;
   gap: 18px;
   padding: 18px 22px;
-  background: var(--bg-card);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   border-radius: 14px;
   overflow: hidden;
   cursor: default;
-  transition: transform 0.2s ease, border-color 0.3s ease;
-  border: 1px solid transparent;
+  transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  border: 1px solid rgba(168, 85, 247, 0.25);
 }
 
 .activeAccountCard:hover {
   transform: translateY(-2px);
-  border-color: var(--border-subtle);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
 }
 
 .activeAccountAvatar {
@@ -375,6 +378,20 @@
 }
 
 /* ---- Animations ---- */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;
