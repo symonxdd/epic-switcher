@@ -95,12 +95,17 @@ export default function Accounts() {
   const activeUserId = activeLoginSession?.userId || null;
 
   // Merge activeLoginSession with session data to get username/alias
-  const activeSession = activeUserId
+  let activeSession = activeUserId
     ? sessions.find(s => s.userId === activeUserId) || activeLoginSession
     : null;
 
   // Check if the currently active session is the new detected session
   const isNewSession = newLoginSession && activeLoginSession && newLoginSession.userId === activeLoginSession.userId;
+
+  // If it's a new session, merge the username from newLoginUsername
+  if (isNewSession && activeSession) {
+    activeSession = { ...activeSession, username: newLoginUsername || activeSession.username };
+  }
 
   return (
     <div className={styles.pageWrapper}>
