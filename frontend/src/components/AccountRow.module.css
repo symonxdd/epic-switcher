@@ -163,21 +163,53 @@
 /* ---- Alias Input ---- */
 .aliasInputContainer {
   position: absolute;
-  top: -11px;
+  top: 50%;
   right: 62px;
-  transform-origin: top right;
+  transform-origin: center right;
   opacity: 0;
-  transform: translateY(10px) scaleY(0.8);
+  transform: translateY(-50%) scale(0.95);
   transition: all 0.18s cubic-bezier(0.25, 0.8, 0.25, 1);
   z-index: 9999;
   margin-right: 10px;
+  padding: 8px 10px;
+  border-radius: 6px;
 }
 
 .aliasInputContainer.slideUp {
   opacity: 1;
-  transform: translateY(-2px) scaleY(1);
+  transform: translateY(-50%) scale(1);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   background: var(--bg-surface);
+}
+
+/* ---- Ignored Row Styles ---- */
+.ignoredRow {
+  opacity: 0.6;
+}
+
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ignoredPill {
+  font-size: 0.75rem;
+  padding: 4px 10px;
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
+  color: var(--text-secondary);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ignoredIconButton {
+  color: var(--text-secondary);
+}
+
+.ignoredIconButton:hover {
+  color: var(--color-accent-red);
 }
 
 /* ---- Tooltip (Left version for close button) ---- */
@@ -211,4 +243,9 @@
 
 .tooltipWrapperLeft:hover .tooltipLeft {
   display: block;
+}
+
+/* ---- Alternating Row Colors ---- */
+.altRowDark {
+  background-color: color-mix(in srgb, var(--bg-surface) 50%, var(--bg-card) 50%);
 }
