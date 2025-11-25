@@ -19,7 +19,7 @@
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
   background-size: 200% 200%;
   animation: gradientShift 5s ease infinite;
-  border-radius: 14px;
+  border-radius: 24px;
   overflow: hidden;
   cursor: default;
   transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
@@ -271,17 +271,61 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: 1px solid transparent;
-  border-radius: 8px;
-  transition: background 0.2s ease, border 0.2s ease, transform 0.15s ease;
+  border: none;
+  border-radius: 18px;
+  transition: transform 0.2s ease;
   position: relative;
-  background-color: var(--bg-card);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   cursor: pointer;
+  overflow: hidden;
+}
+
+/* Animated gradient border (matches active card style) */
+.listItem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.25), rgba(168, 85, 247, 0.25));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .listItem:hover {
-  border: 1px solid var(--border-subtle);
-  transform: translateY(-1px);
+  transform: translateY(-2px);
+}
+
+/* Cursor glow effect */
+.listItem::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  transform: translate(-50%, -50%);
+}
+
+.listItem:hover::after {
+  opacity: 1;
+}
+
+/* Ensure content is above pseudo-elements */
+.listItem > * {
+  position: relative;
+  z-index: 2;
 }
 
 .activeItem {
@@ -290,7 +334,7 @@
 
 .activeItem:hover {
   background-color: var(--bg-card-active);
-  border: 1px solid transparent;
+  border: none;
 }
 
 /* ---- Avatar ---- */
@@ -302,8 +346,9 @@
 }
 
 .avatar {
-  background: color-mix(in srgb, var(--text-primary) 12%, var(--bg-card));
-  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #a855f7;
   font-weight: 600;
   font-size: 0.9rem;
   width: 36px;
@@ -379,6 +424,20 @@
 
 /* ---- Animations ---- */
 @keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+@keyframes borderRotate {
   0% {
     background-position: 0% 50%;
   }

@@ -200,11 +200,25 @@ export default function Accounts() {
                         const displayName = session.alias || session.username || session.userId;
                         const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
 
+                        const handleMouseMove = (e) => {
+                          const card = e.currentTarget;
+                          const rect = card.getBoundingClientRect();
+                          const x = e.clientX - rect.left;
+                          const y = e.clientY - rect.top;
+
+                          const glow = card.querySelector(`.${styles.listItem}::after`);
+                          if (card) {
+                            card.style.setProperty('--mouse-x', `${x}px`);
+                            card.style.setProperty('--mouse-y', `${y}px`);
+                          }
+                        };
+
                         return (
                           <div
                             key={session.userId}
                             className={styles.listItem}
                             onClick={() => handleSwitchAccount(session)}
+                            onMouseMove={handleMouseMove}
                           >
                             <div className={styles.avatarWrapper}>
                               <div className={styles.avatar}>
