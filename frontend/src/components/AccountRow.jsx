@@ -35,14 +35,17 @@ export default function AccountRow({
       if (
         inputRef.current &&
         !inputRef.current.contains(e.target) &&
-        !e.target.closest(`.${styles.aliasIconButton}`)
+        !e.target.closest(`.${styles.iconButton}`)
       ) {
         onCloseEdit?.();
       }
     }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [onCloseEdit]);
+
+    if (isEditing) {
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => document.removeEventListener("mousedown", handleClickOutside);
+    }
+  }, [onCloseEdit, isEditing]);
 
   function getFirstVisibleChar(str) {
     if (!str) return "";
@@ -59,6 +62,10 @@ export default function AccountRow({
 
   const handleDelete = (e) => {
     e.stopPropagation();
+    // Close the alias input if it's open
+    if (isEditing) {
+      onCloseEdit?.();
+    }
     onDeleteSession?.(session.userId);
   };
 
@@ -118,7 +125,7 @@ export default function AccountRow({
             {isEditing && (
               <div
                 ref={inputRef}
-                className={`${styles.aliasInputContainer} ${styles.slideUp}`}
+                className={styles.aliasInputContainer}
               >
                 <AliasInput
                   userId={session.userId}

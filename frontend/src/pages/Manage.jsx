@@ -76,7 +76,10 @@ export default function Manage() {
                   isActive={session.userId === activeUserId}
                   isAltRow={idx % 2 === 1}
                   onAliasChange={onAliasChange}
-                  onDeleteSession={() => setDeleteTarget(session)}
+                  onDeleteSession={() => {
+                    setEditingAliasForId(null);
+                    setDeleteTarget(session);
+                  }}
                   isEditing={editingAliasForId === session.userId}
                   onEditToggle={() =>
                     setEditingAliasForId(prev =>
