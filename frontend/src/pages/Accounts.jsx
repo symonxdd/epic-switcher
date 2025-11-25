@@ -175,20 +175,22 @@ export default function Accounts() {
                       </div>
                     </div>
 
-                    <div className={styles.viewToggle}>
-                      <button
-                        className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
-                        onClick={() => setViewMode('list')}
-                      >
-                        <HiViewList />
-                      </button>
-                      <button
-                        className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
-                        onClick={() => setViewMode('grid')}
-                      >
-                        <HiViewGrid />
-                      </button>
-                    </div>
+                    {sessions.filter(s => s.userId !== activeUserId).length >= 2 && (
+                      <div className={styles.viewToggle}>
+                        <button
+                          className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
+                          onClick={() => setViewMode('list')}
+                        >
+                          <HiViewList />
+                        </button>
+                        <button
+                          className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
+                          onClick={() => setViewMode('grid')}
+                        >
+                          <HiViewGrid />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div
