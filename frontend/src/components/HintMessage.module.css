@@ -9,7 +9,7 @@
   border: 1px solid var(--border-subtle);
   color: var(--text-primary);
   padding: 12px 14px;
-  border-radius: 10px;
+  border-radius: 18px;
   transition: background-color 0.2s ease, border 0.2s ease, opacity 0.25s ease;
 }
 
