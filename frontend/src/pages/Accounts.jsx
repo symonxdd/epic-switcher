@@ -148,7 +148,6 @@ export default function Accounts() {
                         <button
                           className={styles.addDetectedButton}
                           onClick={handleAccept}
-                          title="Add this account to your list"
                         >
                           <HiPlus />
                           <span>Add</span>

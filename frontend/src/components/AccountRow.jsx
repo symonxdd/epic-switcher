@@ -13,13 +13,13 @@ export default function AccountRow({
   userId,
   isActive,
   isIgnored = false,
-  isAltRow = false,
   onAliasChange,
   onDeleteSession,
   onUnignoreClick,
   isEditing = false,
   onEditToggle,
   onCloseEdit,
+  onMouseMove,
 }) {
   const inputRef = useRef(null);
 
@@ -76,19 +76,11 @@ export default function AccountRow({
 
   return (
     <div
-      className={`${styles.listItem} 
-        ${isIgnored ? styles.ignoredRow : ""}
-        ${isAltRow ? styles.altRowDark : styles.altRowLight}`}
+      className={`${styles.listItem} ${isIgnored ? styles.ignoredRow : ""}`}
+      onMouseMove={onMouseMove}
     >
       <div className={styles.avatarWrapper}>
         <div className={styles.avatar}>{getFirstVisibleChar(displayName)}</div>
-
-        {isActive && (
-          <div className={styles.tooltipWrapper}>
-            <HiOutlineCheckCircle className={styles.activeIcon} />
-            <div className={styles.tooltip}>This is the active session.</div>
-          </div>
-        )}
       </div>
 
       <div className={styles.textBlock}>
@@ -104,6 +96,13 @@ export default function AccountRow({
       <div className={styles.actionsWrapper}>
         {!isIgnored ? (
           <>
+            {isActive && (
+              <div className={styles.activeBadge}>
+                <HiOutlineCheckCircle />
+                <span>Active</span>
+              </div>
+            )}
+
             <button
               type="button"
               className={`${styles.iconButton} ${session.alias ? styles.hasAlias : ""}`}

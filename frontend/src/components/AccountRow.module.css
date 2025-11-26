@@ -2,21 +2,62 @@
 .listItem {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 12px;
-  width: 100%;
   padding: 12px 14px;
-  border-radius: 10px;
-  border: 1px solid var(--border-subtle);
-  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: none;
+  border-radius: 18px;
+  transition: transform 0.2s ease;
   position: relative;
-  overflow: visible;
-  background-color: var(--bg-card);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
+  overflow: hidden;
+}
+
+/* Animated gradient border (matches Accounts page style) */
+.listItem::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  padding: 1px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.25), rgba(168, 85, 247, 0.25));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  pointer-events: none;
 }
 
 .listItem:hover {
   transform: translateY(-2px);
+}
+
+/* Cursor glow effect */
+.listItem::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  transform: translate(-50%, -50%);
+}
+
+.listItem:hover::after {
+  opacity: 1;
+}
+
+/* Ensure content is above pseudo-elements */
+.listItem > * {
+  position: relative;
+  z-index: 2;
 }
 
 /* ---- Avatar ---- */
@@ -29,8 +70,9 @@
 }
 
 .avatar {
-  background: color-mix(in srgb, var(--text-primary) 15%, var(--bg-card));
-  color: var(--text-primary);
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  color: #a855f7;
   font-weight: 600;
   font-size: 0.9rem;
   width: 36px;
@@ -42,45 +84,23 @@
   user-select: none;
 }
 
-/* ---- Active Check ---- */
-.tooltipWrapper {
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  display: inline-flex;
+/* ---- Active Badge ---- */
+.activeBadge {
+  display: flex;
   align-items: center;
-  justify-content: center;
-  z-index: 10;
-}
-
-.activeIcon {
-  color: #22c55e;
-  font-size: 1.1rem;
-  background: var(--bg-surface);
-  border-radius: 50%;
-  box-shadow: 0 0 0 2px var(--bg-card);
-}
-
-.tooltip {
-  width: 180px;
-  position: absolute;
-  top: 50%;
-  left: 120%;
-  transform: translateY(-50%);
-  padding: 8px 12px;
+  gap: 6px;
+  padding: 8px 16px;
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+  border: 1px solid rgba(168, 85, 247, 0.3);
+  border-radius: 24px;
+  color: #a855f7;
   font-size: 0.85rem;
-  line-height: 1.4;
-  color: var(--text-primary);
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  border-radius: 6px;
-  white-space: normal;
-  display: none;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
-.tooltipWrapper:hover .tooltip {
-  display: block;
+.activeBadge svg {
+  font-size: 1.1rem;
 }
 
 /* ---- Text ---- */
@@ -134,7 +154,7 @@
 /* ---- Icon Buttons ---- */
 .iconButton {
   background: color-mix(in srgb, var(--text-secondary) 8%, transparent);
-  border: none;
+  border: 1px solid color-mix(in srgb, var(--text-secondary) 15%, transparent);
   color: var(--text-secondary);
   border-radius: 999px;
   cursor: pointer;
@@ -142,7 +162,7 @@
   align-items: center;
   justify-content: center;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   padding: 8px;
   min-width: 36px;
   min-height: 36px;
@@ -150,8 +170,9 @@
 
 .iconButton:hover {
   background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--text-secondary) 25%, transparent);
   color: var(--text-primary);
-  /* transform: scale(1.08); */
+  transform: translateY(-1px);
 }
 
 .iconButton:active {
@@ -274,4 +295,19 @@
 
 .tooltipWrapperLeft:hover .tooltipLeft {
   display: block;
+}
+
+/* ---- Animations ---- */
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }

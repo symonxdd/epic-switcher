@@ -69,26 +69,40 @@ export default function Manage() {
             <div className={styles.noSessionsMessage}>No sessions available.</div>
           ) : (
             <div className={styles.listContainer}>
-              {sessions.map((session, idx) => (
-                <AccountRow
-                  key={session.userId}
-                  session={session}
-                  isActive={session.userId === activeUserId}
-                  isAltRow={idx % 2 === 1}
-                  onAliasChange={onAliasChange}
-                  onDeleteSession={() => {
-                    setEditingAliasForId(null);
-                    setDeleteTarget(session);
-                  }}
-                  isEditing={editingAliasForId === session.userId}
-                  onEditToggle={() =>
-                    setEditingAliasForId(prev =>
-                      prev === session.userId ? null : session.userId
-                    )
+              {sessions.map((session, idx) => {
+                const handleMouseMove = (e) => {
+                  const card = e.currentTarget;
+                  const rect = card.getBoundingClientRect();
+                  const x = e.clientX - rect.left;
+                  const y = e.clientY - rect.top;
+
+                  if (card) {
+                    card.style.setProperty('--mouse-x', `${x}px`);
+                    card.style.setProperty('--mouse-y', `${y}px`);
                   }
-                  onCloseEdit={() => setEditingAliasForId(null)}
-                />
-              ))}
+                };
+
+                return (
+                  <AccountRow
+                    key={session.userId}
+                    session={session}
+                    isActive={session.userId === activeUserId}
+                    onAliasChange={onAliasChange}
+                    onDeleteSession={() => {
+                      setEditingAliasForId(null);
+                      setDeleteTarget(session);
+                    }}
+                    isEditing={editingAliasForId === session.userId}
+                    onEditToggle={() =>
+                      setEditingAliasForId(prev =>
+                        prev === session.userId ? null : session.userId
+                      )
+                    }
+                    onCloseEdit={() => setEditingAliasForId(null)}
+                    onMouseMove={handleMouseMove}
+                  />
+                );
+              })}
 
               {ignoredIds.map((userId, idx) => (
                 <AccountRow
@@ -96,7 +110,6 @@ export default function Manage() {
                   userId={userId}
                   isActive={userId === activeUserId}
                   isIgnored
-                  isAltRow={false}
                   onUnignoreClick={() => setSelectedIgnoredId(userId)}
                 />
               ))}
