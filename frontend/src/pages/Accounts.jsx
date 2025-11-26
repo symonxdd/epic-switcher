@@ -177,7 +177,7 @@ export default function Accounts() {
                 <>
                   <div className={styles.subtitleRow}>
                     <div className={styles.subtitleWithIcon}>
-                      <div className={styles.subtitle}>Switch to another account</div>
+                      <div className={styles.subtitle}>Switch account</div>
                       <div className={styles.addTooltipWrapper}>
                         <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
                         <div className={styles.tooltip}>Add new account</div>

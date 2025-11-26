@@ -272,7 +272,7 @@
 .listView {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2px;
+  gap: 8px;
   justify-content: start;
 }
 
@@ -283,7 +283,7 @@
 .gridView {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 2px;
+  gap: 8px;
 }
 
 /* ---- List Item ---- */
