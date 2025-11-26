@@ -124,7 +124,17 @@ export default function Accounts() {
               {/* Active Account Section */}
               {activeSession && (
                 <div className={styles.activeAccountSection}>
-                  <div className={styles.activeAccountCard}>
+                  <div
+                    className={styles.activeAccountCard}
+                    onMouseMove={(e) => {
+                      const card = e.currentTarget;
+                      const rect = card.getBoundingClientRect();
+                      const x = e.clientX - rect.left;
+                      const y = e.clientY - rect.top;
+                      card.style.setProperty('--mouse-x', `${x}px`);
+                      card.style.setProperty('--mouse-y', `${y}px`);
+                    }}
+                  >
                     <div className={styles.activeAccountAvatar}>
                       {getFirstVisibleChar(
                         activeSession.alias || activeSession.username || activeSession.userId

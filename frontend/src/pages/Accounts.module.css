@@ -32,6 +32,27 @@
   box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
 }
 
+/* Cursor glow effect for active card */
+.activeAccountCard::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  z-index: 1;
+  left: var(--mouse-x, 50%);
+  top: var(--mouse-y, 50%);
+  transform: translate(-50%, -50%);
+}
+
+.activeAccountCard:hover::after {
+  opacity: 1;
+}
+
 .activeAccountAvatar {
   position: relative;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
