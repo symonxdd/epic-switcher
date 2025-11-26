@@ -24,11 +24,11 @@ export default function DeleteSessionModal({ session, onConfirm, onCancel }) {
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
-            <button className={styles.primaryButton} onClick={onConfirm}>
-              Delete
-            </button>
             <button className={styles.secondaryButton} onClick={onCancel}>
-              Cancel
+              <span>Cancel</span>
+            </button>
+            <button className={styles.primaryButton} onClick={onConfirm}>
+              <span>Delete</span>
             </button>
           </div>
         </div>

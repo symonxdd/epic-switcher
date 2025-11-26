@@ -21,11 +21,11 @@ export default function AddAccountModal({
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
-            <button className={styles.primaryButton} onClick={onMoveAside}>
-              Move aside
-            </button>
             <button className={styles.secondaryButton} onClick={onCancel}>
               Cancel
+            </button>
+            <button className={styles.primaryButton} onClick={onMoveAside}>
+              Move aside
             </button>
           </div>
         </div>

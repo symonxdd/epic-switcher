@@ -6,7 +6,7 @@
   gap: 12px;
   width: 100%;
   padding: 12px 14px;
-  border-radius: 18px;
+  border-radius: 10px;
   border: 1px solid var(--border-subtle);
   transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
@@ -17,7 +17,6 @@
 
 .listItem:hover {
   transform: translateY(-2px);
-  border-color: color-mix(in srgb, var(--border-subtle) 70%, var(--text-secondary) 30%);
 }
 
 /* ---- Avatar ---- */
@@ -137,7 +136,7 @@
   background: color-mix(in srgb, var(--text-secondary) 8%, transparent);
   border: none;
   color: var(--text-secondary);
-  border-radius: 8px;
+  border-radius: 999px;
   cursor: pointer;
   display: flex;
   align-items: center;
@@ -152,7 +151,7 @@
 .iconButton:hover {
   background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
   color: var(--text-primary);
-  transform: scale(1.08);
+  /* transform: scale(1.08); */
 }
 
 .iconButton:active {

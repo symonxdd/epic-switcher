@@ -74,45 +74,51 @@
 .modalButtonRow {
   display: flex;
   gap: 0.75rem;
+  justify-content: flex-end;
 }
 
 .modalButtons button {
-  width: 100%;
+  /* width: 100%; */
   font-size: 0.9rem;
-  font-weight: 400;
+  font-weight: 600;
   padding: 0.7rem 1rem;
-  border-radius: 8px;
+  border-radius: 15px;
   cursor: default;
   transition:
     background-color var(--transition-speed) ease,
     color var(--transition-speed) ease,
-    border-color var(--transition-speed) ease,
-    transform var(--transition-speed) ease;
+    border-color var(--transition-speed) ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
+  gap: 8px;
+}
+
+.buttonIcon {
+  width: 1.1rem;
+  height: 1.1rem;
 }
 
 .primaryButton {
-  background: var(--btn-primary-bg);
-  color: var(--text-inverse);
+  background: var(--text-primary);
+  color: var(--bg-surface);
   border: none;
+  font-weight: 500;
 }
 
 .primaryButton:hover {
-  background: var(--btn-primary-hover);
-  transform: translateY(-1px);
+  background: color-mix(in srgb, var(--text-primary) 80%, var(--bg-surface) 20%);
 }
 
 .secondaryButton {
-  background: var(--btn-ghost-hover);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  background: transparent;
+  color: var(--text-secondary);
+  border: none;
 }
 
 .secondaryButton:hover {
   background-color: var(--btn-ghost-hover);
-  transform: translateY(-1px);
+  color: var(--text-primary);
 }
 
 .ghostButton {
