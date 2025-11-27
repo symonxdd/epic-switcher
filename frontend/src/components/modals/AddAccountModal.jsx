@@ -1,11 +1,34 @@
+import { useState, useRef } from 'react'
 import styles from './ModalShared.module.css'
 
 export default function AddAccountModal({
   onMoveAside,
   onCancel
 }) {
+  const [isClosing, setIsClosing] = useState(false);
+  const pendingActionRef = useRef(null);
+
+  const handleAnimationEnd = () => {
+    if (isClosing && pendingActionRef.current) {
+      pendingActionRef.current();
+    }
+  };
+
+  const handleMoveAside = () => {
+    pendingActionRef.current = onMoveAside;
+    setIsClosing(true);
+  };
+
+  const handleCancel = () => {
+    pendingActionRef.current = onCancel;
+    setIsClosing(true);
+  };
+
   return (
-    <div className={styles.modalOverlay}>
+    <div
+      className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+      onAnimationEnd={handleAnimationEnd}
+    >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h3>Prepare to Add Account</h3>
 
@@ -21,10 +44,10 @@ export default function AddAccountModal({
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
-            <button className={styles.secondaryButton} onClick={onCancel}>
+            <button className={styles.secondaryButton} onClick={handleCancel}>
               Cancel
             </button>
-            <button className={styles.primaryButton} onClick={onMoveAside}>
+            <button className={styles.primaryButton} onClick={handleMoveAside}>
               Move aside
             </button>
           </div>

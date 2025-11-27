@@ -148,6 +148,16 @@
   }
 }
 
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
 @keyframes slideUp {
   from {
     transform: translateY(30px);
@@ -158,4 +168,25 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+}
+
+/* Exit animation classes */
+.modalOverlay.closing {
+  animation: fadeOut 0.2s ease forwards;
+}
+
+.modalOverlay.closing .modal {
+  animation: slideDown 0.2s ease forwards;
 }

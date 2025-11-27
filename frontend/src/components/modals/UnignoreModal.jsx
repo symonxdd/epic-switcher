@@ -1,8 +1,32 @@
+import { useState, useRef } from 'react';
 import styles from "./ModalShared.module.css";
 
 export default function UnignoreModal({ userId, onConfirm, onCancel }) {
+  const [isClosing, setIsClosing] = useState(false);
+  const pendingActionRef = useRef(null);
+
+  const handleAnimationEnd = () => {
+    if (isClosing && pendingActionRef.current) {
+      pendingActionRef.current();
+    }
+  };
+
+  const handleConfirm = () => {
+    pendingActionRef.current = onConfirm;
+    setIsClosing(true);
+  };
+
+  const handleCancel = () => {
+    pendingActionRef.current = onCancel;
+    setIsClosing(true);
+  };
+
   return (
-    <div className={styles.modalOverlay} onClick={onCancel}>
+    <div
+      className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+      onClick={handleCancel}
+      onAnimationEnd={handleAnimationEnd}
+    >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h3>Revert Ignored Account</h3>
 
@@ -15,10 +39,10 @@ export default function UnignoreModal({ userId, onConfirm, onCancel }) {
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
-            <button className={styles.primaryButton} onClick={onConfirm}>
+            <button className={styles.primaryButton} onClick={handleConfirm}>
               Un-ignore
             </button>
-            <button className={styles.secondaryButton} onClick={onCancel}>
+            <button className={styles.secondaryButton} onClick={handleCancel}>
               Cancel
             </button>
           </div>
