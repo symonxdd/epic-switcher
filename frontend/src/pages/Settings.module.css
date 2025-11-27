@@ -21,7 +21,7 @@
   padding: 20px;
   background-color: var(--bg-card);
   border: 1px solid var(--border-subtle);
-  border-radius: 12px;
+  border-radius: 24px;
   flex: 0 1 calc(50% - 8px);
   min-width: 280px;
   display: flex;
@@ -61,7 +61,7 @@
   font-size: 0.96rem;
   font-weight: 400;
   font-family: Nunito, sans-serif;
-  border-radius: 8px;
+  border-radius: 24px;
   border: 1px solid var(--border-subtle);
   transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out, border-color 0.2s ease-in-out;
 }
@@ -153,7 +153,7 @@
   background-color: var(--background-tertiary, transparent);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: 24px;
   padding: 8px 14px;
   font-size: 0.96rem;
   font-family: Nunito, sans-serif;
@@ -174,7 +174,7 @@
   background-color: var(--background-tertiary, transparent);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
-  border-radius: 8px;
+  border-radius: 24px;
   padding: 8px 14px;
   font-size: 0.96rem;
   font-family: Nunito, sans-serif;
