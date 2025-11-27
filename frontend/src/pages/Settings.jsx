@@ -83,9 +83,10 @@ function Settings() {
 
           {/* Hide User IDs / (Usernames, if alias set) */}
           <div className={styles.toggleRow}>
-            <span className={styles.toggleLabel}>Hide User IDs on Accounts page</span>
+            <label htmlFor="hideUserIdsToggle" className={styles.toggleLabel}>Hide User IDs on Accounts page</label>
             <label className={styles.switch}>
               <input
+                id="hideUserIdsToggle"
                 type="checkbox"
                 checked={hideUserIds}
                 onChange={(e) => {
@@ -130,9 +131,10 @@ function Settings() {
 
           {currentTheme === "dark" && (
             <div className={styles.trueBlackToggle}>
-              <span className={styles.toggleLabel}>Enable True Black</span>
+              <label htmlFor="trueBlackToggle" className={styles.toggleLabel}>Enable True Black</label>
               <label className={styles.switch}>
                 <input
+                  id="trueBlackToggle"
                   type="checkbox"
                   checked={trueBlack}
                   onChange={(e) => setTrueBlack(e.target.checked)}
