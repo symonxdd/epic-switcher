@@ -81,7 +81,7 @@ Thanks for supporting open-source software! 💙
 ## 📸 Screens  
 
 ### Accounts page
-![accounts-page](./docs/screens/accounts-page.png)
+![accounts-page](./docs/screens/accounts-page-with-add-button.png)
 
 <br/>
 
@@ -91,12 +91,7 @@ Thanks for supporting open-source software! 💙
 <br/>
 
 ### Manage page
-![manage-page](./docs/screens/manage-page.png) 
-
-<br/>
-
-### Manage page (alias feature)
-![manage-page-alias-feature](./docs/screens/manage-page-alias-feature.png) 
+![manage-page](./docs/screens/manage-page-with-hint.png)
 
 <br/>
 
@@ -106,7 +101,7 @@ Thanks for supporting open-source software! 💙
 <br/>
 
 ### How it Works page
-![/how-it-works](./docs/screens/how-it-works.png) 
+![/how-it-works](./docs/screens/how-it-works-page.png) 
 
 <br/>
 
