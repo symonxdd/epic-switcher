@@ -78,7 +78,7 @@ Thanks for supporting open-source software! 💙
 
 <br/>
 
-## 📸 Screens  
+## 🖼️ Screens  
 
 ### Accounts page
 ![accounts-page](./docs/screens/accounts-page-with-add-button.png)
@@ -209,13 +209,14 @@ When a `v*` tag is pushed, the [`release.yml`](.github/workflows/release.yml) Gi
 <br/>
 
 ## Built with ❤️
-This project is built with passion using:
+This project is built with:
 - [Wails](https://wails.io/)
 - [Go](https://go.dev/)
 - [React](https://react.dev/)
 
-### 🖼️ Assets & Credits
-Logo by [Epicons](https://www.svgrepo.com/svg/355688/user-a-solid) from [SVGRepo](https://www.svgrepo.com/)
+### Credits 
+- Logo symbol by [Epicons](https://www.svgrepo.com/svg/355688/user-a-solid) from [SVGRepo](https://www.svgrepo.com/)
+- Demo screenshot background by [Unsplash](https://unsplash.com/photos/a-close-up-of-a-cell-phone-with-a-purple-background-Cp4dn8_6Y5I)
 
 <div align="center">
   <sub>Made with 💛 by Symon from Belgium</sub>
