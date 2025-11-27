@@ -149,6 +149,7 @@
 
 /* --- Reset Button --- */
 .resetButton {
+  width: fit-content;
   background-color: var(--background-tertiary, transparent);
   color: var(--text-primary);
   border: 1px solid var(--border-subtle);
