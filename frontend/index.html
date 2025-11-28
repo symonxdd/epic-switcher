@@ -5,6 +5,25 @@
   <meta charset="UTF-8" />
   <meta content="width=device-width, initial-scale=1.0" name="viewport" />
   <title>epic-switcher</title>
+
+  <!-- Apply theme before React mounts to prevent flickering -->
+  <script>
+    (function () {
+      // Read theme preference from localStorage
+      const savedTheme = localStorage.getItem('theme') || 'system';
+      const savedTrueBlack = localStorage.getItem('trueBlack') === 'true';
+
+      // Determine system theme
+      const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+
+      // Apply actual theme
+      const actualTheme = savedTheme === 'system' ? systemTheme : savedTheme;
+      document.documentElement.setAttribute('data-theme', actualTheme);
+
+      // Apply true black if enabled
+      document.documentElement.setAttribute('data-true-black', savedTrueBlack);
+    })();
+  </script>
 </head>
 
 <body>
