@@ -177,11 +177,13 @@ export default function Accounts() {
                 <>
                   <div className={styles.subtitleRow}>
                     <div className={styles.subtitleWithIcon}>
-                      <div className={styles.subtitle}>Switch account</div>
-                      <div className={styles.addTooltipWrapper}>
-                        <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
-                        <div className={styles.tooltip}>Add new account</div>
-                      </div>
+                      <div className={styles.subtitle}>{activeSession ? 'Switch account' : 'Select account'}</div>
+                      {activeSession && (
+                        <div className={styles.addTooltipWrapper}>
+                          <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
+                          <div className={styles.tooltip}>Add new account</div>
+                        </div>
+                      )}
                     </div>
 
                     {sessions.filter(s => s.userId !== activeUserId).length >= 2 && (
