@@ -120,18 +120,28 @@ func (a *AuthService) IgnoreDetectedSession(userID string) error {
 // MoveAsideActiveSession stops the Epic Games Launcher, clears its login session,
 // and re-launches it for the user to sign in again.
 func (a *AuthService) MoveAsideActiveSession() error {
-	fmt.Println("🔹 Attempting to close Epic Games Launcher...")
+	fmt.Println("Stopping Epic Games Launcher...")
 
 	// 1️⃣ Kill the Epic Games Launcher process
 	killCmd := helper.NewCommand("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
-	if err := killCmd.Run(); err != nil {
-		// It's okay if it wasn't running — only fail if something else went wrong
-		if !strings.Contains(err.Error(), "not found") {
+
+	// CombinedOutput runs the command and returns both standard output and standard error.
+	// This is crucial because taskkill writes specific messages to stderr/stdout depending on the outcome.
+	output, err := killCmd.CombinedOutput()
+
+	if err != nil {
+		// If err is not nil, the command exited with a non-zero status (failed).
+		// However, a failure can happen simply because the process wasn't running to begin with.
+		outputStr := string(output)
+
+		if strings.Contains(strings.ToLower(outputStr), "not found") {
+			// Process not running, which is fine.
+		} else {
+			fmt.Printf("Error closing Epic Games Launcher: %v\nOutput: %s\n", err, outputStr)
 			return fmt.Errorf("failed to close Epic Games Launcher: %w", err)
 		}
-		fmt.Println("ℹ️ Epic Games Launcher was not running.")
 	} else {
-		fmt.Println("✅ Epic Games Launcher closed successfully.")
+		fmt.Println("Epic Games Launcher closed.")
 	}
 
 	// 2️⃣ Confirm process is actually gone (poll until no longer found)
@@ -145,38 +155,50 @@ func (a *AuthService) MoveAsideActiveSession() error {
 			break // fully stopped
 		}
 		if time.Since(start) > maxWait {
+			fmt.Println("Timeout waiting for Epic Games Launcher to close.")
 			return fmt.Errorf("timeout waiting for Epic Games Launcher to close")
 		}
 		time.Sleep(250 * time.Millisecond)
 	}
 
-	fmt.Println("✅ Confirmed Epic Games Launcher process has exited.")
+	fmt.Println("Confirmed Epic Games Launcher process has exited")
 
 	// 3️⃣ Clear the contents of the login session file
 	iniPath := utils.GetEpicLoginSessionPath()
 	if iniPath == "" {
+		fmt.Println("Error: Could not find Epic Games session path.")
 		return fmt.Errorf("could not find Epic Games session path")
 	}
 
-	fmt.Println("🔹 Clearing session file at:", iniPath)
+	// Check if file exists and is writable
+	if _, err := os.Stat(iniPath); err != nil {
+		fmt.Printf("Error accessing session file: %v\n", err)
+		return fmt.Errorf("cannot access session file: %w", err)
+	}
+
 	if err := os.WriteFile(iniPath, []byte(""), 0644); err != nil {
+		fmt.Printf("Error clearing session file: %v\n", err)
 		return fmt.Errorf("failed to clear session file: %w", err)
 	}
-	fmt.Println("✅ Session file cleared.")
 
 	// 4️⃣ Re-launch the Epic Games Launcher
+	fmt.Println("Re-launching Epic Games Launcher...")
 	launcherPath := utils.GetEpicLauncherPath()
-	fmt.Println("🔹 Launching Epic Games Launcher:", launcherPath)
+
+	// Check if launcher executable exists
+	if _, err := os.Stat(launcherPath); err != nil {
+		fmt.Printf("Error: Launcher executable not found at %s\n", launcherPath)
+		return fmt.Errorf("launcher executable not found at %s: %w", launcherPath, err)
+	}
 
 	startCmd := helper.NewCommand(launcherPath)
-	startCmd.Stdout = os.Stdout
-	startCmd.Stderr = os.Stderr
 
 	if err := startCmd.Start(); err != nil {
+		fmt.Printf("Error launching Epic Games Launcher: %v\n", err)
 		return fmt.Errorf("failed to launch Epic Games Launcher: %w", err)
 	}
 
-	fmt.Println("✅ Epic Games Launcher started successfully.")
+	fmt.Println("Epic Games Launcher started.")
 	return nil
 }
 

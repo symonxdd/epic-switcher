@@ -6,21 +6,32 @@ export default function AddAccountModal({
   onCancel
 }) {
   const [isClosing, setIsClosing] = useState(false);
-  const pendingActionRef = useRef(null);
+  const closeCallbackRef = useRef(null);
 
-  const handleAnimationEnd = () => {
-    if (isClosing && pendingActionRef.current) {
-      pendingActionRef.current();
+  const handleAnimationEnd = (e) => {
+    // Only trigger when the overlay's own animation ends,
+    // not when child animations (modal slideDown) bubble up
+    if (e.target !== e.currentTarget) return;
+
+    // After animation completes, call the parent callback to unmount
+    if (isClosing && closeCallbackRef.current) {
+      closeCallbackRef.current();
     }
   };
 
   const handleMoveAside = () => {
-    pendingActionRef.current = onMoveAside;
+    // Execute backend action immediately (don't wait for animation)
+    onMoveAside();
+    // Store the callback to close modal state after animation
+    closeCallbackRef.current = () => { }; // No-op, onMoveAside already handles closing
+    // Start exit animation
     setIsClosing(true);
   };
 
   const handleCancel = () => {
-    pendingActionRef.current = onCancel;
+    // Store the cancel callback to execute after animation
+    closeCallbackRef.current = onCancel;
+    // Start exit animation
     setIsClosing(true);
   };
 
