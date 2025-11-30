@@ -164,16 +164,17 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  border: none;
   border-radius: 24px;
-  color: #a855f7;
+  color: white;
   font-size: 0.85rem;
   font-weight: 600;
   font-family: inherit;
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
+  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
 }
 
 .addDetectedButton svg {
@@ -181,14 +182,14 @@
 }
 
 .addDetectedButton:hover {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.25), rgba(59, 130, 246, 0.25));
-  border-color: rgba(168, 85, 247, 0.5);
   transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.4);
+  filter: brightness(1.1);
 }
 
 .addDetectedButton:active {
   transform: translateY(0);
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2), rgba(59, 130, 246, 0.2));
+  filter: brightness(0.95);
 }
 
 .activeAccountBadge {
