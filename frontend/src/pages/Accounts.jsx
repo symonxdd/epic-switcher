@@ -107,6 +107,10 @@ export default function Accounts() {
     activeSession = { ...activeSession, username: newLoginUsername || activeSession.username };
   }
 
+  // Calculate non-active accounts count and label
+  const nonActiveAccountsCount = sessions.filter(s => s.userId !== activeUserId).length;
+  const accountsLabel = nonActiveAccountsCount === 1 ? 'Available account' : 'Available accounts';
+
   return (
     <div className={styles.pageWrapper}>
       <PageHeader title="Accounts" />
@@ -189,11 +193,11 @@ export default function Accounts() {
               )}
 
               {/* Non-Active Accounts List */}
-              {sessions.filter(s => s.userId !== activeUserId).length > 0 && (
+              {nonActiveAccountsCount > 0 && (
                 <>
                   <div className={styles.subtitleRow}>
                     <div className={styles.subtitleWithIcon}>
-                      <div className={styles.subtitle}>{activeSession ? 'Switch account' : 'Select account'}</div>
+                      <div className={styles.subtitle}>{accountsLabel}</div>
                       {activeSession && (
                         <div className={styles.addTooltipWrapper}>
                           <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
@@ -202,7 +206,7 @@ export default function Accounts() {
                       )}
                     </div>
 
-                    {sessions.filter(s => s.userId !== activeUserId).length >= 2 && (
+                    {nonActiveAccountsCount >= 2 && (
                       <div className={styles.viewToggle}>
                         <button
                           className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
