@@ -121,6 +121,22 @@ export default function Accounts() {
             </div>
           ) : (
             <>
+              {/* Not Logged In Section */}
+              {!activeSession && (
+                <div className={styles.notLoggedInSection}>
+                  <div className={styles.notLoggedInCard}>
+                    <div className={styles.notLoggedInInfo}>
+                      <div className={styles.notLoggedInName}>
+                        Not logged in
+                      </div>
+                      <div className={styles.notLoggedInMeta}>
+                        Select an account from the list, or login with a different one in the Epic Games Launcher
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               {/* Active Account Section */}
               {activeSession && (
                 <div className={styles.activeAccountSection}>
