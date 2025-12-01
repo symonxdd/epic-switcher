@@ -106,7 +106,7 @@ Thanks for supporting open-source software! 💙
 <br/>
 
 ### Settings page
-![settings-page](./docs/screens/settings-page.png) 
+![settings-page](./docs/screens/settings-page-with-update-notice.png) 
 
 <br/>
 
