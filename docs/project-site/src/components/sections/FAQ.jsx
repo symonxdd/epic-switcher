@@ -1,0 +1,54 @@
+import React from 'react';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
+
+const faqItems = [
+  {
+    question: "What is Epic Switcher?",
+    answer: "Epic Switcher is a minimalist Windows application designed to help you quickly switch between multiple Epic Games accounts with a single click, without manually re-entering credentials every time."
+  },
+  {
+    question: "Is it safe to use?",
+    answer: "Yes. Epic Switcher works by managing your local session files. It does not store your passwords or modify the actual Epic Games Launcher code. It's an open-source tool, so you can inspect the code yourself!"
+  },
+  {
+    question: "Why do I see a Windows SmartScreen warning?",
+    answer: "This is a common warning for new or niche open-source apps that haven't built 'reputation' with Microsoft yet. You can safely dismiss it by clicking 'More info' and then 'Run anyway'."
+  },
+  {
+    question: "Does it require installation?",
+    answer: "No, Epic Switcher is a portable 'Zero-Install' application. Just download the .exe and run it."
+  },
+  {
+    question: "Can I use it on Mac or Linux?",
+    answer: "Currently, Epic Switcher is specifically designed for Windows as it relies on Windows-specific Epic Games Launcher paths and behaviors."
+  }
+];
+
+export const FAQ = () => {
+  return (
+    <section id="faq" className="py-24 bg-muted/30">
+      <div className="container mx-auto px-6 max-w-3xl">
+        <div className="text-center mb-16">
+          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Frequently Asked Questions</h2>
+          <p className="text-muted-foreground">Everything you need to know about Epic Switcher.</p>
+        </div>
+
+        <Accordion type="single" collapsible className="w-full bg-background rounded-xl border p-6 shadow-sm">
+          {faqItems.map((item, i) => (
+            <AccordionItem key={i} value={`item-${i}`}>
+              <AccordionTrigger className="text-left font-medium">{item.question}</AccordionTrigger>
+              <AccordionContent className="text-muted-foreground leading-relaxed">
+                {item.answer}
+              </AccordionContent>
+            </AccordionItem>
+          ))}
+        </Accordion>
+      </div>
+    </section>
+  );
+};
