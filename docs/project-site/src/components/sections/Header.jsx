@@ -29,7 +29,7 @@ export const Header = () => {
           onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
         >
           <img src="/favicon.png" alt="Epic Switcher" className="w-8 h-8" />
-          <span className="text-xl font-bold tracking-tight">Epic Switcher</span>
+          <span className="text-lg font-semibold tracking-tight">Epic Switcher</span>
         </div>
 
         <nav className="hidden md:flex items-center gap-8">
