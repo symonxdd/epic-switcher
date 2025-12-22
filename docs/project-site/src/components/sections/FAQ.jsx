@@ -31,7 +31,7 @@ const faqItems = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="py-24 bg-muted/30">
+    <section id="faq" className="py-24 bg-background">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold tracking-tight sm:text-4xl mb-4">Frequently Asked Questions</h2>

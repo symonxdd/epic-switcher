@@ -9,7 +9,7 @@ export const Hero = () => {
   return (
     <section id="home" className="pt-32 pb-16 overflow-hidden">
       <div className="container mx-auto px-6 text-center">
-        <div className="max-w-4xl mx-auto mb-16">
+        <div className="max-w-4xl mx-auto mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

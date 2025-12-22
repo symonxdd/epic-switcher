@@ -46,13 +46,13 @@ export const Carousel = () => {
                 stiffness: 260,
                 damping: 25,
               }}
-              className="absolute w-[280px] md:w-[750px] overflow-visible shadow-2xl bg-transparent border-none"
+              className="absolute w-[280px] md:w-[750px] overflow-hidden rounded-2xl shadow-2xl bg-transparent border-none"
               style={{ perspective: 1000 }}
             >
               <img
                 src={screen.src}
                 alt={screen.title}
-                className="w-full h-auto block"
+                className="w-full h-auto block rounded-2xl"
               />
               {isActive && (
                 <motion.div
