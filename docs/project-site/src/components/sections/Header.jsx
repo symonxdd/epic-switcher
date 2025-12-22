@@ -50,7 +50,7 @@ export const Header = () => {
             size="sm"
             onClick={() => scrollTo('#downloads')}
           >
-            Get Started
+            Download
           </Button>
         </div>
       </div>

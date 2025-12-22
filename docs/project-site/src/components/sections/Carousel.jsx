@@ -20,48 +20,47 @@ export const Carousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full overflow-hidden py-12">
-      <div className="flex justify-center items-center gap-4 relative h-[400px] md:h-[600px]">
+    <div className="relative w-full py-12">
+      <div className="flex justify-center items-center relative h-[350px] md:h-[550px] max-w-7xl mx-auto">
         {screenshots.map((screen, i) => {
-          // Calculate relative position to handle circular carousel
           let position = i - index;
-          if (position < -2) position += screenshots.length;
-          if (position > 2) position -= screenshots.length;
+          if (position < -Math.floor(screenshots.length / 2)) position += screenshots.length;
+          if (position > Math.floor(screenshots.length / 2)) position -= screenshots.length;
 
           const isActive = position === 0;
-          const isVisible = Math.abs(position) <= 2;
-
-          if (!isVisible) return null;
+          const isVisible = Math.abs(position) <= 1; // Only show 3 items to avoid clutter
 
           return (
             <motion.div
               key={screen.id}
               initial={false}
               animate={{
-                x: position * 300,
-                scale: isActive ? 1.1 : 0.8,
-                opacity: isActive ? 1 : 0.4,
-                zIndex: isActive ? 10 : 1,
+                x: position * (window.innerWidth < 768 ? 220 : 500),
+                scale: isActive ? 1 : 0.7,
+                opacity: isVisible ? (isActive ? 1 : 0.4) : 0,
+                zIndex: isActive ? 10 : 5,
+                rotateY: position * 20,
               }}
               transition={{
                 type: 'spring',
-                stiffness: 300,
-                damping: 30,
+                stiffness: 260,
+                damping: 25,
               }}
-              className="absolute w-[300px] md:w-[800px] rounded-xl overflow-hidden shadow-2xl border bg-card"
+              className="absolute w-[280px] md:w-[750px] overflow-visible shadow-2xl bg-transparent border-none"
+              style={{ perspective: 1000 }}
             >
               <img
                 src={screen.src}
                 alt={screen.title}
-                className="w-full h-auto object-cover"
+                className="w-full h-auto block"
               />
               {isActive && (
                 <motion.div
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-6 left-6 right-6 p-4 bg-background/60 backdrop-blur-md rounded-lg border shadow-lg"
+                  className="absolute bottom-4 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/20 backdrop-blur-xl rounded-full border border-white/10 shadow-lg whitespace-nowrap"
                 >
-                  <p className="text-lg font-semibold tracking-tight">{screen.title}</p>
+                  <p className="text-sm font-medium tracking-tight text-white">{screen.title}</p>
                 </motion.div>
               )}
             </motion.div>
@@ -69,13 +68,16 @@ export const Carousel = () => {
         })}
       </div>
 
-      <div className="flex justify-center gap-2 mt-8">
+      <div className="flex justify-center gap-3 mt-12">
         {screenshots.map((_, i) => (
           <button
             key={i}
             onClick={() => setIndex(i)}
-            className={`w-2 h-2 rounded-full transition-all ${i === index ? 'bg-primary w-6' : 'bg-muted hover:bg-muted-foreground'
+            className={`h-1.5 rounded-full transition-all duration-300 ${i === index
+              ? 'bg-foreground w-8 opacity-100'
+              : 'bg-foreground/20 hover:bg-foreground/40 w-1.5'
               }`}
+            aria-label={`Go to screenshot ${i + 1}`}
           />
         ))}
       </div>
