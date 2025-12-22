@@ -12,7 +12,7 @@ export const Hero = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 pb-4 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               Switch Epic Accounts <br className="hidden md:block" /> Seamlessly
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
