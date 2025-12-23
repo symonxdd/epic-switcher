@@ -9,15 +9,15 @@ import { motion } from 'framer-motion';
 const faqItems = [
   {
     question: "What is Epic Switcher?",
-    answer: "Epic Switcher is a minimalist Windows application designed to help you quickly switch between multiple Epic Games accounts with a single click, without manually re-entering credentials every time."
+    answer: "Epic Switcher is a minimalist Windows application designed to help you quickly switch between multiple Epic Games Launcher accounts with a single click, without manually re-entering credentials every time."
   },
   {
     question: "Is it safe to use?",
-    answer: "Yes. Epic Switcher works by managing your local session files. It does not store your passwords or modify the actual Epic Games Launcher code. It's an open-source tool, so you can inspect the code yourself!"
+    answer: "Yes. Epic Switcher works by managing your local session files entirely on your device. It does not store your passwords or modify the actual Epic Games Launcher code. It's an open-source project, so you can inspect the code yourself!"
   },
   {
     question: "Why do I see a Windows SmartScreen warning?",
-    answer: "This is a common warning for new or niche open-source apps that haven't built 'reputation' with Microsoft yet. You can safely dismiss it by clicking 'More info' and then 'Run anyway'."
+    answer: "This is a common warning for new open-source apps that haven't built 'reputation' with Microsoft yet. You can safely dismiss it by clicking 'More info' and then 'Run anyway'."
   },
   {
     question: "Does it require installation?",
