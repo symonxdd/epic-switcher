@@ -1,10 +1,8 @@
 import React from 'react';
-import { Heart, ExternalLink } from 'lucide-react';
+import { Heart } from 'lucide-react';
 import { SiGithub } from '@icons-pack/react-simple-icons';
 
 export const Footer = () => {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer id="contact" className="py-12 border-t">
       <div className="container mx-auto px-6">
@@ -23,7 +21,7 @@ export const Footer = () => {
               rel="noopener noreferrer"
               className="hover:text-foreground transition-all flex items-center gap-1.5 group"
             >
-              <SiGithub className="w-4 h-4 group-hover:scale-110 transition-transform" />
+              <SiGithub className="w-4 h-4" />
               <span className="border-b border-transparent group-hover:border-foreground/20">GitHub</span>
             </a>
           </div>

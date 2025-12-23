@@ -109,7 +109,7 @@ export const Contact = () => {
 
               <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-md">
                 <Send className="mr-2 h-4 w-4" />
-                Send It
+                Send
               </Button>
 
               {status === 'error' && (
