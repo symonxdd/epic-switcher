@@ -30,7 +30,7 @@ export const Hero = () => {
             >
               <Button
                 size="lg"
-                className="h-14 px-10 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all rounded-full group"
+                className="h-14 px-10 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all rounded-full"
                 asChild
               >
                 <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">
