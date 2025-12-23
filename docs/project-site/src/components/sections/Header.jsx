@@ -46,17 +46,17 @@ export const Header = () => {
               {item.label}
             </button>
           ))}
-        </nav>
-
-        <div className="flex items-center gap-4">
           <a
             href="https://github.com/symonxdd/epic-switcher"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors"
+            className="text-muted-foreground hover:text-foreground transition-colors flex items-center"
           >
             <SiGithub className="w-5 h-5" />
           </a>
+        </nav>
+
+        <div className="flex items-center gap-4">
           <ThemeToggle />
           <Button
             variant="outline"
