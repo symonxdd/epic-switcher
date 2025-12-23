@@ -5,6 +5,7 @@ import { FAQ } from './components/sections/FAQ';
 import { Contact } from './components/sections/Contact';
 import { Downloads } from './components/sections/Downloads';
 import { Footer } from './components/sections/Footer';
+import { SupportCoffee } from './components/sections/SupportCoffee';
 import { ThemeProvider } from './components/ThemeProvider';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
           <FAQ />
           <Contact />
         </main>
+        <SupportCoffee />
         <Footer />
       </div>
     </ThemeProvider>
