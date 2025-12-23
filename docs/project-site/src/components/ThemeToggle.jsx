@@ -5,10 +5,10 @@ import { useTheme } from "./ThemeProvider";
 import { Button } from "./ui/button";
 
 export const ThemeToggle = () => {
-  const { theme, setTheme } = useTheme();
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
   const toggleTheme = () => {
-    setTheme(theme === "dark" ? "light" : "dark");
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -21,17 +21,17 @@ export const ThemeToggle = () => {
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
-          key={theme}
-          initial={{ y: -20, opacity: 0, rotate: -90 }}
-          animate={{ y: 0, opacity: 1, rotate: 0 }}
-          exit={{ y: 20, opacity: 0, rotate: 90 }}
-          transition={{ duration: 0.2, ease: "easeInOut" }}
+          key={resolvedTheme}
+          initial={{ scale: 0.8, opacity: 0 }}
+          animate={{ scale: 1, opacity: 1 }}
+          exit={{ scale: 0.8, opacity: 0 }}
+          transition={{ duration: 0.15, ease: "easeOut" }}
           className="absolute inset-0 flex items-center justify-center"
         >
-          {theme === "dark" ? (
-            <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
-          ) : (
+          {resolvedTheme === "dark" ? (
             <Sun className="h-[1.2rem] w-[1.2rem] transition-all" />
+          ) : (
+            <Moon className="h-[1.2rem] w-[1.2rem] transition-all" />
           )}
         </motion.div>
       </AnimatePresence>

@@ -121,7 +121,17 @@
 
   body {
     @apply bg-background text-foreground;
+    background-image: radial-gradient(circle at 80% 0%,
+        oklch(0.85 0.12 240 / 30%) 0%,
+        transparent 45%);
+    background-attachment: fixed;
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+  }
+
+  .dark body {
+    background-image: radial-gradient(circle at 80% 0%,
+        oklch(0.35 0.15 250 / 40%) 0%,
+        transparent 50%);
   }
 
   /* Ensure card backgrounds and borders also transition smoothly */
@@ -132,6 +142,6 @@
   .text-muted-foreground,
   .bg-primary,
   .bg-secondary {
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, background-image 0.3s ease;
   }
 }

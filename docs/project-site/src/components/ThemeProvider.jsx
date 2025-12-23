@@ -26,14 +26,16 @@ export const ThemeProvider = ({
         : "light";
 
       root.classList.add(systemTheme);
-      return;
+    } else {
+      root.classList.add(theme);
     }
-
-    root.classList.add(theme);
   }, [theme]);
 
   const value = {
     theme,
+    resolvedTheme: theme === "system"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : theme,
     setTheme: (theme) => {
       localStorage.setItem(storageKey, theme);
       setTheme(theme);
