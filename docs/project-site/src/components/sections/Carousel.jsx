@@ -98,21 +98,29 @@ export const Carousel = () => {
                 alt={screen.title}
                 className="w-full h-auto block rounded-2xl pointer-events-none"
               />
-              {isActive && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="absolute bottom-8 left-1/2 -translate-x-1/2 px-4 py-2 bg-black/20 backdrop-blur-xl rounded-full border border-white/10 shadow-lg whitespace-nowrap pointer-events-none text-center"
-                >
-                  <p className="text-sm font-medium tracking-tight text-white">{screen.title}</p>
-                </motion.div>
-              )}
             </motion.div>
           );
         })}
       </div>
 
-      <div className="flex justify-center gap-3 -mt-5 md:-mt-10 relative z-20">
+      <div className="flex justify-center mt-12 mb-0 h-10 overflow-hidden relative z-20">
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={index}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            className="text-center"
+          >
+            <p className="text-xl font-semibold tracking-tight text-foreground/90">
+              {screenshots[index].title}
+            </p>
+          </motion.div>
+        </AnimatePresence>
+      </div>
+
+      <div className="flex justify-center gap-3 mt-6 relative z-20">
         {screenshots.map((_, i) => (
           <button
             key={i}
