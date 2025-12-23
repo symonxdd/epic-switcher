@@ -11,15 +11,20 @@ export const Contact = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setStatus('loading');
     const form = e.target;
     const data = new FormData(form);
 
-    // Web3Forms public access key - FREE for 250/mo
-    data.append("access_key", "YOUR_ACCESS_KEY_HERE");
+    data.append("access_key", "03a09ca6-caa6-4db6-8979-f64bd372198a");
+    data.append("subject", `New DM from ${data.get("name")} on Epic Switcher`);
+    data.append("from_name", data.get("name"));
 
     try {
       const response = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
+        headers: {
+          'Accept': 'application/json'
+        },
         body: data,
       });
 
@@ -29,9 +34,11 @@ export const Contact = () => {
         setStatus('success');
         form.reset();
       } else {
+        console.error("Web3Forms Error:", result);
         setStatus('error');
       }
     } catch (error) {
+      console.error("Submission Error:", error);
       setStatus('error');
     }
   };
@@ -62,7 +69,7 @@ export const Contact = () => {
             <div className="text-center py-12">
               <CheckCircle2 className="w-16 h-16 text-green-500 mx-auto mb-6" />
               <h3 className="text-2xl font-bold mb-2">Message Sent!</h3>
-              <p className="text-muted-foreground">Bet. I'll get back to you soon.</p>
+              <p className="text-muted-foreground">I'll get back to you soon.</p>
               <Button
                 variant="outline"
                 className="mt-8"
@@ -107,9 +114,26 @@ export const Contact = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-md">
-                <Send className="mr-2 h-4 w-4" />
-                Send
+              <Button
+                type="submit"
+                className="w-full h-12 text-lg font-semibold rounded-md transition-all active:scale-[0.98]"
+                disabled={status === 'loading'}
+              >
+                {status === 'loading' ? (
+                  <span className="flex items-center gap-2">
+                    <motion.div
+                      animate={{ rotate: 360 }}
+                      transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                      className="w-4 h-4 border-2 border-current border-t-transparent rounded-full"
+                    />
+                    Sending...
+                  </span>
+                ) : (
+                  <>
+                    <Send className="mr-2 h-4 w-4" />
+                    Send
+                  </>
+                )}
               </Button>
 
               {status === 'error' && (
