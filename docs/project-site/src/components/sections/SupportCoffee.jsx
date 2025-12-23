@@ -28,11 +28,6 @@ export const SupportCoffee = () => {
                 strokeLinecap="round"
                 initial={{ pathLength: 0, opacity: 0, y: 10, x: 0 }}
                 animate={{
-                  d: [
-                    `M${15 + i * 12} 45 Q${10 + i * 12} 35 ${20 + i * 12} 25 T${15 + i * 12} 5`,
-                    `M${15 + i * 12} 45 Q${20 + i * 12} 35 ${10 + i * 12} 25 T${15 + i * 12} 5`,
-                    `M${15 + i * 12} 45 Q${10 + i * 12} 35 ${20 + i * 12} 25 T${15 + i * 12} 5`
-                  ],
                   pathLength: [0, 0.45, 0.45, 0],
                   pathOffset: [0, 0, 0.55, 1],
                   opacity: [0, 0.4, 0.3, 0],
