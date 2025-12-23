@@ -19,14 +19,27 @@ export const Hero = () => {
             <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-10 pb-4 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               Switch Epic Accounts <br className="hidden md:block" /> Seamlessly
             </h1>
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-12">
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
               Epic Switcher is designed to facilitate switching between accounts in the Epic Games Launcher. Minimalist, fast, and secure.
             </p>
 
             <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.2, duration: 0.5 }}
+              className="mt-12 mb-16"
+            >
+              <img
+                src="/screenshots/accounts-page.png"
+                alt="Epic Switcher Accounts Page"
+                className="max-w-[750px] w-full mx-auto rounded-xl shadow-2xl border border-border/50"
+              />
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.5 }}
+              transition={{ delay: 0.4, duration: 0.5 }}
               className="flex justify-center relative z-20"
             >
               <Button
