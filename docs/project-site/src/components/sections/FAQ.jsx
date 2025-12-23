@@ -24,8 +24,8 @@ const faqItems = [
     answer: "No, Epic Switcher is a portable 'Zero-Install' application. Just download the .exe and run it."
   },
   {
-    question: "Can I use it on Mac or Linux?",
-    answer: "Currently, Epic Switcher is specifically designed for Windows as it relies on Windows-specific Epic Games Launcher paths and behaviors."
+    question: "Can I use it on Mac?",
+    answer: "Currently, Epic Switcher targets Windows due to its use of Windows-specific Epic Games Launcher paths. Adding macOS support would be straightforward and would primarily require confirmation of the default Epic Games Launcher installation directory on macOS, which I'm unable to verify myself as I don't have access to a macOS device."
   }
 ];
 
