@@ -92,7 +92,8 @@ export const Hero = () => {
               <motion.img
                 src="/screenshots/accounts-page-no-bg.png"
                 alt="Epic Switcher Accounts Page"
-                className="max-w-[750px] w-full mx-auto rounded-lg border border-border/40"
+                className="max-w-[750px] w-full mx-auto rounded-lg border border-border/40 select-none pointer-events-none"
+                draggable="false"
                 style={{
                   rotateX,
                   rotateY,
@@ -131,7 +132,8 @@ export const Hero = () => {
                     <img
                       src="/screenshots/accounts-page-no-bg.png"
                       alt="Epic Switcher Accounts Page Full"
-                      className="w-full h-auto max-h-[85vh] object-contain mx-auto pointer-events-none rounded-lg"
+                      className="w-full h-auto max-h-[85vh] object-contain mx-auto pointer-events-none rounded-lg select-none"
+                      draggable="false"
                     />
                     <button
                       className="absolute -top-12 right-0 p-2 text-white/50 hover:text-white transition-colors"

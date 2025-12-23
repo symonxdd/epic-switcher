@@ -78,7 +78,7 @@ export const Contact = () => {
                 <Input
                   id="name"
                   name="name"
-                  placeholder="John Doe"
+                  placeholder=""
                   required
                   className="bg-background/50 border-input focus-visible:ring-primary"
                 />
@@ -90,7 +90,7 @@ export const Contact = () => {
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="john@example.com"
+                  placeholder=""
                   required
                   className="bg-background/50 border-input focus-visible:ring-primary"
                 />
@@ -101,7 +101,7 @@ export const Contact = () => {
                 <Textarea
                   id="message"
                   name="message"
-                  placeholder="Hey, I noticed that..."
+                  placeholder=""
                   required
                   className="min-h-[150px] bg-background/50 border-input focus-visible:ring-primary resize-none"
                 />

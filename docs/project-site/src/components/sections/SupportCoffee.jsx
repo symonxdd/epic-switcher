@@ -17,7 +17,7 @@ export const SupportCoffee = () => {
         className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-white/40 dark:bg-background/20 backdrop-blur-xl border border-black/10 dark:border-border/50 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
       >
         {/* Animated Steam */}
-        <div className="absolute -top-10 left-6 pointer-events-none">
+        <div className="absolute -top-10 left-4 pointer-events-none">
           <svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
             {[0, 1, 2].map((i) => (
               <motion.path
@@ -33,16 +33,18 @@ export const SupportCoffee = () => {
                     `M${15 + i * 12} 45 Q${20 + i * 12} 35 ${10 + i * 12} 25 T${15 + i * 12} 5`,
                     `M${15 + i * 12} 45 Q${10 + i * 12} 35 ${20 + i * 12} 25 T${15 + i * 12} 5`
                   ],
-                  pathLength: [0, 0.4, 0.8, 0],
-                  opacity: [0, 0.3, 0.2, 0],
-                  y: [10, -5, -20, -35],
-                  x: [0, i % 2 === 0 ? 3 : -3, 0]
+                  pathLength: [0, 0.45, 0.45, 0],
+                  pathOffset: [0, 0, 0.55, 1],
+                  opacity: [0, 0.4, 0.3, 0],
+                  y: [12, 5, -5, -12],
+                  x: [0, i % 2 === 0 ? 2 : -2, 0]
                 }}
                 transition={{
-                  duration: 5 + i,
+                  duration: 4 + i * 0.5,
                   repeat: Infinity,
                   delay: i * 1.5,
                   ease: "linear",
+                  times: [0, 0.3, 0.8, 1]
                 }}
                 className="text-orange-950 dark:text-foreground/40"
               />
