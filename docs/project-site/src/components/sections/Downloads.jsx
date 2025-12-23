@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button } from '@/components/ui/button';
 import { Download, ShieldCheck, Zap, ExternalLink } from 'lucide-react';
+import { useLatestRelease } from '../../hooks/useLatestRelease';
 
 // Modern SVG for GitHub to avoid lucide deprecation
 const GithubIcon = ({ className }) => (
@@ -15,12 +16,12 @@ const GithubIcon = ({ className }) => (
 );
 
 export const Downloads = () => {
-  const latestReleaseUrl = "https://github.com/symonxdd/epic-switcher/releases/latest";
+  const { downloadUrl } = useLatestRelease();
 
   return (
     <section id="downloads" className="py-24">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground p-12 md:p-24 relative overflow-hidden shadow-2xl selection:bg-secondary selection:text-secondary-foreground">
+        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground px-8 py-16 md:px-16 md:py-24 relative overflow-hidden shadow-2xl selection:bg-secondary selection:text-secondary-foreground">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black/10 rounded-full blur-2xl pointer-events-none" />
@@ -39,7 +40,7 @@ export const Downloads = () => {
                   className="h-14 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-all rounded-full"
                   asChild
                 >
-                  <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">
+                  <a href={downloadUrl}>
                     <Download className="mr-2 h-5 w-5" />
                     Download for Windows
                   </a>

@@ -2,9 +2,10 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { Carousel } from './Carousel';
+import { useLatestRelease } from '../../hooks/useLatestRelease';
 
 export const Hero = () => {
-  const latestReleaseUrl = "https://github.com/symonxdd/epic-switcher/releases/latest";
+  const { downloadUrl } = useLatestRelease();
 
   return (
     <section id="home" className="pt-28 pb-0 overflow-hidden">
@@ -33,7 +34,7 @@ export const Hero = () => {
                 className="h-14 px-10 text-lg font-semibold shadow-xl hover:shadow-2xl transition-all rounded-full"
                 asChild
               >
-                <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">
+                <a href={downloadUrl}>
                   <Download className="mr-2 h-5 w-5" />
                   Download for Windows
                 </a>

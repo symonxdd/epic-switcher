@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { useLatestRelease } from '../../hooks/useLatestRelease';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -10,6 +11,7 @@ const navItems = [
 ];
 
 export const Header = () => {
+  const { downloadUrl } = useLatestRelease();
   const scrollTo = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -48,9 +50,11 @@ export const Header = () => {
           <Button
             variant="outline"
             size="sm"
-            onClick={() => scrollTo('#downloads')}
+            asChild
           >
-            Download
+            <a href={downloadUrl}>
+              Download
+            </a>
           </Button>
         </div>
       </div>
