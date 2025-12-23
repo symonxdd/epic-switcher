@@ -37,7 +37,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="pt-0 pb-20 bg-background scroll-mt-20">
+    <section id="contact" className="pt-0 pb-20 bg-background dark:bg-[#0A0A0A] scroll-mt-20">
       <div className="container mx-auto px-6 max-w-2xl">
         <div className="text-center mb-16">
           <motion.div
@@ -56,7 +56,7 @@ export const Contact = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-card border rounded-3xl p-8 md:p-12 shadow-sm"
+          className="bg-card dark:bg-[#121212] border dark:border-white/5 rounded-3xl p-8 md:p-12 shadow-sm"
         >
           {status === 'success' ? (
             <div className="text-center py-12">
@@ -80,7 +80,7 @@ export const Contact = () => {
                   name="name"
                   placeholder=""
                   required
-                  className="bg-background/50 border-input focus-visible:ring-primary"
+                  className="bg-background/50 dark:bg-black/40 border-input focus-visible:ring-primary"
                 />
               </div>
 
@@ -92,7 +92,7 @@ export const Contact = () => {
                   type="email"
                   placeholder=""
                   required
-                  className="bg-background/50 border-input focus-visible:ring-primary"
+                  className="bg-background/50 dark:bg-black/40 border-input focus-visible:ring-primary"
                 />
               </div>
 
@@ -103,11 +103,11 @@ export const Contact = () => {
                   name="message"
                   placeholder=""
                   required
-                  className="min-h-[150px] bg-background/50 border-input focus-visible:ring-primary resize-none"
+                  className="min-h-[150px] bg-background/50 dark:bg-black/40 border-input focus-visible:ring-primary resize-none"
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-2xl">
+              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-md">
                 <Send className="mr-2 h-4 w-4" />
                 Send It
               </Button>
