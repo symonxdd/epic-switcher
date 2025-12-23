@@ -12,6 +12,10 @@ const faqItems = [
     answer: "Epic Switcher is a minimalist Windows application designed to help you quickly switch between multiple Epic Games Launcher accounts with a single click, without manually re-entering credentials every time."
   },
   {
+    question: "How does it work?",
+    answer: "Epic Switcher automates the switching process by managing your session files. Instead of logging you out, it safely 'sets aside' your current session and swaps it with another stored session by updating the local EpicLoginSession.ini file. This keeps your accounts active and ready to use without re-authentication when you switch back."
+  },
+  {
     question: "Is it safe to use?",
     answer: "Yes. Epic Switcher works by managing your local session files entirely on your device. It does not store your passwords or modify the actual Epic Games Launcher code. It's an open-source project, so you can inspect the code yourself!"
   },
@@ -26,6 +30,10 @@ const faqItems = [
   {
     question: "Can I use it on Mac?",
     answer: "Currently, Epic Switcher targets Windows due to its use of Windows-specific Epic Games Launcher paths. Adding macOS support would be straightforward and would primarily require confirmation of the default Epic Games Launcher installation directory on macOS, which I'm unable to verify myself as I don't have access to a macOS device."
+  },
+  {
+    question: "What is the technical stack behind Epic Switcher?",
+    answer: "Epic Switcher is built with a modern, high-performance stack: a Go backend for native Windows interactions and file system management, a React + Vite frontend for a smooth and responsive user interface, and Wails as the bridge to create a lightweight, cross-platform desktop experience without the overhead of Electron."
   }
 ];
 
