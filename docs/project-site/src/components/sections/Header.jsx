@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useLatestRelease } from '../../hooks/useLatestRelease';
+import { ThemeToggle } from '../ThemeToggle';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -47,6 +48,7 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center gap-4">
+          <ThemeToggle />
           <Button
             variant="outline"
             size="sm"
