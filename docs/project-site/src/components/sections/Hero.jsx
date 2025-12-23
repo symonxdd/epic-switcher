@@ -26,7 +26,7 @@ export const Hero = () => {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="flex justify-center"
+              className="flex justify-center relative z-20"
             >
               <Button
                 size="lg"
