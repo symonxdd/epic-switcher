@@ -37,7 +37,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-24 bg-background">
+    <section id="contact" className="pt-0 pb-20 bg-background scroll-mt-20">
       <div className="container mx-auto px-6 max-w-2xl">
         <div className="text-center mb-16">
           <motion.div

@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import React, { useState, useEffect, useCallback } from 'react';
+import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 
 const screenshots = [
   { id: 1, src: '/screenshots/accounts-page.png', title: 'Main Dashboard' },
@@ -11,28 +11,49 @@ const screenshots = [
 
 export const Carousel = () => {
   const [index, setIndex] = useState(0);
-  const [isPaused, setIsPaused] = useState(false);
+  const [isHovering, setIsHovering] = useState(false);
+  const [isDragging, setIsDragging] = useState(false);
+  const isPaused = isHovering || isDragging;
+  const progress = useMotionValue(0);
+  const DURATION = 5000;
+
+  const handleIndexChange = useCallback((newIndex) => {
+    setIndex(newIndex);
+    progress.jump(0);
+  }, [progress]);
 
   useEffect(() => {
     if (isPaused) return;
-    const timer = setInterval(() => {
-      setIndex((prev) => (prev + 1) % screenshots.length);
-    }, 5000);
-    return () => clearInterval(timer);
-  }, [isPaused, index]);
+
+    // Calculate remaining duration based on current progress
+    const remainingDuration = DURATION * (1 - progress.get());
+
+    const controls = animate(progress, 1, {
+      duration: remainingDuration / 1000,
+      ease: "linear",
+      onComplete: () => {
+        handleIndexChange((index + 1) % screenshots.length);
+      }
+    });
+
+    return () => controls.stop();
+  }, [index, isPaused, progress, handleIndexChange]);
 
   const handleDragEnd = (event, info) => {
-    setIsPaused(false);
     const threshold = 50;
     if (info.offset.x < -threshold) {
-      setIndex((prev) => (prev + 1) % screenshots.length);
+      handleIndexChange((index + 1) % screenshots.length);
     } else if (info.offset.x > threshold) {
-      setIndex((prev) => (prev - 1 + screenshots.length) % screenshots.length);
+      handleIndexChange((index - 1 + screenshots.length) % screenshots.length);
     }
   };
 
   return (
-    <div className="relative w-full pb-12 pt-0">
+    <div
+      className="relative w-full pb-12 pt-0"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+    >
       <div className="flex justify-center items-center relative h-[350px] md:h-[550px] max-w-7xl mx-auto">
         {screenshots.map((screen, i) => {
           let position = i - index;
@@ -48,8 +69,11 @@ export const Carousel = () => {
               initial={false}
               drag="x"
               dragConstraints={{ left: 0, right: 0 }}
-              onDragStart={() => setIsPaused(true)}
-              onDragEnd={handleDragEnd}
+              onDragStart={() => setIsDragging(true)}
+              onDragEnd={(event, info) => {
+                setIsDragging(false);
+                handleDragEnd(event, info);
+              }}
               onClick={() => {
                 if (!isActive) setIndex(i);
               }}
@@ -92,13 +116,20 @@ export const Carousel = () => {
         {screenshots.map((_, i) => (
           <button
             key={i}
-            onClick={() => setIndex(i)}
-            className={`h-1.5 rounded-full transition-all duration-300 ${i === index
-              ? 'bg-foreground w-8 opacity-100'
+            onClick={() => handleIndexChange(i)}
+            className={`h-1.5 rounded-full overflow-hidden transition-all duration-300 relative ${i === index
+              ? 'bg-foreground/20 w-8 opacity-100'
               : 'bg-foreground/20 hover:bg-foreground/40 w-1.5'
               }`}
             aria-label={`Go to screenshot ${i + 1}`}
-          />
+          >
+            {i === index && (
+              <motion.div
+                style={{ scaleX: progress }}
+                className="absolute top-0 left-0 h-full w-full bg-foreground origin-left"
+              />
+            )}
+          </button>
         ))}
       </div>
     </div>
