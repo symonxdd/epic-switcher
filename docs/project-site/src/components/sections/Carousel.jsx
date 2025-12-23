@@ -88,7 +88,7 @@ export const Carousel = () => {
         })}
       </div>
 
-      <div className="flex justify-center gap-3 mt-4 relative z-20">
+      <div className="flex justify-center gap-3 -mt-5 md:-mt-10 relative z-20">
         {screenshots.map((_, i) => (
           <button
             key={i}
