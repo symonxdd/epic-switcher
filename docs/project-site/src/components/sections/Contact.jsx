@@ -107,8 +107,8 @@ export const Contact = () => {
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 text-lg font-semibold group">
-                <Send className="mr-2 h-4 w-4 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
+              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-full">
+                <Send className="mr-2 h-4 w-4" />
                 Send It
               </Button>
 

@@ -20,7 +20,7 @@ export const Carousel = () => {
   }, []);
 
   return (
-    <div className="relative w-full py-12">
+    <div className="relative w-full pb-12 pt-0">
       <div className="flex justify-center items-center relative h-[350px] md:h-[550px] max-w-7xl mx-auto">
         {screenshots.map((screen, i) => {
           let position = i - index;

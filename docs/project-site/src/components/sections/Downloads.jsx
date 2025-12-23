@@ -20,7 +20,7 @@ export const Downloads = () => {
   return (
     <section id="downloads" className="py-24">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground p-12 md:p-24 relative overflow-hidden shadow-2xl">
+        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground p-12 md:p-24 relative overflow-hidden shadow-2xl selection:bg-secondary selection:text-secondary-foreground">
           {/* Decorative elements */}
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-96 h-96 bg-white/10 rounded-full blur-3xl pointer-events-none" />
           <div className="absolute bottom-0 left-0 translate-y-1/2 -translate-x-1/2 w-64 h-64 bg-black/10 rounded-full blur-2xl pointer-events-none" />
@@ -36,7 +36,7 @@ export const Downloads = () => {
                 <Button
                   size="lg"
                   variant="secondary"
-                  className="h-14 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+                  className="h-14 px-10 text-lg font-semibold shadow-lg hover:shadow-xl transition-all rounded-full"
                   asChild
                 >
                   <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">
@@ -48,7 +48,7 @@ export const Downloads = () => {
                 <Button
                   size="lg"
                   variant="outline"
-                  className="h-14 px-10 text-lg font-semibold bg-white/5 border-white/20 hover:bg-white hover:text-primary transition-colors"
+                  className="h-14 px-10 text-lg font-semibold bg-white/5 border-white/20 hover:bg-white hover:text-primary transition-colors rounded-full"
                   asChild
                 >
                   <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer">

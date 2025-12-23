@@ -7,15 +7,15 @@ export const Hero = () => {
   const latestReleaseUrl = "https://github.com/symonxdd/epic-switcher/releases/latest";
 
   return (
-    <section id="home" className="pt-32 pb-16 overflow-hidden">
+    <section id="home" className="pt-20 pb-0 overflow-hidden">
       <div className="container mx-auto px-6 text-center">
-        <div className="max-w-4xl mx-auto mb-12">
+        <div className="max-w-4xl mx-auto mb-2">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-5xl md:text-7xl font-bold tracking-tighter mb-6 pb-4 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="text-5xl md:text-7xl font-bold tracking-tight mb-6 pb-4 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               Switch Epic Accounts <br className="hidden md:block" /> Seamlessly
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-10">
@@ -34,7 +34,7 @@ export const Hero = () => {
                 asChild
               >
                 <a href={latestReleaseUrl} target="_blank" rel="noopener noreferrer">
-                  <Download className="mr-2 h-5 w-5 group-hover:translate-y-0.5 transition-transform" />
+                  <Download className="mr-2 h-5 w-5" />
                   Download for Windows
                 </a>
               </Button>
