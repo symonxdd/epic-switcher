@@ -80,7 +80,7 @@ export const Contact = () => {
                   name="name"
                   placeholder="John Doe"
                   required
-                  className="bg-background/50 border-muted focus-visible:ring-primary"
+                  className="bg-background/50 border-input focus-visible:ring-primary"
                 />
               </div>
 
@@ -92,7 +92,7 @@ export const Contact = () => {
                   type="email"
                   placeholder="john@example.com"
                   required
-                  className="bg-background/50 border-muted focus-visible:ring-primary"
+                  className="bg-background/50 border-input focus-visible:ring-primary"
                 />
               </div>
 
@@ -103,11 +103,11 @@ export const Contact = () => {
                   name="message"
                   placeholder="Hey, I noticed that..."
                   required
-                  className="min-h-[150px] bg-background/50 border-muted focus-visible:ring-primary resize-none"
+                  className="min-h-[150px] bg-background/50 border-input focus-visible:ring-primary resize-none"
                 />
               </div>
 
-              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-full">
+              <Button type="submit" className="w-full h-12 text-lg font-semibold rounded-2xl">
                 <Send className="mr-2 h-4 w-4" />
                 Send It
               </Button>
