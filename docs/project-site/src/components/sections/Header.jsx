@@ -3,6 +3,7 @@ import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useLatestRelease } from '../../hooks/useLatestRelease';
 import { ThemeToggle } from '../ThemeToggle';
+import { SiGithub } from '@icons-pack/react-simple-icons';
 
 const navItems = [
   { label: 'Home', href: '#home' },
@@ -48,6 +49,14 @@ export const Header = () => {
         </nav>
 
         <div className="flex items-center gap-4">
+          <a
+            href="https://github.com/symonxdd/epic-switcher"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <SiGithub className="w-5 h-5" />
+          </a>
           <ThemeToggle />
           <Button
             variant="outline"

@@ -1,5 +1,6 @@
 import React from 'react';
-import { Heart, Github, ExternalLink } from 'lucide-react';
+import { Heart, ExternalLink } from 'lucide-react';
+import { SiGithub } from '@icons-pack/react-simple-icons';
 
 export const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -13,6 +14,15 @@ export const Footer = () => {
           </div>
           <div className="flex items-center gap-6">
             <span>Powered by Wails & React</span>
+            <a
+              href="https://github.com/symonxdd/epic-switcher"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-colors flex items-center gap-1.5"
+            >
+              <SiGithub className="w-4 h-4" />
+              GitHub
+            </a>
           </div>
         </div>
       </div>
