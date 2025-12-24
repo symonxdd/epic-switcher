@@ -4,7 +4,7 @@ import { SiGithub } from '@icons-pack/react-simple-icons';
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="py-12 border-t">
+    <footer id="contact" className="py-12">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 text-sm text-muted-foreground/60">
           <div className="flex items-center gap-1.5 order-2 md:order-1">
