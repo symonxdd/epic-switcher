@@ -92,18 +92,12 @@ export const Hero = () => {
               <motion.img
                 src="/screenshots/accounts-page-no-bg.png"
                 alt="Epic Switcher Accounts Page"
-                className="max-w-[750px] w-full mx-auto rounded-lg border border-border/40 select-none pointer-events-none"
+                className="max-w-[750px] w-full mx-auto rounded-lg border border-border select-none pointer-events-none"
                 draggable="false"
                 style={{
                   rotateX,
                   rotateY,
                   transformStyle: "preserve-3d"
-                }}
-                initial={{ filter: "drop-shadow(0 0 0 rgba(255,255,255,0.05))" }}
-                animate={{ filter: "drop-shadow(0 0 5px rgba(255,255,255,0.08))" }}
-                whileHover={{
-                  scale: 1.01,
-                  filter: "drop-shadow(0 0 35px rgba(255,255,255,0.12))"
                 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{
