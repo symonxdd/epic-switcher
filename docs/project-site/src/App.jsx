@@ -6,6 +6,7 @@ import { Contact } from './components/sections/Contact';
 import { Downloads } from './components/sections/Downloads';
 import { Footer } from './components/sections/Footer';
 import { SupportCoffee } from './components/sections/SupportCoffee';
+import { ScrollToTop } from './components/sections/ScrollToTop';
 import { ThemeProvider } from './components/ThemeProvider';
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
           <Contact />
         </main>
         <SupportCoffee />
+        <ScrollToTop />
         <Footer />
       </div>
     </ThemeProvider>
