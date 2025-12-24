@@ -99,8 +99,8 @@ export const Hero = () => {
                   rotateY,
                   transformStyle: "preserve-3d"
                 }}
-                initial={{ filter: "drop-shadow(0 0 20px rgba(255,255,255,0.05))" }}
-                animate={{ filter: "drop-shadow(0 0 25px rgba(255,255,255,0.08))" }}
+                initial={{ filter: "drop-shadow(0 0 0 rgba(255,255,255,0.05))" }}
+                animate={{ filter: "drop-shadow(0 0 5px rgba(255,255,255,0.08))" }}
                 whileHover={{
                   scale: 1.01,
                   filter: "drop-shadow(0 0 35px rgba(255,255,255,0.12))"
