@@ -8,7 +8,7 @@ const ThemeContext = createContext({
 export const ThemeProvider = ({
   children,
   defaultTheme = "system",
-  storageKey = "vite-ui-theme",
+  storageKey = "epic-switcher-theme",
   ...props
 }) => {
   const [theme, setTheme] = useState(
@@ -17,17 +17,13 @@ export const ThemeProvider = ({
 
   useEffect(() => {
     const root = window.document.documentElement;
-    root.classList.remove("light", "dark");
+    const resolvedTheme = theme === "system"
+      ? (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")
+      : theme;
 
-    if (theme === "system") {
-      const systemTheme = window.matchMedia("(prefers-color-scheme: dark)")
-        .matches
-        ? "dark"
-        : "light";
-
-      root.classList.add(systemTheme);
-    } else {
-      root.classList.add(theme);
+    if (!root.classList.contains(resolvedTheme)) {
+      root.classList.remove("light", "dark");
+      root.classList.add(resolvedTheme);
     }
   }, [theme]);
 
