@@ -6,25 +6,41 @@ export const Footer = () => {
   return (
     <footer id="contact" className="py-12">
       <div className="container mx-auto px-6">
-        <div className="flex flex-col md:flex-row justify-center items-center gap-8 md:gap-12 text-sm text-muted-foreground/60">
-          <div className="flex items-center gap-1.5 order-2 md:order-1">
-            Made with <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" /> by Symon
+        <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm text-muted-foreground/60">
+          <div className="flex items-center gap-1.5">
+            Made with <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
           </div>
-          <div className="flex items-center gap-8 order-1 md:order-2">
-            <span className="flex items-center gap-2">
-              <span className="w-1 h-1 rounded-full bg-border md:hidden" />
-              Powered by Wails & React
-            </span>
+
+          <span className="leading-none">
+            Project site powered by{" "}
             <a
-              href="https://github.com/symonxdd/epic-switcher"
+              href="https://react.dev"
               target="_blank"
               rel="noopener noreferrer"
-              className="hover:text-foreground transition-all flex items-center gap-1.5 group"
+              className="hover:text-foreground transition-all border-b border-transparent hover:border-foreground/20 leading-none inline-block align-baseline"
             >
-              <SiGithub className="w-4 h-4" />
-              <span className="border-b border-transparent group-hover:border-foreground/20">GitHub</span>
+              React
+            </a>{" "}
+            &{" "}
+            <a
+              href="https://ui.shadcn.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-all border-b border-transparent hover:border-foreground/20 leading-none inline-block align-baseline"
+            >
+              shadcn/ui
             </a>
-          </div>
+          </span>
+
+          <a
+            href="https://github.com/symonxdd/epic-switcher"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="hover:text-foreground transition-all flex items-center gap-1.5 group"
+          >
+            <SiGithub className="w-4 h-4" />
+            <span className="border-b border-transparent group-hover:border-foreground/20">GitHub</span>
+          </a>
         </div>
       </div>
     </footer>
