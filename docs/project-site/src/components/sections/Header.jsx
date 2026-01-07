@@ -23,8 +23,12 @@ export const Header = () => {
 
   return (
     <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{
+        duration: 0.6,
+        ease: [0.22, 1, 0.36, 1] // Custom cubic-bezier for a smooth, premium feel
+      }}
       className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b"
     >
       <div className="container mx-auto px-6 h-16 flex items-center justify-between">
