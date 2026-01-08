@@ -12,6 +12,7 @@
         const theme = localStorage.getItem(storageKey) || 'system';
         const root = document.documentElement;
         root.classList.remove('light', 'dark');
+        root.classList.add('no-transitions');
 
         if (theme === 'system') {
           const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
@@ -28,6 +29,14 @@
 <body>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
+  <script>
+    // Remove no-transitions class after initial load to enable animations
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        document.documentElement.classList.remove('no-transitions');
+      }, 100);
+    });
+  </script>
 </body>
 
 </html>
