@@ -73,7 +73,7 @@
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
   background-size: 200% 200%;
   animation: gradientShift 5s ease infinite;
-  border-radius: 24px;
+  border-radius: 28px;
   overflow: hidden;
   cursor: default;
   transition: border-color 0.3s ease, box-shadow 0.3s ease;
