@@ -219,7 +219,7 @@ This project is built with:
 - Demo screenshot background by [Unsplash](https://unsplash.com/photos/a-close-up-of-a-cell-phone-with-a-purple-background-Cp4dn8_6Y5I)
 
 <div align="center">
-  <sub>Made with 💛 by Symon from Belgium</sub>
+  <sub>Made with 💛 by Symon</sub>
 </div>
 <div align="center">
   <sub>Powered by <a href="https://wails.io/">Wails</a></sub>

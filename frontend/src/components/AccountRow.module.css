@@ -6,7 +6,7 @@
   padding: 12px 14px;
   border: none;
   border-radius: 18px;
-  transition: transform 0.2s ease;
+  transition: border-radius 0.2s ease;
   position: relative;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
   background-size: 200% 200%;
@@ -29,9 +29,7 @@
   pointer-events: none;
 }
 
-.listItem:hover {
-  transform: translateY(-2px);
-}
+
 
 /* Cursor glow effect */
 .listItem::after {
@@ -172,7 +170,6 @@
   background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
   border-color: color-mix(in srgb, var(--text-secondary) 25%, transparent);
   color: var(--text-primary);
-  transform: translateY(-1px);
 }
 
 .iconButton:active {
@@ -234,7 +231,6 @@
 
 .ignoredRow:hover {
   opacity: 0.85;
-  transform: translateY(-1px);
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
 }
 

@@ -76,37 +76,16 @@
   border-radius: 24px;
   overflow: hidden;
   cursor: default;
-  transition: transform 0.2s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   border: 1px solid rgba(168, 85, 247, 0.25);
   min-height: 92px;
 }
 
 .activeAccountCard:hover {
-  transform: translateY(-2px);
   border-color: rgba(168, 85, 247, 0.4);
-  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
 }
 
-/* Cursor glow effect for active card */
-.activeAccountCard::after {
-  content: '';
-  position: absolute;
-  width: 200px;
-  height: 200px;
-  background: radial-gradient(circle, rgba(168, 85, 247, 0.2), transparent 70%);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 1;
-  left: var(--mouse-x, 50%);
-  top: var(--mouse-y, 50%);
-  transform: translate(-50%, -50%);
-}
 
-.activeAccountCard:hover::after {
-  opacity: 1;
-}
 
 .activeAccountAvatar {
   position: relative;
@@ -182,7 +161,6 @@
 }
 
 .addDetectedButton:hover {
-  transform: translateY(-1px);
   box-shadow: 0 6px 16px rgba(168, 85, 247, 0.4);
   filter: brightness(1.1);
 }
@@ -350,7 +328,7 @@
   padding: 12px 14px;
   border: none;
   border-radius: 18px;
-  transition: transform 0.2s ease;
+  transition: border-radius 0.2s ease;
   position: relative;
   background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
   background-size: 200% 200%;
@@ -375,7 +353,8 @@
 }
 
 .listItem:hover {
-  transform: translateY(-2px);
+  border-color: rgba(168, 85, 247, 0.4);
+  box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
 }
 
 /* Cursor glow effect */

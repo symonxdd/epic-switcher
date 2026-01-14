@@ -63,6 +63,10 @@ export default function Manage() {
     <div className={styles.pageWrapper}>
       <PageHeader title="Manage" />
 
+      <div className={styles.description}>
+        Customize account aliases, delete unused sessions, and unignore ignored accounts.
+      </div>
+
       {!isLoading && (
         <>
           {sessions.length === 0 && ignoredIds.length === 0 ? (
