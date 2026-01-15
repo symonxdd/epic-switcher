@@ -73,22 +73,37 @@
   align-items: center;
   gap: 18px;
   padding: 20px 20px;
-  background: linear-gradient(190deg, #FBBB03, #E21E0A);
+  background: color-mix(in srgb, var(--text-primary) 4%, transparent);
   border: none;
   border-radius: 28px;
   overflow: visible;
   cursor: default;
-  transition: border-color 0.3s ease, transform 0.3s ease;
+  transition: all 0.3s ease;
   z-index: 2;
 }
 
 .activeAccountCard::before {
   content: '';
   position: absolute;
+  inset: 0;
+  padding: 2px;
+  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
+  border-radius: 28px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.activeAccountCard::after {
+  content: '';
+  position: absolute;
   inset: 2px;
   background: linear-gradient(135deg, #FBBB03, #E21E0A);
-  filter: blur(35px);
-  opacity: 0.4;
+  /* filter: blur(30px); */
+  opacity: 0.15;
   z-index: -1;
   border-radius: 24px;
   pointer-events: none;
@@ -96,9 +111,9 @@
 
 .activeAccountAvatar {
   position: relative;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  color: white;
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border: 1px solid #FBBB03;
+  color: #FBBB03;
   font-weight: 700;
   font-size: 1.3rem;
   width: 56px;
@@ -110,7 +125,6 @@
   user-select: none;
   flex-shrink: 0;
   z-index: 2;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .activeAccountInfo {
@@ -125,16 +139,15 @@
 .activeAccountName {
   font-size: 1.15rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .activeAccountMeta {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,10 +197,10 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: rgba(255, 255, 255, 0.15);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
+  border: 1px solid #FBBB03;
   border-radius: 24px;
-  color: white;
+  color: #FBBB03;
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
