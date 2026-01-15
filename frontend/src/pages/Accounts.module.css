@@ -223,7 +223,9 @@
 }
 
 .subtitle {
-  color: var(--text-primary);
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
 }
 
 .subtitleWithIcon {

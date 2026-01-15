@@ -109,7 +109,7 @@ export default function Accounts() {
 
   // Calculate non-active accounts count and label
   const nonActiveAccountsCount = sessions.filter(s => s.userId !== activeUserId).length;
-  const accountsLabel = nonActiveAccountsCount === 1 ? 'Available account' : 'Available accounts';
+  const accountsLabel = "Select an account to switch";
 
   return (
     <div className={styles.pageWrapper}>
