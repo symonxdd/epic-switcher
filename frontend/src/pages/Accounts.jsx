@@ -151,6 +151,11 @@ export default function Accounts() {
                           </div>
                         )}
                       </div>
+
+                      <div className={styles.activeAccountBadge}>
+                        <HiOutlineCheckCircle />
+                        <span>Active</span>
+                      </div>
                     </div>
 
                     <div className={styles.activeAccountSide}>
@@ -163,10 +168,6 @@ export default function Accounts() {
                           <span>Add</span>
                         </button>
                       )}
-                      <div className={styles.activeAccountBadge}>
-                        <HiOutlineCheckCircle />
-                        <span>Active</span>
-                      </div>
                     </div>
 
                   </div>
