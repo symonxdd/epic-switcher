@@ -207,7 +207,7 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background: black;
+  background-color: var(--bg-surface);
   border: 1px solid #FBBB03;
   border-radius: 24px;
   color: #FBBB03;
@@ -215,6 +215,7 @@
   font-weight: 600;
   flex-shrink: 0;
   transition: all 0.2s ease;
+  z-index: 10;
 }
 
 .activeAccountBadge svg {
