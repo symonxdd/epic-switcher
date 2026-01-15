@@ -61,7 +61,7 @@
 
 /* ---- Active Account Section ---- */
 .activeAccountSection {
-  margin-bottom: 28px;
+  margin-bottom: 56px;
   display: flex;
   justify-content: center;
 }
@@ -73,21 +73,22 @@
   align-items: center;
   gap: 18px;
   padding: 20px 20px;
-  background-color: #080808;
-  border: 1px solid #1f1f1f;
+  background-color: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   border-radius: 24px;
   overflow: visible;
   cursor: default;
   transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  /* min-height: 92px; */
-  /* box-shadow: 0 0 40px rgba(255, 255, 255, 0.034); */
+  box-shadow:
+    0 0 15px color-mix(in srgb, var(--text-primary) 3%, transparent),
+    0 0 30px color-mix(in srgb, var(--text-primary) 2%, transparent);
 }
 
 .activeAccountAvatar {
   position: relative;
-  background: linear-gradient(135deg, rgba(206, 157, 21, 0.1), rgba(0, 142, 236, 0.1));
-  border: 1px solid rgba(206, 157, 21, 0.3);
-  color: #ce9d15;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   font-weight: 700;
   font-size: 1.3rem;
   width: 56px;
@@ -113,7 +114,7 @@
 .activeAccountName {
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -139,7 +140,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #ce9d15, #008eec);
+  background: var(--color-primary);
   border: none;
   border-radius: 24px;
   color: white;
@@ -149,7 +150,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(206, 157, 21, 0.3);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-primary) 30%, transparent);
 }
 
 .addDetectedButton svg {
@@ -171,10 +172,10 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, rgba(206, 157, 21, 0.1), rgba(0, 142, 236, 0.1));
-  border: 1px solid rgba(206, 157, 21, 0.3);
+  background: var(--bg-app);
+  border: 1px solid var(--border-subtle);
   border-radius: 24px;
-  color: #ce9d15;
+  color: var(--text-secondary);
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
