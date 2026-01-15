@@ -72,29 +72,22 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 18px 22px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
-  border-radius: 28px;
-  overflow: hidden;
+  padding: 20px 20px;
+  background-color: #080808;
+  border: 1px solid #1f1f1f;
+  border-radius: 24px;
+  overflow: visible;
   cursor: default;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-  border: 1px solid rgba(168, 85, 247, 0.25);
-  min-height: 92px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
+  /* min-height: 92px; */
+  /* box-shadow: 0 0 40px rgba(255, 255, 255, 0.034); */
 }
-
-.activeAccountCard:hover {
-  border-color: rgba(168, 85, 247, 0.4);
-}
-
-
 
 .activeAccountAvatar {
   position: relative;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: #a855f7;
+  background: linear-gradient(135deg, rgba(206, 157, 21, 0.1), rgba(0, 142, 236, 0.1));
+  border: 1px solid rgba(206, 157, 21, 0.3);
+  color: #ce9d15;
   font-weight: 700;
   font-size: 1.3rem;
   width: 56px;
@@ -146,7 +139,7 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, #a855f7, #3b82f6);
+  background: linear-gradient(135deg, #ce9d15, #008eec);
   border: none;
   border-radius: 24px;
   color: white;
@@ -156,7 +149,7 @@
   cursor: pointer;
   transition: all 0.2s ease;
   flex-shrink: 0;
-  box-shadow: 0 4px 12px rgba(168, 85, 247, 0.3);
+  box-shadow: 0 4px 12px rgba(206, 157, 21, 0.3);
 }
 
 .addDetectedButton svg {
@@ -164,7 +157,7 @@
 }
 
 .addDetectedButton:hover {
-  box-shadow: 0 6px 16px rgba(168, 85, 247, 0.4);
+  box-shadow: 0 6px 16px rgba(206, 157, 21, 0.4);
   filter: brightness(1.1);
 }
 
@@ -178,10 +171,10 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
-  border: 1px solid rgba(168, 85, 247, 0.3);
+  background: linear-gradient(135deg, rgba(206, 157, 21, 0.1), rgba(0, 142, 236, 0.1));
+  border: 1px solid rgba(206, 157, 21, 0.3);
   border-radius: 24px;
-  color: #a855f7;
+  color: #ce9d15;
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
