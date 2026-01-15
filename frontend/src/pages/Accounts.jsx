@@ -129,21 +129,7 @@ export default function Accounts() {
               {activeSession && (
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
-                    <div className={styles.activeAccountSide}>
-                      {isNewSession && (
-                        <button
-                          className={styles.addDetectedButton}
-                          onClick={handleAccept}
-                        >
-                          <HiPlus />
-                          <span>Add</span>
-                        </button>
-                      )}
-                      <div className={styles.activeAccountBadge}>
-                        <HiOutlineCheckCircle />
-                        <span>Active</span>
-                      </div>
-                    </div>
+
 
                     <div
                       className={styles.activeAccountCard}
@@ -166,6 +152,23 @@ export default function Accounts() {
                         )}
                       </div>
                     </div>
+
+                    <div className={styles.activeAccountSide}>
+                      {isNewSession && (
+                        <button
+                          className={styles.addDetectedButton}
+                          onClick={handleAccept}
+                        >
+                          <HiPlus />
+                          <span>Add</span>
+                        </button>
+                      )}
+                      <div className={styles.activeAccountBadge}>
+                        <HiOutlineCheckCircle />
+                        <span>Active</span>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
               )}
