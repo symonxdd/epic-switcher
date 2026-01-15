@@ -66,6 +66,12 @@
   justify-content: center;
 }
 
+.activeAccountContent {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 .activeAccountCard {
   width: fit-content;
   position: relative;
@@ -80,6 +86,7 @@
   cursor: default;
   transition: all 0.3s ease;
   z-index: 2;
+  flex-shrink: 0;
 }
 
 .activeAccountCard::before {
@@ -153,7 +160,7 @@
   text-overflow: ellipsis;
 }
 
-.activeAccountRight {
+.activeAccountSide {
   display: flex;
   align-items: center;
   gap: 12px;
@@ -204,7 +211,11 @@
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
-  backdrop-filter: blur(4px);
+  transition: all 0.2s ease;
+}
+
+.activeAccountBadge:hover {
+  background: color-mix(in srgb, var(--text-primary) 12%, transparent);
 }
 
 .activeAccountBadge svg {

@@ -128,28 +128,8 @@ export default function Accounts() {
               {/* Active Account Section */}
               {activeSession && (
                 <div className={styles.activeAccountSection}>
-                  <div
-                    className={styles.activeAccountCard}
-                  >
-                    <div className={styles.activeAccountAvatar}>
-                      {getFirstVisibleChar(
-                        activeSession.alias || activeSession.username || activeSession.userId
-                      )}
-                    </div>
-                    <div className={styles.activeAccountInfo}>
-                      <div className={styles.activeAccountName}>
-                        {activeSession.alias || activeSession.username || activeSession.userId}
-                      </div>
-                      {!hideUserIds && (
-                        <div className={styles.activeAccountMeta}>
-                          {activeSession.alias
-                            ? activeSession.username || activeSession.userId
-                            : activeSession.userId}
-                        </div>
-                      )}
-                    </div>
-
-                    <div className={styles.activeAccountRight}>
+                  <div className={styles.activeAccountContent}>
+                    <div className={styles.activeAccountSide}>
                       {isNewSession && (
                         <button
                           className={styles.addDetectedButton}
@@ -162,6 +142,28 @@ export default function Accounts() {
                       <div className={styles.activeAccountBadge}>
                         <HiOutlineCheckCircle />
                         <span>Active</span>
+                      </div>
+                    </div>
+
+                    <div
+                      className={styles.activeAccountCard}
+                    >
+                      <div className={styles.activeAccountAvatar}>
+                        {getFirstVisibleChar(
+                          activeSession.alias || activeSession.username || activeSession.userId
+                        )}
+                      </div>
+                      <div className={styles.activeAccountInfo}>
+                        <div className={styles.activeAccountName}>
+                          {activeSession.alias || activeSession.username || activeSession.userId}
+                        </div>
+                        {!hideUserIds && (
+                          <div className={styles.activeAccountMeta}>
+                            {activeSession.alias
+                              ? activeSession.username || activeSession.userId
+                              : activeSession.userId}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
