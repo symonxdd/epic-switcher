@@ -73,22 +73,32 @@
   align-items: center;
   gap: 18px;
   padding: 20px 20px;
-  background-color: var(--bg-card);
-  border: 1px solid var(--border-subtle);
+  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  border: none;
   border-radius: 24px;
   overflow: visible;
   cursor: default;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease;
-  box-shadow:
-    0 0 15px color-mix(in srgb, var(--text-primary) 3%, transparent),
-    0 0 30px color-mix(in srgb, var(--text-primary) 2%, transparent);
+  transition: border-color 0.3s ease, transform 0.3s ease;
+  z-index: 2;
+}
+
+.activeAccountCard::before {
+  content: '';
+  position: absolute;
+  inset: 2px;
+  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  filter: blur(35px);
+  opacity: 0.4;
+  z-index: -1;
+  border-radius: 24px;
+  pointer-events: none;
 }
 
 .activeAccountAvatar {
   position: relative;
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
   font-weight: 700;
   font-size: 1.3rem;
   width: 56px;
@@ -100,6 +110,7 @@
   user-select: none;
   flex-shrink: 0;
   z-index: 2;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .activeAccountInfo {
@@ -114,15 +125,16 @@
 .activeAccountName {
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--text-secondary);
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 .activeAccountMeta {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.85);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -172,13 +184,14 @@
   align-items: center;
   gap: 6px;
   padding: 8px 16px;
-  background: var(--bg-app);
-  border: 1px solid var(--border-subtle);
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 24px;
-  color: var(--text-secondary);
+  color: white;
   font-size: 0.85rem;
   font-weight: 600;
   flex-shrink: 0;
+  backdrop-filter: blur(4px);
 }
 
 .activeAccountBadge svg {
@@ -325,13 +338,11 @@
   align-items: center;
   gap: 12px;
   padding: 12px 14px;
-  border: none;
   border-radius: 18px;
-  transition: border-radius 0.2s ease;
+  transition: all 0.3s ease;
   position: relative;
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
-  background-size: 200% 200%;
-  animation: gradientShift 5s ease infinite;
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
   cursor: pointer;
   overflow: hidden;
 }
@@ -349,11 +360,20 @@
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   mask-composite: exclude;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .listItem:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.12), rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12));
+  background-size: 200% 200%;
+  animation: gradientShift 5s ease infinite;
   border-color: rgba(168, 85, 247, 0.4);
   box-shadow: 0 8px 24px rgba(168, 85, 247, 0.15);
+}
+
+.listItem:hover::before {
+  opacity: 1;
 }
 
 /* Cursor glow effect */
@@ -401,9 +421,9 @@
 }
 
 .avatar {
-  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
-  border: 1px solid rgba(168, 85, 247, 0.3);
-  color: #a855f7;
+  background: var(--bg-tab-bar);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
   font-weight: 600;
   font-size: 0.9rem;
   width: 36px;
@@ -413,6 +433,13 @@
   justify-content: center;
   border-radius: 50%;
   user-select: none;
+  transition: all 0.2s ease;
+}
+
+.listItem:hover .avatar {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.15), rgba(59, 130, 246, 0.15));
+  border-color: rgba(168, 85, 247, 0.3);
+  color: #a855f7;
 }
 
 /* ---- Tooltip ---- */
