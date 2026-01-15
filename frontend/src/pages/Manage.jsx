@@ -10,6 +10,9 @@ import styles from "./Manage.module.css";
 import AccountRow from "../components/AccountRow";
 import { Load, Unignore } from "../../wailsjs/go/services/IgnoreListStore";
 import { DeleteSession } from "../../wailsjs/go/services/SessionStore";
+import { MoveAsideActiveSession } from "../../wailsjs/go/services/AuthService";
+import { HiPlus } from "react-icons/hi";
+import AddAccountModal from "../components/modals/AddAccountModal";
 
 export default function Manage() {
   const { sessions, setSessions, isLoading, onAliasChange } = useContext(SessionContext);
@@ -21,6 +24,7 @@ export default function Manage() {
   const [deleteTarget, setDeleteTarget] = useState(null);
 
   const [editingAliasForId, setEditingAliasForId] = useState(null);
+  const [showAddModal, setShowAddModal] = useState(false);
 
   // Load ignored IDs on mount
   useEffect(() => {
@@ -59,12 +63,38 @@ export default function Manage() {
     }
   }
 
+  async function handleAddMainAction() {
+    try {
+      await MoveAsideActiveSession();
+      toast.success("Epic Games Launcher restarted — log in with your other account.", { id: "move-aside-active-session" });
+      setShowAddModal(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to move aside active session.", { id: "move-aside-error" });
+    }
+  }
+
+  function handleAddCancel() {
+    setShowAddModal(false);
+  }
+
   return (
     <div className={styles.pageWrapper}>
-      <PageHeader title="Manage" />
+      <PageHeader
+        title="Manage"
+        rightElement={
+          <button
+            className={styles.addButton}
+            onClick={() => setShowAddModal(true)}
+          >
+            <HiPlus />
+            <span>Add</span>
+          </button>
+        }
+      />
 
       <div className={styles.description}>
-        Customize account aliases, delete unused sessions, and unignore ignored accounts.
+        Add new accounts, customize aliases, delete unused sessions, and unignore accounts.
       </div>
 
       {!isLoading && (
@@ -138,6 +168,10 @@ export default function Manage() {
           onConfirm={() => handleUnignore(selectedIgnoredId)}
           onCancel={() => setSelectedIgnoredId(null)}
         />
+      )}
+
+      {showAddModal && (
+        <AddAccountModal onMoveAside={handleAddMainAction} onCancel={handleAddCancel} />
       )}
     </div>
   );

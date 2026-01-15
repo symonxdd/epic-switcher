@@ -19,6 +19,36 @@
   line-height: 1.5;
 }
 
+.addButton {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 18px;
+  background: var(--btn-ghost-bg, rgba(255, 255, 255, 0.05));
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.addButton:hover {
+  background: var(--btn-ghost-hover, rgba(255, 255, 255, 0.1));
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.addButton:active {
+  opacity: 0.8;
+}
+
+.addButton svg {
+  font-size: 1.1rem;
+}
+
 /* ---- Container ---- */
 .listContainer {
   display: flex;

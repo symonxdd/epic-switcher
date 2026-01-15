@@ -4,13 +4,12 @@ import PageHeader from '../components/PageHeader';
 import { AuthContext } from '../context/AuthContext';
 import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
-import { AddDetectedSession, IgnoreDetectedSession, MoveAsideActiveSession } from '../../wailsjs/go/services/AuthService';
+import { AddDetectedSession, IgnoreDetectedSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
 import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus } from 'react-icons/hi';
 import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
-import AddAccountModal from "../components/modals/AddAccountModal";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 
@@ -27,7 +26,6 @@ export default function Accounts() {
   } = useContext(AuthContext);
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
-  const [showAddModal, setShowAddModal] = useState(false);
   const [hideUserIds, setHideUserIds] = useState(false);
 
   useEffect(() => {
@@ -58,20 +56,6 @@ export default function Accounts() {
     setNewLoginSession(null);
   }
 
-  async function handleAddMainAction() {
-    try {
-      await MoveAsideActiveSession();
-      toast.success("Epic Games Launcher restarted — log in with your other account.", { id: "move-aside-active-session" });
-      setShowAddModal(false);
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to move aside active session.", { id: "move-aside-error" });
-    }
-  }
-
-  function handleAddCancel() {
-    setShowAddModal(false);
-  }
 
   async function handleSwitchAccount(session) {
     try {
@@ -190,12 +174,6 @@ export default function Accounts() {
                   <div className={styles.subtitleRow}>
                     <div className={styles.subtitleWithIcon}>
                       <div className={styles.subtitle}>{accountsLabel}</div>
-                      {activeSession && (
-                        <div className={styles.addTooltipWrapper}>
-                          <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
-                          <div className={styles.tooltip}>Add new account</div>
-                        </div>
-                      )}
                     </div>
 
                     {nonActiveAccountsCount >= 2 && (
@@ -272,12 +250,8 @@ export default function Accounts() {
               {/* Only Active Account, No Others */}
               {sessions.length > 0 && sessions.filter(s => s.userId !== activeUserId).length === 0 && (
                 <div className={styles.noOtherAccountsMessage}>
-                  <div className={styles.addTooltipWrapper}>
-                    <HiPlus className={styles.addIcon} onClick={() => setShowAddModal(true)} />
-                    <div className={styles.tooltip}>Add new account</div>
-                  </div>
                   <div className={styles.noOtherAccountsText}>
-                    No other accounts available. Click the + icon to add one.
+                    No other accounts available.
                   </div>
                 </div>
               )}
@@ -286,9 +260,6 @@ export default function Accounts() {
         </>
       )}
 
-      {showAddModal && (
-        <AddAccountModal onMoveAside={handleAddMainAction} onCancel={handleAddCancel} />
-      )}
 
       {sessions.length > 0 && <HintMessage />}
     </div>
