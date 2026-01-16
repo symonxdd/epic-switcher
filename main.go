@@ -33,7 +33,7 @@ func main() {
 			Assets: assets,
 		},
 		OnStartup:        app.Startup,
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 1},
+		BackgroundColour: &options.RGBA{R: 16, G: 16, B: 16, A: 1},
 		Bind: []interface{}{
 			app,
 			authService,
