@@ -3,25 +3,19 @@ import { motion } from 'framer-motion';
 const pageVariants = {
   initial: {
     opacity: 0,
-    y: 10,
-    scale: 0.99
   },
   in: {
     opacity: 1,
-    y: 0,
-    scale: 1
   },
   out: {
     opacity: 0,
-    y: -10,
-    scale: 0.99
   }
 };
 
 const pageTransition = {
   type: 'tween',
   ease: 'easeOut',
-  duration: 0.15
+  duration: 0.25
 };
 
 const PageTransition = ({ children }) => {
