@@ -63,7 +63,7 @@
 .activeAccountSection {
   margin-bottom: 56px;
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
 }
 
 .activeAccountContent {
@@ -79,7 +79,7 @@
   align-items: center;
   gap: 18px;
   padding: 24px 32px 24px 24px;
-  background: color-mix(in srgb, var(--text-primary) 4%, transparent);
+  /* background: color-mix(in srgb, var(--text-primary) 4%, transparent); */
   border: none;
   border-radius: 28px;
   overflow: visible;
@@ -108,7 +108,7 @@
   content: '';
   position: absolute;
   inset: 1px;
-  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  /* background: linear-gradient(135deg, #FBBB03, #E21E0A); */
   /* filter: blur(30px); */
   opacity: 0.15;
   z-index: -1;
