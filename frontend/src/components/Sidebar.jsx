@@ -4,6 +4,7 @@ import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle, FaQuestionCircle } from '
 import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
+import { SupportCoffee } from './SupportCoffee';
 
 function Sidebar() {
   const { sessions, isLoading } = useContext(SessionContext);
@@ -48,6 +49,7 @@ function Sidebar() {
       </div>
 
       <div className={styles['sidebar-bottom']}>
+        <SupportCoffee />
         <NavLink
           to="/faq"
           className={({ isActive }) =>
