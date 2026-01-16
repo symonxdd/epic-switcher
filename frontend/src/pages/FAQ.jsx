@@ -10,6 +10,10 @@ import {
 function FAQ() {
   const faqData = [
     {
+      question: "Why was I logged out after some time?",
+      answer: "Epic Games enforces security measures that may invalidate session keys after a certain period of inactivity or for other security reasons. When this happens, you will need to log in again through the Epic Games Launcher. This is a behavior of the Epic Games ecosystem that Epic Switcher cannot bypass or control."
+    },
+    {
       question: "Is Epic Switcher safe to use?",
       answer: "Yes, Epic Switcher is safe. It only modifies a local configuration file (`GameUserSettings.ini`) to swap session keys. It doesn't interact with the Epic Games servers directly, nor does it collect or share any of your personal data."
     },
@@ -28,10 +32,6 @@ function FAQ() {
     {
       question: "Does it work with 2FA?",
       answer: "Yes! Since the app uses session keys from the launcher, you only need to handle 2FA when you first log into the Epic Games Launcher. Once the session is saved in Epic Switcher, you can swap back to it without needing to re-enter 2FA codes."
-    },
-    {
-      question: "Why was I logged out after some time?",
-      answer: "Epic Games enforces security measures that may invalidate session keys after a certain period of inactivity or for other security reasons. When this happens, you will need to log in again through the Epic Games Launcher. This is a behavior of the Epic Games ecosystem that Epic Switcher cannot bypass or control."
     }
   ];
 
