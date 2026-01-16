@@ -23,6 +23,7 @@ export const SupportCoffee = () => {
       <a
         href="https://paypal.me/symonxd"
         onClick={handleSupportClick}
+        draggable="false"
         className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
       >
         {/* Animated Steam */}
