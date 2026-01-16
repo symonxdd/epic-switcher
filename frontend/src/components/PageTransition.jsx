@@ -1,8 +1,8 @@
 import { motion } from 'framer-motion';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 // Use a module-level variable to track the very first time this component is rendered across the entire app session.
-let isAppStartup = true;
+let isFirstAppMount = true;
 
 const pageVariants = {
   initial: {
@@ -13,47 +13,55 @@ const pageVariants = {
   in: {
     opacity: 1,
     y: 0,
-    scale: 1
+    scale: 1,
+    transition: {
+      duration: 0.25,
+      ease: 'easeOut'
+    }
   },
   out: {
     opacity: 0,
     y: -10,
-    scale: 0.99
+    scale: 0.99,
+    transition: {
+      duration: 0.25,
+      ease: 'easeOut'
+    }
   }
-};
-
-const pageTransition = {
-  type: 'tween',
-  ease: 'easeOut',
-  duration: 0.25
 };
 
 const startupVariants = {
   initial: {
     opacity: 0,
+    y: 20,
   },
   in: {
     opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.8,
+      delay: 0.4,
+      ease: 'easeOut'
+    }
   },
   out: {
     opacity: 0,
     y: -10,
-    scale: 0.99
+    scale: 0.99,
+    transition: {
+      duration: 0.25,
+      ease: 'easeOut'
+    }
   }
 };
 
-const startupTransition = {
-  type: 'tween',
-  ease: 'easeOut',
-  duration: 0.6
-};
-
 const PageTransition = ({ children }) => {
-  const [isStartup] = useState(isAppStartup);
-
-  useEffect(() => {
-    isAppStartup = false;
-  }, []);
+  // Capture the startup state for THIS specific component instance.
+  // We use the global flag and then immediately set it to false so NO OTHER instance (next route) picks it up.
+  const [isStartup] = useState(isFirstAppMount);
+  if (isFirstAppMount) {
+    isFirstAppMount = false;
+  }
 
   return (
     <motion.div
@@ -61,7 +69,6 @@ const PageTransition = ({ children }) => {
       animate="in"
       exit="out"
       variants={isStartup ? startupVariants : pageVariants}
-      transition={isStartup ? startupTransition : pageTransition}
       style={{ width: '100%', height: '100%' }}
     >
       {children}

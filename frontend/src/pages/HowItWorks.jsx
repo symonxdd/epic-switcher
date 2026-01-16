@@ -49,12 +49,12 @@ function HowItWorks() {
         <div className={styles.section}>
           <ul className={styles.bulletList}>
             <li className={styles.paragraph}>
-              The Epic Games Launcher persists the active login session to a file called
+              The Epic Games Launcher persists the active login session to a file called{' '}
               <span
                 className={`${styles.file} ${styles.fileSessionRef}`}
                 onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
                 onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-              > GameUserSettings.ini</span>.
+              >GameUserSettings.ini</span>.
             </li>
 
             <li className={styles.paragraph}>
@@ -67,12 +67,12 @@ function HowItWorks() {
             </li>
 
             <li className={styles.paragraph}>
-              When Epic Switcher swaps accounts, it overwrites the session key from
+              When Epic Switcher swaps accounts, it overwrites the session key from{' '}
               <span
                 className={`${styles.file} ${styles.fileSessionRef}`}
                 onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
                 onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-              > GameUserSettings.ini</span> with the correct one from the <span
+              >GameUserSettings.ini</span> with the correct one from the <span
                 className={styles.fileAppDataRef}
                 onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
                 onMouseLeave={() => handleFileRefHover('appDataBtn', false)}

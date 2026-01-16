@@ -19,6 +19,7 @@
 }
 
 .bulletList {
+  list-style-type: disc;
   list-style-position: outside;
   padding-left: 1.25rem;
   margin: 0;

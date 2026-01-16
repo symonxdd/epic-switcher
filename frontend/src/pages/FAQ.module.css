@@ -4,6 +4,13 @@
   min-height: 100%;
 }
 
+.description {
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
 .container {
   color: var(--text-primary);
   background-color: var(--bg-card);

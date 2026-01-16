@@ -34,6 +34,11 @@ function FAQ() {
   return (
     <div className={styles.pageWrapper}>
       <PageHeader title="FAQ" />
+
+      <div className={styles.description}>
+        Common questions about Epic Switcher's safety, security, and how it works.
+      </div>
+
       <div className={styles.container}>
         <Accordion type="single" collapsible className="w-full">
           {faqData.map((item, index) => (
