@@ -116,3 +116,13 @@
   gap: 0.5rem;
   /* controls spacing between logo + links */
 }
+
+.bottomGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.coffeeContainer {
+  width: 100%;
+}

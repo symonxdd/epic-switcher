@@ -18,12 +18,12 @@ export const SupportCoffee = () => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1, duration: 0.5 }}
-      className="px-4 mb-4"
+      className="px-2 mb-2"
     >
       <a
         href="https://paypal.me/symonxd"
         onClick={handleSupportClick}
-        className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-white/40 dark:bg-background/20 backdrop-blur-xl border border-black/10 dark:border-border/50 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
+        className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
       >
         {/* Animated Steam */}
         <div className="absolute -top-10 left-4 pointer-events-none">
@@ -50,7 +50,8 @@ export const SupportCoffee = () => {
                   ease: "linear",
                   times: [0, 0.3, 0.8, 1]
                 }}
-                className="text-orange-950 dark:text-foreground/40"
+                className="text-orange-950/40"
+                style={{ color: 'var(--text-secondary)' }}
               />
             ))}
           </svg>
@@ -91,10 +92,16 @@ export const SupportCoffee = () => {
         </div>
 
         <div className="flex flex-col">
-          <span className="text-xs font-semibold text-black/70 dark:text-foreground/80 group-hover:text-primary transition-colors tracking-tight">
+          <span
+            className="text-xs font-semibold group-hover:text-[var(--color-primary)] transition-colors tracking-tight"
+            style={{ color: 'var(--text-primary)' }}
+          >
             Like this project?
           </span>
-          <span className="text-[11px] text-black/50 dark:text-muted-foreground whitespace-nowrap">
+          <span
+            className="text-[11px] whitespace-nowrap"
+            style={{ color: 'var(--text-secondary)' }}
+          >
             Feel free to support.
           </span>
         </div>

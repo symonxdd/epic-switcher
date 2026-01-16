@@ -48,43 +48,48 @@ function Sidebar() {
         </div>
       </div>
 
-      <div className={styles['sidebar-bottom']}>
-        <SupportCoffee />
-        <NavLink
-          to="/faq"
-          className={({ isActive }) =>
-            isActive
-              ? `${styles['sidebar-item']} ${styles.active}`
-              : styles['sidebar-item']
-          }
-        >
-          <FaQuestionCircle className={styles.icon} />
-          <span>FAQ</span>
-        </NavLink>
+      <div className={styles.bottomGroup}>
+        <div className={styles['sidebar-bottom']}>
+          <NavLink
+            to="/faq"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles['sidebar-item']} ${styles.active}`
+                : styles['sidebar-item']
+            }
+          >
+            <FaQuestionCircle className={styles.icon} />
+            <span>FAQ</span>
+          </NavLink>
 
-        <NavLink
-          to="/how-it-works"
-          className={({ isActive }) =>
-            isActive
-              ? `${styles['sidebar-item']} ${styles.active}`
-              : styles['sidebar-item']
-          }
-        >
-          <FaInfoCircle className={styles.icon} />
-          <span>How it works</span>
-        </NavLink>
+          <NavLink
+            to="/how-it-works"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles['sidebar-item']} ${styles.active}`
+                : styles['sidebar-item']
+            }
+          >
+            <FaInfoCircle className={styles.icon} />
+            <span>How it works</span>
+          </NavLink>
 
-        <NavLink
-          to="/settings"
-          className={({ isActive }) =>
-            isActive
-              ? `${styles['sidebar-item']} ${styles.active}`
-              : styles['sidebar-item']
-          }
-        >
-          <FaCog className={styles.icon} />
-          <span>Settings</span>
-        </NavLink>
+          <NavLink
+            to="/settings"
+            className={({ isActive }) =>
+              isActive
+                ? `${styles['sidebar-item']} ${styles.active}`
+                : styles['sidebar-item']
+            }
+          >
+            <FaCog className={styles.icon} />
+            <span>Settings</span>
+          </NavLink>
+        </div>
+
+        <div className={styles.coffeeContainer}>
+          <SupportCoffee />
+        </div>
       </div>
     </aside>
 

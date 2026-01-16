@@ -1,6 +1,6 @@
 import PageHeader from '../components/PageHeader';
 import styles from './HowItWorks.module.css';
-import { FaInfoCircle, FaLock, FaGithub } from 'react-icons/fa';
+import { FaInfoCircle, FaLock, FaGithub, FaGlobe } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { OpenDirectory } from '../../wailsjs/go/services/SystemService';
 import { BrowserOpenURL } from '../../wailsjs/runtime';
@@ -19,6 +19,14 @@ function HowItWorks() {
       BrowserOpenURL('https://github.com/symonxdd/epic-switcher');
     } catch (err) {
       console.error('Failed to open GitHub link in default browser:', err);
+    }
+  }
+
+  const handleOpenProjectSite = () => {
+    try {
+      BrowserOpenURL('https://epic-switcher.vercel.app/');
+    } catch (err) {
+      console.error('Failed to open project site link in default browser:', err);
     }
   }
 
@@ -104,11 +112,15 @@ function HowItWorks() {
         </div>
 
         <div className={styles.sourceSection}>
-          <strong className={styles.directoriesTitle}>Source code</strong>
+          <strong className={styles.directoriesTitle}>Links</strong>
           <div className={styles.directoriesList}>
             <span onClick={handleOpenGithub}>
               <FaGithub className={styles.directoryIcon} />
               View on GitHub
+            </span>
+            <span onClick={handleOpenProjectSite}>
+              <FaGlobe className={styles.directoryIcon} />
+              View project site
             </span>
           </div>
         </div>
