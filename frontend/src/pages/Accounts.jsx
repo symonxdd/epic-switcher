@@ -113,7 +113,6 @@ export default function Accounts() {
   const isNewSession = newLoginSession && activeLoginSession && newLoginSession.userId === activeLoginSession.userId;
 
   console.log("📷 Active Session:", activeSession);
-  console.log("🖼️ Avatar Path:", activeSession?.avatarPath);
 
   // If it's a new session, merge the username from newLoginUsername
   if (isNewSession && activeSession) {

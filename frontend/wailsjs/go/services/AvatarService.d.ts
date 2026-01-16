@@ -4,4 +4,4 @@ import {context} from '../models';
 
 export function SelectAndSaveAvatar(arg1:string):Promise<string>;
 
-export function SetContext(arg1:context.Context):Promise<void>;
+export function Startup(arg1:context.Context):Promise<void>;

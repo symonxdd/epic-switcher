@@ -23,8 +23,8 @@ func NewAvatarService() *AvatarService {
 	}
 }
 
-// SetContext sets the context for the service.
-func (a *AvatarService) SetContext(ctx context.Context) {
+// Startup sets the context for the service.
+func (a *AvatarService) Startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
