@@ -11,7 +11,7 @@ export const SupportCoffee = () => {
       className="fixed bottom-8 right-8 z-[100]"
     >
       <a
-        href="https://paypal.me/symonxd"
+        href="https://buymeacoffee.com/symonxd"
         target="_blank"
         rel="noopener noreferrer"
         className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-white/40 dark:bg-background/20 backdrop-blur-xl border border-black/10 dark:border-border/50 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"

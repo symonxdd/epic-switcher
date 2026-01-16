@@ -7,7 +7,7 @@ export const SupportCoffee = () => {
   const handleSupportClick = (e) => {
     e.preventDefault();
     try {
-      BrowserOpenURL('https://paypal.me/symonxd');
+      BrowserOpenURL('https://buymeacoffee.com/symonxd');
     } catch (err) {
       console.error('Failed to open support link in default browser:', err);
     }
@@ -21,7 +21,6 @@ export const SupportCoffee = () => {
       className="px-2 mb-2"
     >
       <a
-        href="https://paypal.me/symonxd"
         onClick={handleSupportClick}
         draggable="false"
         className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
