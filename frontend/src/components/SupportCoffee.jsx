@@ -23,7 +23,7 @@ export const SupportCoffee = () => {
       <a
         onClick={handleSupportClick}
         draggable="false"
-        className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/10 dark:border-white/10 hover:border-primary/50 dark:hover:border-primary/50 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
+        className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/5 dark:border-white/5 hover:border-black/15 dark:hover:border-white/20 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
       >
         {/* Animated Steam */}
         <div className="absolute -top-10 left-4 pointer-events-none">
@@ -58,7 +58,7 @@ export const SupportCoffee = () => {
         </div>
 
         {/* Coffee Cup (Glassmorphism) */}
-        <div className="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-black/5 to-black/10 dark:from-white/10 dark:to-white/5 transition-all duration-500 overflow-hidden border border-black/10 dark:border-white/20 shadow-inner">
+        <div className="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-black/5 to-black/10 dark:from-white/10 dark:to-white/5 transition-all duration-500 overflow-hidden border border-black/5 dark:border-white/10 shadow-inner">
           {/* Latte Liquid Layer */}
           <motion.div
             className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#4A2C2A] to-[#A67B5B] dark:from-orange-900/40 dark:to-orange-400/30"
