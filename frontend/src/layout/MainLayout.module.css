@@ -23,4 +23,15 @@
   overflow-y: auto;
   transition: background-color 0.3s, border 0.3s;
   position: relative;
+
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+}
+
+.content::-webkit-scrollbar {
+  display: none;
+  /* Chrome, Safari and Opera */
 }

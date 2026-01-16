@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle } from 'react-icons/fa';
+import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle, FaQuestionCircle } from 'react-icons/fa';
 import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
@@ -48,6 +48,18 @@ function Sidebar() {
       </div>
 
       <div className={styles['sidebar-bottom']}>
+        <NavLink
+          to="/faq"
+          className={({ isActive }) =>
+            isActive
+              ? `${styles['sidebar-item']} ${styles.active}`
+              : styles['sidebar-item']
+          }
+        >
+          <FaQuestionCircle className={styles.icon} />
+          <span>FAQ</span>
+        </NavLink>
+
         <NavLink
           to="/how-it-works"
           className={({ isActive }) =>
