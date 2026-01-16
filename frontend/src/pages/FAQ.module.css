@@ -42,19 +42,3 @@
   line-height: 1.6;
   padding-bottom: 1rem;
 }
-
-.madeWith {
-  font-size: 0.77rem;
-  color: var(--text-secondary);
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
-  margin-top: auto;
-  padding-bottom: 1.5rem;
-}
-
-.heart {
-  color: var(--color-primary);
-  text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
-  padding: 0 2px;
-}

@@ -52,9 +52,6 @@ function FAQ() {
           ))}
         </Accordion>
       </div>
-      <div className={styles.madeWith}>
-        Meticulously engineered with<span className={styles.heart}>❤️‍🩹</span> by Symon
-      </div>
     </div>
   );
 }
