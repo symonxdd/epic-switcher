@@ -3,7 +3,6 @@ package main
 import (
 	"context"
 	"embed"
-	"fmt"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -44,14 +43,10 @@ func main() {
 					if strings.HasPrefix(r.URL.Path, prefix) {
 						filename := strings.TrimPrefix(r.URL.Path, prefix)
 						avatarPath := filepath.Join(sessionStore.GetAvatarDir(), filename)
-						fmt.Printf("🖼️ Avatar request (via Middleware): %s (Resolved: %s)\n", filename, avatarPath)
 
 						if _, err := os.Stat(avatarPath); err == nil {
-							fmt.Printf("✅ Avatar found on disk, serving...\n")
 							http.ServeFile(w, r, avatarPath)
 							return
-						} else {
-							fmt.Printf("❌ Avatar NOT found on disk: %v\n", err)
 						}
 					}
 					next.ServeHTTP(w, r)
