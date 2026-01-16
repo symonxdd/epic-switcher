@@ -78,8 +78,8 @@
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 24px 32px 24px 24px;
-  /* background: color-mix(in srgb, var(--text-primary) 4%, transparent); */
+  padding: 20px 28px;
+  background: #ffffff;
   border: none;
   border-radius: 28px;
   overflow: visible;
@@ -201,8 +201,8 @@
 
 .activeAccountBadge {
   position: absolute;
-  top: -16px;
-  right: 14px;
+  top: -14px;
+  right: 18px;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -555,4 +555,8 @@
   100% {
     background-position: 0% 50%;
   }
+}
+
+[data-theme="dark"] .activeAccountCard {
+  background: #020202;
 }
