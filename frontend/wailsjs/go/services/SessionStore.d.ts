@@ -4,8 +4,12 @@ import {models} from '../models';
 
 export function DeleteSession(arg1:string):Promise<void>;
 
+export function GetAvatarDir():Promise<string>;
+
 export function LoadSessions():Promise<Array<models.LoginSession>>;
 
 export function SaveSessions(arg1:Array<models.LoginSession>):Promise<void>;
 
 export function UpdateAlias(arg1:string,arg2:string):Promise<void>;
+
+export function UpdateAvatar(arg1:string,arg2:string):Promise<void>;

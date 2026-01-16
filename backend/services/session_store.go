@@ -20,6 +20,10 @@ func NewSessionStore() *SessionStore {
 	return &SessionStore{filePath: path}
 }
 
+func (s *SessionStore) GetAvatarDir() string {
+	return filepath.Join(filepath.Dir(s.filePath), "avatars")
+}
+
 func (s *SessionStore) LoadSessions() ([]models.LoginSession, error) {
 	s.ensureFile()
 	data, err := os.ReadFile(s.filePath)
@@ -61,6 +65,20 @@ func (s *SessionStore) UpdateAlias(userID string, alias string) error {
 	for i := range sessions {
 		if sessions[i].UserID == userID {
 			sessions[i].Alias = alias
+			sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
+			return s.SaveSessions(sessions)
+		}
+	}
+
+	return fmt.Errorf("session not found")
+}
+
+func (s *SessionStore) UpdateAvatar(userID string, avatarPath string) error {
+	sessions, _ := s.LoadSessions()
+
+	for i := range sessions {
+		if sessions[i].UserID == userID {
+			sessions[i].AvatarPath = avatarPath
 			sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
 			return s.SaveSessions(sessions)
 		}

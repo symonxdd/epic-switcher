@@ -7,4 +7,5 @@ type LoginSession struct {
 	LoginToken string `json:"loginToken"`
 	CreatedAt  string `json:"created_at"`
 	UpdatedAt  string `json:"updated_at"`
+	AvatarPath string `json:"avatarPath"`
 }

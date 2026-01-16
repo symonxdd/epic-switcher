@@ -6,6 +6,10 @@ export function DeleteSession(arg1) {
   return window['go']['services']['SessionStore']['DeleteSession'](arg1);
 }
 
+export function GetAvatarDir() {
+  return window['go']['services']['SessionStore']['GetAvatarDir']();
+}
+
 export function LoadSessions() {
   return window['go']['services']['SessionStore']['LoadSessions']();
 }
@@ -16,4 +20,8 @@ export function SaveSessions(arg1) {
 
 export function UpdateAlias(arg1, arg2) {
   return window['go']['services']['SessionStore']['UpdateAlias'](arg1, arg2);
+}
+
+export function UpdateAvatar(arg1, arg2) {
+  return window['go']['services']['SessionStore']['UpdateAvatar'](arg1, arg2);
 }

@@ -6,12 +6,14 @@ import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
 import { AddDetectedSession, IgnoreDetectedSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
-import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus } from 'react-icons/hi';
+import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from 'react-icons/hi';
 import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
+import AvatarSelectionModal from '../components/modals/AvatarSelectionModal';
+import { SelectAndSaveAvatar } from "../../wailsjs/go/services/AvatarService";
 
 export default function Accounts() {
   const location = useLocation();
@@ -27,6 +29,7 @@ export default function Accounts() {
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
   const [hideUserIds, setHideUserIds] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
 
   useEffect(() => {
     checkLoginStatus();
@@ -68,6 +71,29 @@ export default function Accounts() {
     }
   }
 
+  async function handleAvatarClick() {
+    setShowAvatarModal(true);
+  }
+
+  async function handleAvatarSelect() {
+    if (!activeSession) return;
+    try {
+      const filename = await SelectAndSaveAvatar(activeSession.userId);
+      if (filename) {
+        // Update local state immediately
+        setSessions(prev => prev.map(s =>
+          s.userId === activeSession.userId ? { ...s, avatarPath: filename } : s
+        ));
+        toast.success("Avatar updated!", { id: "avatar-success" });
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update avatar.", { id: "avatar-error" });
+    } finally {
+      setShowAvatarModal(false);
+    }
+  }
+
   function getFirstVisibleChar(str) {
     if (!str) return "";
     const segmenter = new Intl.Segmenter("en", { granularity: "grapheme" });
@@ -85,6 +111,9 @@ export default function Accounts() {
 
   // Check if the currently active session is the new detected session
   const isNewSession = newLoginSession && activeLoginSession && newLoginSession.userId === activeLoginSession.userId;
+
+  console.log("📷 Active Session:", activeSession);
+  console.log("🖼️ Avatar Path:", activeSession?.avatarPath);
 
   // If it's a new session, merge the username from newLoginUsername
   if (isNewSession && activeSession) {
@@ -134,10 +163,21 @@ export default function Accounts() {
                     <div
                       className={styles.activeAccountCard}
                     >
-                      <div className={styles.activeAccountAvatar}>
-                        {getFirstVisibleChar(
-                          activeSession.alias || activeSession.username || activeSession.userId
+                      <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
+                        {activeSession.avatarPath ? (
+                          <img
+                            src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
+                            alt=""
+                            className={styles.customAvatarImage}
+                          />
+                        ) : (
+                          getFirstVisibleChar(
+                            activeSession.alias || activeSession.username || activeSession.userId
+                          )
                         )}
+                        <div className={styles.avatarOverlay}>
+                          <HiPencil />
+                        </div>
                       </div>
                       <div className={styles.activeAccountInfo}>
                         <div className={styles.activeAccountName}>
@@ -215,7 +255,6 @@ export default function Accounts() {
                           const x = e.clientX - rect.left;
                           const y = e.clientY - rect.top;
 
-                          const glow = card.querySelector(`.${styles.listItem}::after`);
                           if (card) {
                             card.style.setProperty('--mouse-x', `${x}px`);
                             card.style.setProperty('--mouse-y', `${y}px`);
@@ -231,7 +270,15 @@ export default function Accounts() {
                           >
                             <div className={styles.avatarWrapper}>
                               <div className={styles.avatar}>
-                                {getFirstVisibleChar(displayName)}
+                                {session.avatarPath ? (
+                                  <img
+                                    src={`/custom-avatar/${session.avatarPath}?t=${new Date().getTime()}`}
+                                    alt=""
+                                    className={styles.customAvatarImage}
+                                  />
+                                ) : (
+                                  getFirstVisibleChar(displayName)
+                                )}
                               </div>
                             </div>
 
@@ -268,6 +315,14 @@ export default function Accounts() {
 
 
       {sessions.length > 0 && <HintMessage />}
+
+      {showAvatarModal && (
+        <AvatarSelectionModal
+          username={activeSession?.alias || activeSession?.username || activeSession?.userId}
+          onSelect={handleAvatarSelect}
+          onCancel={() => setShowAvatarModal(false)}
+        />
+      )}
     </div>
   );
 }

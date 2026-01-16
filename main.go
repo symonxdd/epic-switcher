@@ -1,7 +1,13 @@
 package main
 
 import (
+	"context"
 	"embed"
+	"fmt"
+	"net/http"
+	"os"
+	"path/filepath"
+	"strings"
 
 	"epic-games-account-switcher/backend"
 	"epic-games-account-switcher/backend/services"
@@ -23,6 +29,7 @@ func main() {
 	ignoreService := services.NewIgnoreListStore()
 	systemService := services.NewSystemService()
 	updateService := services.NewUpdateService()
+	avatarService := services.NewAvatarService()
 
 	err := wails.Run(&options.App{
 		Title:     "Epic Switcher",
@@ -31,8 +38,30 @@ func main() {
 		Frameless: true,
 		AssetServer: &assetserver.Options{
 			Assets: assets,
+			Middleware: func(next http.Handler) http.Handler {
+				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+					const prefix = "/custom-avatar/"
+					if strings.HasPrefix(r.URL.Path, prefix) {
+						filename := strings.TrimPrefix(r.URL.Path, prefix)
+						avatarPath := filepath.Join(sessionStore.GetAvatarDir(), filename)
+						fmt.Printf("🖼️ Avatar request (via Middleware): %s (Resolved: %s)\n", filename, avatarPath)
+
+						if _, err := os.Stat(avatarPath); err == nil {
+							fmt.Printf("✅ Avatar found on disk, serving...\n")
+							http.ServeFile(w, r, avatarPath)
+							return
+						} else {
+							fmt.Printf("❌ Avatar NOT found on disk: %v\n", err)
+						}
+					}
+					next.ServeHTTP(w, r)
+				})
+			},
 		},
-		OnStartup:        app.Startup,
+		OnStartup: func(ctx context.Context) {
+			app.Startup(ctx)
+			avatarService.SetContext(ctx)
+		},
 		BackgroundColour: &options.RGBA{R: 16, G: 16, B: 16, A: 1},
 		Bind: []interface{}{
 			app,
@@ -43,6 +72,7 @@ func main() {
 			ignoreService,
 			systemService,
 			updateService,
+			avatarService,
 		},
 	})
 
