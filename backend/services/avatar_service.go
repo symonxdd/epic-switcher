@@ -23,9 +23,14 @@ func NewAvatarService() *AvatarService {
 	}
 }
 
-// Startup sets the context for the service.
-func (a *AvatarService) Startup(ctx context.Context) {
+// setContext sets the context for the service (unexported to hide from Wails bindings).
+func (a *AvatarService) setContext(ctx context.Context) {
 	a.ctx = ctx
+}
+
+// SetAvatarServiceContext provides a way for other packages to set the context without exposing it to the frontend bindings.
+func SetAvatarServiceContext(a *AvatarService, ctx context.Context) {
+	a.setContext(ctx)
 }
 
 // SelectAndSaveAvatar opens a file dialog, copies the selected image to the app's avatar directory,

@@ -55,6 +55,7 @@ func main() {
 		},
 		OnStartup: func(ctx context.Context) {
 			app.Startup(ctx)
+			services.SetAvatarServiceContext(avatarService, ctx)
 		},
 		BackgroundColour: &options.RGBA{R: 16, G: 16, B: 16, A: 1},
 		Bind: []interface{}{

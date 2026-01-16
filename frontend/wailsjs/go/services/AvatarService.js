@@ -5,7 +5,3 @@
 export function SelectAndSaveAvatar(arg1) {
   return window['go']['services']['AvatarService']['SelectAndSaveAvatar'](arg1);
 }
-
-export function Startup(arg1) {
-  return window['go']['services']['AvatarService']['Startup'](arg1);
-}
