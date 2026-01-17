@@ -131,7 +131,7 @@ export default function EditAvatarModal({
           <div className={styles.modalLeftColumn}>
             <div className={styles.avatarPreviewContainer}>
               <div
-                className={`${styles.currentAvatar} ${!showBorder ? styles.currentAvatarNoBorder : ''}`}
+                className={`${styles.currentAvatar} ${(!showBorder || !currentAvatarImage || currentAvatarImage === "") ? styles.currentAvatarNoBorder : ''}`}
                 style={{ background: currentAvatarColor || defaultGradient }}
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
@@ -141,7 +141,7 @@ export default function EditAvatarModal({
                     style={{ margin: 0 }}
                   />
                 ) : (
-                  getFirstVisibleChar(username)
+                  <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                 )}
               </div>
               <span className={styles.previewLabel}>Current</span>
@@ -229,7 +229,7 @@ export default function EditAvatarModal({
                     style={{ background: currentAvatarColor || defaultGradient }}
                     title="Use initials (no image)"
                   >
-                    {getFirstVisibleChar(username)}
+                    <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                   </div>
                 </div>
 

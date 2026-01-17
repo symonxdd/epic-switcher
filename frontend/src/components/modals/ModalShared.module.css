@@ -387,14 +387,19 @@
 }
 
 .noneAvatar {
+  border: none !important;
   display: flex !important;
   align-items: center;
   justify-content: center;
+  user-select: none;
+}
+
+.initialsText {
   color: white;
   font-weight: 700;
-  font-size: 1.15rem;
-  user-select: none;
-  background-clip: padding-box;
+  font-size: inherit;
+  line-height: 1;
+  display: block;
 }
 
 .avatarWrapper {
