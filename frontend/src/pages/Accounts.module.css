@@ -89,11 +89,10 @@
 
 .activeAccountAvatar {
   position: relative;
-  background: var(--bg-card);
-  border: 1.5px solid var(--border-subtle);
+  background: var(--avatar-gradient);
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.4rem;
+  font-size: 1.6rem;
   width: 120px;
   height: 120px;
   display: flex;
@@ -478,9 +477,9 @@
 }
 
 .avatar {
-  background: var(--bg-tab-bar);
-  border: 1px solid var(--border-subtle);
-  color: var(--text-secondary);
+  background: var(--avatar-gradient);
+  /* border: 1px solid rgba(255, 255, 255, 0.15); */
+  color: var(--text-primary);
   font-weight: 600;
   font-size: 0.9rem;
   width: 36px;

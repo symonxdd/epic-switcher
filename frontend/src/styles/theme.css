@@ -35,6 +35,7 @@
   --btn-ghost-hover: #e0e0e0;
 
   /* Misc */
+  --avatar-gradient: linear-gradient(135deg, #FBBB03, #E21F0A);
   --shadow-card-hover: 0 4px 8px rgba(0, 0, 0, 0.08);
   --transition-speed: 0.25s;
 }
