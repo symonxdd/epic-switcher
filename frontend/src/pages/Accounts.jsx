@@ -142,7 +142,6 @@ export default function Accounts() {
 
   return (
     <div className={styles.pageWrapper}>
-      <PageHeader title="Accounts" />
 
       {!isLoading && (
         <>
