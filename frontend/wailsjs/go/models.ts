@@ -7,7 +7,7 @@ export namespace models {
 	    loginToken: string;
 	    created_at: string;
 	    updated_at: string;
-	    avatarPath: string;
+	    avatarImage: string;
 	    avatarColor: string;
 	
 	    static createFrom(source: any = {}) {
@@ -22,7 +22,7 @@ export namespace models {
 	        this.loginToken = source["loginToken"];
 	        this.created_at = source["created_at"];
 	        this.updated_at = source["updated_at"];
-	        this.avatarPath = source["avatarPath"];
+	        this.avatarImage = source["avatarImage"];
 	        this.avatarColor = source["avatarColor"];
 	    }
 	}

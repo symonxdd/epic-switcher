@@ -82,7 +82,7 @@ export default function Accounts() {
       if (filename) {
         // Update local state immediately
         setSessions(prev => prev.map(s =>
-          s.userId === activeSession.userId ? { ...s, avatarPath: filename } : s
+          s.userId === activeSession.userId ? { ...s, avatarImage: filename } : s
         ));
         toast.success("Avatar updated!", { id: "avatar-success" });
       }
@@ -100,7 +100,7 @@ export default function Accounts() {
       await RemoveAvatar(activeSession.userId);
       // Update local state immediately
       setSessions(prev => prev.map(s =>
-        s.userId === activeSession.userId ? { ...s, avatarPath: "" } : s
+        s.userId === activeSession.userId ? { ...s, avatarImage: "" } : s
       ));
       toast.success("Avatar cleared!", { id: "avatar-success" });
     } catch (err) {
@@ -179,9 +179,9 @@ export default function Accounts() {
                         onClick={handleAvatarClick}
                         style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
                       >
-                        {activeSession.avatarPath ? (
+                        {activeSession.avatarImage ? (
                           <img
-                            src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
+                            src={`/custom-avatar/${activeSession.avatarImage}?t=${new Date().getTime()}`}
                             alt=""
                             className={styles.customAvatarImage}
                           />
@@ -288,9 +288,9 @@ export default function Accounts() {
                                 className={styles.avatar}
                                 style={session.avatarColor ? { background: session.avatarColor } : {}}
                               >
-                                {session.avatarPath ? (
+                                {session.avatarImage ? (
                                   <img
-                                    src={`/custom-avatar/${session.avatarPath}?t=${new Date().getTime()}`}
+                                    src={`/custom-avatar/${session.avatarImage}?t=${new Date().getTime()}`}
                                     alt=""
                                     className={styles.customAvatarImage}
                                   />
@@ -337,14 +337,14 @@ export default function Accounts() {
         <EditAvatarModal
           username={activeSession?.alias || activeSession?.username || activeSession?.userId}
           userId={activeSession?.userId}
-          currentAvatarPath={activeSession?.avatarPath}
+          currentAvatarImage={activeSession?.avatarImage}
           currentAvatarColor={activeSession?.avatarColor}
           onSelect={handleAvatarSelect}
           onRemove={handleAvatarRemove}
           onCancel={() => setShowAvatarModal(false)}
           onAvatarChange={(filename) => {
             setSessions(prev => prev.map(s =>
-              s.userId === activeSession?.userId ? { ...s, avatarPath: filename } : s
+              s.userId === activeSession?.userId ? { ...s, avatarImage: filename } : s
             ));
             setShowAvatarModal(false);
           }}

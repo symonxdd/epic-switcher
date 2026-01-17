@@ -95,7 +95,7 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 	}
 
 	// 6. Update session store
-	if err := a.sessionStore.UpdateAvatar(userID, destFilename); err != nil {
+	if err := a.sessionStore.UpdateAvatarImage(userID, destFilename); err != nil {
 		return "", fmt.Errorf("failed to update session store: %w", err)
 	}
 
@@ -141,7 +141,7 @@ func (a *AvatarService) SetAvatar(userID string, filename string) error {
 		return fmt.Errorf("avatar file not found: %s", filename)
 	}
 
-	return a.sessionStore.UpdateAvatar(userID, filename)
+	return a.sessionStore.UpdateAvatarImage(userID, filename)
 }
 
 // SetAvatarColor sets a custom background color for the given userID in the session store.
@@ -159,7 +159,7 @@ func (a *AvatarService) RemoveAvatar(userID string) error {
 		return fmt.Errorf("userID is required")
 	}
 
-	return a.sessionStore.UpdateAvatar(userID, "")
+	return a.sessionStore.UpdateAvatarImage(userID, "")
 }
 
 // DeleteAvatarFile deletes the specified avatar file from the disk.

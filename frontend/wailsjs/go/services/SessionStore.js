@@ -22,10 +22,10 @@ export function UpdateAlias(arg1, arg2) {
   return window['go']['services']['SessionStore']['UpdateAlias'](arg1, arg2);
 }
 
-export function UpdateAvatar(arg1, arg2) {
-  return window['go']['services']['SessionStore']['UpdateAvatar'](arg1, arg2);
-}
-
 export function UpdateAvatarColor(arg1, arg2) {
   return window['go']['services']['SessionStore']['UpdateAvatarColor'](arg1, arg2);
+}
+
+export function UpdateAvatarImage(arg1, arg2) {
+  return window['go']['services']['SessionStore']['UpdateAvatarImage'](arg1, arg2);
 }

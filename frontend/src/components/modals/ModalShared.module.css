@@ -24,7 +24,7 @@
   border: 1px solid var(--border-subtle);
   transform: translateY(20px);
   animation: slideUp 0.25s ease forwards;
-  max-width: 460px;
+  max-width: 600px;
   width: 90%;
   text-align: center;
   overflow: hidden;
@@ -55,7 +55,7 @@
 .modalNote {
   font-size: 0.88rem;
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0;
 }
 
 .modalNote p {
@@ -67,8 +67,8 @@
   flex-direction: column;
   align-items: stretch;
   gap: 0.75rem;
-  margin-top: 1.5rem;
-  padding: 0 45px;
+  margin-top: 1rem;
+  padding: 0 30px;
 }
 
 .modalButtonRow {
@@ -77,17 +77,20 @@
   justify-content: flex-end;
 }
 
-.modalButtons button {
-  /* width: 100%; */
+.primaryButton,
+.secondaryButton,
+.dangerButton,
+.dangerPrimaryButton {
   font-size: 0.9rem;
   font-weight: 600;
   padding: 0.7rem 1rem;
   border-radius: 15px;
-  cursor: default;
+  cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  transition: all 0.2s ease;
 }
 
 .buttonIcon {
@@ -197,29 +200,52 @@
   background-color: color-mix(in srgb, var(--color-accent-red) 10%, transparent);
 }
 
-.colorSelectionContainer {
-  margin: 1.5rem 0;
+.modalTwoColumn {
+  display: flex;
+  gap: 2rem;
+  padding: 0 30px;
+  margin-top: 1.5rem;
+}
+
+.modalLeftColumn {
+  flex: 0 0 140px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
+.modalRightColumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  min-width: 0;
+}
+
+.colorSelectionContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
 .colorGrid {
   display: flex;
-  gap: 12px;
-  justify-content: center;
+  gap: 10px;
+  justify-content: flex-start;
   flex-wrap: wrap;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .colorCircle {
-  width: 38px;
-  height: 38px;
+  width: 36px;
+  height: 36px;
   border-radius: 50%;
   cursor: pointer;
-  border: 3px solid transparent;
+  border: none;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  position: relative;
+  overflow: hidden;
 }
 
 .colorCircle:hover {
@@ -228,25 +254,32 @@
 }
 
 .colorCircleActive {
-  border-color: var(--text-primary);
   transform: scale(1.1);
-  box-shadow: 0 0 0 1px var(--bg-surface), 0 0 0 3px var(--text-primary);
+  box-shadow: 0 0 0 2px var(--bg-surface), 0 0 0 4px var(--text-primary);
+  z-index: 2;
 }
 
 .avatarPreviewContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 1.5rem 0;
+  width: 100%;
 }
 
 .currentAvatar {
-  width: 90px;
-  height: 90px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
   object-fit: cover;
-  margin-bottom: 0.5rem;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  margin-bottom: 1rem;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: white;
+  user-select: none;
 }
 
 .previewLabel {

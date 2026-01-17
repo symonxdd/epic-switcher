@@ -73,12 +73,12 @@ func (s *SessionStore) UpdateAlias(userID string, alias string) error {
 	return fmt.Errorf("session not found")
 }
 
-func (s *SessionStore) UpdateAvatar(userID string, avatarPath string) error {
+func (s *SessionStore) UpdateAvatarImage(userID string, avatarImage string) error {
 	sessions, _ := s.LoadSessions()
 
 	for i := range sessions {
 		if sessions[i].UserID == userID {
-			sessions[i].AvatarPath = avatarPath
+			sessions[i].AvatarImage = avatarImage
 			sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
 			return s.SaveSessions(sessions)
 		}
