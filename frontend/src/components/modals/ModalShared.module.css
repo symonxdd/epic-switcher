@@ -190,3 +190,35 @@
 .modalOverlay.closing .modal {
   animation: slideDown 0.2s ease forwards;
 }
+
+.dangerButton {
+  background: transparent;
+  color: var(--color-accent-red);
+  border: none;
+}
+
+.dangerButton:hover {
+  background-color: color-mix(in srgb, var(--color-accent-red) 10%, transparent);
+}
+
+.avatarPreviewContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1.5rem 0;
+}
+
+.currentAvatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.previewLabel {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  font-weight: 500;
+}

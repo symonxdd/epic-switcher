@@ -13,7 +13,7 @@ import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import AvatarSelectionModal from '../components/modals/AvatarSelectionModal';
-import { SelectAndSaveAvatar } from "../../wailsjs/go/services/AvatarService";
+import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 
 export default function Accounts() {
   const location = useLocation();
@@ -89,6 +89,23 @@ export default function Accounts() {
     } catch (err) {
       console.error(err);
       toast.error("Failed to update avatar.", { id: "avatar-error" });
+    } finally {
+      setShowAvatarModal(false);
+    }
+  }
+
+  async function handleAvatarRemove() {
+    if (!activeSession) return;
+    try {
+      await RemoveAvatar(activeSession.userId);
+      // Update local state immediately
+      setSessions(prev => prev.map(s =>
+        s.userId === activeSession.userId ? { ...s, avatarPath: "" } : s
+      ));
+      toast.success("Avatar removed!", { id: "avatar-success" });
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to remove avatar.", { id: "avatar-error" });
     } finally {
       setShowAvatarModal(false);
     }
@@ -317,7 +334,9 @@ export default function Accounts() {
       {showAvatarModal && (
         <AvatarSelectionModal
           username={activeSession?.alias || activeSession?.username || activeSession?.userId}
+          currentAvatarPath={activeSession?.avatarPath}
           onSelect={handleAvatarSelect}
+          onRemove={handleAvatarRemove}
           onCancel={() => setShowAvatarModal(false)}
         />
       )}

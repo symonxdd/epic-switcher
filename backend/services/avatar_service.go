@@ -97,3 +97,30 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 
 	return destFilename, nil
 }
+
+// RemoveAvatar clears the custom avatar for the given userID and deletes the file.
+func (a *AvatarService) RemoveAvatar(userID string) error {
+	if userID == "" {
+		return fmt.Errorf("userID is required")
+	}
+
+	sessions, err := a.sessionStore.LoadSessions()
+	if err != nil {
+		return err
+	}
+
+	var avatarPath string
+	for _, sess := range sessions {
+		if sess.UserID == userID {
+			avatarPath = sess.AvatarPath
+			break
+		}
+	}
+
+	if avatarPath != "" {
+		fullPath := filepath.Join(a.sessionStore.GetAvatarDir(), avatarPath)
+		_ = os.Remove(fullPath)
+	}
+
+	return a.sessionStore.UpdateAvatar(userID, "")
+}
