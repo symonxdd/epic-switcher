@@ -16,15 +16,11 @@ export default function EditAvatarModal({
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
-  const [showBorder, setShowBorder] = useState(true);
-  const closeCallbackRef = useRef(null);
-
-  useEffect(() => {
+  const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
-    if (stored !== null) {
-      setShowBorder(stored === 'true');
-    }
-  }, []);
+    return stored !== null ? stored === 'true' : true;
+  });
+  const closeCallbackRef = useRef(null);
 
   const handleToggleBorder = (e) => {
     const newVal = e.target.checked;

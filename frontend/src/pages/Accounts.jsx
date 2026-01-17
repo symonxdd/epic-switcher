@@ -30,7 +30,10 @@ export default function Accounts() {
   const { viewMode, setViewMode } = useContext(ViewModeContext);
   const [hideUserIds, setHideUserIds] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
-  const [showBorder, setShowBorder] = useState(true);
+  const [showBorder, setShowBorder] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
+    return stored !== null ? stored === 'true' : true;
+  });
 
   useEffect(() => {
     checkLoginStatus();
@@ -44,7 +47,6 @@ export default function Accounts() {
       const storedBorder = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
       if (storedBorder !== null) setShowBorder(storedBorder === 'true');
     };
-    loadBorder();
 
     window.addEventListener('storage', loadBorder);
     return () => window.removeEventListener('storage', loadBorder);
