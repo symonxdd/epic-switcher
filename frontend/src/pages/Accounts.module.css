@@ -104,6 +104,11 @@
   z-index: 2;
   overflow: hidden;
   cursor: pointer;
+  outline: none;
+}
+
+.activeAccountAvatar:has(img) {
+  background: none;
 }
 
 .avatarOverlay {
@@ -491,6 +496,11 @@
   user-select: none;
   transition: all 0.2s ease;
   overflow: hidden;
+  outline: none;
+}
+
+.avatar:has(img) {
+  background: none;
 }
 
 .listItem:hover .avatar {
