@@ -202,16 +202,22 @@
 
 .modalTwoColumn {
   display: flex;
-  gap: 2rem;
+  gap: 0.5rem;
   padding: 0 30px;
   margin-top: 1.5rem;
+  align-items: center;
+  /* Vertically center columns */
 }
 
 .modalLeftColumn {
-  flex: 0 0 140px;
+  flex: 0 0 200px;
+  /* Wider for more padding */
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 35px;
+  /* Significant spacing left/right */
+  border-right: 1px solid var(--border-subtle);
 }
 
 .modalRightColumn {
@@ -220,6 +226,7 @@
   flex-direction: column;
   gap: 1.5rem;
   min-width: 0;
+  padding-left: 35px;
 }
 
 .colorSelectionContainer {
@@ -290,12 +297,17 @@
 
 .avatarGalleryContainer {
   margin: 1rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .galleryLabel {
   font-size: 0.8rem;
   color: var(--text-secondary);
   margin-bottom: 0.5rem;
+  text-align: left;
+  width: 100%;
 }
 
 .avatarGallery {

@@ -131,7 +131,7 @@ export default function EditAvatarModal({
 
           <div className={styles.modalRightColumn}>
             <div className={styles.colorSelectionContainer}>
-              <p className={styles.galleryLabel}>Select a color:</p>
+              <p className={styles.galleryLabel}>Choose a color:</p>
               <div className={styles.colorGrid}>
                 {[
                   'linear-gradient(135deg, #FBBB03, #E21F0A)',
@@ -192,7 +192,7 @@ export default function EditAvatarModal({
 
             <div style={{ textAlign: 'left' }}>
               <p style={{ fontSize: '0.8rem', opacity: 0.7, margin: '0 0 8px 0' }}>
-                Selecting a new image will open a file selector.
+                Or a new image:
               </p>
               <button
                 className={styles.primaryButton}
