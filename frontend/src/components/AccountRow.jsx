@@ -80,7 +80,20 @@ export default function AccountRow({
       onMouseMove={onMouseMove}
     >
       <div className={styles.avatarWrapper}>
-        <div className={styles.avatar}>{getFirstVisibleChar(displayName)}</div>
+        <div
+          className={styles.avatar}
+          style={session?.avatarColor ? { background: session.avatarColor } : {}}
+        >
+          {session?.avatarPath ? (
+            <img
+              src={`/custom-avatar/${session.avatarPath}?t=${new Date().getTime()}`}
+              alt=""
+              className={styles.customAvatarImage}
+            />
+          ) : (
+            getFirstVisibleChar(displayName)
+          )}
+        </div>
       </div>
 
       <div className={styles.textBlock}>

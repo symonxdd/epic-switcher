@@ -1,15 +1,16 @@
 import { useState, useRef, useEffect } from 'react'
-import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile } from '../../../wailsjs/go/services/AvatarService'
+import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor } from '../../../wailsjs/go/services/AvatarService'
 import styles from './ModalShared.module.css'
 
-export default function AvatarSelectionModal({
+export default function EditAvatarModal({
   onSelect,
   onRemove,
   onCancel,
-  username,
   userId,
   currentAvatarPath,
-  onAvatarChange
+  currentAvatarColor,
+  onAvatarChange,
+  onColorChange
 }) {
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
@@ -102,24 +103,50 @@ export default function AvatarSelectionModal({
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Custom Avatar</h3>
+        <h3>Edit Avatar</h3>
 
         <div className={styles.modalNote}>
-          <p>You can set a custom profile picture for <strong>{username}</strong>.</p>
+          <p>Customize your avatar.</p>
+
+          <div className={styles.avatarPreviewContainer}>
+            <img
+              src={`/custom-avatar/${currentAvatarPath}?t=${new Date().getTime()}`}
+              alt="Current Avatar"
+              className={styles.currentAvatar}
+            />
+            <span className={styles.previewLabel}>Current</span>
+          </div>
+
+          <div className={styles.colorSelectionContainer}>
+            <p className={styles.galleryLabel}>Select background color:</p>
+            <div className={styles.colorGrid}>
+              {[
+                'linear-gradient(135deg, #FBBB03, #E21F0A)',
+                'linear-gradient(135deg, #A855F7, #3B82F6)',
+                'linear-gradient(135deg, #10B981, #3B82F6)',
+                'linear-gradient(135deg, #EC4899, #EF4444)',
+                'linear-gradient(135deg, #F59E0B, #D97706)',
+                'linear-gradient(135deg, #6B7280, #374151)'
+              ].map((gradient) => (
+                <div
+                  key={gradient}
+                  className={`${styles.colorCircle} ${currentAvatarColor === gradient || (!currentAvatarColor && gradient === 'linear-gradient(135deg, #FBBB03, #E21F0A)') ? styles.colorCircleActive : ''}`}
+                  style={{ background: gradient }}
+                  onClick={async () => {
+                    try {
+                      await SetAvatarColor(userId, gradient);
+                      if (onColorChange) onColorChange(gradient);
+                    } catch (err) {
+                      console.error('Failed to set avatar color:', err);
+                    }
+                  }}
+                />
+              ))}
+            </div>
+          </div>
           <p>
             This will open a file selector on your system.
           </p>
-
-          {currentAvatarPath && (
-            <div className={styles.avatarPreviewContainer}>
-              <img
-                src={`/custom-avatar/${currentAvatarPath}?t=${new Date().getTime()}`}
-                alt="Current Avatar"
-                className={styles.currentAvatar}
-              />
-              <span className={styles.previewLabel}>Current</span>
-            </div>
-          )}
 
           {availableAvatars.length > 0 && (
             <div className={styles.avatarGalleryContainer}>

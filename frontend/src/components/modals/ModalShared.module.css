@@ -197,6 +197,42 @@
   background-color: color-mix(in srgb, var(--color-accent-red) 10%, transparent);
 }
 
+.colorSelectionContainer {
+  margin: 1.5rem 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.colorGrid {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+.colorCircle {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.colorCircle:hover {
+  transform: scale(1.15);
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.colorCircleActive {
+  border-color: var(--text-primary);
+  transform: scale(1.1);
+  box-shadow: 0 0 0 1px var(--bg-surface), 0 0 0 3px var(--text-primary);
+}
+
 .avatarPreviewContainer {
   display: flex;
   flex-direction: column;

@@ -13,3 +13,5 @@ export function SaveSessions(arg1:Array<models.LoginSession>):Promise<void>;
 export function UpdateAlias(arg1:string,arg2:string):Promise<void>;
 
 export function UpdateAvatar(arg1:string,arg2:string):Promise<void>;
+
+export function UpdateAvatarColor(arg1:string,arg2:string):Promise<void>;

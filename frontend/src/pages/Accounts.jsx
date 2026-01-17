@@ -12,7 +12,7 @@ import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
-import AvatarSelectionModal from '../components/modals/AvatarSelectionModal';
+import EditAvatarModal from '../components/modals/EditAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 
 export default function Accounts() {
@@ -174,7 +174,11 @@ export default function Accounts() {
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
                     <div className={styles.avatarLabelGroup}>
-                      <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
+                      <div
+                        className={styles.activeAccountAvatar}
+                        onClick={handleAvatarClick}
+                        style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
+                      >
                         {activeSession.avatarPath ? (
                           <img
                             src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
@@ -221,7 +225,6 @@ export default function Accounts() {
                         </button>
                       )}
                     </div>
-
                   </div>
                 </div>
               )}
@@ -281,7 +284,10 @@ export default function Accounts() {
                             onMouseMove={handleMouseMove}
                           >
                             <div className={styles.avatarWrapper}>
-                              <div className={styles.avatar}>
+                              <div
+                                className={styles.avatar}
+                                style={session.avatarColor ? { background: session.avatarColor } : {}}
+                              >
                                 {session.avatarPath ? (
                                   <img
                                     src={`/custom-avatar/${session.avatarPath}?t=${new Date().getTime()}`}
@@ -325,14 +331,14 @@ export default function Accounts() {
         </>
       )}
 
-
       {sessions.length > 0 && <HintMessage />}
 
       {showAvatarModal && (
-        <AvatarSelectionModal
+        <EditAvatarModal
           username={activeSession?.alias || activeSession?.username || activeSession?.userId}
           userId={activeSession?.userId}
           currentAvatarPath={activeSession?.avatarPath}
+          currentAvatarColor={activeSession?.avatarColor}
           onSelect={handleAvatarSelect}
           onRemove={handleAvatarRemove}
           onCancel={() => setShowAvatarModal(false)}
@@ -340,8 +346,12 @@ export default function Accounts() {
             setSessions(prev => prev.map(s =>
               s.userId === activeSession?.userId ? { ...s, avatarPath: filename } : s
             ));
-            toast.success("Avatar updated!", { id: "avatar-success" });
             setShowAvatarModal(false);
+          }}
+          onColorChange={(color) => {
+            setSessions(prev => prev.map(s =>
+              s.userId === activeSession?.userId ? { ...s, avatarColor: color } : s
+            ));
           }}
         />
       )}

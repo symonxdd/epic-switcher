@@ -87,6 +87,20 @@ func (s *SessionStore) UpdateAvatar(userID string, avatarPath string) error {
 	return fmt.Errorf("session not found")
 }
 
+func (s *SessionStore) UpdateAvatarColor(userID string, avatarColor string) error {
+	sessions, _ := s.LoadSessions()
+
+	for i := range sessions {
+		if sessions[i].UserID == userID {
+			sessions[i].AvatarColor = avatarColor
+			sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
+			return s.SaveSessions(sessions)
+		}
+	}
+
+	return fmt.Errorf("session not found")
+}
+
 func (s *SessionStore) addOrUpdate(session models.LoginSession) error {
 	// 1. Load all sessions currently stored in JSON
 	sessions, _ := s.LoadSessions()

@@ -10,3 +10,5 @@ export function RemoveAvatar(arg1:string):Promise<void>;
 export function SelectAndSaveAvatar(arg1:string):Promise<string>;
 
 export function SetAvatar(arg1:string,arg2:string):Promise<void>;
+
+export function SetAvatarColor(arg1:string,arg2:string):Promise<void>;

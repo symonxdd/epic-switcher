@@ -21,3 +21,7 @@ export function SelectAndSaveAvatar(arg1) {
 export function SetAvatar(arg1, arg2) {
   return window['go']['services']['AvatarService']['SetAvatar'](arg1, arg2);
 }
+
+export function SetAvatarColor(arg1, arg2) {
+  return window['go']['services']['AvatarService']['SetAvatarColor'](arg1, arg2);
+}

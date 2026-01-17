@@ -144,6 +144,15 @@ func (a *AvatarService) SetAvatar(userID string, filename string) error {
 	return a.sessionStore.UpdateAvatar(userID, filename)
 }
 
+// SetAvatarColor sets a custom background color for the given userID in the session store.
+func (a *AvatarService) SetAvatarColor(userID string, color string) error {
+	if userID == "" {
+		return fmt.Errorf("userID is required")
+	}
+
+	return a.sessionStore.UpdateAvatarColor(userID, color)
+}
+
 // RemoveAvatar clears the custom avatar for the given userID in the session store.
 func (a *AvatarService) RemoveAvatar(userID string) error {
 	if userID == "" {

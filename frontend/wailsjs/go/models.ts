@@ -8,6 +8,7 @@ export namespace models {
 	    created_at: string;
 	    updated_at: string;
 	    avatarPath: string;
+	    avatarColor: string;
 	
 	    static createFrom(source: any = {}) {
 	        return new LoginSession(source);
@@ -22,6 +23,7 @@ export namespace models {
 	        this.created_at = source["created_at"];
 	        this.updated_at = source["updated_at"];
 	        this.avatarPath = source["avatarPath"];
+	        this.avatarColor = source["avatarColor"];
 	    }
 	}
 
