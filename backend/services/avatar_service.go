@@ -2,8 +2,9 @@ package services
 
 import (
 	"context"
+	"crypto/md5"
+	"encoding/hex"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 
@@ -33,8 +34,8 @@ func SetAvatarServiceContext(a *AvatarService, ctx context.Context) {
 	a.setContext(ctx)
 }
 
-// SelectAndSaveAvatar opens a file dialog, copies the selected image to the app's avatar directory,
-// updates the session store, and returns the unique filename.
+// SelectAndSaveAvatar opens a file dialog, copies the selected image to the app's avatar directory
+// using its MD5 hash as the filename, updates the session store, and returns the unique filename.
 func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 	if userID == "" {
 		return "", fmt.Errorf("userID is required")
@@ -62,35 +63,38 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 		return "", nil // User cancelled
 	}
 
-	// 2. Prepare destination directory
+	// 2. Read file to calculate hash
+	data, err := os.ReadFile(selection)
+	if err != nil {
+		return "", fmt.Errorf("failed to read selected file: %w", err)
+	}
+
+	hash := md5.Sum(data)
+	hashStr := hex.EncodeToString(hash[:])
+	fmt.Printf("[AvatarService] MD5 hash for %s: %s\n", filepath.Base(selection), hashStr)
+
+	// 3. Prepare destination directory
 	avatarDir := a.sessionStore.GetAvatarDir()
 	if err := os.MkdirAll(avatarDir, 0755); err != nil {
 		return "", fmt.Errorf("failed to create avatar directory: %w", err)
 	}
 
-	// 3. Generate unique filename (keep extension)
+	// 4. Generate unique filename (hash + extension)
 	ext := filepath.Ext(selection)
-	destFilename := fmt.Sprintf("%s%s", userID, ext)
+	destFilename := fmt.Sprintf("%s%s", hashStr, ext)
 	destPath := filepath.Join(avatarDir, destFilename)
 
-	// 4. Copy file
-	source, err := os.Open(selection)
-	if err != nil {
-		return "", err
-	}
-	defer source.Close()
-
-	dest, err := os.Create(destPath)
-	if err != nil {
-		return "", err
-	}
-	defer dest.Close()
-
-	if _, err := io.Copy(dest, source); err != nil {
-		return "", err
+	// 5. Save file only if it doesn't exist (deduplication)
+	if _, err := os.Stat(destPath); os.IsNotExist(err) {
+		fmt.Printf("[AvatarService] Saving new unique avatar: %s\n", destFilename)
+		if err := os.WriteFile(destPath, data, 0644); err != nil {
+			return "", fmt.Errorf("failed to save avatar file: %w", err)
+		}
+	} else {
+		fmt.Printf("[AvatarService] Using existing avatar (deduplicated): %s\n", destFilename)
 	}
 
-	// 5. Update session store
+	// 6. Update session store
 	if err := a.sessionStore.UpdateAvatar(userID, destFilename); err != nil {
 		return "", fmt.Errorf("failed to update session store: %w", err)
 	}
