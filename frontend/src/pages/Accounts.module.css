@@ -86,22 +86,7 @@
   background: #060606;
 }
 
-.activeAccountCard {
-  width: fit-content;
-  position: relative;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 12px 20px;
-  border-radius: 20px;
-  overflow: visible;
-  cursor: default;
-  transition: all 0.3s ease;
-  z-index: 2;
-  flex-shrink: 0;
-  min-width: 128px;
-  color: var(--text-primary);
-}
+
 
 .activeAccountAvatar {
   position: relative;
@@ -154,7 +139,7 @@
   /* Left align info since avatar moved left */
   gap: 2px;
   z-index: 2;
-  min-width: 0;
+  min-width: 128px;
   text-align: left;
 }
 

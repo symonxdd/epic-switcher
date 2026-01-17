@@ -196,21 +196,17 @@ export default function Accounts() {
                       </div>
                     </div>
 
-                    <div
-                      className={styles.activeAccountCard}
-                    >
-                      <div className={styles.activeAccountInfo}>
-                        <div className={styles.activeAccountName}>
-                          {activeSession.alias || activeSession.username || activeSession.userId}
-                        </div>
-                        {!hideUserIds && (
-                          <div className={styles.activeAccountMeta}>
-                            {activeSession.alias
-                              ? activeSession.username || activeSession.userId
-                              : activeSession.userId}
-                          </div>
-                        )}
+                    <div className={styles.activeAccountInfo}>
+                      <div className={styles.activeAccountName}>
+                        {activeSession.alias || activeSession.username || activeSession.userId}
                       </div>
+                      {!hideUserIds && (
+                        <div className={styles.activeAccountMeta}>
+                          {activeSession.alias
+                            ? activeSession.username || activeSession.userId
+                            : activeSession.userId}
+                        </div>
+                      )}
                     </div>
 
                     <div className={styles.activeAccountSide}>
