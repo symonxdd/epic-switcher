@@ -98,6 +98,48 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 	return destFilename, nil
 }
 
+// GetAvailableAvatars returns a list of all avatar filenames in the avatars directory.
+func (a *AvatarService) GetAvailableAvatars() ([]string, error) {
+	avatarDir := a.sessionStore.GetAvatarDir()
+
+	// Ensure the directory exists
+	if _, err := os.Stat(avatarDir); os.IsNotExist(err) {
+		return []string{}, nil
+	}
+
+	entries, err := os.ReadDir(avatarDir)
+	if err != nil {
+		return nil, fmt.Errorf("failed to read avatar directory: %w", err)
+	}
+
+	var avatars []string
+	for _, entry := range entries {
+		if !entry.IsDir() {
+			avatars = append(avatars, entry.Name())
+		}
+	}
+
+	return avatars, nil
+}
+
+// SetAvatar sets an existing avatar file for the given userID.
+func (a *AvatarService) SetAvatar(userID string, filename string) error {
+	if userID == "" {
+		return fmt.Errorf("userID is required")
+	}
+	if filename == "" {
+		return fmt.Errorf("filename is required")
+	}
+
+	// Verify the file exists
+	avatarPath := filepath.Join(a.sessionStore.GetAvatarDir(), filename)
+	if _, err := os.Stat(avatarPath); os.IsNotExist(err) {
+		return fmt.Errorf("avatar file not found: %s", filename)
+	}
+
+	return a.sessionStore.UpdateAvatar(userID, filename)
+}
+
 // RemoveAvatar clears the custom avatar for the given userID and deletes the file.
 func (a *AvatarService) RemoveAvatar(userID string) error {
 	if userID == "" {

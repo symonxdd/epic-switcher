@@ -334,10 +334,18 @@ export default function Accounts() {
       {showAvatarModal && (
         <AvatarSelectionModal
           username={activeSession?.alias || activeSession?.username || activeSession?.userId}
+          userId={activeSession?.userId}
           currentAvatarPath={activeSession?.avatarPath}
           onSelect={handleAvatarSelect}
           onRemove={handleAvatarRemove}
           onCancel={() => setShowAvatarModal(false)}
+          onAvatarChange={(filename) => {
+            setSessions(prev => prev.map(s =>
+              s.userId === activeSession?.userId ? { ...s, avatarPath: filename } : s
+            ));
+            toast.success("Avatar updated!", { id: "avatar-success" });
+            setShowAvatarModal(false);
+          }}
         />
       )}
     </div>

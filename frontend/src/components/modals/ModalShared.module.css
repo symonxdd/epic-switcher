@@ -218,3 +218,55 @@
   color: var(--text-secondary);
   font-weight: 500;
 }
+
+.avatarGalleryContainer {
+  margin: 1rem 0;
+}
+
+.galleryLabel {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+}
+
+.avatarGallery {
+  display: flex;
+  gap: 0.5rem;
+  overflow-x: auto;
+  padding: 0.5rem 0;
+  scrollbar-width: thin;
+  scrollbar-color: var(--border-subtle) transparent;
+}
+
+.avatarGallery::-webkit-scrollbar {
+  height: 6px;
+}
+
+.avatarGallery::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.avatarGallery::-webkit-scrollbar-thumb {
+  background-color: var(--border-subtle);
+  border-radius: 3px;
+}
+
+.avatarMiniature {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  cursor: pointer;
+  flex-shrink: 0;
+  border: 2px solid transparent;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.avatarMiniature:hover {
+  border-color: var(--text-secondary);
+  transform: scale(1.05);
+}
+
+.avatarMiniatureActive {
+  border-color: var(--color-accent-orange);
+}
