@@ -92,7 +92,7 @@
   background: var(--avatar-gradient);
   color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.6rem;
+  font-size: 2.5rem;
   width: 120px;
   height: 120px;
   display: flex;
@@ -121,7 +121,6 @@
   opacity: 0;
   transition: opacity 0.2s ease;
   color: white;
-  font-size: 1.4rem;
   z-index: 3;
 }
 

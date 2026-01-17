@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor } from '../../../wailsjs/go/services/AvatarService'
+import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar } from '../../../wailsjs/go/services/AvatarService'
 import styles from './ModalShared.module.css'
 
 export default function EditAvatarModal({
@@ -149,12 +149,19 @@ export default function EditAvatarModal({
                 ].map((gradient) => (
                   <div
                     key={gradient}
-                    className={`${styles.colorCircle} ${currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient) ? styles.colorCircleActive : ''}`}
+                    className={`${styles.colorCircle} ${(!currentAvatarImage || currentAvatarImage === "") && (currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
                     style={{ background: gradient }}
                     onClick={async () => {
                       try {
+                        // Set the background color
                         await SetAvatarColor(userId, gradient);
                         if (onColorChange) onColorChange(gradient);
+
+                        // If there was an image, clear it so we can see the color + initials
+                        if (currentAvatarImage) {
+                          await RemoveAvatar(userId);
+                          if (onAvatarChange) onAvatarChange("");
+                        }
                       } catch (err) {
                         console.error('Failed to set avatar color:', err);
                       }
