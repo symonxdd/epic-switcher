@@ -11,7 +11,8 @@ export default function EditAvatarModal({
   currentAvatarImage,
   currentAvatarColor,
   onAvatarChange,
-  onColorChange
+  onColorChange,
+  onRemove
 }) {
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
@@ -162,7 +163,9 @@ export default function EditAvatarModal({
 
           <div className={styles.modalRightColumn}>
             <div className={styles.colorSelectionContainer}>
-              <p className={styles.galleryLabel}>Choose a color:</p>
+              <p className={styles.galleryLabel}>
+                {currentAvatarImage ? "Choose a border color:" : "Choose a background color:"}
+              </p>
               <div className={styles.colorGrid}>
                 {[
                   'linear-gradient(135deg, #FBBB03, #E21F0A)',
@@ -174,7 +177,7 @@ export default function EditAvatarModal({
                 ].map((gradient) => (
                   <div
                     key={gradient}
-                    className={`${styles.colorCircle} ${(!currentAvatarImage || currentAvatarImage === "") && (currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
+                    className={`${styles.colorCircle} ${(currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
                     style={{ background: gradient }}
                     onClick={async () => {
                       try {
@@ -182,10 +185,11 @@ export default function EditAvatarModal({
                         await SetAvatarColor(userId, gradient);
                         if (onColorChange) onColorChange(gradient);
 
-                        // If there was an image, clear it so we can see the color + initials
+                        // If there is an image, update the border
                         if (currentAvatarImage) {
-                          await RemoveAvatar(userId);
-                          if (onAvatarChange) onAvatarChange("");
+                          if (!showBorder) {
+                            handleToggleBorder({ target: { checked: true } });
+                          }
                         }
                       } catch (err) {
                         console.error('Failed to set avatar color:', err);
@@ -209,6 +213,25 @@ export default function EditAvatarModal({
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
                 </button>
+                <div className={styles.avatarWrapper}>
+                  <div
+                    className={`${styles.avatarMiniature} ${styles.noneAvatar} ${(!currentAvatarImage || currentAvatarImage === "") ? styles.avatarMiniatureActive : ''}`}
+                    onClick={async () => {
+                      if (!currentAvatarImage || currentAvatarImage === "") return;
+                      try {
+                        await RemoveAvatar(userId);
+                        if (onAvatarChange) onAvatarChange("");
+                        if (onRemove) onRemove();
+                      } catch (err) {
+                        console.error('Failed to remove avatar image:', err);
+                      }
+                    }}
+                    style={{ background: currentAvatarColor || defaultGradient }}
+                    title="Use initials (no image)"
+                  >
+                    {getFirstVisibleChar(username)}
+                  </div>
+                </div>
 
                 {availableAvatars.map((avatar) => (
                   <div key={avatar} className={styles.avatarWrapper}>

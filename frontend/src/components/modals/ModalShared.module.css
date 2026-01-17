@@ -386,6 +386,17 @@
   cursor: default;
 }
 
+.noneAvatar {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: 700;
+  font-size: 1.15rem;
+  user-select: none;
+  background-clip: padding-box;
+}
+
 .avatarWrapper {
   position: relative;
   display: inline-block;
