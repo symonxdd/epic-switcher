@@ -301,6 +301,10 @@
   padding: 0;
 }
 
+.currentAvatarNoBorder:has(img) {
+  background: none !important;
+}
+
 .currentAvatar img {
   width: 100%;
   height: 100%;

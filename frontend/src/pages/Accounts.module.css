@@ -113,6 +113,10 @@
   padding: 0;
 }
 
+.activeAccountAvatarNoBorder:has(img) {
+  background: none !important;
+}
+
 .avatarOverlay {
   position: absolute;
   inset: 0;
@@ -504,6 +508,10 @@
 
 .avatarNoBorder {
   padding: 0;
+}
+
+.avatarNoBorder:has(img) {
+  background: none !important;
 }
 
 .listItem:hover .avatar {
