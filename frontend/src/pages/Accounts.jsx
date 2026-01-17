@@ -112,7 +112,7 @@ export default function Accounts() {
   // Check if the currently active session is the new detected session
   const isNewSession = newLoginSession && activeLoginSession && newLoginSession.userId === activeLoginSession.userId;
 
-  console.log("📷 Active Session:", activeSession);
+  console.log("Active Session:", activeSession);
 
   // If it's a new session, merge the username from newLoginUsername
   if (isNewSession && activeSession) {
@@ -121,7 +121,7 @@ export default function Accounts() {
 
   // Calculate non-active accounts count and label
   const nonActiveAccountsCount = sessions.filter(s => s.userId !== activeUserId).length;
-  const accountsLabel = "Select an account to switch";
+  const accountsLabel = "Select an account to switch:";
 
   return (
     <div className={styles.pageWrapper}>
