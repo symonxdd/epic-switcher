@@ -124,7 +124,6 @@ export default function EditAvatarModal({
                   <img
                     src={`/custom-avatar/${currentAvatarImage}?t=${new Date().getTime()}`}
                     alt="Current Avatar"
-                    className={styles.currentAvatar}
                     style={{ margin: 0 }}
                   />
                 ) : (

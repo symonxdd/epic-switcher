@@ -105,10 +105,7 @@
   overflow: hidden;
   cursor: pointer;
   outline: none;
-}
-
-.activeAccountAvatar:has(img) {
-  background: none;
+  padding: 1.5px;
 }
 
 .avatarOverlay {
@@ -132,6 +129,8 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .activeAccountInfo {
@@ -482,7 +481,6 @@
 
 .avatar {
   background: var(--avatar-gradient);
-  /* border: 1px solid rgba(255, 255, 255, 0.15); */
   color: var(--text-primary);
   font-weight: 600;
   font-size: 0.9rem;
@@ -496,10 +494,7 @@
   transition: all 0.2s ease;
   overflow: hidden;
   outline: none;
-}
-
-.avatar:has(img) {
-  background: none;
+  padding: 1.5px;
 }
 
 .listItem:hover .avatar {

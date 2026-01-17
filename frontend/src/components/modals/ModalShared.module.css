@@ -283,7 +283,7 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  object-fit: cover;
+  padding: 1.5px;
   margin-bottom: 1rem;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -293,6 +293,15 @@
   font-weight: 700;
   color: white;
   user-select: none;
+  overflow: hidden;
+}
+
+.currentAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+  display: block;
 }
 
 .previewLabel {
