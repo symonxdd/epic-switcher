@@ -280,3 +280,110 @@
   box-shadow: 0 0 10px var(--color-primary);
   cursor: default;
 }
+
+.avatarWrapper {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.deleteAvatarBtn {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: var(--color-accent-red);
+  padding: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.deleteAvatarBtn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.deleteAvatarBtn:hover {
+  background: var(--color-accent-red);
+  color: white;
+  transform: scale(1.1);
+  border-color: var(--color-accent-red);
+}
+
+/* Nested Confirmation Modal Styles */
+.confirmDeleteOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2000;
+  border-radius: 14px;
+  animation: fadeIn 0.15s ease forwards;
+}
+
+.confirmDeleteModal {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  width: 320px;
+  text-align: center;
+  box-shadow: 0 12px 48px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.15s ease forwards;
+  overflow: hidden;
+  padding-bottom: 1.5rem;
+}
+
+.confirmDeleteTitle {
+  margin: 0;
+  background: var(--bg-app);
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.confirmDeleteText {
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin: 1.5rem 0;
+  padding: 0 1.5rem;
+  line-height: 1.5;
+}
+
+.confirmDeleteButtons {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  padding: 0 1.5rem;
+}
+
+.confirmDeleteButtons button {
+  min-width: 100px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  padding: 0.6rem 1rem;
+  border-radius: 15px;
+  cursor: default;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}

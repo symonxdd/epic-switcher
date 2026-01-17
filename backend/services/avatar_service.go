@@ -152,3 +152,20 @@ func (a *AvatarService) RemoveAvatar(userID string) error {
 
 	return a.sessionStore.UpdateAvatar(userID, "")
 }
+
+// DeleteAvatarFile deletes the specified avatar file from the disk.
+func (a *AvatarService) DeleteAvatarFile(filename string) error {
+	if filename == "" {
+		return fmt.Errorf("filename is required")
+	}
+
+	avatarPath := filepath.Join(a.sessionStore.GetAvatarDir(), filename)
+
+	// Check if file exists before trying to delete
+	if _, err := os.Stat(avatarPath); os.IsNotExist(err) {
+		return fmt.Errorf("avatar file not found: %s", filename)
+	}
+
+	fmt.Printf("[AvatarService] Deleting avatar file: %s\n", filename)
+	return os.Remove(avatarPath)
+}

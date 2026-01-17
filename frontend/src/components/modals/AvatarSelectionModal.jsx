@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react'
-import { GetAvailableAvatars, SetAvatar } from '../../../wailsjs/go/services/AvatarService'
+import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile } from '../../../wailsjs/go/services/AvatarService'
 import styles from './ModalShared.module.css'
 
 export default function AvatarSelectionModal({
@@ -13,6 +13,7 @@ export default function AvatarSelectionModal({
 }) {
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
+  const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
   const closeCallbackRef = useRef(null);
 
   useEffect(() => {
@@ -72,6 +73,29 @@ export default function AvatarSelectionModal({
     }
   };
 
+  const handleDeleteClick = (e, filename) => {
+    e.stopPropagation();
+    setConfirmDelete(filename);
+  };
+
+  const confirmDeleteAvatar = async () => {
+    if (!confirmDelete) return;
+    try {
+      await DeleteAvatarFile(confirmDelete);
+      setAvailableAvatars(prev => prev.filter(a => a !== confirmDelete));
+
+      // If the deleted avatar was the one currently assigned to this user, 
+      // we should probably clear it in the UI/session store too.
+      if (confirmDelete === currentAvatarPath) {
+        onRemove();
+      }
+
+      setConfirmDelete(null);
+    } catch (err) {
+      console.error('Failed to delete avatar:', err);
+    }
+  };
+
   return (
     <div
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
@@ -102,13 +126,24 @@ export default function AvatarSelectionModal({
               <p className={styles.galleryLabel}>Select from existing avatars:</p>
               <div className={styles.avatarGallery}>
                 {availableAvatars.map((avatar) => (
-                  <img
-                    key={avatar}
-                    src={`/custom-avatar/${avatar}?t=${Date.now()}`}
-                    alt={avatar}
-                    className={`${styles.avatarMiniature} ${currentAvatarPath === avatar ? styles.avatarMiniatureActive : ''}`}
-                    onClick={() => handleAvatarClick(avatar)}
-                  />
+                  <div key={avatar} className={styles.avatarWrapper}>
+                    <img
+                      src={`/custom-avatar/${avatar}?t=${Date.now()}`}
+                      alt={avatar}
+                      className={`${styles.avatarMiniature} ${currentAvatarPath === avatar ? styles.avatarMiniatureActive : ''}`}
+                      onClick={() => handleAvatarClick(avatar)}
+                    />
+                    <button
+                      className={styles.deleteAvatarBtn}
+                      onClick={(e) => handleDeleteClick(e, avatar)}
+                      title="Delete this image"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
                 ))}
               </div>
             </div>
@@ -130,6 +165,28 @@ export default function AvatarSelectionModal({
             </button>
           </div>
         </div>
+
+        {confirmDelete && (
+          <div className={styles.confirmDeleteOverlay} onClick={() => setConfirmDelete(null)}>
+            <div className={styles.confirmDeleteModal} onClick={(e) => e.stopPropagation()}>
+              <div className={styles.confirmDeleteTitle}>Delete Image</div>
+              <p className={styles.confirmDeleteText}>
+                Confirm deleting this image
+              </p>
+              <div className={styles.confirmDeleteButtons}>
+                <button className={styles.secondaryButton} onClick={() => setConfirmDelete(null)}>
+                  Cancel
+                </button>
+                <button
+                  className={styles.primaryButton}
+                  onClick={confirmDeleteAvatar}
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   )
