@@ -121,7 +121,7 @@ export default function Accounts() {
 
   // Calculate non-active accounts count and label
   const nonActiveAccountsCount = sessions.filter(s => s.userId !== activeUserId).length;
-  const accountsLabel = "Select an account to switch:";
+  const accountsLabel = "Select an account to switch";
 
   return (
     <div className={styles.pageWrapper}>
@@ -157,27 +157,26 @@ export default function Accounts() {
               {activeSession && (
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
-
+                    <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
+                      {activeSession.avatarPath ? (
+                        <img
+                          src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
+                          alt=""
+                          className={styles.customAvatarImage}
+                        />
+                      ) : (
+                        getFirstVisibleChar(
+                          activeSession.alias || activeSession.username || activeSession.userId
+                        )
+                      )}
+                      <div className={styles.avatarOverlay}>
+                        <HiPencil />
+                      </div>
+                    </div>
 
                     <div
                       className={styles.activeAccountCard}
                     >
-                      <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
-                        {activeSession.avatarPath ? (
-                          <img
-                            src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
-                            alt=""
-                            className={styles.customAvatarImage}
-                          />
-                        ) : (
-                          getFirstVisibleChar(
-                            activeSession.alias || activeSession.username || activeSession.userId
-                          )
-                        )}
-                        <div className={styles.avatarOverlay}>
-                          <HiPencil />
-                        </div>
-                      </div>
                       <div className={styles.activeAccountInfo}>
                         <div className={styles.activeAccountName}>
                           {activeSession.alias || activeSession.username || activeSession.userId}

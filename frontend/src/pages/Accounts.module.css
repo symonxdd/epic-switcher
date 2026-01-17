@@ -69,37 +69,40 @@
 .activeAccountContent {
   display: flex;
   align-items: center;
-  gap: 24px;
+  gap: 16px;
+  /* Reduced gap since avatar is smaller sibling now */
 }
 
 .activeAccountCard {
   width: fit-content;
   position: relative;
   display: flex;
-  /* flex-direction: column; */
   align-items: center;
   gap: 16px;
-  padding: 32px 40px;
+  padding: 12px 20px;
+  /* Reduced padding as requested */
   background: linear-gradient(135deg, #FBBB03, #E21E0A);
-  border-radius: 28px;
+  border-radius: 20px;
+  /* Slightly smaller radius for smaller card */
   overflow: visible;
   cursor: default;
   transition: all 0.3s ease;
   z-index: 2;
   flex-shrink: 0;
-  min-width: 240px;
+  min-width: 180px;
+  /* Reduced min-width */
   color: white;
 }
 
 .activeAccountAvatar {
   position: relative;
-  background: rgba(255, 255, 255, 0.2);
-  border: 1.5px solid rgba(255, 255, 255, 0.4);
-  color: white;
+  background: var(--bg-card);
+  border: 1.5px solid var(--border-subtle);
+  color: var(--text-primary);
   font-weight: 700;
-  font-size: 1.3rem;
-  width: 56px;
-  height: 56px;
+  font-size: 1.4rem;
+  width: 120px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -138,11 +141,12 @@
 .activeAccountInfo {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  gap: 4px;
+  align-items: flex-start;
+  /* Left align info since avatar moved left */
+  gap: 2px;
   z-index: 2;
   min-width: 0;
-  text-align: center;
+  text-align: left;
 }
 
 .activeAccountName {
@@ -203,22 +207,28 @@
 
 .activeAccountBadge {
   position: absolute;
-  top: -14px;
-  right: 18px;
+  top: -10px;
+  right: 12px;
   display: flex;
   align-items: center;
   gap: 6px;
-  padding: 4px 10px;
+  padding: 3px 10px;
   background-color: white;
   border: 1px solid #E21E0A;
   border-radius: 24px;
   color: #E21E0A;
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   font-weight: 700;
   flex-shrink: 0;
   transition: all 0.2s ease;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="dark"] .activeAccountBadge {
+  background-color: var(--bg-app);
+  color: #FBBB03;
+  border-color: #FBBB03;
 }
 
 .activeAccountBadge svg {
