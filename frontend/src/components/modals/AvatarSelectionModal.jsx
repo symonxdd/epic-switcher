@@ -93,7 +93,7 @@ export default function AvatarSelectionModal({
                 alt="Current Avatar"
                 className={styles.currentAvatar}
               />
-              <span className={styles.previewLabel}>Current Selection</span>
+              <span className={styles.previewLabel}>Current</span>
             </div>
           )}
 
