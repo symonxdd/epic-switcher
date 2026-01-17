@@ -73,6 +73,7 @@
 }
 
 .activeAccountCard {
+  --active-border: linear-gradient(135deg, #FBBB03, #E21E0A);
   width: fit-content;
   position: relative;
   display: flex;
@@ -96,7 +97,7 @@
   position: absolute;
   inset: 0;
   padding: 2px;
-  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  background: var(--active-border);
   -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
   -webkit-mask-composite: xor;
   mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
@@ -109,12 +110,12 @@
 .activeAccountCard::after {
   content: '';
   position: absolute;
-  inset: 1px;
-  /* background: linear-gradient(135deg, #FBBB03, #E21E0A); */
-  /* filter: blur(30px); */
-  opacity: 0.15;
+  inset: -2px;
+  background: linear-gradient(135deg, #FBBB03, #E21E0A);
+  filter: blur(8px);
+  opacity: 0.4;
   z-index: -1;
-  border-radius: 27px;
+  border-radius: 30px;
   pointer-events: none;
 }
 
@@ -588,5 +589,6 @@
 }
 
 [data-theme="dark"] .activeAccountCard {
-  background: #020202;
+  background: #0A0A0A;
+  --active-border: linear-gradient(135deg, #333, #222);
 }
