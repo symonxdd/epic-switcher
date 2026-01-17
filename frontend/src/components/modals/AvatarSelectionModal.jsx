@@ -46,7 +46,7 @@ export default function AvatarSelectionModal({
         <h3>Custom Avatar</h3>
 
         <div className={styles.modalNote}>
-          <p>Would you like to set a custom profile picture for <strong>{username}</strong>?</p>
+          <p>You can set a custom profile picture for <strong>{username}</strong>.</p>
 
           {currentAvatarPath && (
             <div className={styles.avatarPreviewContainer}>

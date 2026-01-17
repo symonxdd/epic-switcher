@@ -84,10 +84,6 @@
   padding: 0.7rem 1rem;
   border-radius: 15px;
   cursor: default;
-  transition:
-    background-color var(--transition-speed) ease,
-    color var(--transition-speed) ease,
-    border-color var(--transition-speed) ease;
   display: inline-flex;
   align-items: center;
   justify-content: center;
