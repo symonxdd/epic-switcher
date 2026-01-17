@@ -17,11 +17,20 @@ export default function EditAvatarModal({
   const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
   const closeCallbackRef = useRef(null);
 
-  useEffect(() => {
+  const refreshAvatars = () => {
     GetAvailableAvatars()
       .then((avatars) => setAvailableAvatars(avatars || []))
       .catch(console.error);
+  };
+
+  useEffect(() => {
+    refreshAvatars();
   }, []);
+
+  // Refresh gallery when image changes (e.g. after upload or set)
+  useEffect(() => {
+    refreshAvatars();
+  }, [currentAvatarImage]);
 
   const handleAnimationEnd = (e) => {
     if (e.target !== e.currentTarget) return;
@@ -30,10 +39,9 @@ export default function EditAvatarModal({
     }
   };
 
-  const handleSelect = () => {
-    onSelect();
-    closeCallbackRef.current = () => { };
-    setIsClosing(true);
+  const handleSelect = async () => {
+    await onSelect();
+    // Do not close automatically
   };
 
   const handleCancel = () => {
@@ -58,9 +66,7 @@ export default function EditAvatarModal({
       if (onAvatarChange) {
         onAvatarChange(filename);
       }
-      // Only close if onAvatarChange didn't already handle it
-      closeCallbackRef.current = onCancel;
-      setIsClosing(true);
+      // Do not close automatically
     } catch (err) {
       console.error('Failed to set avatar:', err);
     }
@@ -161,45 +167,38 @@ export default function EditAvatarModal({
             <div className={styles.avatarGalleryContainer}>
               <p className={styles.galleryLabel}>Or an existing avatar:</p>
               <div className={styles.avatarGallery}>
-                {availableAvatars.length === 0 ? (
-                  <p style={{ fontSize: '0.75rem', opacity: 0.5, fontStyle: 'italic', margin: '10px 0' }}>
-                    No custom images yet
-                  </p>
-                ) : (
-                  availableAvatars.map((avatar) => (
-                    <div key={avatar} className={styles.avatarWrapper}>
-                      <img
-                        src={`/custom-avatar/${avatar}?t=${Date.now()}`}
-                        alt={avatar}
-                        className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
-                        onClick={() => handleAvatarClick(avatar)}
-                      />
-                      <button
-                        className={styles.deleteAvatarBtn}
-                        onClick={(e) => handleDeleteClick(e, avatar)}
-                        title="Delete this image"
-                      >
-                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                          <line x1="18" y1="6" x2="6" y2="18"></line>
-                          <line x1="6" y1="6" x2="18" y2="18"></line>
-                        </svg>
-                      </button>
-                    </div>
-                  ))
-                )}
-              </div>
-            </div>
+                <button
+                  className={styles.uploadAvatarBtn}
+                  onClick={handleSelect}
+                  title="Select new image"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
 
-            <div style={{ textAlign: 'left' }}>
-              <p style={{ fontSize: '0.8rem', opacity: 0.7, margin: '0 0 8px 0' }}>
-                Or a new image:
-              </p>
-              <button
-                className={styles.primaryButton}
-                onClick={handleSelect}
-              >
-                {currentAvatarImage ? 'Change Image' : 'Select Image'}
-              </button>
+                {availableAvatars.map((avatar) => (
+                  <div key={avatar} className={styles.avatarWrapper}>
+                    <img
+                      src={`/custom-avatar/${avatar}?t=${Date.now()}`}
+                      alt={avatar}
+                      className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
+                      onClick={() => handleAvatarClick(avatar)}
+                    />
+                    <button
+                      className={styles.deleteAvatarBtn}
+                      onClick={(e) => handleDeleteClick(e, avatar)}
+                      title="Delete this image"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

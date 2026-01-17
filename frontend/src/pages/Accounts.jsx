@@ -90,7 +90,7 @@ export default function Accounts() {
       console.error(err);
       toast.error("Failed to update avatar.", { id: "avatar-error" });
     } finally {
-      setShowAvatarModal(false);
+      // Modal remains open as requested
     }
   }
 
@@ -107,7 +107,7 @@ export default function Accounts() {
       console.error(err);
       toast.error("Failed to clear avatar.", { id: "avatar-error" });
     } finally {
-      setShowAvatarModal(false);
+      // Modal remains open as requested
     }
   }
 
@@ -346,7 +346,7 @@ export default function Accounts() {
             setSessions(prev => prev.map(s =>
               s.userId === activeSession?.userId ? { ...s, avatarImage: filename } : s
             ));
-            setShowAvatarModal(false);
+            // setShowAvatarModal(false); // Do not close automatically
           }}
           onColorChange={(color) => {
             setSessions(prev => prev.map(s =>
