@@ -48,11 +48,23 @@ export default function AvatarSelectionModal({
   };
 
   const handleAvatarClick = async (filename) => {
+    if (!userId || !filename) {
+      console.warn('Cannot set avatar: missing userId or filename', { userId, filename });
+      return;
+    }
+
+    if (filename === currentAvatarPath) {
+      console.log('Avatar already selected, doing nothing.');
+      return;
+    }
+
     try {
+      console.log('Setting avatar for user:', userId, 'to file:', filename);
       await SetAvatar(userId, filename);
       if (onAvatarChange) {
         onAvatarChange(filename);
       }
+      // Only close if onAvatarChange didn't already handle it
       closeCallbackRef.current = onCancel;
       setIsClosing(true);
     } catch (err) {

@@ -259,14 +259,24 @@
   cursor: pointer;
   flex-shrink: 0;
   border: 2px solid transparent;
-  transition: border-color 0.15s ease, transform 0.15s ease;
+  transition: all 0.2s ease;
+  pointer-events: auto;
 }
 
 .avatarMiniature:hover {
-  border-color: var(--text-secondary);
-  transform: scale(1.05);
+  border-color: rgba(0, 0, 0, 0.4);
+  transform: translateY(-2px) scale(1.1);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .avatarMiniature:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
 
 .avatarMiniatureActive {
-  border-color: var(--color-accent-orange);
+  border-color: var(--color-primary) !important;
+  transform: scale(1.05);
+  box-shadow: 0 0 10px var(--color-primary);
+  cursor: default;
 }
