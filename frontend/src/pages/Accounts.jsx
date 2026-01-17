@@ -30,6 +30,7 @@ export default function Accounts() {
   const { viewMode, setViewMode } = useContext(ViewModeContext);
   const [hideUserIds, setHideUserIds] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [showBorder, setShowBorder] = useState(true);
 
   useEffect(() => {
     checkLoginStatus();
@@ -38,6 +39,15 @@ export default function Accounts() {
   useEffect(() => {
     const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
     setHideUserIds(storedHideUserIds === "true");
+
+    const loadBorder = () => {
+      const storedBorder = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
+      if (storedBorder !== null) setShowBorder(storedBorder === 'true');
+    };
+    loadBorder();
+
+    window.addEventListener('storage', loadBorder);
+    return () => window.removeEventListener('storage', loadBorder);
   }, []);
 
   async function handleAccept() {
@@ -175,7 +185,7 @@ export default function Accounts() {
                   <div className={styles.activeAccountContent}>
                     <div className={styles.avatarLabelGroup}>
                       <div
-                        className={styles.activeAccountAvatar}
+                        className={`${styles.activeAccountAvatar} ${!showBorder ? styles.activeAccountAvatarNoBorder : ''}`}
                         onClick={handleAvatarClick}
                         style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
                       >
@@ -285,7 +295,7 @@ export default function Accounts() {
                           >
                             <div className={styles.avatarWrapper}>
                               <div
-                                className={styles.avatar}
+                                className={`${styles.avatar} ${!showBorder ? styles.avatarNoBorder : ''}`}
                                 style={session.avatarColor ? { background: session.avatarColor } : {}}
                               >
                                 {session.avatarImage ? (

@@ -105,7 +105,12 @@
   overflow: hidden;
   cursor: pointer;
   outline: none;
-  padding: 1.5px;
+  padding: 2px;
+  transition: padding 0.2s ease;
+}
+
+.activeAccountAvatarNoBorder {
+  padding: 0;
 }
 
 .avatarOverlay {
@@ -494,7 +499,11 @@
   transition: all 0.2s ease;
   overflow: hidden;
   outline: none;
-  padding: 1.5px;
+  padding: 2px;
+}
+
+.avatarNoBorder {
+  padding: 0;
 }
 
 .listItem:hover .avatar {

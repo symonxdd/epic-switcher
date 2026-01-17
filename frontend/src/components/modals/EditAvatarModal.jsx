@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar } from '../../../wailsjs/go/services/AvatarService'
 import styles from './ModalShared.module.css'
+import { STORAGE_KEYS } from '../../constants/storageKeys'
 
 export default function EditAvatarModal({
   onSelect,
@@ -15,7 +16,23 @@ export default function EditAvatarModal({
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
+  const [showBorder, setShowBorder] = useState(true);
   const closeCallbackRef = useRef(null);
+
+  useEffect(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
+    if (stored !== null) {
+      setShowBorder(stored === 'true');
+    }
+  }, []);
+
+  const handleToggleBorder = (e) => {
+    const newVal = e.target.checked;
+    setShowBorder(newVal);
+    localStorage.setItem(STORAGE_KEYS.SHOW_AVATAR_BORDER, newVal);
+    // Notify window for other components to update if they are on the same page
+    window.dispatchEvent(new Event('storage'));
+  };
 
   const refreshAvatars = () => {
     GetAvailableAvatars()
@@ -111,13 +128,13 @@ export default function EditAvatarModal({
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Edit Avatar</h3>
+        <h3>Customize Avatar</h3>
 
         <div className={styles.modalTwoColumn}>
           <div className={styles.modalLeftColumn}>
             <div className={styles.avatarPreviewContainer}>
               <div
-                className={styles.currentAvatar}
+                className={`${styles.currentAvatar} ${!showBorder ? styles.currentAvatarNoBorder : ''}`}
                 style={{ background: currentAvatarColor || defaultGradient }}
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
@@ -131,6 +148,19 @@ export default function EditAvatarModal({
                 )}
               </div>
               <span className={styles.previewLabel}>Current</span>
+
+              <div className={styles.showBorderToggle}>
+                <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
+                <label className={styles.switch}>
+                  <input
+                    id="showBorderToggle"
+                    type="checkbox"
+                    checked={showBorder}
+                    onChange={handleToggleBorder}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
             </div>
           </div>
 

@@ -2,4 +2,5 @@
 export const STORAGE_KEYS = {
   USERNAME_HINT_DISMISSED: "username_hint_dismissed",
   HIDE_USER_IDS: "hide_user_ids",
+  SHOW_AVATAR_BORDER: "show_avatar_border",
 };
