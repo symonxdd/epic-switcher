@@ -157,6 +157,11 @@ export default function Accounts() {
               {activeSession && (
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
+                    <div className={styles.activeAccountBadge}>
+                      <HiOutlineCheckCircle />
+                      <span>Active</span>
+                    </div>
+
                     <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
                       {activeSession.avatarPath ? (
                         <img
@@ -188,11 +193,6 @@ export default function Accounts() {
                               : activeSession.userId}
                           </div>
                         )}
-                      </div>
-
-                      <div className={styles.activeAccountBadge}>
-                        <HiOutlineCheckCircle />
-                        <span>Active</span>
                       </div>
                     </div>
 

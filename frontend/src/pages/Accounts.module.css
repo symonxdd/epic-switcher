@@ -67,10 +67,23 @@
 }
 
 .activeAccountContent {
+  position: relative;
+  /* Added relative for badge positioning */
   display: flex;
   align-items: center;
   gap: 16px;
-  /* Reduced gap since avatar is smaller sibling now */
+  /* User manually increased avatar size, keeping gap */
+  padding-right: 12px;
+  /* Add some space for the absolute badge if needed */
+
+  background: var(--bg-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: 25px;
+  padding: 12px 20px;
+}
+
+[data-theme="dark"] .activeAccountContent {
+  background: #060606;
 }
 
 .activeAccountCard {
@@ -80,18 +93,14 @@
   align-items: center;
   gap: 16px;
   padding: 12px 20px;
-  /* Reduced padding as requested */
-  background: linear-gradient(135deg, #FBBB03, #E21E0A);
   border-radius: 20px;
-  /* Slightly smaller radius for smaller card */
   overflow: visible;
   cursor: default;
   transition: all 0.3s ease;
   z-index: 2;
   flex-shrink: 0;
-  min-width: 180px;
-  /* Reduced min-width */
-  color: white;
+  min-width: 128px;
+  color: var(--text-primary);
 }
 
 .activeAccountAvatar {
@@ -152,7 +161,7 @@
 .activeAccountName {
   font-size: 1.15rem;
   font-weight: 600;
-  color: white;
+  color: var(--text-primary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -160,7 +169,7 @@
 
 .activeAccountMeta {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -207,28 +216,46 @@
 
 .activeAccountBadge {
   position: absolute;
-  top: -10px;
-  right: 12px;
+  top: 8px;
+  right: 8px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 6px;
-  padding: 3px 10px;
-  background-color: white;
-  border: 1px solid #E21E0A;
+  padding: 6px 14px;
+  /* More spacious padding */
+  background-color: #222;
+  /* Dark background in light mode */
+  border: 1px solid #444;
+  /* Grayscale border */
   border-radius: 24px;
-  color: #E21E0A;
-  font-size: 0.7rem;
+  color: #fff;
+  /* Greyscale text */
+  font-size: 0.75rem;
+  /* Slightly larger for better readability with more padding */
   font-weight: 700;
   flex-shrink: 0;
   transition: all 0.2s ease;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  line-height: 1;
+  /* Helps with vertical centering */
+}
+
+.activeAccountBadge span {
+  display: flex;
+  align-items: center;
+  margin-top: -1px;
+  /* Subtle nudge for perfect vertical centering */
 }
 
 [data-theme="dark"] .activeAccountBadge {
-  background-color: var(--bg-app);
-  color: #FBBB03;
-  border-color: #FBBB03;
+  background-color: #eee;
+  /* Bright grayscale background */
+  color: #111;
+  /* Dark grayscale text */
+  border-color: #fff;
+  /* Bright border */
 }
 
 .activeAccountBadge svg {
