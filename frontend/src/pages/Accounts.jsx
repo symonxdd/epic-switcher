@@ -174,39 +174,41 @@ export default function Accounts() {
               {activeSession && (
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
-                    <div className={styles.activeAccountBadge}>
-                      <HiOutlineCheckCircle />
-                      <span>Active</span>
-                    </div>
-
-                    <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
-                      {activeSession.avatarPath ? (
-                        <img
-                          src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
-                          alt=""
-                          className={styles.customAvatarImage}
-                        />
-                      ) : (
-                        getFirstVisibleChar(
-                          activeSession.alias || activeSession.username || activeSession.userId
-                        )
-                      )}
-                      <div className={styles.avatarOverlay}>
-                        <HiPencil />
-                      </div>
-                    </div>
-
-                    <div className={styles.activeAccountInfo}>
-                      <div className={styles.activeAccountName}>
-                        {activeSession.alias || activeSession.username || activeSession.userId}
-                      </div>
-                      {!hideUserIds && (
-                        <div className={styles.activeAccountMeta}>
-                          {activeSession.alias
-                            ? activeSession.username || activeSession.userId
-                            : activeSession.userId}
+                    <div className={styles.avatarLabelGroup}>
+                      <div className={styles.activeAccountAvatar} onClick={handleAvatarClick}>
+                        {activeSession.avatarPath ? (
+                          <img
+                            src={`/custom-avatar/${activeSession.avatarPath}?t=${new Date().getTime()}`}
+                            alt=""
+                            className={styles.customAvatarImage}
+                          />
+                        ) : (
+                          getFirstVisibleChar(
+                            activeSession.alias || activeSession.username || activeSession.userId
+                          )
+                        )}
+                        <div className={styles.avatarOverlay}>
+                          <HiPencil />
                         </div>
-                      )}
+                      </div>
+
+                      <div className={styles.activeAccountInfo}>
+                        <div className={styles.activeAccountName}>
+                          {activeSession.alias || activeSession.username || activeSession.userId}
+                        </div>
+                        {!hideUserIds && (
+                          <div className={styles.activeAccountMeta}>
+                            {activeSession.alias
+                              ? activeSession.username || activeSession.userId
+                              : activeSession.userId}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styles.activeAccountBadge}>
+                        <HiOutlineCheckCircle />
+                        <span>Active</span>
+                      </div>
                     </div>
 
                     <div className={styles.activeAccountSide}>
