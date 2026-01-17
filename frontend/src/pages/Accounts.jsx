@@ -102,10 +102,10 @@ export default function Accounts() {
       setSessions(prev => prev.map(s =>
         s.userId === activeSession.userId ? { ...s, avatarPath: "" } : s
       ));
-      toast.success("Avatar removed!", { id: "avatar-success" });
+      toast.success("Avatar cleared!", { id: "avatar-success" });
     } catch (err) {
       console.error(err);
-      toast.error("Failed to remove avatar.", { id: "avatar-error" });
+      toast.error("Failed to clear avatar.", { id: "avatar-error" });
     } finally {
       setShowAvatarModal(false);
     }

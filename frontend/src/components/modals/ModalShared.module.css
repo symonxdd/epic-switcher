@@ -387,3 +387,25 @@
   align-items: center;
   justify-content: center;
 }
+
+.dangerPrimaryButton {
+  background: var(--color-accent-red);
+  color: white;
+  border: none;
+  font-weight: 500;
+  box-shadow: 0 2px 8px color-mix(in srgb, var(--color-accent-red) 30%, transparent);
+  transition: all 0.2s ease;
+}
+
+.dangerPrimaryButton:hover {
+  background: color-mix(in srgb, var(--color-accent-red) 85%, black);
+  box-shadow: 0 4px 12px color-mix(in srgb, var(--color-accent-red) 40%, transparent);
+}
+
+.dangerPrimaryButton:active {
+  opacity: 0.8;
+}
+
+[data-theme="dark"] .dangerPrimaryButton:hover {
+  background: color-mix(in srgb, var(--color-accent-red) 85%, white);
+}

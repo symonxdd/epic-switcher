@@ -154,7 +154,7 @@ export default function AvatarSelectionModal({
           <div className={styles.modalButtonRow}>
             {currentAvatarPath && (
               <button className={styles.dangerButton} onClick={handleRemove} style={{ marginRight: 'auto' }}>
-                Remove
+                Clear
               </button>
             )}
             <button className={styles.secondaryButton} onClick={handleCancel}>
@@ -178,7 +178,7 @@ export default function AvatarSelectionModal({
                   Cancel
                 </button>
                 <button
-                  className={styles.primaryButton}
+                  className={styles.dangerPrimaryButton}
                   onClick={confirmDeleteAvatar}
                 >
                   Delete
