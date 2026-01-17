@@ -73,16 +73,14 @@
 }
 
 .activeAccountCard {
-  --active-border: linear-gradient(135deg, #FBBB03, #E21E0A);
   width: fit-content;
   position: relative;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
   gap: 16px;
   padding: 32px 40px;
-  background: #ffffff;
-  border: none;
+  background: linear-gradient(135deg, #FBBB03, #E21E0A);
   border-radius: 28px;
   overflow: visible;
   cursor: default;
@@ -90,40 +88,14 @@
   z-index: 2;
   flex-shrink: 0;
   min-width: 240px;
-}
-
-.activeAccountCard::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  padding: 2px;
-  background: var(--active-border);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  mask-composite: exclude;
-  border-radius: 28px;
-  pointer-events: none;
-  z-index: 1;
-}
-
-.activeAccountCard::after {
-  content: '';
-  position: absolute;
-  inset: -2px;
-  background: linear-gradient(135deg, #FBBB03, #E21E0A);
-  filter: blur(8px);
-  opacity: 0.4;
-  z-index: -1;
-  border-radius: 30px;
-  pointer-events: none;
+  color: white;
 }
 
 .activeAccountAvatar {
   position: relative;
-  background: color-mix(in srgb, var(--text-primary) 8%, transparent);
-  border: 1px solid #FBBB03;
-  color: #FBBB03;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  color: white;
   font-weight: 700;
   font-size: 1.3rem;
   width: 56px;
@@ -176,7 +148,7 @@
 .activeAccountName {
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--text-primary);
+  color: white;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -184,7 +156,7 @@
 
 .activeAccountMeta {
   font-size: 0.85rem;
-  color: var(--text-secondary);
+  color: rgba(255, 255, 255, 0.85);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -237,15 +209,16 @@
   align-items: center;
   gap: 6px;
   padding: 4px 10px;
-  background-color: var(--bg-surface);
-  border: 1px solid #FBBB03;
+  background-color: white;
+  border: 1px solid #E21E0A;
   border-radius: 24px;
-  color: #FBBB03;
+  color: #E21E0A;
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
   flex-shrink: 0;
   transition: all 0.2s ease;
   z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .activeAccountBadge svg {
@@ -588,7 +561,4 @@
   }
 }
 
-[data-theme="dark"] .activeAccountCard {
-  background: #0A0A0A;
-  --active-border: linear-gradient(135deg, #333, #222);
-}
+/* No override needed for activeAccountCard in dark mode anymore */
