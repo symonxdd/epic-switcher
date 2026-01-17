@@ -76,9 +76,10 @@
   width: fit-content;
   position: relative;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 18px;
-  padding: 20px 28px;
+  gap: 16px;
+  padding: 32px 40px;
   background: #ffffff;
   border: none;
   border-radius: 28px;
@@ -87,6 +88,7 @@
   transition: all 0.3s ease;
   z-index: 2;
   flex-shrink: 0;
+  min-width: 240px;
 }
 
 .activeAccountCard::before {
@@ -161,12 +163,13 @@
 }
 
 .activeAccountInfo {
-  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  align-items: center;
+  gap: 4px;
   z-index: 2;
   min-width: 0;
+  text-align: center;
 }
 
 .activeAccountName {
