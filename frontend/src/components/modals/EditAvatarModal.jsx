@@ -146,59 +146,25 @@ export default function EditAvatarModal({
               </div>
               {/* <span className={styles.previewLabel}>Current</span> */}
 
-              <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
-                <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
-                <label className={styles.switch}>
-                  <input
-                    id="showBorderToggle"
-                    type="checkbox"
-                    checked={showBorder}
-                    onChange={handleToggleBorder}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </div>
+              {currentAvatarImage && currentAvatarImage !== "" && (
+                <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
+                  <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
+                  <label className={styles.switch}>
+                    <input
+                      id="showBorderToggle"
+                      type="checkbox"
+                      checked={showBorder}
+                      onChange={handleToggleBorder}
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              )}
             </div>
           </div>
 
           <div className={styles.modalRightColumn}>
-            <div className={styles.colorSelectionContainer}>
-              <p className={styles.galleryLabel}>
-                {currentAvatarImage ? "Choose a border color:" : "Choose a background color:"}
-              </p>
-              <div className={styles.colorGrid}>
-                {[
-                  'linear-gradient(135deg, #FBBB03, #E21F0A)',
-                  'linear-gradient(135deg, #A855F7, #3B82F6)',
-                  'linear-gradient(135deg, #10B981, #3B82F6)',
-                  'linear-gradient(135deg, #EC4899, #EF4444)',
-                  'linear-gradient(135deg, #F59E0B, #D97706)',
-                  'linear-gradient(135deg, #6B7280, #374151)'
-                ].map((gradient) => (
-                  <div
-                    key={gradient}
-                    className={`${styles.colorCircle} ${(currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
-                    style={{ background: gradient }}
-                    onClick={async () => {
-                      try {
-                        // Set the background color
-                        await SetAvatarColor(userId, gradient);
-                        if (onColorChange) onColorChange(gradient);
 
-                        // If there is an image, update the border
-                        if (currentAvatarImage) {
-                          if (!showBorder) {
-                            handleToggleBorder({ target: { checked: true } });
-                          }
-                        }
-                      } catch (err) {
-                        console.error('Failed to set avatar color:', err);
-                      }
-                    }}
-                  />
-                ))}
-              </div>
-            </div>
 
             <div className={styles.avatarGalleryContainer}>
               <p className={styles.galleryLabel}>Or an existing avatar:</p>
@@ -259,6 +225,44 @@ export default function EditAvatarModal({
                       </svg>
                     </button>
                   </div>
+                ))}
+              </div>
+            </div>
+
+            <div className={styles.colorSelectionContainer}>
+              <p className={styles.galleryLabel}>
+                {currentAvatarImage ? "Choose a border color:" : "Choose a background color:"}
+              </p>
+              <div className={styles.colorGrid}>
+                {[
+                  'linear-gradient(135deg, #FBBB03, #E21F0A)',
+                  'linear-gradient(135deg, #A855F7, #3B82F6)',
+                  'linear-gradient(135deg, #10B981, #3B82F6)',
+                  'linear-gradient(135deg, #EC4899, #EF4444)',
+                  'linear-gradient(135deg, #F59E0B, #D97706)',
+                  'linear-gradient(135deg, #6B7280, #374151)'
+                ].map((gradient) => (
+                  <div
+                    key={gradient}
+                    className={`${styles.colorCircle} ${(currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
+                    style={{ background: gradient }}
+                    onClick={async () => {
+                      try {
+                        // Set the background color
+                        await SetAvatarColor(userId, gradient);
+                        if (onColorChange) onColorChange(gradient);
+
+                        // If there is an image, update the border
+                        if (currentAvatarImage) {
+                          if (!showBorder) {
+                            handleToggleBorder({ target: { checked: true } });
+                          }
+                        }
+                      } catch (err) {
+                        console.error('Failed to set avatar color:', err);
+                      }
+                    }}
+                  />
                 ))}
               </div>
             </div>
