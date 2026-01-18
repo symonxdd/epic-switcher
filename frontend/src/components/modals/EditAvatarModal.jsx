@@ -146,7 +146,7 @@ export default function EditAvatarModal({
               </div>
               <span className={styles.previewLabel}>Current</span>
 
-              <div className={styles.showBorderToggle}>
+              <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
                 <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
                 <label className={styles.switch}>
                   <input
@@ -213,7 +213,10 @@ export default function EditAvatarModal({
                     <line x1="5" y1="12" x2="19" y2="12"></line>
                   </svg>
                 </button>
-                <div className={styles.avatarWrapper}>
+                <div
+                  className={`${styles.avatarWrapper} ${(!currentAvatarImage || currentAvatarImage === "") ? styles.avatarWrapperActive : ''}`}
+                  style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}
+                >
                   <div
                     className={`${styles.avatarMiniature} ${styles.noneAvatar} ${(!currentAvatarImage || currentAvatarImage === "") ? styles.avatarMiniatureActive : ''}`}
                     onClick={async () => {
@@ -234,7 +237,11 @@ export default function EditAvatarModal({
                 </div>
 
                 {availableAvatars.map((avatar) => (
-                  <div key={avatar} className={styles.avatarWrapper}>
+                  <div
+                    key={avatar}
+                    className={`${styles.avatarWrapper} ${currentAvatarImage === avatar ? styles.avatarWrapperActive : ''}`}
+                    style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
+                  >
                     <img
                       src={`/custom-avatar/${avatar}?t=${Date.now()}`}
                       alt={avatar}

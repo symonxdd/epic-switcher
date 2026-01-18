@@ -114,7 +114,7 @@ export default function Accounts() {
       setSessions(prev => prev.map(s =>
         s.userId === activeSession.userId ? { ...s, avatarImage: "" } : s
       ));
-      toast.success("Avatar cleared!", { id: "avatar-success" });
+      // toast.success("Avatar cleared!", { id: "avatar-success" });
     } catch (err) {
       console.error(err);
       toast.error("Failed to clear avatar.", { id: "avatar-error" });
