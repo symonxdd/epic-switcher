@@ -129,6 +129,14 @@ export default function EditAvatarModal({
 
         <div className={styles.modalTwoColumn}>
           <div className={styles.modalLeftColumn}>
+            {/* Top spacer to balance the toggle at the bottom and keep avatar centered */}
+            {currentAvatarImage && currentAvatarImage !== "" && (
+              <div className={styles.showBorderToggleSpacer} aria-hidden="true">
+                <label className={styles.toggleLabel}>placeholder</label>
+                <div className={styles.switchPlaceholder}></div>
+              </div>
+            )}
+
             <div className={styles.avatarPreviewContainer}>
               <div
                 className={`${styles.currentAvatar} ${(!showBorder || !currentAvatarImage || currentAvatarImage === "") ? styles.currentAvatarNoBorder : ''}`}
@@ -145,22 +153,22 @@ export default function EditAvatarModal({
                 )}
               </div>
               <span className={styles.previewLabel}>Current</span>
-
-              {currentAvatarImage && currentAvatarImage !== "" && (
-                <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
-                  <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
-                  <label className={styles.switch}>
-                    <input
-                      id="showBorderToggle"
-                      type="checkbox"
-                      checked={showBorder}
-                      onChange={handleToggleBorder}
-                    />
-                    <span className={styles.slider}></span>
-                  </label>
-                </div>
-              )}
             </div>
+
+            {currentAvatarImage && currentAvatarImage !== "" && (
+              <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
+                <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
+                <label className={styles.switch}>
+                  <input
+                    id="showBorderToggle"
+                    type="checkbox"
+                    checked={showBorder}
+                    onChange={handleToggleBorder}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
+            )}
           </div>
 
           <div className={styles.modalVerticalDivider} />

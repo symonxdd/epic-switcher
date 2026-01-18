@@ -208,23 +208,28 @@
 .modalTwoColumn {
   display: flex;
   gap: 25px;
-  padding: 0 30px;
+  padding: 1rem 30px;
   align-items: center;
+  min-height: 280px;
+  /* Ensure a consistent minimum height */
 }
 
 .modalLeftColumn {
-  flex: 0 0 160px;
+  flex: 0 0 170px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1rem;
+  justify-content: center;
+  align-self: stretch;
+  /* Stretch to parent height to help divider */
 }
 
 .modalVerticalDivider {
   width: 1px;
-  height: 200px;
+  align-self: stretch;
   background-color: var(--border-subtle);
   flex-shrink: 0;
+  margin: 0.5rem 0;
 }
 
 .modalRightColumn {
@@ -289,6 +294,7 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
+  position: relative;
 }
 
 .currentAvatar {
@@ -606,14 +612,30 @@
 
 
 /* --- Switch Control (from Settings) --- */
-.showBorderToggle {
+.showBorderToggle,
+.showBorderToggleSpacer {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   gap: 12px;
-  width: 100%;
-  margin-top: 1.25rem;
+  width: max-content;
   padding: 0 4px;
+}
+
+.showBorderToggle {
+  margin-top: 1.25rem;
+}
+
+.showBorderToggleSpacer {
+  margin-bottom: 1.25rem;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.switchPlaceholder {
+  width: 38px;
+  height: 20px;
+  flex-shrink: 0;
 }
 
 .toggleLabel {
