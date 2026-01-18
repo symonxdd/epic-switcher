@@ -31,7 +31,7 @@
 }
 
 .modalWide {
-  max-width: 550px;
+  max-width: 612px;
 }
 
 .modal h3 {
@@ -207,29 +207,31 @@
 
 .modalTwoColumn {
   display: flex;
-  gap: 0;
-  padding: 0 15px;
-  /* margin-top: 1.5rem; */
+  gap: 25px;
+  padding: 0 30px;
   align-items: center;
-  /* Vertically center columns */
 }
 
 .modalLeftColumn {
-  flex: 0 0 180px;
+  flex: 0 0 160px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 25px;
-  border-right: 1px solid var(--border-subtle);
+}
+
+.modalVerticalDivider {
+  width: 1px;
+  height: 200px;
+  background-color: var(--border-subtle);
+  flex-shrink: 0;
 }
 
 .modalRightColumn {
   flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  /* gap: 1.25rem; */
   min-width: 0;
-  padding-left: 25px;
 }
 
 .colorSelectionContainer {
@@ -603,7 +605,8 @@
 .showBorderToggle {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-start;
+  gap: 12px;
   width: 100%;
   margin-top: 1.25rem;
   padding: 0 4px;

@@ -163,6 +163,8 @@ export default function EditAvatarModal({
             </div>
           </div>
 
+          <div className={styles.modalVerticalDivider} />
+
           <div className={styles.modalRightColumn}>
 
 
