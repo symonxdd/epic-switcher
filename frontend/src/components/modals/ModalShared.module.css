@@ -260,33 +260,38 @@
   border-radius: 50%;
   cursor: pointer;
   border: 2px solid transparent;
-  /* Changed from none to transparent for smooth transition */
-  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease, border-color 0.2s ease;
+  /* Even width for better symmetry */
+  box-sizing: border-box;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   z-index: 1;
   background-clip: padding-box;
   overflow: hidden;
+  transform: translateZ(0);
+  /* Stabilize subpixel rendering */
+  backface-visibility: hidden;
 }
 
-
 .colorCircle:hover {
-  transform: scale(1.18);
+  transform: scale(1.12) translateZ(0);
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
   z-index: 5;
 }
 
 .colorCircleActive {
-  transform: scale(1.15);
-  border-color: var(--text-primary);
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+  transform: scale(1.12) translateZ(0);
+  border-color: var(--bg-surface);
+  box-shadow: 0 0 0 2px var(--text-primary), 0 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 4;
+  cursor: default;
 }
 
 .colorCircleActive:hover {
-  transform: scale(1.22);
-  border-color: var(--text-primary);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  transform: scale(1.12) translateZ(0);
+  box-shadow: 0 0 0 2px var(--text-primary), 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .avatarPreviewContainer {
@@ -385,36 +390,34 @@
   cursor: pointer;
   flex-shrink: 0;
   border: 2px solid transparent;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  /* Unified with color circles */
+  box-sizing: border-box;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
+    border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
   pointer-events: auto;
   backface-visibility: hidden;
   transform: translateZ(0);
-  will-change: transform;
+  will-change: transform, box-shadow;
 }
 
 .avatarMiniature:hover {
-  border-color: rgba(0, 0, 0, 0.4);
-  transform: translateY(-2px) scale(1.1);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-[data-theme="dark"] .avatarMiniature:hover {
-  border-color: rgba(255, 255, 255, 0.3);
-  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
+  transform: scale(1.12) translateZ(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 6;
 }
 
 .avatarMiniatureActive {
-  border-color: var(--text-primary);
-  transform: scale(1.15);
+  transform: scale(1.12) translateZ(0);
+  border-color: var(--bg-surface);
+  box-shadow: 0 0 0 2px var(--text-primary), 0 4px 10px rgba(0, 0, 0, 0.15);
   cursor: default;
   z-index: 5;
-  /* box-shadow: none; */
 }
 
 .avatarMiniatureActive:hover {
-  border-color: var(--text-primary);
-  transform: scale(1.15);
-  /* box-shadow: none; */
+  transform: scale(1.12) translateZ(0);
+  box-shadow: 0 0 0 2px var(--text-primary), 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .noneAvatar {

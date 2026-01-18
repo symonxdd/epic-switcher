@@ -258,21 +258,23 @@ export default function EditAvatarModal({
                     key={gradient}
                     className={`${styles.colorCircle} ${(currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
                     style={{ backgroundImage: gradient }}
-                    onClick={async () => {
-                      try {
-                        // Set the background color
-                        await SetAvatarColor(userId, gradient);
-                        if (onColorChange) onColorChange(gradient);
+                    onClick={() => {
+                      const isActive = currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient);
+                      if (isActive) return;
 
-                        // If there is an image, update the border
-                        if (currentAvatarImage) {
-                          if (!showBorder) {
-                            handleToggleBorder({ target: { checked: true } });
-                          }
-                        }
-                      } catch (err) {
-                        console.error('Failed to set avatar color:', err);
+                      // 1. Optimistically update UI first
+                      if (onColorChange) onColorChange(gradient);
+
+                      // If there is an image, update the border toggle optmistically
+                      if (currentAvatarImage && !showBorder) {
+                        handleToggleBorder({ target: { checked: true } });
                       }
+
+                      // 2. Call service in background to avoid blocking UI thread/animations
+                      SetAvatarColor(userId, gradient).catch((err) => {
+                        console.error('Failed to set avatar color:', err);
+                        // Optionally revert UI if needed, but usually not necessary for color
+                      });
                     }}
                   />
                 ))}
