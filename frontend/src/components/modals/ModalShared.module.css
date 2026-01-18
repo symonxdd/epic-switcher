@@ -217,6 +217,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  margin-top: 1rem;
 }
 
 .modalVerticalDivider {
@@ -393,7 +394,7 @@
 
 [data-theme="dark"] .avatarMiniature:hover {
   border-color: rgba(255, 255, 255, 0.3);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  /* box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); */
 }
 
 .avatarMiniatureActive {
@@ -401,17 +402,14 @@
   transform: scale(1.15);
   cursor: default;
   z-index: 5;
-  box-shadow: none;
-  /* Removing potential weird box shadow per user request */
+  /* box-shadow: none; */
 }
 
 .avatarMiniatureActive:hover {
   border-color: var(--text-primary);
   transform: scale(1.15);
-  box-shadow: none;
+  /* box-shadow: none; */
 }
-
-
 
 .noneAvatar {
   border: none !important;

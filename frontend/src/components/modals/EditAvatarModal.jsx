@@ -21,7 +21,6 @@ export default function EditAvatarModal({
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
   });
-  const [galleryTimestamp] = useState(() => Date.now());
   const closeCallbackRef = useRef(null);
 
   const handleToggleBorder = (e) => {
@@ -137,7 +136,7 @@ export default function EditAvatarModal({
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
                   <img
-                    src={`/custom-avatar/${currentAvatarImage}?t=${galleryTimestamp}`}
+                    src={`/custom-avatar/${currentAvatarImage}`}
                     alt="Current Avatar"
                     style={{ margin: 0 }}
                   />
@@ -214,7 +213,7 @@ export default function EditAvatarModal({
                     style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
                   >
                     <img
-                      src={`/custom-avatar/${avatar}?t=${galleryTimestamp}`}
+                      src={`/custom-avatar/${avatar}`}
                       alt={avatar}
                       className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
                       onClick={() => handleAvatarClick(avatar)}
