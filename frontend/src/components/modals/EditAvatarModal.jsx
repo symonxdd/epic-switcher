@@ -249,7 +249,7 @@ export default function EditAvatarModal({
                   <div
                     key={gradient}
                     className={`${styles.colorCircle} ${(currentAvatarColor === gradient || (!currentAvatarColor && gradient === defaultGradient)) ? styles.colorCircleActive : ''}`}
-                    style={{ background: gradient }}
+                    style={{ backgroundImage: gradient }}
                     onClick={async () => {
                       try {
                         // Set the background color

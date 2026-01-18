@@ -259,6 +259,8 @@
   box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   z-index: 1;
+  background-clip: padding-box;
+  overflow: hidden;
 }
 
 
@@ -304,6 +306,7 @@
   user-select: none;
   overflow: hidden;
   transition: padding 0.2s ease;
+  background-clip: padding-box;
 }
 
 .currentAvatarNoBorder {
