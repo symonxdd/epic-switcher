@@ -124,7 +124,7 @@ export default function EditAvatarModal({
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
       onAnimationEnd={handleAnimationEnd}
     >
-      <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
+      <div className={`${styles.modal} ${styles.modalWide}`} onClick={(e) => e.stopPropagation()}>
         <h3>Customize Avatar</h3>
 
         <div className={styles.modalTwoColumn}>
@@ -144,7 +144,7 @@ export default function EditAvatarModal({
                   <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                 )}
               </div>
-              {/* <span className={styles.previewLabel}>Current</span> */}
+              <span className={styles.previewLabel}>Current</span>
 
               {currentAvatarImage && currentAvatarImage !== "" && (
                 <div className={styles.showBorderToggle} style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}>
@@ -167,7 +167,7 @@ export default function EditAvatarModal({
 
 
             <div className={styles.avatarGalleryContainer}>
-              <p className={styles.galleryLabel}>Or an existing avatar:</p>
+              <p className={styles.galleryLabel}>Choose an avatar:</p>
               <div className={styles.avatarGallery}>
                 <button
                   className={styles.uploadAvatarBtn}
@@ -201,6 +201,8 @@ export default function EditAvatarModal({
                     <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                   </div>
                 </div>
+
+                <div className={styles.gallerySeparator} />
 
                 {availableAvatars.map((avatar) => (
                   <div

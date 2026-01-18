@@ -73,7 +73,7 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  padding: 25px 25px;
+  /* padding: 25px 25px; */
   width: fit-content;
   min-width: 280px;
   max-width: 90%;
