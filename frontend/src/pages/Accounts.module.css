@@ -78,13 +78,9 @@
   min-width: 280px;
   max-width: 90%;
 
-  background: var(--bg-card);
-  border: 1px solid var(--border-subtle);
-  border-radius: 25px;
-}
-
-[data-theme="dark"] .activeAccountContent {
-  background: #060606;
+  /* background: var(--bg-card); */
+  /* border: 1px solid var(--border-subtle); */
+  /* border-radius: 25px; */
 }
 
 .activeAccountAvatar {
