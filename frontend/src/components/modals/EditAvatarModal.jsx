@@ -267,6 +267,12 @@ export default function EditAvatarModal({
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
+            <div className={styles.autoSaveNotice}>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+              Changes auto-saved
+            </div>
             <button className={styles.secondaryButton} onClick={handleCancel}>
               Close
             </button>
