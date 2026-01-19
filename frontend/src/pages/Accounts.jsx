@@ -209,7 +209,7 @@ export default function Accounts() {
 
                         <div className={styles.activeAccountBadge} onClick={(e) => e.stopPropagation()}>
                           <HiOutlineCheckCircle />
-                          <span>Active</span>
+                          <span>Currently logged in</span>
                         </div>
                       </div>
 

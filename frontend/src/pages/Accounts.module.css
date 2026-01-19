@@ -3,7 +3,7 @@
   flex-direction: column;
   height: 100%;
   min-height: 100%;
-  padding-top: 0.25rem;
+  padding-top: 2.25rem;
 }
 
 /* ---- Not Logged In Section ---- */
@@ -62,7 +62,7 @@
 
 /* ---- Active Account Section ---- */
 .activeAccountSection {
-  margin-bottom: 25px;
+  margin-bottom: 4rem;
   display: flex;
   justify-content: center;
 }
@@ -226,45 +226,67 @@
 .activeAccountBadge {
   position: absolute;
   top: -4px;
-  right: -17px;
-  transform: translate(20%, -20%);
+  left: 105px;
+  transform: translateY(-20%);
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 5px;
-  padding: 4px 10px;
+  justify-content: flex-start;
+  gap: 0;
+  min-width: 32px;
+  max-width: 32px;
+  height: 32px;
+  padding: 0 6px;
   background-color: #222;
   border: 1px solid #444;
   border-radius: 20px;
   color: #fff;
-  font-size: 0.7rem;
+  font-size: 0.75rem;
   font-weight: 700;
   flex-shrink: 0;
-  transition: all 0.2s ease;
+  transition: max-width 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s ease, box-shadow 0.3s ease;
   z-index: 10;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   line-height: 1;
   cursor: default;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.activeAccountBadge:hover {
+  max-width: 300px;
+  padding-right: 8px;
+  /* More breathing room for the text on the right */
+  background-color: #2a2a2a;
 }
 
 .activeAccountBadge span {
+  opacity: 0;
   display: flex;
   align-items: center;
   margin-top: -1px;
-  /* Subtle nudge for perfect vertical centering */
+  transition: opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.activeAccountBadge:hover span {
+  margin-left: 8px;
+  opacity: 1;
 }
 
 [data-theme="dark"] .activeAccountBadge {
   background-color: #eee;
-  /* Bright grayscale background */
   color: #111;
-  /* Dark grayscale text */
   border-color: #fff;
-  /* Bright border */
+}
+
+[data-theme="dark"] .activeAccountBadge:hover {
+  background-color: #fff;
 }
 
 .activeAccountBadge svg {
   font-size: 1.1rem;
+  flex-shrink: 0;
 }
 
 /* ---- No Active Account Message ---- */
