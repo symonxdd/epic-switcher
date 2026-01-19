@@ -217,30 +217,34 @@
   filter: brightness(0.95);
 }
 
+.activeAvatarWrapper {
+  position: relative;
+  width: fit-content;
+  cursor: pointer;
+}
+
 .activeAccountBadge {
-  /* margin-top: 5px; */
+  position: absolute;
+  top: -4px;
+  right: -17px;
+  transform: translate(20%, -20%);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 6px;
-  padding: 6px 14px;
-  /* More spacious padding */
+  gap: 5px;
+  padding: 4px 10px;
   background-color: #222;
-  /* Dark background in light mode */
   border: 1px solid #444;
-  /* Grayscale border */
-  border-radius: 24px;
+  border-radius: 20px;
   color: #fff;
-  /* Greyscale text */
-  font-size: 0.75rem;
-  /* Slightly larger for better readability with more padding */
+  font-size: 0.7rem;
   font-weight: 700;
   flex-shrink: 0;
   transition: all 0.2s ease;
   z-index: 10;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   line-height: 1;
-  /* Helps with vertical centering */
+  cursor: default;
 }
 
 .activeAccountBadge span {

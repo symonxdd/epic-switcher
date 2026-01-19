@@ -186,30 +186,31 @@ export default function Accounts() {
                 <div className={styles.activeAccountSection}>
                   <div className={styles.activeAccountContent}>
                     <div className={styles.avatarLabelGroup}>
-                      <div
-                        className={`${styles.activeAccountAvatar} ${!showBorder ? styles.activeAccountAvatarNoBorder : ''}`}
-                        onClick={handleAvatarClick}
-                        style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
-                      >
-                        {activeSession.avatarImage ? (
-                          <img
-                            src={`/avatar-thumb/${activeSession.avatarImage}`}
-                            alt=""
-                            className={styles.customAvatarImage}
-                          />
-                        ) : (
-                          getFirstVisibleChar(
-                            activeSession.alias || activeSession.username || activeSession.userId
-                          )
-                        )}
-                        <div className={styles.avatarOverlay}>
-                          <HiPencil />
+                      <div className={styles.activeAvatarWrapper} onClick={handleAvatarClick}>
+                        <div
+                          className={`${styles.activeAccountAvatar} ${!showBorder ? styles.activeAccountAvatarNoBorder : ''}`}
+                          style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
+                        >
+                          {activeSession.avatarImage ? (
+                            <img
+                              src={`/avatar-thumb/${activeSession.avatarImage}`}
+                              alt=""
+                              className={styles.customAvatarImage}
+                            />
+                          ) : (
+                            getFirstVisibleChar(
+                              activeSession.alias || activeSession.username || activeSession.userId
+                            )
+                          )}
+                          <div className={styles.avatarOverlay}>
+                            <HiPencil />
+                          </div>
                         </div>
-                      </div>
 
-                      <div className={styles.activeAccountBadge}>
-                        <HiOutlineCheckCircle />
-                        <span>Active</span>
+                        <div className={styles.activeAccountBadge} onClick={(e) => e.stopPropagation()}>
+                          <HiOutlineCheckCircle />
+                          <span>Active</span>
+                        </div>
                       </div>
 
                       <div className={styles.activeAccountInfo}>
