@@ -375,9 +375,43 @@
 .galleryLabel {
   font-size: 0.8rem;
   color: var(--text-secondary);
-  margin-bottom: 0.5rem;
+  font-weight: 500;
   text-align: left;
+}
+
+.galleryHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
+  margin-bottom: 0.25rem;
+}
+
+.uploadAvatarBtnMini {
+  background: transparent;
+  border: none;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 99px;
+  transition: all 0.2s ease;
+  opacity: 0.8;
+}
+
+.uploadAvatarBtnMini:hover {
+  opacity: 1;
+  background: var(--btn-ghost-hover);
+}
+
+.uploadAvatarBtnMini svg {
+  width: 14px;
+  height: 14px;
+  stroke-width: 2.5;
 }
 
 .avatarGallery {
@@ -467,14 +501,7 @@
   display: block;
 }
 
-.gallerySeparator {
-  width: 1px;
-  height: 48px;
-  /* background-color: var(--border-subtle); */
-  margin: 0 0.5rem;
-  align-self: center;
-  flex-shrink: 0;
-}
+
 
 .avatarWrapper {
   position: relative;

@@ -192,7 +192,17 @@ export default function EditAvatarModal({
 
 
             <div className={styles.avatarGalleryContainer}>
-              <p className={styles.galleryLabel}>Choose an avatar:</p>
+              <div className={styles.galleryHeader}>
+                <p className={styles.galleryLabel}>Choose an avatar:</p>
+                <button
+                  className={styles.uploadAvatarBtnMini}
+                  onClick={handleSelect}
+                  title="Select new image"
+                >
+                  <HiOutlinePlus />
+                  <span>Add Image</span>
+                </button>
+              </div>
               <div className={styles.avatarGallery}>
                 {availableAvatars.map((avatar) => (
                   <div
@@ -218,7 +228,6 @@ export default function EditAvatarModal({
                     </button>
                   </div>
                 ))}
-
                 <div
                   className={`${styles.avatarWrapper} ${(!currentAvatarImage || currentAvatarImage === "") ? styles.avatarWrapperActive : ''}`}
                   style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}
@@ -241,19 +250,6 @@ export default function EditAvatarModal({
                     <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                   </div>
                 </div>
-
-                <div className={styles.gallerySeparator} />
-
-                <button
-                  className={styles.uploadAvatarBtn}
-                  onClick={handleSelect}
-                  title="Select new image"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </button>
               </div>
             </div>
 
