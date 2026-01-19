@@ -102,6 +102,7 @@ export default function EditAvatarModal({
       // If the deleted avatar was the one currently assigned to this user, 
       // we should probably clear it in the UI/session store too.
       if (confirmDelete === currentAvatarImage) {
+        await RemoveAvatar(userId);
         if (onAvatarChange) onAvatarChange("");
       }
 
