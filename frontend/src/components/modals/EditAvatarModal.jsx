@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react'
-import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar } from '../../../wailsjs/go/services/AvatarService'
-import { HiOutlineCheckCircle, HiPencil, HiOutlinePlus, HiTrash } from 'react-icons/hi';
+import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar, SelectImage, ReadImageAsBase64, SaveAvatarWithCrop } from '../../../wailsjs/go/services/AvatarService'
+import { HiOutlineCheckCircle, HiPencil, HiOutlinePlus, HiTrash, HiOutlinePhotograph, HiScissors } from 'react-icons/hi';
 import { HiArrowsExpand } from 'react-icons/hi';
 import styles from './ModalShared.module.css'
 import { STORAGE_KEYS } from '../../constants/storageKeys'
 import ImageLightbox from './ImageLightbox'
+import CropAvatarModal from './CropAvatarModal'
 
 export default function EditAvatarModal({
   onSelect,
@@ -21,6 +22,9 @@ export default function EditAvatarModal({
   const [availableAvatars, setAvailableAvatars] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
   const [showLightbox, setShowLightbox] = useState(false); // for viewing full-res image
+  const [showCropModal, setShowCropModal] = useState(false);
+  const [cropImage, setCropImage] = useState(null); // Base64 or URL
+  const [cropSourcePath, setCropSourcePath] = useState(null); // Original path or filename
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
@@ -57,9 +61,67 @@ export default function EditAvatarModal({
     }
   };
 
+
+
   const handleSelect = async () => {
-    await onSelect();
-    // Do not close automatically
+    try {
+      const path = await SelectImage();
+      if (!path) return; // User cancelled
+
+      // Read as base64 for preview in cropper
+      // We need to read it because the browser can't access local file paths directly
+      const base64 = await ReadImageAsBase64(path);
+
+      setCropImage(base64);
+      setCropSourcePath(path);
+      setShowCropModal(true);
+    } catch (err) {
+      console.error("Failed to select image:", err);
+    }
+  };
+
+  const handleRecrop = (e, filename) => {
+    e.stopPropagation();
+    // For existing avatars, we can use the server URL
+    setCropImage(`/avatar-full/${filename}`);
+    setCropSourcePath(filename);
+    setShowCropModal(true);
+  };
+
+  const handleCropConfirm = async (pixelCrop) => {
+    if (!cropSourcePath || !userId) return;
+
+    try {
+      // pixelCrop contains x, y, width, height
+      /* 
+         NOTE: cropSourcePath can be:
+         1. A full absolute path (new upload)
+         2. A filename (re-crop existing)
+         The backend handles both distinctions.
+      */
+      const newFilename = await SaveAvatarWithCrop(
+        userId,
+        cropSourcePath,
+        Math.round(pixelCrop.x),
+        Math.round(pixelCrop.y),
+        Math.round(pixelCrop.width),
+        Math.round(pixelCrop.height)
+      );
+
+      // Refresh avatars list
+      await refreshAvatars();
+
+      // If it was a new upload or re-crop of current avatar, update the parent
+      if (onAvatarChange) {
+        onAvatarChange(newFilename);
+      }
+
+      setShowCropModal(false);
+      setCropImage(null);
+      setCropSourcePath(null);
+    } catch (err) {
+      console.error("Failed to save cropped avatar:", err);
+    }
   };
 
   const handleCancel = () => {
@@ -226,6 +288,13 @@ export default function EditAvatarModal({
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                       </svg>
                     </button>
+                    <button
+                      className={styles.cropAvatarBtn}
+                      onClick={(e) => handleRecrop(e, avatar)}
+                      title="Adjust crop"
+                    >
+                      <HiScissors />
+                    </button>
                   </div>
                 ))}
                 <div
@@ -338,6 +407,18 @@ export default function EditAvatarModal({
           src={`/avatar-full/${currentAvatarImage}`}
           alt="Full resolution avatar"
           onClose={() => setShowLightbox(false)}
+        />
+      )}
+
+      {showCropModal && cropImage && (
+        <CropAvatarModal
+          image={cropImage}
+          onCropComplete={handleCropConfirm}
+          onCancel={() => {
+            setShowCropModal(false);
+            setCropImage(null);
+            setCropSourcePath(null);
+          }}
         />
       )}
     </div>

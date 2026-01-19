@@ -8,9 +8,15 @@ export function GetAvailableAvatars():Promise<Array<string>>;
 
 export function GetImageMetadata(arg1:string):Promise<services.ImageMetadata>;
 
+export function ReadImageAsBase64(arg1:string):Promise<string>;
+
 export function RemoveAvatar(arg1:string):Promise<void>;
 
+export function SaveAvatarWithCrop(arg1:string,arg2:string,arg3:number,arg4:number,arg5:number,arg6:number):Promise<string>;
+
 export function SelectAndSaveAvatar(arg1:string):Promise<string>;
+
+export function SelectImage():Promise<string>;
 
 export function SetAvatar(arg1:string,arg2:string):Promise<void>;
 

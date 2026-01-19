@@ -14,12 +14,24 @@ export function GetImageMetadata(arg1) {
   return window['go']['services']['AvatarService']['GetImageMetadata'](arg1);
 }
 
+export function ReadImageAsBase64(arg1) {
+  return window['go']['services']['AvatarService']['ReadImageAsBase64'](arg1);
+}
+
 export function RemoveAvatar(arg1) {
   return window['go']['services']['AvatarService']['RemoveAvatar'](arg1);
 }
 
+export function SaveAvatarWithCrop(arg1, arg2, arg3, arg4, arg5, arg6) {
+  return window['go']['services']['AvatarService']['SaveAvatarWithCrop'](arg1, arg2, arg3, arg4, arg5, arg6);
+}
+
 export function SelectAndSaveAvatar(arg1) {
   return window['go']['services']['AvatarService']['SelectAndSaveAvatar'](arg1);
+}
+
+export function SelectImage() {
+  return window['go']['services']['AvatarService']['SelectImage']();
 }
 
 export function SetAvatar(arg1, arg2) {

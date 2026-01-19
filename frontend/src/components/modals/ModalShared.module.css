@@ -28,6 +28,7 @@
   width: 90%;
   text-align: center;
   overflow: hidden;
+  --wails-draggable: no-drag;
 }
 
 .modalWide {
@@ -864,4 +865,98 @@
     opacity: 1;
     transform: translate(-50%, 0);
   }
+}
+
+/* --- Avatar Cropping --- */
+.cropperContainer {
+  position: relative;
+  width: 100%;
+  height: 380px;
+  background-color: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.5);
+  border: 1px solid var(--border-subtle);
+}
+
+.cropperControls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 0 10px;
+  margin-bottom: 1.5rem;
+}
+
+.cropperControlGroup {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.cropperControlLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  min-width: 50px;
+  text-align: left;
+}
+
+.cropperSlider {
+  flex: 1;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--bg-app);
+  border-radius: 3px;
+  outline: none;
+  cursor: pointer;
+}
+
+.cropperSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--text-primary);
+  border: 2px solid var(--bg-surface);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: transform 0.1s ease;
+}
+
+.cropperSlider:hover::-webkit-slider-thumb {
+  transform: scale(1.1);
+}
+
+.cropAvatarBtn {
+  position: absolute;
+  top: -4px;
+  left: -4px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  color: var(--text-secondary);
+  padding: 0;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.cropAvatarBtn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.cropAvatarBtn:hover {
+  background: var(--text-primary);
+  color: var(--bg-surface);
+  transform: scale(1.1);
+  border-color: var(--text-primary);
 }

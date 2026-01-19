@@ -3,6 +3,7 @@ package services
 import (
 	"context"
 	"crypto/md5"
+	"encoding/base64"
 	"encoding/hex"
 	"fmt"
 	"image"
@@ -136,6 +137,96 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 	return destFilename, nil
 }
 
+// SelectImage opens a file dialog and returns the path to the selected image.
+func (a *AvatarService) SelectImage() (string, error) {
+	if a.ctx == nil {
+		return "", fmt.Errorf("context not set for AvatarService")
+	}
+
+	// 1. Open file dialog
+	selection, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select Avatar Image",
+		Filters: []runtime.FileFilter{
+			{
+				DisplayName: "Images (*.png;*.jpg;*.jpeg;*.webp;*.gif;*.svg)",
+				Pattern:     "*.png;*.jpg;*.jpeg;*.webp;*.gif;*.svg",
+			},
+		},
+	})
+
+	if selection == "" {
+		return "", nil // User cancelled
+	}
+
+	if err != nil {
+		return "", err
+	}
+
+	return selection, nil
+}
+
+// SaveAvatarWithCrop saves an original image (if new) and generates a thumbnail with manual crop coordinates.
+func (a *AvatarService) SaveAvatarWithCrop(userID string, sourcePath string, x, y, width, height int) (string, error) {
+	if userID == "" {
+		return "", fmt.Errorf("userID is required")
+	}
+
+	avatarDir := a.sessionStore.GetAvatarDir()
+	var finalFilename string
+	var fullSourcePath string
+
+	// 1. Determine if sourcePath is an absolute path or just a filename
+	if filepath.IsAbs(sourcePath) {
+		// New image from disk
+		data, err := os.ReadFile(sourcePath)
+		if err != nil {
+			return "", fmt.Errorf("failed to read source file: %w", err)
+		}
+
+		hash := md5.Sum(data)
+		hashStr := hex.EncodeToString(hash[:])
+		ext := filepath.Ext(sourcePath)
+		finalFilename = fmt.Sprintf("%s%s", hashStr, ext)
+		destPath := filepath.Join(avatarDir, finalFilename)
+
+		// 3. Save file only if it doesn't exist (deduplication)
+		if _, err := os.Stat(destPath); os.IsNotExist(err) {
+			if err := os.MkdirAll(avatarDir, 0755); err != nil {
+				return "", fmt.Errorf("failed to create avatar directory: %w", err)
+			}
+			fmt.Printf("[AvatarService] Saving new unique avatar: %s\n", finalFilename)
+			if err := os.WriteFile(destPath, data, 0644); err != nil {
+				return "", fmt.Errorf("failed to save avatar file: %w", err)
+			}
+		}
+		fullSourcePath = destPath
+	} else {
+		// Existing image in library (re-cropping)
+		finalFilename = sourcePath
+		fullSourcePath = filepath.Join(avatarDir, finalFilename)
+		if _, err := os.Stat(fullSourcePath); os.IsNotExist(err) {
+			return "", fmt.Errorf("source avatar file not found: %s", sourcePath)
+		}
+		fmt.Printf("[AvatarService] Re-cropping existing avatar: %s\n", finalFilename)
+	}
+
+	// 2. Generate thumbnail with manual crop
+	thumbFilename := getThumbnailFilename(finalFilename)
+	thumbPath := filepath.Join(avatarDir, thumbFilename)
+
+	if err := generateManualThumbnail(fullSourcePath, thumbPath, x, y, width, height, ThumbnailSize); err != nil {
+		return "", fmt.Errorf("failed to generate manual thumbnail: %w", err)
+	}
+	fmt.Printf("[AvatarService] Generated manual thumbnail: %s\n", thumbFilename)
+
+	// 3. Update session store
+	if err := a.sessionStore.UpdateAvatarImage(userID, finalFilename); err != nil {
+		return "", fmt.Errorf("failed to update session store: %w", err)
+	}
+
+	return finalFilename, nil
+}
+
 // GetAvailableAvatars returns a list of all avatar filenames in the avatars directory.
 func (a *AvatarService) GetAvailableAvatars() ([]string, error) {
 	avatarDir := a.sessionStore.GetAvatarDir()
@@ -160,6 +251,34 @@ func (a *AvatarService) GetAvailableAvatars() ([]string, error) {
 	}
 
 	return avatars, nil
+}
+
+// ReadImageAsBase64 reads a local file and returns it as a data URL.
+func (a *AvatarService) ReadImageAsBase64(path string) (string, error) {
+	if path == "" {
+		return "", fmt.Errorf("path is required")
+	}
+
+	data, err := os.ReadFile(path)
+	if err != nil {
+		return "", fmt.Errorf("failed to read file: %w", err)
+	}
+
+	ext := strings.ToLower(filepath.Ext(path))
+	mimeType := "image/jpeg"
+	switch ext {
+	case ".png":
+		mimeType = "image/png"
+	case ".webp":
+		mimeType = "image/webp"
+	case ".gif":
+		mimeType = "image/gif"
+	case ".svg":
+		mimeType = "image/svg+xml"
+	}
+
+	encoded := base64.StdEncoding.EncodeToString(data)
+	return fmt.Sprintf("data:%s;base64,%s", mimeType, encoded), nil
 }
 
 // SetAvatar sets an existing avatar file for the given userID.
@@ -332,5 +451,23 @@ func generateThumbnail(srcPath, destPath string, size int) error {
 
 	// Save as JPEG for thumbnails (good compression for photos)
 	// Use the original extension to maintain format
+	return imaging.Save(thumb, destPath)
+}
+
+// generateManualThumbnail crops the source image and resizes it to targetSize.
+func generateManualThumbnail(srcPath, destPath string, x, y, w, h, targetSize int) error {
+	src, err := imaging.Open(srcPath)
+	if err != nil {
+		return fmt.Errorf("failed to open image: %w", err)
+	}
+
+	// 1. Crop the specified area
+	cropRect := image.Rect(x, y, x+w, y+h)
+	cropped := imaging.Crop(src, cropRect)
+
+	// 2. Resize to target thumbnail size
+	thumb := imaging.Resize(cropped, targetSize, targetSize, imaging.Lanczos)
+
+	// 3. Save
 	return imaging.Save(thumb, destPath)
 }
