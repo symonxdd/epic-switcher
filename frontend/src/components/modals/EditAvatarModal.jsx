@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react'
 import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar } from '../../../wailsjs/go/services/AvatarService'
+import { HiOutlineCheckCircle, HiPencil, HiOutlinePlus, HiTrash } from 'react-icons/hi';
+import { HiArrowsExpand } from 'react-icons/hi';
 import styles from './ModalShared.module.css'
 import { STORAGE_KEYS } from '../../constants/storageKeys'
 import ImageLightbox from './ImageLightbox'
@@ -142,34 +144,29 @@ export default function EditAvatarModal({
 
             <div className={styles.avatarPreviewContainer}>
               <div
-                className={`${styles.currentAvatar} ${(!showBorder || !currentAvatarImage || currentAvatarImage === "") ? styles.currentAvatarNoBorder : ''}`}
+                className={`${styles.currentAvatar} ${(!showBorder || !currentAvatarImage || currentAvatarImage === "") ? styles.currentAvatarNoBorder : ''} ${(currentAvatarImage && currentAvatarImage !== "") ? styles.clickableAvatar : ''}`}
                 style={{ background: currentAvatarColor || defaultGradient }}
+                onClick={() => {
+                  if (currentAvatarImage && currentAvatarImage !== "") {
+                    setShowLightbox(true);
+                  }
+                }}
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
-                  <img
-                    src={`/avatar-full/${currentAvatarImage}`}
-                    alt="Current Avatar"
-                    style={{ margin: 0 }}
-                  />
+                  <>
+                    <img
+                      src={`/avatar-full/${currentAvatarImage}`}
+                      alt="Current Avatar"
+                      style={{ margin: 0 }}
+                    />
+                    <div className={styles.avatarOverlay}>
+                      <HiArrowsExpand />
+                    </div>
+                  </>
                 ) : (
                   <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                 )}
               </div>
-              {/* View full image button - only show when there's an image */}
-              {currentAvatarImage && currentAvatarImage !== "" && (
-                <button
-                  className={styles.viewFullButton}
-                  onClick={() => setShowLightbox(true)}
-                  title="View full image"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                    <polyline points="15 3 21 3 21 9"></polyline>
-                    <polyline points="9 21 3 21 3 15"></polyline>
-                    <line x1="21" y1="3" x2="14" y2="10"></line>
-                    <line x1="3" y1="21" x2="10" y2="14"></line>
-                  </svg>
-                </button>
-              )}
               <span className={styles.previewLabel}>Current</span>
             </div>
 
