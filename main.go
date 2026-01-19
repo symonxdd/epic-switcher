@@ -3,12 +3,9 @@ package main
 import (
 	"context"
 	"embed"
-	"net/http"
-	"os"
-	"path/filepath"
-	"strings"
 
 	"epic-games-account-switcher/backend"
+	"epic-games-account-switcher/backend/middleware"
 	"epic-games-account-switcher/backend/services"
 
 	"github.com/wailsapp/wails/v2"
@@ -30,28 +27,17 @@ func main() {
 	updateService := services.NewUpdateService()
 	avatarService := services.NewAvatarService()
 
+	// Get avatar directory once at startup
+	avatarDir := sessionStore.GetAvatarDir()
+
 	err := wails.Run(&options.App{
 		Title:     "Epic Switcher",
 		Width:     960,
 		Height:    580,
 		Frameless: true,
 		AssetServer: &assetserver.Options{
-			Assets: assets,
-			Middleware: func(next http.Handler) http.Handler {
-				return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-					const prefix = "/custom-avatar/"
-					if strings.HasPrefix(r.URL.Path, prefix) {
-						filename := strings.TrimPrefix(r.URL.Path, prefix)
-						avatarPath := filepath.Join(sessionStore.GetAvatarDir(), filename)
-
-						if _, err := os.Stat(avatarPath); err == nil {
-							http.ServeFile(w, r, avatarPath)
-							return
-						}
-					}
-					next.ServeHTTP(w, r)
-				})
-			},
+			Assets:     assets,
+			Middleware: middleware.AvatarHandler(avatarDir),
 		},
 		OnStartup: func(ctx context.Context) {
 			app.Startup(ctx)

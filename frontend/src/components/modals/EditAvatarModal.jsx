@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react'
 import { GetAvailableAvatars, SetAvatar, DeleteAvatarFile, SetAvatarColor, RemoveAvatar } from '../../../wailsjs/go/services/AvatarService'
 import styles from './ModalShared.module.css'
 import { STORAGE_KEYS } from '../../constants/storageKeys'
+import ImageLightbox from './ImageLightbox'
 
 export default function EditAvatarModal({
   onSelect,
@@ -17,6 +18,7 @@ export default function EditAvatarModal({
   const [isClosing, setIsClosing] = useState(false);
   const [availableAvatars, setAvailableAvatars] = useState([]);
   const [confirmDelete, setConfirmDelete] = useState(null); // stores filename to delete
+  const [showLightbox, setShowLightbox] = useState(false); // for viewing full-res image
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
@@ -144,7 +146,7 @@ export default function EditAvatarModal({
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
                   <img
-                    src={`/custom-avatar/${currentAvatarImage}`}
+                    src={`/custom-avatar-thumb/${currentAvatarImage}`}
                     alt="Current Avatar"
                     style={{ margin: 0 }}
                   />
@@ -152,6 +154,21 @@ export default function EditAvatarModal({
                   <span className={styles.initialsText}>{getFirstVisibleChar(username)}</span>
                 )}
               </div>
+              {/* View full image button - only show when there's an image */}
+              {currentAvatarImage && currentAvatarImage !== "" && (
+                <button
+                  className={styles.viewFullButton}
+                  onClick={() => setShowLightbox(true)}
+                  title="View full image"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <polyline points="15 3 21 3 21 9"></polyline>
+                    <polyline points="9 21 3 21 3 15"></polyline>
+                    <line x1="21" y1="3" x2="14" y2="10"></line>
+                    <line x1="3" y1="21" x2="10" y2="14"></line>
+                  </svg>
+                </button>
+              )}
               <span className={styles.previewLabel}>Current</span>
             </div>
 
@@ -221,7 +238,7 @@ export default function EditAvatarModal({
                     style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
                   >
                     <img
-                      src={`/custom-avatar/${avatar}`}
+                      src={`/custom-avatar-thumb/${avatar}`}
                       alt={avatar}
                       className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
                       onClick={() => handleAvatarClick(avatar)}
@@ -319,6 +336,15 @@ export default function EditAvatarModal({
           </div>
         )}
       </div>
+
+      {/* Full-resolution image lightbox */}
+      {showLightbox && currentAvatarImage && (
+        <ImageLightbox
+          src={`/custom-avatar/${currentAvatarImage}`}
+          alt="Full resolution avatar"
+          onClose={() => setShowLightbox(false)}
+        />
+      )}
     </div>
   )
 }

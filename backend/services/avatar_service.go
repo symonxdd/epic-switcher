@@ -7,9 +7,15 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 
+	"github.com/disintegration/imaging"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
+
+// ThumbnailSize is the dimension (width and height) for generated avatar thumbnails.
+// Thumbnails are square and center-cropped.
+const ThumbnailSize = 256
 
 // AvatarService handles avatar-related operations.
 type AvatarService struct {
@@ -90,6 +96,16 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 		if err := os.WriteFile(destPath, data, 0644); err != nil {
 			return "", fmt.Errorf("failed to save avatar file: %w", err)
 		}
+
+		// 5a. Generate thumbnail
+		thumbFilename := getThumbnailFilename(destFilename)
+		thumbPath := filepath.Join(avatarDir, thumbFilename)
+		if err := generateThumbnail(destPath, thumbPath, ThumbnailSize); err != nil {
+			fmt.Printf("[AvatarService] Warning: failed to generate thumbnail: %v\n", err)
+			// Continue without thumbnail - non-fatal
+		} else {
+			fmt.Printf("[AvatarService] Generated thumbnail: %s\n", thumbFilename)
+		}
 	} else {
 		fmt.Printf("[AvatarService] Using existing avatar (deduplicated): %s\n", destFilename)
 	}
@@ -118,8 +134,10 @@ func (a *AvatarService) GetAvailableAvatars() ([]string, error) {
 
 	var avatars []string
 	for _, entry := range entries {
-		if !entry.IsDir() {
-			avatars = append(avatars, entry.Name())
+		name := entry.Name()
+		// Exclude thumbnail files (those ending with _thumb before extension)
+		if !entry.IsDir() && !isThumbnailFile(name) {
+			avatars = append(avatars, name)
 		}
 	}
 
@@ -162,13 +180,14 @@ func (a *AvatarService) RemoveAvatar(userID string) error {
 	return a.sessionStore.UpdateAvatarImage(userID, "")
 }
 
-// DeleteAvatarFile deletes the specified avatar file from the disk.
+// DeleteAvatarFile deletes the specified avatar file and its thumbnail from the disk.
 func (a *AvatarService) DeleteAvatarFile(filename string) error {
 	if filename == "" {
 		return fmt.Errorf("filename is required")
 	}
 
-	avatarPath := filepath.Join(a.sessionStore.GetAvatarDir(), filename)
+	avatarDir := a.sessionStore.GetAvatarDir()
+	avatarPath := filepath.Join(avatarDir, filename)
 
 	// Check if file exists before trying to delete
 	if _, err := os.Stat(avatarPath); os.IsNotExist(err) {
@@ -176,5 +195,47 @@ func (a *AvatarService) DeleteAvatarFile(filename string) error {
 	}
 
 	fmt.Printf("[AvatarService] Deleting avatar file: %s\n", filename)
-	return os.Remove(avatarPath)
+	if err := os.Remove(avatarPath); err != nil {
+		return err
+	}
+
+	// Also delete the thumbnail if it exists
+	thumbFilename := getThumbnailFilename(filename)
+	thumbPath := filepath.Join(avatarDir, thumbFilename)
+	if _, err := os.Stat(thumbPath); err == nil {
+		fmt.Printf("[AvatarService] Deleting thumbnail: %s\n", thumbFilename)
+		os.Remove(thumbPath) // Ignore error for thumbnail deletion
+	}
+
+	return nil
+}
+
+// getThumbnailFilename returns the thumbnail filename for a given original filename.
+// Example: "abc123.jpg" -> "abc123_thumb.jpg"
+func getThumbnailFilename(filename string) string {
+	ext := filepath.Ext(filename)
+	base := strings.TrimSuffix(filename, ext)
+	return base + "_thumb" + ext
+}
+
+// isThumbnailFile checks if a filename is a thumbnail (ends with _thumb before extension).
+func isThumbnailFile(filename string) bool {
+	ext := filepath.Ext(filename)
+	base := strings.TrimSuffix(filename, ext)
+	return strings.HasSuffix(base, "_thumb")
+}
+
+// generateThumbnail creates a square, center-cropped thumbnail of the given size.
+func generateThumbnail(srcPath, destPath string, size int) error {
+	src, err := imaging.Open(srcPath)
+	if err != nil {
+		return fmt.Errorf("failed to open image: %w", err)
+	}
+
+	// Fill creates a center-cropped thumbnail
+	thumb := imaging.Fill(src, size, size, imaging.Center, imaging.Lanczos)
+
+	// Save as JPEG for thumbnails (good compression for photos)
+	// Use the original extension to maintain format
+	return imaging.Save(thumb, destPath)
 }
