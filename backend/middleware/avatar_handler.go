@@ -16,7 +16,7 @@ func AvatarHandler(avatarDir string) assetserver.Middleware {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
 			// 1. Handle Thumbnails
-			const thumbPrefix = "/custom-avatar-thumb/"
+			const thumbPrefix = "/avatar-thumb/"
 			if strings.HasPrefix(r.URL.Path, thumbPrefix) {
 				filename := strings.TrimPrefix(r.URL.Path, thumbPrefix)
 				ext := filepath.Ext(filename)
@@ -33,7 +33,7 @@ func AvatarHandler(avatarDir string) assetserver.Middleware {
 			}
 
 			// 2. Handle Original Images
-			const prefix = "/custom-avatar/"
+			const prefix = "/avatar-full/"
 			if strings.HasPrefix(r.URL.Path, prefix) {
 				filename := strings.TrimPrefix(r.URL.Path, prefix)
 				avatarPath := filepath.Join(avatarDir, filename)

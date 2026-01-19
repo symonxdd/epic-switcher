@@ -86,7 +86,7 @@ export default function AccountRow({
         >
           {session?.avatarImage ? (
             <img
-              src={`/custom-avatar/${session.avatarImage}?t=${new Date().getTime()}`}
+              src={`/avatar-full/${session.avatarImage}`}
               alt=""
               className={styles.customAvatarImage}
             />

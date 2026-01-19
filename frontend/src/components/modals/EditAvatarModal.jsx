@@ -147,7 +147,7 @@ export default function EditAvatarModal({
               >
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
                   <img
-                    src={`/custom-avatar-thumb/${currentAvatarImage}`}
+                    src={`/avatar-full/${currentAvatarImage}`}
                     alt="Current Avatar"
                     style={{ margin: 0 }}
                   />
@@ -239,7 +239,7 @@ export default function EditAvatarModal({
                     style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
                   >
                     <img
-                      src={`/custom-avatar-thumb/${avatar}`}
+                      src={`/avatar-thumb/${avatar}`}
                       alt={avatar}
                       className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
                       onClick={() => handleAvatarClick(avatar)}
@@ -341,7 +341,7 @@ export default function EditAvatarModal({
       {/* Full-resolution image lightbox */}
       {showLightbox && currentAvatarImage && (
         <ImageLightbox
-          src={`/custom-avatar/${currentAvatarImage}`}
+          src={`/avatar-full/${currentAvatarImage}`}
           alt="Full resolution avatar"
           onClose={() => setShowLightbox(false)}
         />
