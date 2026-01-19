@@ -194,16 +194,31 @@ export default function EditAvatarModal({
             <div className={styles.avatarGalleryContainer}>
               <p className={styles.galleryLabel}>Choose an avatar:</p>
               <div className={styles.avatarGallery}>
-                <button
-                  className={styles.uploadAvatarBtn}
-                  onClick={handleSelect}
-                  title="Select new image"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                    <line x1="12" y1="5" x2="12" y2="19"></line>
-                    <line x1="5" y1="12" x2="19" y2="12"></line>
-                  </svg>
-                </button>
+                {availableAvatars.map((avatar) => (
+                  <div
+                    key={avatar}
+                    className={`${styles.avatarWrapper} ${currentAvatarImage === avatar ? styles.avatarWrapperActive : ''}`}
+                    style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
+                  >
+                    <img
+                      src={`/avatar-thumb/${avatar}`}
+                      alt={avatar}
+                      className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
+                      onClick={() => handleAvatarClick(avatar)}
+                    />
+                    <button
+                      className={styles.deleteAvatarBtn}
+                      onClick={(e) => handleDeleteClick(e, avatar)}
+                      title="Delete this image"
+                    >
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"></line>
+                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                      </svg>
+                    </button>
+                  </div>
+                ))}
+
                 <div
                   className={`${styles.avatarWrapper} ${(!currentAvatarImage || currentAvatarImage === "") ? styles.avatarWrapperActive : ''}`}
                   style={{ '--avatar-accent': currentAvatarColor || defaultGradient }}
@@ -229,30 +244,16 @@ export default function EditAvatarModal({
 
                 <div className={styles.gallerySeparator} />
 
-                {availableAvatars.map((avatar) => (
-                  <div
-                    key={avatar}
-                    className={`${styles.avatarWrapper} ${currentAvatarImage === avatar ? styles.avatarWrapperActive : ''}`}
-                    style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
-                  >
-                    <img
-                      src={`/avatar-thumb/${avatar}`}
-                      alt={avatar}
-                      className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
-                      onClick={() => handleAvatarClick(avatar)}
-                    />
-                    <button
-                      className={styles.deleteAvatarBtn}
-                      onClick={(e) => handleDeleteClick(e, avatar)}
-                      title="Delete this image"
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                        <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
-                      </svg>
-                    </button>
-                  </div>
-                ))}
+                <button
+                  className={styles.uploadAvatarBtn}
+                  onClick={handleSelect}
+                  title="Select new image"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="12" y1="5" x2="12" y2="19"></line>
+                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                  </svg>
+                </button>
               </div>
             </div>
 
