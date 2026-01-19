@@ -158,7 +158,8 @@
 }
 
 .activeAccountName {
-  font-size: 1.15rem;
+  /* font-size: 1.15rem; */
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--text-primary);
   white-space: nowrap;
@@ -217,7 +218,7 @@
 }
 
 .activeAccountBadge {
-  margin-top: 5px;
+  /* margin-top: 5px; */
   display: flex;
   align-items: center;
   justify-content: center;

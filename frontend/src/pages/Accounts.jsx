@@ -207,6 +207,11 @@ export default function Accounts() {
                         </div>
                       </div>
 
+                      <div className={styles.activeAccountBadge}>
+                        <HiOutlineCheckCircle />
+                        <span>Active</span>
+                      </div>
+
                       <div className={styles.activeAccountInfo}>
                         <div className={styles.activeAccountName}>
                           {activeSession.alias || activeSession.username || activeSession.userId}
@@ -218,11 +223,6 @@ export default function Accounts() {
                               : activeSession.userId}
                           </div>
                         )}
-                      </div>
-
-                      <div className={styles.activeAccountBadge}>
-                        <HiOutlineCheckCircle />
-                        <span>Active</span>
                       </div>
                     </div>
 
