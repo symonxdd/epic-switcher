@@ -155,7 +155,7 @@ export default function EditAvatarModal({
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
                   <>
                     <img
-                      src={`/avatar-full/${currentAvatarImage}`}
+                      src={`/avatar-thumb/${currentAvatarImage}`}
                       alt="Current Avatar"
                       style={{ margin: 0 }}
                     />

@@ -193,7 +193,7 @@ export default function Accounts() {
                       >
                         {activeSession.avatarImage ? (
                           <img
-                            src={`/avatar-full/${activeSession.avatarImage}`}
+                            src={`/avatar-thumb/${activeSession.avatarImage}`}
                             alt=""
                             className={styles.customAvatarImage}
                           />
@@ -302,7 +302,7 @@ export default function Accounts() {
                               >
                                 {session.avatarImage ? (
                                   <img
-                                    src={`/avatar-full/${session.avatarImage}`}
+                                    src={`/avatar-thumb/${session.avatarImage}`}
                                     alt=""
                                     className={styles.customAvatarImage}
                                   />
