@@ -5,9 +5,15 @@ import (
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
+	"image"
+	_ "image/gif"
+	_ "image/jpeg"
+	_ "image/png"
 	"os"
 	"path/filepath"
 	"strings"
+
+	_ "golang.org/x/image/webp"
 
 	"github.com/disintegration/imaging"
 	"github.com/wailsapp/wails/v2/pkg/runtime"
@@ -21,6 +27,17 @@ const ThumbnailSize = 256
 type AvatarService struct {
 	ctx          context.Context
 	sessionStore *SessionStore
+}
+
+// ImageMetadata represents technical details of an image file.
+type ImageMetadata struct {
+	Filename    string `json:"filename"`
+	Size        int64  `json:"size"`
+	FormatSize  string `json:"formatSize"`
+	Width       int    `json:"width"`
+	Height      int    `json:"height"`
+	Format      string `json:"format"`
+	ContentType string `json:"contentType"`
 }
 
 // NewAvatarService creates a new AvatarService instance.
@@ -209,6 +226,83 @@ func (a *AvatarService) DeleteAvatarFile(filename string) error {
 	}
 
 	return nil
+}
+
+// GetImageMetadata returns technical details for the given avatar filename.
+func (a *AvatarService) GetImageMetadata(filename string) (*ImageMetadata, error) {
+	if filename == "" {
+		return nil, fmt.Errorf("filename is required")
+	}
+
+	avatarDir := a.sessionStore.GetAvatarDir()
+	avatarPath := filepath.Join(avatarDir, filename)
+
+	fileInfo, err := os.Stat(avatarPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to stat image file: %w", err)
+	}
+
+	// Open file to read header only (fast)
+	f, err := os.Open(avatarPath)
+	if err != nil {
+		return nil, fmt.Errorf("failed to open image file: %w", err)
+	}
+	defer f.Close()
+
+	config, format, err := image.DecodeConfig(f)
+	if err != nil {
+		// Fallback for formats not registered or SVG
+		if strings.ToLower(filepath.Ext(filename)) == ".svg" {
+			return &ImageMetadata{
+				Filename:    filename,
+				Size:        fileInfo.Size(),
+				FormatSize:  formatByteSize(fileInfo.Size()),
+				Width:       0, // SVG dimensions are tricky without a full parser
+				Height:      0,
+				Format:      "svg",
+				ContentType: "image/svg+xml",
+			}, nil
+		}
+		return nil, fmt.Errorf("failed to decode image config: %w", err)
+	}
+
+	ext := strings.ToLower(filepath.Ext(filename))
+	contentType := "image/unknown"
+	switch ext {
+	case ".png":
+		contentType = "image/png"
+	case ".jpg", ".jpeg":
+		contentType = "image/jpeg"
+	case ".webp":
+		contentType = "image/webp"
+	case ".gif":
+		contentType = "image/gif"
+	case ".svg":
+		contentType = "image/svg+xml"
+	}
+
+	return &ImageMetadata{
+		Filename:    filename,
+		Size:        fileInfo.Size(),
+		FormatSize:  formatByteSize(fileInfo.Size()),
+		Width:       config.Width,
+		Height:      config.Height,
+		Format:      format,
+		ContentType: contentType,
+	}, nil
+}
+
+func formatByteSize(b int64) string {
+	const unit = 1024
+	if b < unit {
+		return fmt.Sprintf("%d B", b)
+	}
+	div, exp := int64(unit), 0
+	for n := b / unit; n >= unit; n /= unit {
+		div *= unit
+		exp++
+	}
+	return fmt.Sprintf("%.1f %cB", float64(b)/float64(div), "KMGTPE"[exp])
 }
 
 // getThumbnailFilename returns the thumbnail filename for a given original filename.

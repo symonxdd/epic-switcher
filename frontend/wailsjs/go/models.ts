@@ -45,6 +45,30 @@ export namespace services {
 	        this.html_url = source["html_url"];
 	    }
 	}
+	export class ImageMetadata {
+	    filename: string;
+	    size: number;
+	    formatSize: string;
+	    width: number;
+	    height: number;
+	    format: string;
+	    contentType: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new ImageMetadata(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.filename = source["filename"];
+	        this.size = source["size"];
+	        this.formatSize = source["formatSize"];
+	        this.width = source["width"];
+	        this.height = source["height"];
+	        this.format = source["format"];
+	        this.contentType = source["contentType"];
+	    }
+	}
 
 }
 

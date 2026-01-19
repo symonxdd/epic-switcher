@@ -10,6 +10,10 @@ export function GetAvailableAvatars() {
   return window['go']['services']['AvatarService']['GetAvailableAvatars']();
 }
 
+export function GetImageMetadata(arg1) {
+  return window['go']['services']['AvatarService']['GetImageMetadata'](arg1);
+}
+
 export function RemoveAvatar(arg1) {
   return window['go']['services']['AvatarService']['RemoveAvatar'](arg1);
 }

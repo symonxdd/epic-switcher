@@ -1,7 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { GetImageMetadata } from '../../../wailsjs/go/services/AvatarService';
 import styles from './ModalShared.module.css';
 
 export default function ImageLightbox({ src, alt, onClose }) {
+  const [metadata, setMetadata] = useState(null);
+
   // Close on Escape key
   useEffect(() => {
     const handleKeyDown = (e) => {
@@ -13,6 +16,19 @@ export default function ImageLightbox({ src, alt, onClose }) {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [onClose]);
 
+  // Fetch metadata
+  useEffect(() => {
+    if (!src) return;
+
+    // Extract filename from /avatar-full/filename
+    const filename = src.split('/').pop();
+    if (filename) {
+      GetImageMetadata(filename)
+        .then(setMetadata)
+        .catch(console.error);
+    }
+  }, [src]);
+
   return (
     <div className={styles.lightboxOverlay} onClick={onClose}>
       <img
@@ -22,6 +38,24 @@ export default function ImageLightbox({ src, alt, onClose }) {
         className={styles.lightboxImage}
         onClick={(e) => e.stopPropagation()}
       />
+
+      {metadata && (
+        <div className={styles.lightboxMetadata} onClick={(e) => e.stopPropagation()}>
+          <div className={styles.metadataItem}>
+            <span className={styles.metadataLabel}>Dimensions</span>
+            <span className={styles.metadataValue}>{metadata.width} × {metadata.height}</span>
+          </div>
+          <div className={styles.metadataItem}>
+            <span className={styles.metadataLabel}>Size</span>
+            <span className={styles.metadataValue}>{metadata.formatSize}</span>
+          </div>
+          <div className={styles.metadataItem}>
+            <span className={styles.metadataLabel}>Format</span>
+            <span className={styles.metadataValue}>{metadata.format?.toUpperCase()}</span>
+          </div>
+        </div>
+      )}
+
       <button className={styles.lightboxClose} onClick={onClose} title="Close">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
           <line x1="18" y1="6" x2="6" y2="18"></line>
