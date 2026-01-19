@@ -62,6 +62,15 @@ func (a *AvatarService) SelectAndSaveAvatar(userID string) (string, error) {
 		},
 	})
 
+	if selection == "" {
+		if err != nil {
+			fmt.Printf("[AvatarService] Dialog returned error but empty selection (likely cancel): %v\n", err)
+		} else {
+			fmt.Println("[AvatarService] Dialog cancelled by user (empty selection)")
+		}
+		return "", nil
+	}
+
 	if err != nil {
 		return "", err
 	}
