@@ -9,10 +9,6 @@ import {
   saveBorderPreference
 } from './avatarUtils';
 
-/**
- * Left column of the modal showing the current avatar preview with border toggle.
- * Self-contained: owns the border toggle state.
- */
 export default function AvatarPreview({
   currentImage,
   currentColor,
@@ -33,7 +29,6 @@ export default function AvatarPreview({
 
   return (
     <div className={styles.modalLeftColumn}>
-      {/* Top spacer to balance the toggle at the bottom and keep avatar centered */}
       {hasImage && (
         <div className={styles.showBorderToggleSpacer} aria-hidden="true">
           <label className={styles.toggleLabel}>placeholder</label>

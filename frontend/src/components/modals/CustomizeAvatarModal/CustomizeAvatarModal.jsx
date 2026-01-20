@@ -10,15 +10,6 @@ import ColorPicker from './ColorPicker';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 import { getBaseFilename, getFullUrl } from './avatarUtils';
 
-/**
- * Main modal for customizing avatar image and color.
- * Coordinates child components and handles cross-cutting concerns:
- * - Modal animation
- * - Crop modal orchestration
- * - Lightbox visibility
- * - Delete confirmation
- * - Cache busting
- */
 export default function CustomizeAvatarModal({
   onSelect,
   onCancel,
@@ -42,7 +33,6 @@ export default function CustomizeAvatarModal({
   const currentAvatarBase = getBaseFilename(currentAvatarImage);
   const hasImage = currentAvatarImage && currentAvatarImage !== "";
 
-  // Modal close animation
   const handleAnimationEnd = (e) => {
     if (e.target !== e.currentTarget) return;
     if (isClosing && closeCallbackRef.current) {
@@ -55,11 +45,10 @@ export default function CustomizeAvatarModal({
     setIsClosing(true);
   };
 
-  // File selection for new avatar
   const handleAddImage = async () => {
     try {
       const path = await SelectImage();
-      if (!path) return; // User cancelled
+      if (!path) return;
 
       const base64 = await ReadImageAsBase64(path);
       setCropImage(base64);
@@ -70,14 +59,12 @@ export default function CustomizeAvatarModal({
     }
   };
 
-  // Re-crop existing avatar
   const handleRecrop = (filename) => {
     setCropImage(getFullUrl(filename, cacheBust));
     setCropSourcePath(filename);
     setShowCropModal(true);
   };
 
-  // Crop confirmation
   const handleCropConfirm = async (pixelCrop) => {
     if (!cropSourcePath || !userId) return;
 
@@ -91,10 +78,8 @@ export default function CustomizeAvatarModal({
         Math.round(pixelCrop.height)
       );
 
-      // Force thumbnails to reload
       setCacheBust(prev => prev + 1);
 
-      // Update parent with cache-busted filename
       if (onAvatarChange) {
         onAvatarChange(`${newFilename}?t=${Date.now()}`);
       }
@@ -107,7 +92,6 @@ export default function CustomizeAvatarModal({
     }
   };
 
-  // Avatar selection
   const handleSelectAvatar = async (filename) => {
     if (!userId || !filename || filename === currentAvatarBase) return;
 
@@ -121,13 +105,11 @@ export default function CustomizeAvatarModal({
     }
   };
 
-  // Avatar removal (use initials)
   const handleRemoveAvatar = () => {
     if (onAvatarChange) onAvatarChange("");
     if (onRemove) onRemove();
   };
 
-  // Delete confirmation
   const handleDeleteRequest = (filename) => {
     setConfirmDelete(filename);
   };
@@ -138,13 +120,11 @@ export default function CustomizeAvatarModal({
     try {
       await DeleteAvatarFile(confirmDelete);
 
-      // If deleted avatar was currently assigned, clear it
       if (confirmDelete === currentAvatarBase) {
         await RemoveAvatar(userId);
         if (onAvatarChange) onAvatarChange("");
       }
 
-      // Increment cacheBust to trigger gallery refresh
       setCacheBust(prev => prev + 1);
       setConfirmDelete(null);
     } catch (err) {
@@ -215,7 +195,6 @@ export default function CustomizeAvatarModal({
         />
       </div>
 
-      {/* Full-resolution image lightbox */}
       {showLightbox && hasImage && (
         <ImageLightbox
           src={getFullUrl(currentAvatarImage, cacheBust)}

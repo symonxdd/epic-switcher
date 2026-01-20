@@ -1,8 +1,5 @@
 import styles from '../ModalShared.module.css';
 
-/**
- * Confirmation dialog for deleting an avatar from the library.
- */
 export default function DeleteConfirmDialog({
   filename,
   onCancel,

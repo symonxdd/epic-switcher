@@ -2,9 +2,6 @@ import { HiScissors } from 'react-icons/hi';
 import styles from '../ModalShared.module.css';
 import { getThumbnailUrl, DEFAULT_GRADIENT } from './avatarUtils';
 
-/**
- * Single avatar thumbnail in the gallery with hover actions (recrop, delete).
- */
 export default function AvatarGalleryItem({
   filename,
   isActive,

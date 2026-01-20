@@ -2,10 +2,6 @@ import { SetAvatarColor } from '../../../../wailsjs/go/services/AvatarService';
 import styles from '../ModalShared.module.css';
 import { AVATAR_GRADIENTS, DEFAULT_GRADIENT } from './avatarUtils';
 
-/**
- * Color gradient picker grid.
- * Self-contained: handles its own click logic and backend calls.
- */
 export default function ColorPicker({
   userId,
   currentColor,
@@ -16,13 +12,10 @@ export default function ColorPicker({
     const isActive = currentColor === gradient || (!currentColor && gradient === DEFAULT_GRADIENT);
     if (isActive) return;
 
-    // 1. Optimistically update UI first
     if (onColorChange) onColorChange(gradient);
 
-    // 2. Call service in background to avoid blocking UI thread/animations
     SetAvatarColor(userId, gradient).catch((err) => {
       console.error('Failed to set avatar color:', err);
-      // Could revert UI here if needed
     });
   };
 

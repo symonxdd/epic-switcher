@@ -5,10 +5,6 @@ import styles from '../ModalShared.module.css';
 import AvatarGalleryItem from './AvatarGalleryItem';
 import { DEFAULT_GRADIENT, getBaseFilename, getFirstVisibleChar } from './avatarUtils';
 
-/**
- * Avatar gallery grid with add button and "use initials" option.
- * Self-contained: owns the list of available avatars and fetches them.
- */
 export default function AvatarGallery({
   userId,
   username,
@@ -27,34 +23,25 @@ export default function AvatarGallery({
   const gradient = currentColor || DEFAULT_GRADIENT;
   const hasImage = currentImage && currentImage !== "";
 
-  // Fetch available avatars on mount and when currentImage changes
   useEffect(() => {
     GetAvailableAvatars()
       .then((avatars) => setAvailableAvatars(avatars || []))
       .catch(console.error);
   }, [currentImage]);
 
-  // Also expose a way for parent to trigger refresh after crop
   useEffect(() => {
-    // Re-fetch when cacheBust changes (after crop operation)
     GetAvailableAvatars()
       .then((avatars) => setAvailableAvatars(avatars || []))
       .catch(console.error);
   }, [cacheBust]);
 
   const handleSelectAvatar = async (filename) => {
-    if (filename === currentAvatarBase) {
-      // Already selected, do nothing
-      return;
-    }
-    if (onSelectAvatar) {
-      onSelectAvatar(filename);
-    }
+    if (filename === currentAvatarBase) return;
+    if (onSelectAvatar) onSelectAvatar(filename);
   };
 
   const handleUseInitials = async () => {
-    if (!hasImage) return; // Already using initials
-
+    if (!hasImage) return;
     try {
       await RemoveAvatar(userId);
       if (onRemoveAvatar) onRemoveAvatar();
