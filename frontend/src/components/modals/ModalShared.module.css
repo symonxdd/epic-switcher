@@ -274,7 +274,8 @@
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.12);
+  /* Always include the ring shadow, but transparent when inactive for smooth transition */
+  box-shadow: 0 0 0 2px transparent, 0 3px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   z-index: 1;
   background-clip: padding-box;
@@ -286,13 +287,15 @@
 
 .colorCircle:hover {
   transform: scale(1.12) translateZ(0);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  /* Keep the transparent ring to maintain shadow structure */
+  box-shadow: 0 0 0 2px transparent, 0 5px 15px rgba(0, 0, 0, 0.2);
   z-index: 5;
 }
 
 .colorCircleActive {
   transform: scale(1.12) translateZ(0);
   border-color: var(--bg-surface);
+  /* Ring transitions from transparent to visible */
   box-shadow: 0 0 0 2px var(--text-primary), 0 4px 10px rgba(0, 0, 0, 0.15);
   z-index: 4;
   cursor: default;
@@ -460,6 +463,8 @@
   transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     box-shadow 0.25s cubic-bezier(0.4, 0, 0.2, 1),
     border-color 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Always include the ring shadow, but transparent when inactive for smooth transition */
+  box-shadow: 0 0 0 2px transparent, 0 4px 10px rgba(0, 0, 0, 0.1);
   pointer-events: auto;
   backface-visibility: hidden;
   transform: translateZ(0);
@@ -468,7 +473,8 @@
 
 .avatarMiniature:hover {
   transform: scale(1.12) translateZ(0);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  /* Keep the transparent ring to maintain shadow structure */
+  box-shadow: 0 0 0 2px transparent, 0 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 6;
 }
 
