@@ -68,7 +68,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
               Cancel
             </button>
             <button className={styles.primaryButton} onClick={handleConfirm} style={{ minWidth: '130px' }}>
-              Apply Crop
+              Confirm
             </button>
           </div>
         </div>
