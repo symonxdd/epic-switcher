@@ -14,6 +14,7 @@ import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
+import { useAvatarCache } from '../context/AvatarCacheContext';
 
 export default function Accounts() {
   const location = useLocation();
@@ -34,6 +35,7 @@ export default function Accounts() {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
   });
+  const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
     checkLoginStatus();
@@ -193,7 +195,7 @@ export default function Accounts() {
                         >
                           {activeSession.avatarImage ? (
                             <img
-                              src={`/avatar-thumb/${activeSession.avatarImage}`}
+                              src={`/avatar-thumb/${activeSession.avatarImage}?v=${cacheVersion}`}
                               alt=""
                               className={styles.customAvatarImage}
                             />
@@ -303,7 +305,7 @@ export default function Accounts() {
                               >
                                 {session.avatarImage ? (
                                   <img
-                                    src={`/avatar-thumb/${session.avatarImage}`}
+                                    src={`/avatar-thumb/${session.avatarImage}?v=${cacheVersion}`}
                                     alt=""
                                     className={styles.customAvatarImage}
                                   />

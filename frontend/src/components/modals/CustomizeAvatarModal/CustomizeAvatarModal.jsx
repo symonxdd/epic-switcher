@@ -9,6 +9,7 @@ import AvatarGallery from './AvatarGallery';
 import ColorPicker from './ColorPicker';
 import DeleteConfirmDialog from './DeleteConfirmDialog';
 import { getBaseFilename, getFullUrl } from './avatarUtils';
+import { useAvatarCache } from '../../../context/AvatarCacheContext';
 
 export default function CustomizeAvatarModal({
   onSelect,
@@ -27,8 +28,8 @@ export default function CustomizeAvatarModal({
   const [showCropModal, setShowCropModal] = useState(false);
   const [cropImage, setCropImage] = useState(null);
   const [cropSourcePath, setCropSourcePath] = useState(null);
-  const [cacheBust, setCacheBust] = useState(0);
   const closeCallbackRef = useRef(null);
+  const { cacheVersion, invalidateCache } = useAvatarCache();
 
   const currentAvatarBase = getBaseFilename(currentAvatarImage);
   const hasImage = currentAvatarImage && currentAvatarImage !== "";
@@ -60,7 +61,7 @@ export default function CustomizeAvatarModal({
   };
 
   const handleRecrop = (filename) => {
-    setCropImage(getFullUrl(filename, cacheBust));
+    setCropImage(getFullUrl(filename, cacheVersion));
     setCropSourcePath(filename);
     setShowCropModal(true);
   };
@@ -78,10 +79,10 @@ export default function CustomizeAvatarModal({
         Math.round(pixelCrop.height)
       );
 
-      setCacheBust(prev => prev + 1);
+      invalidateCache();
 
       if (onAvatarChange) {
-        onAvatarChange(`${newFilename}?t=${Date.now()}`);
+        onAvatarChange(newFilename);  // Clean filename, no query params
       }
 
       setShowCropModal(false);
@@ -98,7 +99,7 @@ export default function CustomizeAvatarModal({
     try {
       await SetAvatar(userId, filename);
       if (onAvatarChange) {
-        onAvatarChange(`${filename}?t=${Date.now()}`);
+        onAvatarChange(filename);  // Clean filename, no query params
       }
     } catch (err) {
       console.error('Failed to set avatar:', err);
@@ -125,7 +126,7 @@ export default function CustomizeAvatarModal({
         if (onAvatarChange) onAvatarChange("");
       }
 
-      setCacheBust(prev => prev + 1);
+      invalidateCache();
       setConfirmDelete(null);
     } catch (err) {
       console.error('Failed to delete avatar:', err);
@@ -145,7 +146,6 @@ export default function CustomizeAvatarModal({
             currentImage={currentAvatarImage}
             currentColor={currentAvatarColor}
             username={username}
-            cacheBust={cacheBust}
             onViewFullImage={() => setShowLightbox(true)}
           />
 
@@ -157,7 +157,6 @@ export default function CustomizeAvatarModal({
               username={username}
               currentImage={currentAvatarImage}
               currentColor={currentAvatarColor}
-              cacheBust={cacheBust}
               onSelectAvatar={handleSelectAvatar}
               onRemoveAvatar={handleRemoveAvatar}
               onRecrop={handleRecrop}
@@ -197,7 +196,7 @@ export default function CustomizeAvatarModal({
 
       {showLightbox && hasImage && (
         <ImageLightbox
-          src={getFullUrl(currentAvatarImage, cacheBust)}
+          src={getFullUrl(currentAvatarImage, cacheVersion)}
           alt="Full resolution avatar"
           onClose={() => setShowLightbox(false)}
         />

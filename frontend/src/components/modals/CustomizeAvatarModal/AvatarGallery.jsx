@@ -4,13 +4,13 @@ import { HiOutlinePlus } from 'react-icons/hi';
 import styles from '../ModalShared.module.css';
 import AvatarGalleryItem from './AvatarGalleryItem';
 import { DEFAULT_GRADIENT, getBaseFilename, getFirstVisibleChar } from './avatarUtils';
+import { useAvatarCache } from '../../../context/AvatarCacheContext';
 
 export default function AvatarGallery({
   userId,
   username,
   currentImage,
   currentColor,
-  cacheBust,
   onSelectAvatar,
   onRemoveAvatar,
   onRecrop,
@@ -18,6 +18,7 @@ export default function AvatarGallery({
   onAddImage
 }) {
   const [availableAvatars, setAvailableAvatars] = useState([]);
+  const { cacheVersion } = useAvatarCache();
 
   const currentAvatarBase = getBaseFilename(currentImage);
   const gradient = currentColor || DEFAULT_GRADIENT;
@@ -33,7 +34,7 @@ export default function AvatarGallery({
     GetAvailableAvatars()
       .then((avatars) => setAvailableAvatars(avatars || []))
       .catch(console.error);
-  }, [cacheBust]);
+  }, [cacheVersion]);
 
   const handleSelectAvatar = async (filename) => {
     if (filename === currentAvatarBase) return;
@@ -71,7 +72,7 @@ export default function AvatarGallery({
             filename={avatar}
             isActive={currentAvatarBase === avatar}
             accentColor={gradient}
-            cacheBust={cacheBust}
+
             onSelect={handleSelectAvatar}
             onRecrop={onRecrop}
             onDelete={onDeleteRequest}

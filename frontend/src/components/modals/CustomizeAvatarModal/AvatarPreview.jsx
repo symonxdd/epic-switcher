@@ -8,15 +8,16 @@ import {
   getBorderPreference,
   saveBorderPreference
 } from './avatarUtils';
+import { useAvatarCache } from '../../../context/AvatarCacheContext';
 
 export default function AvatarPreview({
   currentImage,
   currentColor,
   username,
-  cacheBust,
   onViewFullImage
 }) {
   const [showBorder, setShowBorder] = useState(getBorderPreference);
+  const { cacheVersion } = useAvatarCache();
 
   const hasImage = currentImage && currentImage !== "";
   const gradient = currentColor || DEFAULT_GRADIENT;
@@ -49,7 +50,7 @@ export default function AvatarPreview({
           {hasImage ? (
             <>
               <img
-                src={getThumbnailUrl(currentImage, cacheBust)}
+                src={getThumbnailUrl(currentImage, cacheVersion)}
                 alt="Current Avatar"
                 style={{ margin: 0 }}
               />

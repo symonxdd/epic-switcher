@@ -1,16 +1,17 @@
 import { HiScissors } from 'react-icons/hi';
 import styles from '../ModalShared.module.css';
 import { getThumbnailUrl, DEFAULT_GRADIENT } from './avatarUtils';
+import { useAvatarCache } from '../../../context/AvatarCacheContext';
 
 export default function AvatarGalleryItem({
   filename,
   isActive,
   accentColor,
-  cacheBust,
   onSelect,
   onRecrop,
   onDelete
 }) {
+  const { cacheVersion } = useAvatarCache();
   const gradient = accentColor || DEFAULT_GRADIENT;
 
   return (
@@ -19,7 +20,7 @@ export default function AvatarGalleryItem({
       style={isActive ? { '--avatar-accent': gradient } : {}}
     >
       <img
-        src={getThumbnailUrl(filename, cacheBust)}
+        src={getThumbnailUrl(filename, cacheVersion)}
         alt={filename}
         className={`${styles.avatarMiniature} ${isActive ? styles.avatarMiniatureActive : ''}`}
         onClick={() => onSelect(filename)}

@@ -2,6 +2,7 @@ import { ThemeProvider } from './ThemeContext';
 import { AuthProvider } from './AuthContext';
 import { SessionProvider } from './SessionContext';
 import { ViewModeProvider } from './ViewModeContext';
+import { AvatarCacheProvider } from './AvatarCacheContext';
 
 export function AppProviders({ children }) {
   return (
@@ -9,7 +10,9 @@ export function AppProviders({ children }) {
       <AuthProvider>
         <SessionProvider>
           <ViewModeProvider>
-            {children}
+            <AvatarCacheProvider>
+              {children}
+            </AvatarCacheProvider>
           </ViewModeProvider>
         </SessionProvider>
       </AuthProvider>
