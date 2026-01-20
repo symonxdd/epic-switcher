@@ -25,6 +25,7 @@ export default function EditAvatarModal({
   const [showCropModal, setShowCropModal] = useState(false);
   const [cropImage, setCropImage] = useState(null); // Base64 or URL
   const [cropSourcePath, setCropSourcePath] = useState(null); // Original path or filename
+  const [cacheBust, setCacheBust] = useState(0); // Increment to force thumbnail reload
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
@@ -38,6 +39,15 @@ export default function EditAvatarModal({
     // Notify window for other components to update if they are on the same page
     window.dispatchEvent(new Event('storage'));
   };
+
+  // Helper to extract filename without query string for proper comparison
+  const getBaseFilename = (filenameWithQuery) => {
+    if (!filenameWithQuery) return filenameWithQuery;
+    return filenameWithQuery.split('?')[0];
+  };
+
+  // Get the base filename for comparison operations
+  const currentAvatarBase = getBaseFilename(currentAvatarImage);
 
   const refreshAvatars = () => {
     GetAvailableAvatars()
@@ -80,8 +90,8 @@ export default function EditAvatarModal({
 
   const handleRecrop = (e, filename) => {
     e.stopPropagation();
-    // For existing avatars, we can use the server URL
-    setCropImage(`/avatar-full/${filename}`);
+    // For existing avatars, we can use the server URL with cache busting
+    setCropImage(`/avatar-full/${filename}${cacheBust ? `?v=${cacheBust}` : ''}`);
     setCropSourcePath(filename);
     setShowCropModal(true);
   };
@@ -106,12 +116,15 @@ export default function EditAvatarModal({
         Math.round(pixelCrop.height)
       );
 
+      // Force thumbnails to reload by incrementing cache bust counter
+      setCacheBust(prev => prev + 1);
+
       // Refresh avatars list
       await refreshAvatars();
 
-      // If it was a new upload or re-crop of current avatar, update the parent
+      // Update the parent with the filename + timestamp for cache busting
+      // The timestamp will persist in session state and propagate to Accounts page
       if (onAvatarChange) {
-        // Append timestamp to force browser to reload the image
         const filenameWithCacheBust = `${newFilename}?t=${Date.now()}`;
         onAvatarChange(filenameWithCacheBust);
       }
@@ -135,7 +148,8 @@ export default function EditAvatarModal({
       return;
     }
 
-    if (filename === currentAvatarImage) {
+    // Compare using base filename (without query string)
+    if (filename === currentAvatarBase) {
       console.log('Avatar already selected, doing nothing.');
       return;
     }
@@ -144,7 +158,8 @@ export default function EditAvatarModal({
       console.log('Setting avatar for user:', userId, 'to file:', filename);
       await SetAvatar(userId, filename);
       if (onAvatarChange) {
-        onAvatarChange(filename);
+        // Add timestamp to bust cache for the new selection
+        onAvatarChange(`${filename}?t=${Date.now()}`);
       }
       // Do not close automatically
     } catch (err) {
@@ -165,7 +180,8 @@ export default function EditAvatarModal({
 
       // If the deleted avatar was the one currently assigned to this user, 
       // we should probably clear it in the UI/session store too.
-      if (confirmDelete === currentAvatarImage) {
+      // Compare using base filename (without query string)
+      if (confirmDelete === currentAvatarBase) {
         await RemoveAvatar(userId);
         if (onAvatarChange) onAvatarChange("");
       }
@@ -217,7 +233,7 @@ export default function EditAvatarModal({
                 {(currentAvatarImage && currentAvatarImage !== "") ? (
                   <>
                     <img
-                      src={`/avatar-thumb/${currentAvatarImage}`}
+                      src={`/avatar-thumb/${currentAvatarImage}${!currentAvatarImage.includes('?') && cacheBust ? `?v=${cacheBust}` : ''}`}
                       alt="Current Avatar"
                       style={{ margin: 0 }}
                     />
@@ -269,13 +285,13 @@ export default function EditAvatarModal({
                 {availableAvatars.map((avatar) => (
                   <div
                     key={avatar}
-                    className={`${styles.avatarWrapper} ${currentAvatarImage === avatar ? styles.avatarWrapperActive : ''}`}
-                    style={currentAvatarImage === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
+                    className={`${styles.avatarWrapper} ${currentAvatarBase === avatar ? styles.avatarWrapperActive : ''}`}
+                    style={currentAvatarBase === avatar ? { '--avatar-accent': currentAvatarColor || defaultGradient } : {}}
                   >
                     <img
-                      src={`/avatar-thumb/${avatar}`}
+                      src={`/avatar-thumb/${avatar}${cacheBust ? `?v=${cacheBust}` : ''}`}
                       alt={avatar}
-                      className={`${styles.avatarMiniature} ${currentAvatarImage === avatar ? styles.avatarMiniatureActive : ''}`}
+                      className={`${styles.avatarMiniature} ${currentAvatarBase === avatar ? styles.avatarMiniatureActive : ''}`}
                       onClick={() => handleAvatarClick(avatar)}
                     />
                     <button
@@ -404,7 +420,7 @@ export default function EditAvatarModal({
       {/* Full-resolution image lightbox */}
       {showLightbox && currentAvatarImage && (
         <ImageLightbox
-          src={`/avatar-full/${currentAvatarImage}`}
+          src={`/avatar-full/${currentAvatarImage}${!currentAvatarImage.includes('?') && cacheBust ? `?v=${cacheBust}` : ''}`}
           alt="Full resolution avatar"
           onClose={() => setShowLightbox(false)}
         />
