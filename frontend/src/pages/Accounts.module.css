@@ -587,10 +587,15 @@
 
 .displayName {
   font-weight: 500;
-  color: var(--text-primary);
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.listItem:hover .displayName {
+  color: var(--text-primary);
 }
 
 .metaLine {
