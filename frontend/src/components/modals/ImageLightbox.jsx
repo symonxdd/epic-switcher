@@ -20,8 +20,9 @@ export default function ImageLightbox({ src, alt, onClose }) {
   useEffect(() => {
     if (!src) return;
 
-    // Extract filename from /avatar-full/filename
-    const filename = src.split('/').pop();
+    // Extract filename from /avatar-full/filename, removing any query string
+    const filenameWithQuery = src.split('/').pop();
+    const filename = filenameWithQuery?.split('?')[0];
     if (filename) {
       GetImageMetadata(filename)
         .then(setMetadata)
