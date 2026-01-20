@@ -520,10 +520,10 @@
   justify-content: center;
 }
 
-.deleteAvatarBtn {
+/* Shared styles for delete and crop buttons */
+.deleteAvatarBtn,
+.cropAvatarBtn {
   position: absolute;
-  top: -4px;
-  right: -4px;
   width: 18px;
   height: 18px;
   border-radius: 50%;
@@ -534,10 +534,33 @@
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  color: var(--color-accent-red);
   padding: 0;
-  transition: all 0.2s ease;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  /* Hidden by default */
+  opacity: 0;
+  transform: scale(0.8);
+  pointer-events: none;
+  transition:
+    opacity 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    transform 0.2s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.15s ease,
+    color 0.15s ease,
+    border-color 0.15s ease;
+}
+
+/* Show buttons on wrapper hover */
+.avatarWrapper:hover .deleteAvatarBtn,
+.avatarWrapper:hover .cropAvatarBtn {
+  opacity: 1;
+  transform: scale(1);
+  pointer-events: auto;
+}
+
+/* Delete button positioning and color */
+.deleteAvatarBtn {
+  top: -4px;
+  right: -4px;
+  color: var(--color-accent-red);
 }
 
 .deleteAvatarBtn svg {
@@ -550,6 +573,25 @@
   color: white;
   transform: scale(1.1);
   border-color: var(--color-accent-red);
+}
+
+/* Crop button positioning and color */
+.cropAvatarBtn {
+  bottom: -4px;
+  right: -4px;
+  color: var(--text-secondary);
+}
+
+.cropAvatarBtn svg {
+  width: 10px;
+  height: 10px;
+}
+
+.cropAvatarBtn:hover {
+  background: var(--text-primary);
+  color: var(--bg-surface);
+  transform: scale(1.1);
+  border-color: var(--text-primary);
 }
 
 /* Nested Confirmation Modal Styles */
