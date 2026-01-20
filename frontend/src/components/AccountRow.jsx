@@ -19,7 +19,7 @@ export default function AccountRow({
   isEditing = false,
   onEditToggle,
   onCloseEdit,
-  onMouseMove,
+
 }) {
   const inputRef = useRef(null);
 
@@ -77,7 +77,7 @@ export default function AccountRow({
   return (
     <div
       className={`${styles.listItem} ${isIgnored ? styles.ignoredRow : ""}`}
-      onMouseMove={onMouseMove}
+
     >
       <div className={styles.avatarWrapper}>
         <div

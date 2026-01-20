@@ -104,17 +104,7 @@ export default function Manage() {
           ) : (
             <div className={styles.listContainer}>
               {sessions.map((session, idx) => {
-                const handleMouseMove = (e) => {
-                  const card = e.currentTarget;
-                  const rect = card.getBoundingClientRect();
-                  const x = e.clientX - rect.left;
-                  const y = e.clientY - rect.top;
 
-                  if (card) {
-                    card.style.setProperty('--mouse-x', `${x}px`);
-                    card.style.setProperty('--mouse-y', `${y}px`);
-                  }
-                };
 
                 return (
                   <AccountRow
@@ -133,7 +123,7 @@ export default function Manage() {
                       )
                     }
                     onCloseEdit={() => setEditingAliasForId(null)}
-                    onMouseMove={handleMouseMove}
+
                   />
                 );
               })}
