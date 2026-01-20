@@ -63,7 +63,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
             </div>
           </div>
 
-          <div className={styles.confirmDeleteButtons} style={{ marginTop: '0.25rem' }}>
+          <div className={styles.modalButtonRow} style={{ marginTop: '0.25rem' }}>
             <button className={styles.secondaryButton} onClick={onCancel} style={{ minWidth: '100px' }}>
               Cancel
             </button>
