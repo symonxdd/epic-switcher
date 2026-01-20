@@ -279,24 +279,11 @@ export default function Accounts() {
                         const displayName = session.alias || session.username || session.userId;
                         const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
 
-                        const handleMouseMove = (e) => {
-                          const card = e.currentTarget;
-                          const rect = card.getBoundingClientRect();
-                          const x = e.clientX - rect.left;
-                          const y = e.clientY - rect.top;
-
-                          if (card) {
-                            card.style.setProperty('--mouse-x', `${x}px`);
-                            card.style.setProperty('--mouse-y', `${y}px`);
-                          }
-                        };
-
                         return (
                           <div
                             key={session.userId}
                             className={styles.listItem}
                             onClick={() => handleSwitchAccount(session)}
-                            onMouseMove={handleMouseMove}
                           >
                             <div className={styles.avatarWrapper}>
                               <div
@@ -319,13 +306,17 @@ export default function Accounts() {
                               <div className={styles.inlineRow}>
                                 <div className={styles.displayName}>{displayName}</div>
                               </div>
-
-                              {!hideUserIds && (
-                                <div className={styles.inlineRow}>
-                                  <div className={styles.metaLine}>{metaLineValue}</div>
-                                </div>
-                              )}
                             </div>
+
+                            <div className={styles.itemOverlay}>
+                              <span>click to switch</span>
+                            </div>
+
+                            {!hideUserIds && (
+                              <div className={styles.inlineRow}>
+                                <div className={styles.metaLine}>{metaLineValue}</div>
+                              </div>
+                            )}
                           </div>
                         );
                       })}
@@ -344,32 +335,35 @@ export default function Accounts() {
             </>
           )}
         </>
-      )}
+      )
+      }
 
       {sessions.length > 0 && <HintMessage />}
 
-      {showAvatarModal && (
-        <CustomizeAvatarModal
-          username={activeSession?.alias || activeSession?.username || activeSession?.userId}
-          userId={activeSession?.userId}
-          currentAvatarImage={activeSession?.avatarImage}
-          currentAvatarColor={activeSession?.avatarColor}
-          onSelect={handleAvatarSelect}
-          onRemove={handleAvatarRemove}
-          onCancel={() => setShowAvatarModal(false)}
-          onAvatarChange={(filename) => {
-            setSessions(prev => prev.map(s =>
-              s.userId === activeSession?.userId ? { ...s, avatarImage: filename } : s
-            ));
-            // setShowAvatarModal(false); // Do not close automatically
-          }}
-          onColorChange={(color) => {
-            setSessions(prev => prev.map(s =>
-              s.userId === activeSession?.userId ? { ...s, avatarColor: color } : s
-            ));
-          }}
-        />
-      )}
-    </div>
+      {
+        showAvatarModal && (
+          <CustomizeAvatarModal
+            username={activeSession?.alias || activeSession?.username || activeSession?.userId}
+            userId={activeSession?.userId}
+            currentAvatarImage={activeSession?.avatarImage}
+            currentAvatarColor={activeSession?.avatarColor}
+            onSelect={handleAvatarSelect}
+            onRemove={handleAvatarRemove}
+            onCancel={() => setShowAvatarModal(false)}
+            onAvatarChange={(filename) => {
+              setSessions(prev => prev.map(s =>
+                s.userId === activeSession?.userId ? { ...s, avatarImage: filename } : s
+              ));
+              // setShowAvatarModal(false); // Do not close automatically
+            }}
+            onColorChange={(color) => {
+              setSessions(prev => prev.map(s =>
+                s.userId === activeSession?.userId ? { ...s, avatarColor: color } : s
+              ));
+            }}
+          />
+        )
+      }
+    </div >
   );
 }
