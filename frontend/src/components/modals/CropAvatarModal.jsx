@@ -28,10 +28,10 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
   return (
     <div className={styles.modalOverlay} style={{ zIndex: 6000 }}>
       {/* Increased width to accommodate the cropper comfortably */}
-      <div className={`${styles.modal} ${styles.modalWide}`} onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
-        <h3>Adjust Avatar</h3>
+      <div className={`${styles.modal} ${styles.modalWide} ${styles.cropModal}`} onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
+        <h3>Crop Avatar</h3>
 
-        <div style={{ padding: '1.5rem 30px' }}>
+        <div style={{ padding: '0.5rem 20px 0.75rem', flex: 1, display: 'flex', flexDirection: 'column', minHeight: 0 }}>
           <div className={styles.cropperContainer}>
             <Cropper
               image={image}
@@ -42,7 +42,6 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
               onCropComplete={onCropCompleteInternal}
               onZoomChange={onZoomChange}
               classes={{
-                containerClassName: styles.cropperContainer,
                 cropAreaClassName: styles.cropperCropArea
               }}
             />
@@ -64,7 +63,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
             </div>
           </div>
 
-          <div className={styles.confirmDeleteButtons} style={{ marginTop: '0.5rem' }}>
+          <div className={styles.confirmDeleteButtons} style={{ marginTop: '0.25rem' }}>
             <button className={styles.secondaryButton} onClick={onCancel} style={{ minWidth: '100px' }}>
               Cancel
             </button>
