@@ -61,8 +61,6 @@ export default function EditAvatarModal({
     }
   };
 
-
-
   const handleSelect = async () => {
     try {
       const path = await SelectImage();
@@ -113,7 +111,9 @@ export default function EditAvatarModal({
 
       // If it was a new upload or re-crop of current avatar, update the parent
       if (onAvatarChange) {
-        onAvatarChange(newFilename);
+        // Append timestamp to force browser to reload the image
+        const filenameWithCacheBust = `${newFilename}?t=${Date.now()}`;
+        onAvatarChange(filenameWithCacheBust);
       }
 
       setShowCropModal(false);
