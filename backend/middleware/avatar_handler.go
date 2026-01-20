@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"encoding/base64"
 	"net/http"
 	"os"
 	"path/filepath"
@@ -15,7 +16,22 @@ func AvatarHandler(avatarDir string) assetserver.Middleware {
 	return func(next http.Handler) http.Handler {
 		return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
-			// 1. Handle Thumbnails
+			// 1. Serve any local file by base64-encoded path (for cropping newly selected images)
+			const localFilePrefix = "/local-file/"
+			if strings.HasPrefix(r.URL.Path, localFilePrefix) {
+				encodedPath := strings.TrimPrefix(r.URL.Path, localFilePrefix)
+				filePath, err := base64.URLEncoding.DecodeString(encodedPath)
+				if err == nil {
+					if _, statErr := os.Stat(string(filePath)); statErr == nil {
+						http.ServeFile(w, r, string(filePath))
+						return
+					}
+				}
+				http.NotFound(w, r)
+				return
+			}
+
+			// 2. Handle Thumbnails
 			const thumbPrefix = "/avatar-thumb/"
 			if strings.HasPrefix(r.URL.Path, thumbPrefix) {
 				filename := strings.TrimPrefix(r.URL.Path, thumbPrefix)

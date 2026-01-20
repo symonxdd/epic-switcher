@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { SetAvatar, DeleteAvatarFile, RemoveAvatar, SelectImage, ReadImageAsBase64, SaveAvatarWithCrop } from '../../../../wailsjs/go/services/AvatarService';
+import { SetAvatar, DeleteAvatarFile, RemoveAvatar, SelectImage, SaveAvatarWithCrop } from '../../../../wailsjs/go/services/AvatarService';
 import styles from '../ModalShared.module.css';
 import ImageLightbox from '../ImageLightbox';
 import CropAvatarModal from '../CropAvatarModal';
@@ -51,8 +51,9 @@ export default function CustomizeAvatarModal({
       const path = await SelectImage();
       if (!path) return;
 
-      const base64 = await ReadImageAsBase64(path);
-      setCropImage(base64);
+      // Use HTTP streaming instead of base64 for instant loading
+      const encodedPath = btoa(path);
+      setCropImage(`/local-file/${encodedPath}`);
       setCropSourcePath(path);
       setShowCropModal(true);
     } catch (err) {
