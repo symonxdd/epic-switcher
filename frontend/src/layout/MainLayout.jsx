@@ -33,11 +33,12 @@ function MainLayout({ children }) {
           style: {
             background: 'var(--bg-toast)',
             color: 'var(--text-primary)',
-            borderRadius: '6px',
+            borderRadius: '16px',
             padding: '10px 14px',
             fontSize: '0.95rem',
             whiteSpace: 'nowrap',
             maxWidth: 'none',
+            border: '1px solid var(--border-subtle)'
           },
         }}
       // limit={3}
