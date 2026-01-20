@@ -12,7 +12,7 @@ import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
-import EditAvatarModal from '../components/modals/EditAvatarModal';
+import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 
 export default function Accounts() {
@@ -347,7 +347,7 @@ export default function Accounts() {
       {sessions.length > 0 && <HintMessage />}
 
       {showAvatarModal && (
-        <EditAvatarModal
+        <CustomizeAvatarModal
           username={activeSession?.alias || activeSession?.username || activeSession?.userId}
           userId={activeSession?.userId}
           currentAvatarImage={activeSession?.avatarImage}

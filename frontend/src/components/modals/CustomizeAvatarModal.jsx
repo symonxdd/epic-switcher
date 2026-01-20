@@ -7,7 +7,7 @@ import { STORAGE_KEYS } from '../../constants/storageKeys'
 import ImageLightbox from './ImageLightbox'
 import CropAvatarModal from './CropAvatarModal'
 
-export default function EditAvatarModal({
+export default function CustomizeAvatarModal({
   onSelect,
   onCancel,
   username,
