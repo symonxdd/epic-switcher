@@ -16,6 +16,7 @@
 }
 
 .modal {
+  position: relative;
   background: var(--bg-surface);
   color: var(--text-primary);
   padding: 0 0 1.75rem 0;
@@ -615,6 +616,41 @@
   z-index: 2000;
   border-radius: 14px;
   animation: fadeIn 0.15s ease forwards;
+}
+
+.lockedOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+  pointer-events: auto;
+  cursor: pointer;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+[data-theme="dark"] .lockedOverlay {
+  background: rgba(0, 0, 0, 0.65);
+}
+
+.lockedHint {
+  background: var(--bg-surface);
+  color: var(--text-secondary);
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  font-size: 0.8rem;
+  font-weight: 500;
+  text-align: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  max-width: 80%;
+  line-height: 1.5;
+  pointer-events: none;
 }
 
 .confirmDeleteModal {

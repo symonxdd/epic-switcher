@@ -213,6 +213,19 @@ export default function Accounts() {
                           <HiOutlineCheckCircle />
                           <span>Currently logged in</span>
                         </div>
+
+                        {isNewSession && (
+                          <button
+                            className={styles.addDetectedButton}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAccept();
+                            }}
+                          >
+                            <HiPlus />
+                            <span>Add to Switcher</span>
+                          </button>
+                        )}
                       </div>
 
                       <div className={styles.activeAccountInfo}>
@@ -230,15 +243,6 @@ export default function Accounts() {
                     </div>
 
                     <div className={styles.activeAccountSide}>
-                      {isNewSession && (
-                        <button
-                          className={styles.addDetectedButton}
-                          onClick={handleAccept}
-                        >
-                          <HiPlus />
-                          <span>Add</span>
-                        </button>
-                      )}
                     </div>
                   </div>
                 </div>
@@ -347,6 +351,7 @@ export default function Accounts() {
             userId={activeSession?.userId}
             currentAvatarImage={activeSession?.avatarImage}
             currentAvatarColor={activeSession?.avatarColor}
+            isLocked={isNewSession}
             onSelect={handleAvatarSelect}
             onRemove={handleAvatarRemove}
             onCancel={() => setShowAvatarModal(false)}

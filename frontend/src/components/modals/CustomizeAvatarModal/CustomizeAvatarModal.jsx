@@ -20,7 +20,8 @@ export default function CustomizeAvatarModal({
   currentAvatarColor,
   onAvatarChange,
   onColorChange,
-  onRemove
+  onRemove,
+  isLocked
 }) {
   const [isClosing, setIsClosing] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(null);
@@ -173,6 +174,14 @@ export default function CustomizeAvatarModal({
             />
           </div>
         </div>
+
+        {isLocked && (
+          <div className={styles.lockedOverlay} onClick={handleCancel}>
+            <div className={styles.lockedHint}>
+              Please add the account first with the "Save account to app" button to customize it's avatar.
+            </div>
+          </div>
+        )}
 
         <div className={styles.modalButtons}>
           <div className={styles.modalButtonRow}>
