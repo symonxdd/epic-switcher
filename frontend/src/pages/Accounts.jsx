@@ -213,19 +213,6 @@ export default function Accounts() {
                           <HiOutlineCheckCircle />
                           <span>Currently logged in</span>
                         </div>
-
-                        {isNewSession && (
-                          <button
-                            className={styles.addDetectedButton}
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              handleAccept();
-                            }}
-                          >
-                            <HiPlus />
-                            <span>Add to Switcher</span>
-                          </button>
-                        )}
                       </div>
 
                       <div className={styles.activeAccountInfo}>
@@ -238,6 +225,19 @@ export default function Accounts() {
                               ? activeSession.username || activeSession.userId
                               : activeSession.userId}
                           </div>
+                        )}
+
+                        {isNewSession && (
+                          <button
+                            className={styles.addDetectedButton}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleAccept();
+                            }}
+                          >
+                            <HiPlus />
+                            <span>Add to Switcher</span>
+                          </button>
                         )}
                       </div>
                     </div>

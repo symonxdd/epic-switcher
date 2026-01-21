@@ -178,7 +178,7 @@ export default function CustomizeAvatarModal({
         {isLocked && (
           <div className={styles.lockedOverlay} onClick={handleCancel}>
             <div className={styles.lockedHint}>
-              Please add the account first with the "Save account to app" button to customize it's avatar.
+              Please add the account first with the "Add to Switcher" button to customize it's avatar.
             </div>
           </div>
         )}
