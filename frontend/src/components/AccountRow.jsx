@@ -110,6 +110,12 @@ export default function AccountRow({
         <div className={styles.actionsWrapper}>
           {!isIgnored ? (
             <>
+              {isActive && (
+                <div className={styles.activeAccountBadge}>
+                  <HiOutlineCheckCircle />
+                  <span>Currently logged in</span>
+                </div>
+              )}
 
 
               <button
@@ -162,12 +168,7 @@ export default function AccountRow({
           )}
         </div>
       </div>
-      {!isIgnored && isActive && (
-        <div className={styles.activeAccountBadge}>
-          <HiOutlineCheckCircle />
-          <span>Currently logged in</span>
-        </div>
-      )}
+
     </div>
   );
 }

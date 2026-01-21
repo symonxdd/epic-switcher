@@ -51,8 +51,8 @@
 
 /* ---- Container ---- */
 .listContainer {
-  display: grid;
-  grid-template-columns: max-content auto;
+  display: flex;
+  flex-direction: column;
   gap: 12px;
   max-height: 70vh;
   overflow-y: auto;

@@ -18,7 +18,6 @@
   overflow: hidden;
   cursor: default;
   /* Grid placement */
-  grid-column: 1;
   width: 100%;
   /* Stretch to fill the max-content column */
 }
@@ -75,11 +74,10 @@
 
 /* ---- External Active Badge (ported from Accounts page) ---- */
 .activeAccountBadge {
-  grid-column: 2;
-  align-self: center;
   /* Vertically center in the grid row */
   display: flex;
   align-items: center;
+  margin-left: 20px;
   justify-content: flex-start;
   gap: 0;
   min-width: 32px;
@@ -236,7 +234,6 @@
   font-size: 0.85rem;
   font-weight: 500;
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
-  margin-left: 40px;
 }
 
 .editAliasButton:hover {
