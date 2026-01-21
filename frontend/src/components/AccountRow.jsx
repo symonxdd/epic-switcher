@@ -7,6 +7,7 @@ import {
 } from "react-icons/hi";
 import styles from "./AccountRow.module.css";
 import EditAliasModal from "./modals/EditAliasModal";
+import { useAvatarCache } from "../context/AvatarCacheContext";
 
 export default function AccountRow({
   session,
@@ -20,6 +21,7 @@ export default function AccountRow({
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
   const inputRef = useRef(null);
+  const { cacheVersion } = useAvatarCache();
 
   const displayName =
     session?.alias || session?.username || session?.userId || userId;
@@ -67,7 +69,7 @@ export default function AccountRow({
           >
             {session?.avatarImage ? (
               <img
-                src={`/avatar-full/${session.avatarImage}`}
+                src={`/avatar-thumb/${session.avatarImage}?v=${cacheVersion}`}
                 alt=""
                 className={styles.customAvatarImage}
               />
@@ -101,7 +103,6 @@ export default function AccountRow({
               <button
                 type="button"
                 className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
-                title="Edit nickname"
                 onClick={handleAliasEdit}
               >
                 <HiOutlinePencil />
@@ -111,7 +112,6 @@ export default function AccountRow({
               <button
                 type="button"
                 className={styles.iconButton}
-                title="Delete session"
                 onClick={handleDelete}
               >
                 <HiOutlineTrash />
