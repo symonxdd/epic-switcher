@@ -11,6 +11,7 @@ import { BrowserOpenURL } from '../../wailsjs/runtime';
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
   const [hideUserIds, setHideUserIds] = useState(false);
+  const [supportDismissed, setSupportDismissed] = useState(false);
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
@@ -18,8 +19,17 @@ function Settings() {
 
   // Load settings from localStorage on mount
   useEffect(() => {
-    const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
-    if (storedHideUserIds === "true") setHideUserIds(true);
+    const handleSync = () => {
+      const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
+      if (storedHideUserIds === "true") setHideUserIds(true);
+
+      const storedSupportDismissed = localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
+      setSupportDismissed(storedSupportDismissed === "true");
+    };
+
+    handleSync();
+    window.addEventListener("storage", handleSync);
+    return () => window.removeEventListener("storage", handleSync);
   }, []);
 
   // Persist settings
@@ -102,15 +112,31 @@ function Settings() {
             </label>
           </div>
 
-          <button
-            className={styles.resetButton}
-            onClick={() => {
-              localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
-              toast.success("Hints have been reset!", { id: "reset-hints" });
-            }}
-          >
-            Reset hints
-          </button>
+          <div className={styles.btnGroup}>
+            <button
+              className={styles.resetButton}
+              onClick={() => {
+                localStorage.removeItem(STORAGE_KEYS.USERNAME_HINT_DISMISSED);
+                toast.success("Hints have been reset!", { id: "reset-hints" });
+              }}
+            >
+              Reset hints
+            </button>
+
+            {supportDismissed && (
+              <button
+                className={styles.resetButton}
+                onClick={() => {
+                  localStorage.removeItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
+                  window.dispatchEvent(new Event("storage"));
+                  setSupportDismissed(false);
+                  toast.success("Support notice will be shown again!", { id: "reset-support" });
+                }}
+              >
+                Re-show support notice
+              </button>
+            )}
+          </div>
         </div>
 
         {/* --- Theme Selector --- */}

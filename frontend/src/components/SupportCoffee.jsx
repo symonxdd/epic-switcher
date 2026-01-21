@@ -1,9 +1,25 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Coffee } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Coffee, X } from 'lucide-react';
 import { BrowserOpenURL } from '../../wailsjs/runtime';
+import DismissSupportModal from './modals/DismissSupportModal';
+import { STORAGE_KEYS } from '../constants/storageKeys';
 
 export const SupportCoffee = () => {
+  const [showDismissModal, setShowDismissModal] = useState(false);
+  const [isDismissed, setIsDismissed] = useState(false);
+
+  useEffect(() => {
+    const checkDismissed = () => {
+      const dismissed = localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
+      setIsDismissed(dismissed === 'true');
+    };
+
+    checkDismissed();
+    window.addEventListener('storage', checkDismissed);
+    return () => window.removeEventListener('storage', checkDismissed);
+  }, []);
+
   const handleSupportClick = (e) => {
     e.preventDefault();
     try {
@@ -13,115 +29,150 @@ export const SupportCoffee = () => {
     }
   };
 
+  const handleDismissClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setShowDismissModal(true);
+  };
+
+  const handleConfirmDismiss = () => {
+    localStorage.setItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED, 'true');
+    window.dispatchEvent(new Event('storage'));
+    setIsDismissed(true);
+    setShowDismissModal(false);
+  };
+
+  if (isDismissed) return null;
+
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ delay: 1, duration: 0.5 }}
-      className="px-2 mb-2"
-    >
-      <a
-        onClick={handleSupportClick}
-        draggable="false"
-        className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/5 dark:border-white/5 hover:border-black/15 dark:hover:border-white/20 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10"
+    <>
+      <motion.div
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 1, duration: 0.5 }}
+        className="px-2 mb-2"
       >
-        {/* Animated Steam */}
-        <div className="absolute -top-10 left-4 pointer-events-none">
-          <svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {[0, 1, 2].map((i) => (
-              <motion.path
-                key={i}
-                d={`M${15 + i * 12} 45 Q${10 + i * 12} 35 ${20 + i * 12} 25 T${15 + i * 12} 5`}
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                initial={{ pathLength: 0, opacity: 0, y: 10, x: 0 }}
-                animate={{
-                  pathLength: [0, 0.45, 0.45, 0],
-                  pathOffset: [0, 0, 0.55, 1],
-                  opacity: [0, 0.4, 0.3, 0],
-                  y: [12, 5, -5, -12],
-                  x: [0, i % 2 === 0 ? 2 : -2, 0]
-                }}
-                transition={{
-                  duration: 4 + i * 0.5,
-                  repeat: Infinity,
-                  delay: i * 1.5,
-                  ease: "linear",
-                  times: [0, 0.3, 0.8, 1]
-                }}
-                className="text-orange-950/40"
-                style={{ color: 'var(--text-secondary)' }}
-              />
-            ))}
-          </svg>
-        </div>
-
-        {/* Coffee Cup (Glassmorphism) */}
-        <div className="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-black/5 to-black/10 dark:from-white/10 dark:to-white/5 transition-all duration-500 overflow-hidden border border-black/5 dark:border-white/10 shadow-inner">
-          {/* Latte Liquid Layer */}
-          <motion.div
-            className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#4A2C2A] to-[#A67B5B] dark:from-orange-900/40 dark:to-orange-400/30"
-            style={{ height: '70%' }}
-            animate={{
-              height: ['68%', '72%', '68%'],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          {/* Foam Layer */}
-          <motion.div
-            className="absolute inset-x-0 bg-white/60 dark:bg-white/10 backdrop-blur-[2px]"
-            style={{ height: '18%', top: '28%' }}
-            animate={{
-              opacity: [0.6, 0.9, 0.6]
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "easeInOut"
-            }}
-          />
-          <Coffee className="w-6 h-6 text-[#F5F5F5] dark:text-orange-200/80 transition-transform relative z-10 drop-shadow-sm" />
-
-          {/* Glossy reflection */}
-          <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/40 dark:from-white/20 to-transparent pointer-events-none" />
-        </div>
-
-        <div className="flex flex-col">
-          <span
-            className="text-xs font-semibold group-hover:text-[var(--color-primary)] transition-colors tracking-tight"
-            style={{ color: 'var(--text-primary)' }}
+        <a
+          onClick={handleSupportClick}
+          draggable="false"
+          className="group relative flex items-center gap-3 p-3 px-4 rounded-3xl bg-black/5 dark:bg-black/40 backdrop-blur-xl border border-black/5 dark:border-white/5 hover:border-black/15 dark:hover:border-white/20 transition-all duration-300 shadow-xl dark:shadow-lg hover:shadow-primary/10 cursor-pointer"
+        >
+          {/* Close Button - visible on hover */}
+          <button
+            onClick={handleDismissClick}
+            className="absolute top-2 right-2 p-1.5 rounded-full bg-white/10 dark:bg-black/20 opacity-0 group-hover:opacity-100 transition-all duration-200 hover:bg-white/20 dark:hover:bg-black/40 z-20 cursor-pointer"
           >
-            Like this project?
-          </span>
-          <span
-            className="text-[11px] whitespace-nowrap"
-            style={{ color: 'var(--text-secondary)' }}
-          >
-            Feel free to support.
-          </span>
-        </div>
+            <X className="w-3 h-3 text-[var(--text-secondary)]" />
+          </button>
 
-        {/* Shine effect */}
-        <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-900/[0.08] dark:via-white/10 to-transparent -translate-x-full"
-            animate={{
-              translateX: ["100%", "-100%"],
-            }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear",
-              repeatDelay: 2
-            }}
+          {/* Animated Steam */}
+          <div className="absolute -top-10 left-4 pointer-events-none">
+            <svg width="60" height="50" viewBox="0 0 60 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+              {[0, 1, 2].map((i) => (
+                <motion.path
+                  key={i}
+                  d={`M${15 + i * 12} 45 Q${10 + i * 12} 35 ${20 + i * 12} 25 T${15 + i * 12} 5`}
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  initial={{ pathLength: 0, opacity: 0, y: 10, x: 0 }}
+                  animate={{
+                    pathLength: [0, 0.45, 0.45, 0],
+                    pathOffset: [0, 0, 0.55, 1],
+                    opacity: [0, 0.4, 0.3, 0],
+                    y: [12, 5, -5, -12],
+                    x: [0, i % 2 === 0 ? 2 : -2, 0]
+                  }}
+                  transition={{
+                    duration: 4 + i * 0.5,
+                    repeat: Infinity,
+                    delay: i * 1.5,
+                    ease: "linear",
+                    times: [0, 0.3, 0.8, 1]
+                  }}
+                  className="text-orange-950/40"
+                  style={{ color: 'var(--text-secondary)' }}
+                />
+              ))}
+            </svg>
+          </div>
+
+          {/* Coffee Cup (Glassmorphism) */}
+          <div className="relative w-12 h-12 flex items-center justify-center rounded-2xl bg-gradient-to-br from-black/5 to-black/10 dark:from-white/10 dark:to-white/5 transition-all duration-500 overflow-hidden border border-black/5 dark:border-white/10 shadow-inner">
+            {/* Latte Liquid Layer */}
+            <motion.div
+              className="absolute bottom-0 inset-x-0 bg-gradient-to-t from-[#4A2C2A] to-[#A67B5B] dark:from-orange-900/40 dark:to-orange-400/30"
+              style={{ height: '70%' }}
+              animate={{
+                height: ['68%', '72%', '68%'],
+              }}
+              transition={{
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            {/* Foam Layer */}
+            <motion.div
+              className="absolute inset-x-0 bg-white/60 dark:bg-white/10 backdrop-blur-[2px]"
+              style={{ height: '18%', top: '28%' }}
+              animate={{
+                opacity: [0.6, 0.9, 0.6]
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+            />
+            <Coffee className="w-6 h-6 text-[#F5F5F5] dark:text-orange-200/80 transition-transform relative z-10 drop-shadow-sm" />
+
+            {/* Glossy reflection */}
+            <div className="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-white/40 dark:from-white/20 to-transparent pointer-events-none" />
+          </div>
+
+          <div className="flex flex-col">
+            <span
+              className="text-xs font-semibold group-hover:text-[var(--color-primary)] transition-colors tracking-tight"
+              style={{ color: 'var(--text-primary)' }}
+            >
+              Like this project?
+            </span>
+            <span
+              className="text-[11px] whitespace-nowrap"
+              style={{ color: 'var(--text-secondary)' }}
+            >
+              Feel free to support.
+            </span>
+          </div>
+
+          {/* Shine effect */}
+          <div className="absolute inset-0 rounded-3xl overflow-hidden pointer-events-none">
+            <motion.div
+              className="absolute inset-0 bg-gradient-to-r from-transparent via-orange-900/[0.08] dark:via-white/10 to-transparent -translate-x-full"
+              animate={{
+                translateX: ["100%", "-100%"],
+              }}
+              transition={{
+                duration: 3,
+                repeat: Infinity,
+                ease: "linear",
+                repeatDelay: 2
+              }}
+            />
+          </div>
+        </a>
+      </motion.div>
+
+      <AnimatePresence>
+        {showDismissModal && (
+          <DismissSupportModal
+            onConfirm={handleConfirmDismiss}
+            onCancel={() => setShowDismissModal(false)}
           />
-        </div>
-      </a>
-    </motion.div>
+        )}
+      </AnimatePresence>
+    </>
   );
 };
+
