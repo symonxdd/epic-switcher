@@ -75,95 +75,99 @@ export default function AccountRow({
   };
 
   return (
-    <div
-      className={`${styles.listItem} ${isIgnored ? styles.ignoredRow : ""}`}
+    <div className={styles.rowWrapper}>
+      <div
+        className={`${styles.listItem} ${isIgnored ? styles.ignoredRow : ""}`}
 
-    >
-      <div className={styles.avatarWrapper}>
-        <div
-          className={styles.avatar}
-          style={session?.avatarColor ? { background: session.avatarColor } : {}}
-        >
-          {session?.avatarImage ? (
-            <img
-              src={`/avatar-full/${session.avatarImage}`}
-              alt=""
-              className={styles.customAvatarImage}
-            />
+      >
+        <div className={styles.avatarWrapper}>
+          <div
+            className={styles.avatar}
+            style={session?.avatarColor ? { background: session.avatarColor } : {}}
+          >
+            {session?.avatarImage ? (
+              <img
+                src={`/avatar-full/${session.avatarImage}`}
+                alt=""
+                className={styles.customAvatarImage}
+              />
+            ) : (
+              getFirstVisibleChar(displayName)
+            )}
+          </div>
+        </div>
+
+        <div className={styles.textBlock}>
+          <div className={styles.inlineRow}>
+            <div className={`${styles.displayName} ${styles.selectableText}`}>{displayName}</div>
+          </div>
+
+          <div className={styles.inlineRow}>
+            <div className={`${styles.metaLine} ${styles.selectableText}`}>{metaLineValue}</div>
+          </div>
+        </div>
+
+        <div className={styles.actionsWrapper}>
+          {!isIgnored ? (
+            <>
+
+
+              <button
+                type="button"
+                className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
+                title="Edit alias"
+                onClick={handleAliasEdit}
+              >
+                <HiOutlinePencil />
+                <span>Edit alias</span>
+              </button>
+
+              <button
+                type="button"
+                className={styles.iconButton}
+                title="Delete session"
+                onClick={handleDelete}
+              >
+                <HiOutlineTrash />
+              </button>
+
+              {isEditing && (
+                <div
+                  ref={inputRef}
+                  className={styles.aliasInputContainer}
+                >
+                  <AliasInput
+                    userId={session.userId}
+                    alias={session.alias}
+                    onAliasChange={onAliasChange}
+                    autoFocus={true}
+                  />
+                </div>
+              )}
+            </>
           ) : (
-            getFirstVisibleChar(displayName)
+            <div className={styles.rightControls}>
+              <div className={styles.ignoredPill}>ignored</div>
+              <div className={styles.tooltipWrapperLeft}>
+                <button
+                  type="button"
+                  className={`${styles.iconButton} ${styles.ignoredIconButton}`}
+                  onClick={handleUnignore}
+                >
+                  <HiOutlineXCircle />
+                </button>
+                <div className={styles.tooltipLeft}>Un-ignore this account</div>
+              </div>
+            </div>
           )}
         </div>
       </div>
-
-      <div className={styles.textBlock}>
-        <div className={styles.inlineRow}>
-          <div className={`${styles.displayName} ${styles.selectableText}`}>{displayName}</div>
+      {!isIgnored && isActive && (
+        <div className={styles.activeAccountBadge}>
+          <HiOutlineCheckCircle />
+          <span>Currently logged in</span>
         </div>
-
-        <div className={styles.inlineRow}>
-          <div className={`${styles.metaLine} ${styles.selectableText}`}>{metaLineValue}</div>
-        </div>
-      </div>
-
-      <div className={styles.actionsWrapper}>
-        {!isIgnored ? (
-          <>
-            {isActive && (
-              <div className={styles.activeBadge}>
-                <HiOutlineCheckCircle />
-                <span>Active</span>
-              </div>
-            )}
-
-            <button
-              type="button"
-              className={`${styles.iconButton} ${session.alias ? styles.hasAlias : ""}`}
-              title="Edit alias"
-              onClick={handleAliasEdit}
-            >
-              <HiOutlinePencil />
-            </button>
-
-            <button
-              type="button"
-              className={styles.iconButton}
-              title="Delete session"
-              onClick={handleDelete}
-            >
-              <HiOutlineTrash />
-            </button>
-
-            {isEditing && (
-              <div
-                ref={inputRef}
-                className={styles.aliasInputContainer}
-              >
-                <AliasInput
-                  userId={session.userId}
-                  alias={session.alias}
-                  onAliasChange={onAliasChange}
-                  autoFocus={true}
-                />
-              </div>
-            )}
-          </>
-        ) : (
-          <div className={styles.rightControls}>
-            <div className={styles.ignoredPill}>ignored</div>
-            <div className={styles.tooltipWrapperLeft}>
-              <button
-                type="button"
-                className={`${styles.iconButton} ${styles.ignoredIconButton}`}
-                onClick={handleUnignore}
-              >
-                <HiOutlineXCircle />
-              </button>
-              <div className={styles.tooltipLeft}>Un-ignore this account</div>
-            </div>
-          </div>
-        )}
-      </div>
+      )}
     </div>
   );
 }

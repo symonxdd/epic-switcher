@@ -1,4 +1,10 @@
 /* ---- List Item ---- */
+/* ---- Row Wrapper (contains List Item + External Badge) ---- */
+.rowWrapper {
+  display: contents;
+}
+
+/* ---- List Item ---- */
 .listItem {
   display: flex;
   align-items: center;
@@ -11,7 +17,10 @@
   border: 1px solid var(--border-subtle);
   overflow: hidden;
   cursor: default;
-  /* Reset cursor unless clickable, handled by parent/onClick usually, but let's keep it safe */
+  /* Grid placement */
+  grid-column: 1;
+  width: 100%;
+  /* Stretch to fill the max-content column */
 }
 
 /* Ensure content is above pseudo-elements */
@@ -64,6 +73,75 @@
   font-size: 1.1rem;
 }
 
+/* ---- External Active Badge (ported from Accounts page) ---- */
+.activeAccountBadge {
+  grid-column: 2;
+  align-self: center;
+  /* Vertically center in the grid row */
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0;
+  min-width: 32px;
+  max-width: 32px;
+  height: 32px;
+  padding: 0 6px;
+  background-color: #222;
+  border: 1px solid #444;
+  border-radius: 20px;
+  color: #fff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: max-width 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+  z-index: 10;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  line-height: 1;
+  cursor: default;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.activeAccountBadge:hover {
+  max-width: 300px;
+  padding-right: 8px;
+  background-color: #2a2a2a;
+}
+
+.activeAccountBadge span {
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  margin-top: -1px;
+  transition: opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.activeAccountBadge:hover span {
+  margin-left: 8px;
+  opacity: 1;
+}
+
+/* Dark mode specific overrides for the badge if needed, assuming global dark mode class is handled elsewhere or via media query.
+   However, since AccountRow might not be under a .dark class directly but relies on variables, we can stick to variables or specific colors.
+   The user asked to match Accounts page exactly. Accounts page uses explicit colors in its CSS.
+*/
+:global([data-theme="dark"]) .activeAccountBadge {
+  background-color: #eee;
+  color: #111;
+  border-color: #fff;
+}
+
+:global([data-theme="dark"]) .activeAccountBadge:hover {
+  background-color: #fff;
+}
+
+.activeAccountBadge svg {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
 .avatar:has(img) {
   background: none;
 }
@@ -105,7 +183,7 @@
 }
 
 .metaLine {
-  font-size: 0.8rem;
+  font-size: 0.7rem;
   color: var(--text-secondary);
   white-space: nowrap;
   overflow: hidden;
@@ -139,6 +217,40 @@
   padding: 8px;
   min-width: 36px;
   min-height: 36px;
+}
+
+/* Specific style for Edit Alias button (text + icon) */
+.editAliasButton {
+  background: color-mix(in srgb, var(--text-secondary) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-secondary) 15%, transparent);
+  color: var(--text-secondary);
+  border-radius: 999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  /* space between icon and text */
+  padding: 8px 16px;
+  min-height: 36px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-left: 40px;
+}
+
+.editAliasButton:hover {
+  background: color-mix(in srgb, var(--text-secondary) 15%, transparent);
+  border-color: color-mix(in srgb, var(--text-secondary) 25%, transparent);
+  color: var(--text-primary);
+}
+
+.editAliasButton:active {
+  transform: scale(0.95);
+}
+
+.editAliasButton svg {
+  font-size: 1.15rem;
 }
 
 .iconButton:hover {
