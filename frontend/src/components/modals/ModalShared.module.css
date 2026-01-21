@@ -812,8 +812,6 @@
   opacity: 0.7;
   user-select: none;
   font-weight: 500;
-  margin-top: 2px;
-  /* Fine nudge down to align with button text */
 }
 
 .autoSaveNotice svg {
@@ -821,6 +819,8 @@
   height: 14px;
   color: var(--color-accent-green, #10B981);
   display: block;
+  margin-top: -1px;
+  /* Isolated nudge for the checkmark icon */
 }
 
 /* --- Full-App Image Lightbox --- */

@@ -1,5 +1,5 @@
 .bodyContent {
-  padding: 2px 0 10px 0;
+  padding: 0 45px 10px 45px;
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -7,29 +7,20 @@
 
 .infoBlock {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 12px;
-  background: color-mix(in srgb, var(--bg-card) 50%, transparent);
   padding: 12px 14px;
   border-radius: 12px;
-  border: 1px solid var(--border-subtle);
 }
 
-.iconWrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-accent-yellow, #eab308);
-  font-size: 1.2rem;
-  margin-top: 2px;
-  flex-shrink: 0;
-}
+
 
 .infoText {
   font-size: 0.85rem;
   color: var(--text-secondary);
   line-height: 1.5;
   margin: 0;
+  text-align: left;
 }
 
 /* Input Styles */
@@ -51,8 +42,8 @@
 }
 
 .input:focus {
-  border-color: var(--color-primary);
-  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-primary) 15%, transparent);
+  border-color: var(--text-primary);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--text-primary) 15%, transparent);
   outline: none;
 }
 

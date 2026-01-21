@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import { HiOutlineLightBulb, HiOutlineX } from 'react-icons/hi';
+import { createPortal } from 'react-dom';
+import { HiOutlineX } from 'react-icons/hi';
 import styles from './ModalShared.module.css';
 
 import localStyles from './EditAliasModal.module.css';
@@ -35,22 +36,20 @@ export default function EditAliasModal({
     inputRef.current?.focus();
   };
 
-  return (
+  return createPortal(
     <div
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
       onAnimationEnd={handleAnimationEnd}
       onClick={handleClose}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Edit Alias</h3>
+        <h3>Edit nickname</h3>
 
         <div className={localStyles.bodyContent}>
           <div className={localStyles.infoBlock}>
-            <div className={localStyles.iconWrapper}>
-              <HiOutlineLightBulb />
-            </div>
             <p className={localStyles.infoText}>
-              Aliases are strictly local to this app. They allow you to add a custom nickname to any account, making it easier to distinguish between them at a glance.
+              Nicknames allow you to change the display name of your account.
+              They are strictly local to this app.
             </p>
           </div>
 
@@ -59,12 +58,12 @@ export default function EditAliasModal({
               ref={inputRef}
               className={localStyles.input}
               value={currentAlias || ""}
-              placeholder="Enter custom alias..."
+              placeholder="Enter nickname..."
               onChange={handleChange}
               autoFocus
             />
             {currentAlias && (
-              <button className={localStyles.clearButton} onClick={handleClear} title="Clear alias">
+              <button className={localStyles.clearButton} onClick={handleClear} title="Clear nickname">
                 <HiOutlineX />
               </button>
             )}
@@ -85,6 +84,7 @@ export default function EditAliasModal({
           </div>
         </div>
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }

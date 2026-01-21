@@ -46,10 +46,6 @@ export default function AccountRow({
 
   const handleDelete = (e) => {
     e.stopPropagation();
-    // Close the alias input if it's open
-    if (isEditing) {
-      onCloseEdit?.();
-    }
     onDeleteSession?.(session.userId);
   };
 
@@ -105,11 +101,11 @@ export default function AccountRow({
               <button
                 type="button"
                 className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
-                title="Edit alias"
+                title="Edit nickname"
                 onClick={handleAliasEdit}
               >
                 <HiOutlinePencil />
-                <span>Edit alias</span>
+                <span>Edit nickname</span>
               </button>
 
               <button
