@@ -1,12 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import {
   HiOutlineCheckCircle,
   HiOutlinePencil,
   HiOutlineXCircle,
   HiOutlineTrash,
 } from "react-icons/hi";
-import AliasInput from "../components/AliasInput";
 import styles from "./AccountRow.module.css";
+import EditAliasModal from "./modals/EditAliasModal";
 
 export default function AccountRow({
   session,
@@ -16,11 +16,9 @@ export default function AccountRow({
   onAliasChange,
   onDeleteSession,
   onUnignoreClick,
-  isEditing = false,
-  onEditToggle,
-  onCloseEdit,
 
 }) {
+  const [showAliasModal, setShowAliasModal] = useState(false);
   const inputRef = useRef(null);
 
   const displayName =
@@ -30,22 +28,8 @@ export default function AccountRow({
     ? session?.username || session?.userId
     : session?.userId || userId;
 
-  useEffect(() => {
-    function handleClickOutside(e) {
-      if (
-        inputRef.current &&
-        !inputRef.current.contains(e.target) &&
-        !e.target.closest(`.${styles.iconButton}`)
-      ) {
-        onCloseEdit?.();
-      }
-    }
-
-    if (isEditing) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [onCloseEdit, isEditing]);
+  // Removed click outside logic since we are using a modal now
+  /* useEffect(() => { ... } */
 
   function getFirstVisibleChar(str) {
     if (!str) return "";
@@ -57,7 +41,7 @@ export default function AccountRow({
 
   const handleAliasEdit = (e) => {
     e.stopPropagation();
-    onEditToggle?.();
+    setShowAliasModal(true);
   };
 
   const handleDelete = (e) => {
@@ -137,18 +121,13 @@ export default function AccountRow({
                 <HiOutlineTrash />
               </button>
 
-              {isEditing && (
-                <div
-                  ref={inputRef}
-                  className={styles.aliasInputContainer}
-                >
-                  <AliasInput
-                    userId={session.userId}
-                    alias={session.alias}
-                    onAliasChange={onAliasChange}
-                    autoFocus={true}
-                  />
-                </div>
+              {showAliasModal && (
+                <EditAliasModal
+                  userId={session.userId}
+                  currentAlias={session.alias}
+                  onAliasChange={onAliasChange}
+                  onClose={() => setShowAliasModal(false)}
+                />
               )}
             </>
           ) : (
