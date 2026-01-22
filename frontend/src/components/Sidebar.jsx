@@ -41,10 +41,12 @@ function Sidebar() {
   return (
     <aside className={styles.sidebar}>
       <div className={styles.topGroup}>
-        <div className={styles.logoContainer}>
-          <img src={appLogo} alt="App logo" className={styles.logoImage} />
-          <span className={styles.logoText}>Epic Switcher</span>
-        </div>
+        {!hiddenItems.includes('sidebar-logo') && (
+          <div className={styles.logoContainer}>
+            <img src={appLogo} alt="App logo" className={styles.logoImage} />
+            <span className={styles.logoText}>Epic Switcher</span>
+          </div>
+        )}
 
         <div className={styles['sidebar-top']}>
           <NavLink
