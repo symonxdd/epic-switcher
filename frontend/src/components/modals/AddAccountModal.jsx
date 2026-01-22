@@ -46,10 +46,10 @@ export default function AddAccountModal({
         <div className={styles.modalNote}>
           <p>This will move the active session aside.</p>
           <p>
-            The Epic Games Launcher will <strong>restart</strong> so you can log in with a different account.
+            The Epic Games Launcher will <strong>restart</strong>, and you'll be able to log in with a different account.
           </p>
           <p>
-            Once you've signed in, return to this app.
+            Once you're signed in, come back, go to the Accounts page and click "Add to Switcher".
           </p>
         </div>
 
