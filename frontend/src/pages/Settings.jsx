@@ -10,7 +10,7 @@ import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
-  const [hideUserIds, setHideUserIds] = useState(false);
+  const [showSidebarAccountCount, setShowSidebarAccountCount] = useState(false);
   const [supportDismissed, setSupportDismissed] = useState(false);
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
@@ -20,8 +20,8 @@ function Settings() {
   // Load settings from localStorage on mount
   useEffect(() => {
     const handleSync = () => {
-      const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
-      if (storedHideUserIds === "true") setHideUserIds(true);
+      const storedShowSidebarCount = localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT);
+      setShowSidebarAccountCount(storedShowSidebarCount === "true");
 
       const storedSupportDismissed = localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
       setSupportDismissed(storedSupportDismissed === "true");
@@ -34,8 +34,9 @@ function Settings() {
 
   // Persist settings
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEYS.HIDE_USER_IDS, hideUserIds);
-  }, [hideUserIds]);
+    localStorage.setItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT, showSidebarAccountCount);
+    window.dispatchEvent(new Event("storage"));
+  }, [showSidebarAccountCount]);
 
   // --- Fetch latest GitHub version ---
   useEffect(() => {
@@ -91,21 +92,21 @@ function Settings() {
         <div className={styles.settingsGroup}>
           <h5 className={styles.labelHeading}>General</h5>
 
-          {/* Hide User IDs / (Usernames, if alias set) */}
+          {/* Show Sidebar Account Count */}
           <div className={styles.toggleRow}>
-            <label htmlFor="hideUserIdsToggle" className={styles.toggleLabel}>Hide User IDs on Accounts page</label>
+            <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count in sidebar</label>
             <label className={styles.switch}>
               <input
-                id="hideUserIdsToggle"
+                id="showSidebarCountToggle"
                 type="checkbox"
-                checked={hideUserIds}
+                checked={showSidebarAccountCount}
                 onChange={(e) => {
-                  setHideUserIds(e.target.checked);
+                  setShowSidebarAccountCount(e.target.checked);
                   toast.success(
                     e.target.checked
-                      ? "User IDs hidden on Accounts page"
-                      : "User IDs visible"
-                    , { id: "hide-user-ids" });
+                      ? "Sidebar account count visible"
+                      : "Sidebar account count hidden"
+                    , { id: "show-sidebar-count" });
                 }}
               />
               <span className={styles.slider}></span>

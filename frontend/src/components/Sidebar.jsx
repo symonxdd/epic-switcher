@@ -1,14 +1,27 @@
-import { useContext } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle, FaQuestionCircle } from 'react-icons/fa';
 import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
+import { STORAGE_KEYS } from '../constants/storageKeys';
 import { SupportCoffee } from './SupportCoffee';
 
 function Sidebar() {
   const { sessions, isLoading } = useContext(SessionContext);
+  const [showCounter, setShowCounter] = useState(false);
   const sessionCount = sessions?.length ?? 0;
+
+  useEffect(() => {
+    const handleSync = () => {
+      const stored = localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT);
+      setShowCounter(stored === "true");
+    };
+
+    handleSync();
+    window.addEventListener("storage", handleSync);
+    return () => window.removeEventListener("storage", handleSync);
+  }, []);
 
   return (
     <aside className={styles.sidebar}>
@@ -29,7 +42,7 @@ function Sidebar() {
           >
             <FaUserAlt className={styles.icon} />
             <span>Accounts</span>
-            {!isLoading && sessionCount > 0 && (
+            {!isLoading && sessionCount > 0 && showCounter && (
               <span className={styles.badge}>{sessionCount}</span>
             )}
           </NavLink>

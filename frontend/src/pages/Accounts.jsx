@@ -29,7 +29,6 @@ export default function Accounts() {
   } = useContext(AuthContext);
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
-  const [hideUserIds, setHideUserIds] = useState(false);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
@@ -42,9 +41,6 @@ export default function Accounts() {
   }, [location.pathname, checkLoginStatus]);
 
   useEffect(() => {
-    const storedHideUserIds = localStorage.getItem(STORAGE_KEYS.HIDE_USER_IDS);
-    setHideUserIds(storedHideUserIds === "true");
-
     const loadBorder = () => {
       const storedBorder = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
       if (storedBorder !== null) setShowBorder(storedBorder === 'true');
@@ -209,13 +205,6 @@ export default function Accounts() {
                         <div className={styles.activeAccountName}>
                           {activeSession.alias || activeSession.username || activeSession.userId}
                         </div>
-                        {!hideUserIds && (
-                          <div className={styles.activeAccountMeta}>
-                            {activeSession.alias
-                              ? activeSession.username || activeSession.userId
-                              : activeSession.userId}
-                          </div>
-                        )}
 
                         {isNewSession && (
                           <button
@@ -271,7 +260,6 @@ export default function Accounts() {
                       .filter(s => s.userId !== activeUserId)
                       .map((session) => {
                         const displayName = session.alias || session.username || session.userId;
-                        const metaLineValue = session.alias ? (session.username || session.userId) : session.userId;
 
                         return (
                           <div
@@ -305,12 +293,6 @@ export default function Accounts() {
                             <div className={styles.itemOverlay}>
                               <span>click to switch</span>
                             </div>
-
-                            {!hideUserIds && (
-                              <div className={styles.inlineRow}>
-                                <div className={styles.metaLine}>{metaLineValue}</div>
-                              </div>
-                            )}
                           </div>
                         );
                       })}
