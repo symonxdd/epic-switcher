@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useTheme } from "../context/ThemeContext";
 import { AnimatePresence } from "framer-motion";
 import PageHeader from '../components/PageHeader';
@@ -10,8 +10,21 @@ import { FaGithub } from "react-icons/fa";
 import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
 import { BrowserOpenURL } from '../../wailsjs/runtime';
 
+const CHEEKY_MESSAGES = [
+  "Nice try! Settings are mandatory for your sanity. 😉",
+  "Forbidden! Without settings, who even are you? 🕵️",
+  "Access Denied: You're trying to hide the most powerful page. ⚡",
+  "I don't think so! You'd be lost without me. ✨",
+  "Error: User is being too cheeky. Resetting toggle. 🤖",
+  "Nice try, but I like it here. I'm staying. 🏠",
+  "Whoops! My finger slipped and I turned it back on. 🤷‍♂️",
+  "How are you going to reach 'Epic' status without these? 🏆",
+  "Settings: The only thing standing between you and chaos. 🌪️"
+];
+
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
+  const lastCheekyIndexRef = useRef(-1);
   const [showSidebarAccountCount, setShowSidebarAccountCount] = useState(() => {
     return localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT) === "true";
   });
@@ -189,7 +202,8 @@ function Settings() {
                   { id: 'sidebar-logo', label: 'Show Logo' },
                   { id: '/manage', label: 'Show Manage' },
                   { id: '/faq', label: 'Show FAQ' },
-                  { id: '/how-it-works', label: 'Show "How it works"' }
+                  { id: '/how-it-works', label: 'Show "How it works"' },
+                  { id: '/settings', label: 'Show Settings' }
                 ].map(item => (
                   <div key={item.id} className={styles.toggleRow}>
                     <label htmlFor={`toggle-${item.id}`} className={styles.toggleLabel}>{item.label}</label>
@@ -197,8 +211,18 @@ function Settings() {
                       <input
                         id={`toggle-${item.id}`}
                         type="checkbox"
-                        checked={!hiddenSidebarItems.includes(item.id)}
+                        checked={item.id === '/settings' ? true : !hiddenSidebarItems.includes(item.id)}
                         onChange={() => {
+                          if (item.id === '/settings') {
+                            let newIndex;
+                            do {
+                              newIndex = Math.floor(Math.random() * CHEEKY_MESSAGES.length);
+                            } while (newIndex === lastCheekyIndexRef.current);
+
+                            lastCheekyIndexRef.current = newIndex;
+                            toast.error(CHEEKY_MESSAGES[newIndex], { id: "cheeky-settings" });
+                            return;
+                          }
                           toggleSidebarItem(item.id);
                           const isCurrentlyVisible = !hiddenSidebarItems.includes(item.id);
                           toast.success(
