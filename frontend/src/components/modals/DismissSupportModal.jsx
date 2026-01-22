@@ -51,7 +51,7 @@ export default function DismissSupportModal({ onConfirm, onCancel }) {
         <h3>Dismiss support notice?</h3>
 
         <div className={styles.modalNote} style={{ fontSize: '0.82rem' }}>
-          <p>I appreciate you using Epic Switcher. If you find the support notice distracting, you're free to hide it at any time.</p>
+          <p>Thank you for using Epic Switcher. If you find the support notice distracting, you're free to hide it at any time.</p>
           <p>
             Simply starring the{" "}
             <span

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { HiOutlineX } from 'react-icons/hi';
+import { HiOutlineX, HiOutlineEmojiHappy } from 'react-icons/hi';
 import styles from './ModalShared.module.css';
 
 import localStyles from './EditAliasModal.module.css';
@@ -67,6 +67,11 @@ export default function EditAliasModal({
                 <HiOutlineX />
               </button>
             )}
+          </div>
+
+          <div className={localStyles.emojiHint}>
+            <HiOutlineEmojiHappy className={localStyles.emojiIcon} />
+            <span>Accepts emoji characters</span>
           </div>
         </div>
 

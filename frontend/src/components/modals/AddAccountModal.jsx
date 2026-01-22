@@ -41,7 +41,7 @@ export default function AddAccountModal({
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Prepare to Add Account</h3>
+        <h3>Prepare to add account</h3>
 
         <div className={styles.modalNote}>
           <p>This will move the active session aside.</p>

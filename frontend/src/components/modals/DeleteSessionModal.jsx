@@ -30,7 +30,7 @@ export default function DeleteSessionModal({ session, onConfirm, onCancel }) {
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Delete Saved Session</h3>
+        <h3>Delete saved session</h3>
 
         <div className={styles.modalNote}>
           <p>Are you sure you want to <strong>delete</strong> this saved session?</p>

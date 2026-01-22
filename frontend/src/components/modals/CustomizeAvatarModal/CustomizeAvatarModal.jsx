@@ -141,7 +141,7 @@ export default function CustomizeAvatarModal({
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={`${styles.modal} ${styles.modalWide}`} onClick={(e) => e.stopPropagation()}>
-        <h3>Customize Avatar</h3>
+        <h3>Customize your avatar</h3>
 
         <div className={styles.modalTwoColumn}>
           <AvatarPreview
