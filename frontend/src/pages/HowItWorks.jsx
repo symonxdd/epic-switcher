@@ -84,9 +84,12 @@ function HowItWorks() {
 
           <div className={styles.privacyNotice}>
             <div className={styles.offlineAndNote}>
-              <div className={styles.inlineItem}>
+              <div className={`${styles.inlineItem} ${styles.tooltipTrigger}`}>
                 <FaLock className={styles.icon} />
                 <strong>Works offline</strong>
+                <div className={styles.customTooltip}>
+                  Epic Switcher functions entirely offline. The only internet connectivity used is to check for new updates, which only occurs when you navigate to the Settings page.
+                </div>
               </div>
               <div className={styles.inlineItem}>
                 <FaInfoCircle className={styles.icon} />

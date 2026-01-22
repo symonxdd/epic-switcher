@@ -231,9 +231,16 @@
   padding: 0 2px;
 }
 
-.logButton {
+.logButton,
+.tooltipTrigger {
   position: relative !important;
   cursor: pointer;
+}
+
+.tooltipTrigger strong {
+  text-decoration: underline dotted var(--text-secondary);
+  text-underline-offset: 4px;
+  text-decoration-thickness: 1px;
 }
 
 .customTooltip {
@@ -270,7 +277,8 @@
   border-color: var(--border-subtle) transparent transparent transparent;
 }
 
-.logButton:hover .customTooltip {
+.logButton:hover .customTooltip,
+.tooltipTrigger:hover .customTooltip {
   opacity: 1;
   transform: translateX(-50%) translateY(0);
 }
