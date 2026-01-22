@@ -233,3 +233,47 @@
   text-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
   padding: 0 2px;
 }
+
+.logButton {
+  position: relative !important;
+  cursor: pointer;
+}
+
+.customTooltip {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(10px);
+  width: 220px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: center;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
+  z-index: 1000;
+  white-space: normal;
+  backdrop-filter: blur(8px);
+}
+
+.customTooltip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-width: 6px;
+  border-style: solid;
+  border-color: var(--border-subtle) transparent transparent transparent;
+}
+
+.logButton:hover .customTooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}

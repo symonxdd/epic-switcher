@@ -106,8 +106,11 @@ function HowItWorks() {
           <span id="sessionFileBtn" onClick={() => handleOpen('sessionFile')}>
             Epic active session file <FiArrowUpRight className={styles.directoryIcon} />
           </span>
-          <span onClick={() => handleOpen('logs')}>
+          <span className={styles.logButton} onClick={() => handleOpen('logs')}>
             Epic logs <FiArrowUpRight className={styles.directoryIcon} />
+            <div className={styles.customTooltip}>
+              Epic Switcher reads the launcher's logs to automatically discover usernames for your accounts, as there is no other way to extract them directly.
+            </div>
           </span>
         </div>
 
