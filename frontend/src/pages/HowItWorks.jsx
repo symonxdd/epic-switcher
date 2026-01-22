@@ -85,7 +85,7 @@ function HowItWorks() {
           <div className={styles.privacyNotice}>
             <div className={styles.offlineAndNote}>
               <div className={styles.inlineItem}>
-                <FaLock className={`${styles.icon} ${styles.lockIcon}`} />
+                <FaLock className={styles.icon} />
                 <strong>Works offline</strong>
               </div>
               <div className={styles.inlineItem}>

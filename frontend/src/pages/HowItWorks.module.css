@@ -105,21 +105,13 @@
 } */
 
 .icon {
-  position: relative;
   font-size: 1.1rem;
-  top: 0;
-  /* reset any offset */
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  vertical-align: middle;
-  /* important */
+  flex-shrink: 0;
+  display: block;
+  margin-top: -1px;
 }
 
-.lockIcon {
-  position: relative;
-  top: -1px;
-}
+/* .lockIcon removed as it's no longer needed */
 
 .offlineLine,
 .note {
@@ -213,6 +205,11 @@
   color: var(--text-secondary);
   white-space: nowrap;
   /* prevents awkward wrapping within one label */
+  line-height: normal;
+}
+
+.inlineItem strong {
+  line-height: 1;
 }
 
 .sourceSection {
