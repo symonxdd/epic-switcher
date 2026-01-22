@@ -216,7 +216,7 @@ function Settings() {
           </div>
 
           {/* --- Update Available Notice --- */}
-          {true && (
+          {remoteVersion && isRemoteVersionNewer(remoteVersion, currentVersion) && (
             <div className={styles.settingsGroup}>
               <h5 className={styles.labelHeading}>
                 New update ready
