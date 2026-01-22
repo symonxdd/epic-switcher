@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 // Use a module-level variable to track the very first time this component is rendered across the entire app session.
 let isFirstAppMount = true;
@@ -62,6 +62,16 @@ const PageTransition = ({ children }) => {
   if (isFirstAppMount) {
     isFirstAppMount = false;
   }
+
+  // Handle scrolling to top on page mount.
+  // Since this component is wrapped in AnimatePresence mode="wait",
+  // this effect will only run for the base route after the previous route has exited.
+  useEffect(() => {
+    const content = document.getElementById('main-content');
+    if (content) {
+      content.scrollTop = 0;
+    }
+  }, []);
 
   return (
     <motion.div

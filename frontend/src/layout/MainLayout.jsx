@@ -9,18 +9,12 @@ function MainLayout({ children }) {
   const { pathname } = useLocation();
   const contentRef = useRef(null);
 
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.scrollTop = 0;
-    }
-  }, [pathname]);
-
   return (
     <div className={styles.appContainer}>
       <TopBar />
       <div className={styles.mainLayout}>
         <Sidebar />
-        <main className={styles.content} ref={contentRef}>
+        <main id="main-content" className={styles.content} ref={contentRef}>
           {children}
         </main>
       </div>
