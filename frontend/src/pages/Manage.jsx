@@ -65,7 +65,7 @@ export default function Manage() {
       />
 
       <div className={styles.description}>
-        Add new accounts, customize aliases, and delete unused sessions.
+        Add new accounts, set nicknames, and delete unused sessions.
       </div>
 
       {!isLoading && (

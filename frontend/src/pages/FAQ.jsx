@@ -10,12 +10,16 @@ import {
 function FAQ() {
   const faqData = [
     {
+      question: "I accidentally logged out in the Epic Games Launcher. What now?",
+      answer: "Don't worry! Simply log back into the Epic Games Launcher and come back to Epic Switcher. The app will automatically detect your session and refresh the session key for you."
+    },
+    {
       question: "Why was I logged out after some time?",
       answer: "For security reasons, Epic Games will occasionally log you out after some time has passed. This happens regardless of whether Epic Switcher is used or not. When it happens, simply log in again through the Epic Games Launcher and come back; the app will automatically renew the session token."
     },
     {
       question: "Is Epic Switcher safe to use?",
-      answer: "Yes, Epic Switcher is safe. It only modifies a local configuration file (`GameUserSettings.ini`) to swap session keys. It doesn't interact with the Epic Games servers directly, nor does it collect or share any of your personal data."
+      answer: "Yes. Epic Switcher is safe because it only manages local file data on your computer. It never touches the internet to share info or talk to Epic's servers. By automating a process you could technically do by hand in a text editor, it maintains a small, secure footprint on your system."
     },
     {
       question: "Will I get banned for using this?",
@@ -52,6 +56,10 @@ function FAQ() {
             </AccordionItem>
           ))}
         </Accordion>
+      </div>
+
+      <div className={styles.disclaimer}>
+        <strong>Disclaimer:</strong> No specific policies are known to restrict the automation of local Epic Games Launcher configuration files; however, usage is at the user's own discretion.
       </div>
     </div>
   );

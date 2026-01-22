@@ -13,7 +13,7 @@
 }
 
 .description {
-  margin-bottom: 10px;
+  margin-bottom: 24px;
   font-size: 0.95rem;
   color: var(--text-secondary);
   line-height: 1.5;
@@ -56,7 +56,6 @@
   gap: 12px;
   max-height: 70vh;
   overflow-y: auto;
-  padding-top: 2px;
   width: 100%;
   max-width: 100%;
   justify-content: start;
