@@ -22,7 +22,6 @@ func main() {
 	sessionStore := services.NewSessionStore()
 	logReader := services.NewLogReaderService()
 	switchService := services.NewSwitchService()
-	ignoreService := services.NewIgnoreListStore()
 	systemService := services.NewSystemService()
 	updateService := services.NewUpdateService()
 	avatarService := services.NewAvatarService()
@@ -50,7 +49,6 @@ func main() {
 			sessionStore,
 			logReader,
 			switchService,
-			ignoreService,
 			systemService,
 			updateService,
 			avatarService,

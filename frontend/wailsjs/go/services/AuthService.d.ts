@@ -12,6 +12,4 @@ export function DetectNewLoginSession():Promise<models.LoginSession>;
 
 export function GetCurrentLoginSession():Promise<models.LoginSession>;
 
-export function IgnoreDetectedSession(arg1:string):Promise<void>;
-
 export function MoveAsideActiveSession():Promise<void>;

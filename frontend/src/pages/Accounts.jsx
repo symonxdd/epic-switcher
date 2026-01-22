@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import { AuthContext } from '../context/AuthContext';
 import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
-import { AddDetectedSession, IgnoreDetectedSession } from '../../wailsjs/go/services/AuthService';
+import { AddDetectedSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
 import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from 'react-icons/hi';
 import styles from './Accounts.module.css';
@@ -60,16 +60,6 @@ export default function Accounts() {
     const loaded = await LoadSessions();
     setSessions(loaded || []);
     toast.success("Account added!", { id: "add-account" });
-    setNewLoginSession(null);
-  }
-
-  async function handleIgnore() {
-    await IgnoreDetectedSession(newLoginSession.userId);
-    toast.success("Will not ask again for this account.", { id: "ignore-account" });
-    setNewLoginSession(null);
-  }
-
-  async function handleDismiss() {
     setNewLoginSession(null);
   }
 

@@ -22,10 +22,6 @@ export function GetCurrentLoginSession() {
   return window['go']['services']['AuthService']['GetCurrentLoginSession']();
 }
 
-export function IgnoreDetectedSession(arg1) {
-  return window['go']['services']['AuthService']['IgnoreDetectedSession'](arg1);
-}
-
 export function MoveAsideActiveSession() {
   return window['go']['services']['AuthService']['MoveAsideActiveSession']();
 }

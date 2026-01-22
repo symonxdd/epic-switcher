@@ -56,19 +56,11 @@ func (a *AuthService) GetCurrentLoginSession() (*models.LoginSession, error) {
 	}, nil
 }
 
-// DetectNewLoginSession checks if the current login session is new or ignored.
+// DetectNewLoginSession checks if the current login session is new or not.
 func (a *AuthService) DetectNewLoginSession() (*models.LoginSession, error) {
 	session, err := a.GetCurrentLoginSession()
 	if err != nil || session == nil {
 		return nil, err // means no user is logged in or invalid token
-	}
-
-	// --- Check ignored list early ---
-	ignoreStore := NewIgnoreListStore()
-	ignored, _ := ignoreStore.IsIgnored(session.UserID)
-	if ignored {
-		fmt.Println("ℹ️ User is in ignore list, skipping prompt.")
-		return nil, nil
 	}
 
 	// --- Check against stored sessions ---
@@ -86,12 +78,6 @@ func (a *AuthService) DetectNewLoginSession() (*models.LoginSession, error) {
 }
 
 func (a *AuthService) CheckIfSessionIsNew(userID string) (bool, error) {
-	ignoreStore := NewIgnoreListStore()
-	ignored, _ := ignoreStore.IsIgnored(userID)
-	if ignored {
-		return false, nil
-	}
-
 	store := NewSessionStore()
 	sessions, _ := store.LoadSessions()
 	for _, s := range sessions {
@@ -110,11 +96,6 @@ func (a *AuthService) AddDetectedSession(session models.LoginSession) error {
 	}
 	fmt.Println("✅ User accepted and session added:", session.UserID)
 	return nil
-}
-
-func (a *AuthService) IgnoreDetectedSession(userID string) error {
-	ignoreStore := NewIgnoreListStore()
-	return ignoreStore.Add(userID)
 }
 
 // MoveAsideActiveSession stops the Epic Games Launcher, clears its login session,

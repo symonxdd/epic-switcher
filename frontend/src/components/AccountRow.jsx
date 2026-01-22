@@ -1,8 +1,7 @@
-import { useRef, useEffect, useState } from "react";
+import { useState } from "react";
 import {
   HiOutlineCheckCircle,
   HiOutlinePencil,
-  HiOutlineXCircle,
   HiOutlineTrash,
 } from "react-icons/hi";
 import styles from "./AccountRow.module.css";
@@ -11,27 +10,19 @@ import { useAvatarCache } from "../context/AvatarCacheContext";
 
 export default function AccountRow({
   session,
-  userId,
   isActive,
-  isIgnored = false,
   onAliasChange,
   onDeleteSession,
-  onUnignoreClick,
-
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
-  const inputRef = useRef(null);
   const { cacheVersion } = useAvatarCache();
 
   const displayName =
-    session?.alias || session?.username || session?.userId || userId;
+    session?.alias || session?.username || session?.userId;
 
   const metaLineValue = session?.alias
     ? session?.username || session?.userId
-    : session?.userId || userId;
-
-  // Removed click outside logic since we are using a modal now
-  /* useEffect(() => { ... } */
+    : session?.userId;
 
   function getFirstVisibleChar(str) {
     if (!str) return "";
@@ -51,17 +42,9 @@ export default function AccountRow({
     onDeleteSession?.(session.userId);
   };
 
-  const handleUnignore = (e) => {
-    e.stopPropagation();
-    onUnignoreClick?.(userId);
-  };
-
   return (
     <div className={styles.rowWrapper}>
-      <div
-        className={`${styles.listItem} ${isIgnored ? styles.ignoredRow : ""}`}
-
-      >
+      <div className={styles.listItem}>
         <div className={styles.avatarWrapper}>
           <div
             className={styles.avatar}
@@ -90,60 +73,43 @@ export default function AccountRow({
         </div>
 
         <div className={styles.actionsWrapper}>
-          {!isIgnored ? (
-            <>
-              {isActive && (
-                <div className={styles.activeAccountBadge}>
-                  <HiOutlineCheckCircle />
-                  <span>Currently logged in</span>
-                </div>
-              )}
-
-
-              <button
-                type="button"
-                className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
-                onClick={handleAliasEdit}
-              >
-                <HiOutlinePencil />
-                <span>Edit nickname</span>
-              </button>
-
-              <button
-                type="button"
-                className={styles.iconButton}
-                onClick={handleDelete}
-              >
-                <HiOutlineTrash />
-              </button>
-
-              {showAliasModal && (
-                <EditAliasModal
-                  userId={session.userId}
-                  currentAlias={session.alias}
-                  onAliasChange={onAliasChange}
-                  onClose={() => setShowAliasModal(false)}
-                />
-              )}
-            </>
-          ) : (
-            <div className={styles.rightControls}>
-              <div className={styles.ignoredPill}>ignored</div>
-              <div className={styles.tooltipWrapperLeft}>
-                <button
-                  type="button"
-                  className={`${styles.iconButton} ${styles.ignoredIconButton}`}
-                  onClick={handleUnignore}
-                >
-                  <HiOutlineXCircle />
-                </button>
-                <div className={styles.tooltipLeft}>Un-ignore this account</div>
+          <>
+            {isActive && (
+              <div className={styles.activeAccountBadge}>
+                <HiOutlineCheckCircle />
+                <span>Currently logged in</span>
               </div>
-            </div>
-          )}
+            )}
+
+
+            <button
+              type="button"
+              className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
+              onClick={handleAliasEdit}
+            >
+              <HiOutlinePencil />
+              <span>Edit nickname</span>
+            </button>
+
+            <button
+              type="button"
+              className={styles.iconButton}
+              onClick={handleDelete}
+            >
+              <HiOutlineTrash />
+            </button>
+
+            {showAliasModal && (
+              <EditAliasModal
+                userId={session.userId}
+                currentAlias={session.alias}
+                onAliasChange={onAliasChange}
+                onClose={() => setShowAliasModal(false)}
+              />
+            )}
+          </>
         </div>
       </div>
-
     </div>
   );
 }
