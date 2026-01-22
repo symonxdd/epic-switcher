@@ -10,12 +10,27 @@ import { SupportCoffee } from './SupportCoffee';
 function Sidebar() {
   const { sessions, isLoading } = useContext(SessionContext);
   const [showCounter, setShowCounter] = useState(false);
+  const [hiddenItems, setHiddenItems] = useState([]);
   const sessionCount = sessions?.length ?? 0;
 
   useEffect(() => {
     const handleSync = () => {
       const stored = localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT);
       setShowCounter(stored === "true");
+
+      const storedHidden = localStorage.getItem(STORAGE_KEYS.SIDEBAR_HIDDEN_ITEMS);
+      if (storedHidden) {
+        try {
+          const parsed = JSON.parse(storedHidden);
+          setHiddenItems(prev => {
+            if (JSON.stringify(prev) === storedHidden) return prev;
+            return parsed;
+          });
+        } catch (e) {
+          console.error("Failed to parse hidden items", e);
+          setHiddenItems([]);
+        }
+      }
     };
 
     handleSync();
@@ -47,45 +62,51 @@ function Sidebar() {
             )}
           </NavLink>
 
-          <NavLink
-            to="/manage"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles['sidebar-item']} ${styles.active}`
-                : styles['sidebar-item']
-            }
-          >
-            <FaLayerGroup className={styles.icon} />
-            <span>Manage</span>
-          </NavLink>
+          {!hiddenItems.includes('/manage') && (
+            <NavLink
+              to="/manage"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles['sidebar-item']} ${styles.active}`
+                  : styles['sidebar-item']
+              }
+            >
+              <FaLayerGroup className={styles.icon} />
+              <span>Manage</span>
+            </NavLink>
+          )}
         </div>
       </div>
 
       <div className={styles.bottomGroup}>
         <div className={styles['sidebar-bottom']}>
-          <NavLink
-            to="/faq"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles['sidebar-item']} ${styles.active}`
-                : styles['sidebar-item']
-            }
-          >
-            <FaQuestionCircle className={styles.icon} />
-            <span>FAQ</span>
-          </NavLink>
+          {!hiddenItems.includes('/faq') && (
+            <NavLink
+              to="/faq"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles['sidebar-item']} ${styles.active}`
+                  : styles['sidebar-item']
+              }
+            >
+              <FaQuestionCircle className={styles.icon} />
+              <span>FAQ</span>
+            </NavLink>
+          )}
 
-          <NavLink
-            to="/how-it-works"
-            className={({ isActive }) =>
-              isActive
-                ? `${styles['sidebar-item']} ${styles.active}`
-                : styles['sidebar-item']
-            }
-          >
-            <FaInfoCircle className={styles.icon} />
-            <span>How it works</span>
-          </NavLink>
+          {!hiddenItems.includes('/how-it-works') && (
+            <NavLink
+              to="/how-it-works"
+              className={({ isActive }) =>
+                isActive
+                  ? `${styles['sidebar-item']} ${styles.active}`
+                  : styles['sidebar-item']
+              }
+            >
+              <FaInfoCircle className={styles.icon} />
+              <span>How it works</span>
+            </NavLink>
+          )}
 
           <NavLink
             to="/settings"

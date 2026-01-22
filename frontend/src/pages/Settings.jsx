@@ -10,8 +10,21 @@ import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
-  const [showSidebarAccountCount, setShowSidebarAccountCount] = useState(false);
-  const [supportDismissed, setSupportDismissed] = useState(false);
+  const [showSidebarAccountCount, setShowSidebarAccountCount] = useState(() => {
+    return localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT) === "true";
+  });
+  const [hiddenSidebarItems, setHiddenSidebarItems] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.SIDEBAR_HIDDEN_ITEMS);
+    if (!stored) return [];
+    try {
+      return JSON.parse(stored);
+    } catch {
+      return [];
+    }
+  });
+  const [supportDismissed, setSupportDismissed] = useState(() => {
+    return localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED) === "true";
+  });
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
@@ -23,11 +36,24 @@ function Settings() {
       const storedShowSidebarCount = localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT);
       setShowSidebarAccountCount(storedShowSidebarCount === "true");
 
+      const storedHiddenItems = localStorage.getItem(STORAGE_KEYS.SIDEBAR_HIDDEN_ITEMS);
+      if (storedHiddenItems) {
+        try {
+          const parsed = JSON.parse(storedHiddenItems);
+          setHiddenSidebarItems(prev => {
+            if (JSON.stringify(prev) === storedHiddenItems) return prev;
+            return parsed;
+          });
+        } catch (e) {
+          console.error("Failed to parse hidden sidebar items", e);
+          setHiddenSidebarItems([]);
+        }
+      }
+
       const storedSupportDismissed = localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
       setSupportDismissed(storedSupportDismissed === "true");
     };
 
-    handleSync();
     window.addEventListener("storage", handleSync);
     return () => window.removeEventListener("storage", handleSync);
   }, []);
@@ -37,6 +63,11 @@ function Settings() {
     localStorage.setItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT, showSidebarAccountCount);
     window.dispatchEvent(new Event("storage"));
   }, [showSidebarAccountCount]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.SIDEBAR_HIDDEN_ITEMS, JSON.stringify(hiddenSidebarItems));
+    window.dispatchEvent(new Event("storage"));
+  }, [hiddenSidebarItems]);
 
   // --- Fetch latest GitHub version ---
   useEffect(() => {
@@ -83,18 +114,23 @@ function Settings() {
     }
   }
 
+  const toggleSidebarItem = (path) => {
+    setHiddenSidebarItems(prev =>
+      prev.includes(path) ? prev.filter(p => p !== path) : [...prev, path]
+    );
+  }
+
   return (
     <div className={styles.settingsContainer}>
       <PageHeader title="Settings" />
 
       <div className={styles.settingsGrid}>
-        {/* --- General Settings --- */}
+        {/* --- Sidebar Settings --- */}
         <div className={styles.settingsGroup}>
-          <h5 className={styles.labelHeading}>General</h5>
+          <h5 className={styles.labelHeading}>Sidebar</h5>
 
-          {/* Show Sidebar Account Count */}
           <div className={styles.toggleRow}>
-            <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count in sidebar</label>
+            <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count</label>
             <label className={styles.switch}>
               <input
                 id="showSidebarCountToggle"
@@ -103,15 +139,54 @@ function Settings() {
                 onChange={(e) => {
                   setShowSidebarAccountCount(e.target.checked);
                   toast.success(
-                    e.target.checked
-                      ? "Sidebar account count visible"
-                      : "Sidebar account count hidden"
-                    , { id: "show-sidebar-count" });
+                    e.target.checked ? "Count visible" : "Count hidden",
+                    { id: "show-sidebar-count" }
+                  );
                 }}
               />
               <span className={styles.slider}></span>
             </label>
           </div>
+
+          <div className={styles.toggleSubGroup}>
+            <div className={styles.subGroupHeader}>
+              <span className={styles.subGroupLabel}>Tab visibility</span>
+            </div>
+
+            <div className={styles.subGroupItems}>
+              {[
+                { id: '/manage', label: 'Show Manage' },
+                { id: '/faq', label: 'Show FAQ' },
+                { id: '/how-it-works', label: 'Show "How it works"' }
+              ].map(item => (
+                <div key={item.id} className={styles.toggleRow}>
+                  <label htmlFor={`toggle-${item.id}`} className={styles.toggleLabel}>{item.label}</label>
+                  <label className={styles.switch}>
+                    <input
+                      id={`toggle-${item.id}`}
+                      type="checkbox"
+                      checked={!hiddenSidebarItems.includes(item.id)}
+                      onChange={() => {
+                        toggleSidebarItem(item.id);
+                        const isCurrentlyVisible = !hiddenSidebarItems.includes(item.id);
+                        toast.success(
+                          isCurrentlyVisible ? `${item.label.replace('Show ', '')} hidden` : `${item.label.replace('Show ', '')} visible`,
+                          { id: `sidebar-${item.id}` }
+                        );
+                      }}
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        {/* --- General Settings --- */}
+        <div className={styles.settingsGroup}>
+          <h5 className={styles.labelHeading}>General</h5>
+
 
           <div className={styles.btnGroup}>
             <button

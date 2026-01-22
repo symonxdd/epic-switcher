@@ -79,6 +79,7 @@
 .trueBlackToggle {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 12px;
   font-size: 0.85rem;
   color: var(--text-primary);
@@ -142,6 +143,36 @@
 
 .switch:hover .slider {
   opacity: 0.9;
+}
+
+/* --- Toggle Sub-groups --- */
+.toggleSubGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.subGroupHeader {
+  margin-bottom: 2px;
+}
+
+.subGroupLabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+.subGroupItems {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  /* Tighter spacing for related items */
 }
 
 /* --- Reset Button --- */
