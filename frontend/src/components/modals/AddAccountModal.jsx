@@ -49,7 +49,7 @@ export default function AddAccountModal({
             The Epic Games Launcher will <strong>restart</strong>, and you'll be able to log in with a different account.
           </p>
           <p>
-            Once you're signed in, come back, go to the Accounts page and click "Add to Switcher".
+            Once you're signed in, come back, go to the Accounts page and click <strong>Add to Switcher</strong>.
           </p>
         </div>
 

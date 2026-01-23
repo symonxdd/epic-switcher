@@ -1,11 +1,17 @@
 import { useState, useRef } from 'react';
 import styles from "../modals/ModalShared.module.css";
+import { useAvatarCache } from "../../context/AvatarCacheContext";
+import { getFirstVisibleChar, getBorderPreference } from "./CustomizeAvatarModal/avatarUtils";
 
 export default function DeleteSessionModal({ session, onConfirm, onCancel }) {
   const [isClosing, setIsClosing] = useState(false);
   const pendingActionRef = useRef(null);
+  const { cacheVersion } = useAvatarCache();
 
   if (!session) return null;
+
+  const displayName = session?.alias || session?.username || session?.userId;
+  const showBorder = getBorderPreference();
 
   const handleAnimationEnd = () => {
     if (isClosing && pendingActionRef.current) {
@@ -37,13 +43,27 @@ export default function DeleteSessionModal({ session, onConfirm, onCancel }) {
           <p>This will <strong>not log you out</strong>, but only remove the session from the saved sessions this app manages.</p>
         </div>
 
-        {session.username && (
-          <div className={styles.modalUsername}>
-            Username: {session.username}
+        <div className={styles.accountPreviewRow}>
+          <div
+            className={styles.accountPreviewAvatar}
+            style={{
+              background: session?.avatarColor || 'linear-gradient(135deg, #FBBB03, #E21F0A)',
+              padding: showBorder ? '2px' : 0
+            }}
+          >
+            {session?.avatarImage ? (
+              <img
+                src={`/avatar-thumb/${session.avatarImage}?v=${cacheVersion}`}
+                alt=""
+              />
+            ) : (
+              getFirstVisibleChar(displayName)
+            )}
           </div>
-        )}
-        <div className={styles.modalUserId}>
-          User ID: {session.userId}
+          <div className={styles.accountPreviewText}>
+            <div className={styles.accountPreviewName}>{displayName}</div>
+            <div className={styles.accountPreviewMeta}>{session.userId}</div>
+          </div>
         </div>
 
         <div className={styles.modalButtons}>
