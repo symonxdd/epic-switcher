@@ -15,6 +15,7 @@ import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 import { useAvatarCache } from '../context/AvatarCacheContext';
+import { getBorderThickness } from '../components/modals/CustomizeAvatarModal/avatarUtils';
 
 export default function Accounts() {
   const location = useLocation();
@@ -34,6 +35,7 @@ export default function Accounts() {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
   });
+  const [borderThickness, setBorderThickness] = useState(getBorderThickness);
   const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
@@ -44,6 +46,7 @@ export default function Accounts() {
     const loadBorder = () => {
       const storedBorder = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
       if (storedBorder !== null) setShowBorder(storedBorder === 'true');
+      setBorderThickness(getBorderThickness());
     };
 
     window.addEventListener('storage', loadBorder);
@@ -177,7 +180,10 @@ export default function Accounts() {
                       <div className={styles.activeAvatarWrapper} onClick={handleAvatarClick}>
                         <div
                           className={`${styles.activeAccountAvatar} ${!showBorder ? styles.activeAccountAvatarNoBorder : ''}`}
-                          style={activeSession.avatarColor ? { background: activeSession.avatarColor } : {}}
+                          style={{
+                            background: activeSession.avatarColor || undefined,
+                            padding: showBorder ? `${borderThickness}px` : undefined
+                          }}
                         >
                           {activeSession.avatarImage ? (
                             <img
@@ -270,7 +276,10 @@ export default function Accounts() {
                             <div className={styles.avatarWrapper}>
                               <div
                                 className={`${styles.avatar} ${!showBorder ? styles.avatarNoBorder : ''}`}
-                                style={session.avatarColor ? { background: session.avatarColor } : {}}
+                                style={{
+                                  background: session.avatarColor || undefined,
+                                  padding: showBorder ? '2px' : 0
+                                }}
                               >
                                 {session.avatarImage ? (
                                   <img

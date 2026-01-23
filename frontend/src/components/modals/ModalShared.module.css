@@ -218,8 +218,8 @@
 .modalTwoColumn {
   display: flex;
   gap: 25px;
-  padding: 1rem 30px;
-  align-items: center;
+  padding: 1rem 30px 0 30px;
+  align-items: flex-start;
   min-height: 280px;
   /* Ensure a consistent minimum height */
 }
@@ -229,8 +229,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   align-self: stretch;
+  padding-top: 1rem;
   /* Stretch to parent height to help divider */
 }
 
@@ -756,31 +757,14 @@
 
 
 
-/* --- Switch Control (from Settings) --- */
-.showBorderToggle,
-.showBorderToggleSpacer {
+.showBorderToggle {
   display: flex;
   align-items: center;
-  justify-content: center;
-  gap: 12px;
-  width: max-content;
-  padding: 0 4px;
-}
-
-.showBorderToggle {
-  margin-top: 1.25rem;
-}
-
-.showBorderToggleSpacer {
-  margin-bottom: 1.25rem;
-  opacity: 0;
-  pointer-events: none;
-}
-
-.switchPlaceholder {
-  width: 38px;
-  height: 20px;
-  flex-shrink: 0;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0 12px;
+  margin-top: 1.5rem;
+  box-sizing: border-box;
 }
 
 .toggleLabel {
@@ -837,6 +821,112 @@
 
 .switch input:checked + .slider::before {
   transform: translateX(18px);
+}
+
+/* --- Border Thickness Slider --- */
+.thicknessSliderContainer {
+  margin-top: 0.75rem;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 12px;
+  box-sizing: border-box;
+}
+
+.thicknessSliderHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.thicknessValue {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  background: var(--bg-app);
+  padding: 2px 6px;
+  border-radius: 6px;
+  min-width: 32px;
+  text-align: center;
+}
+
+.thicknessSlider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--bg-app);
+  outline: none;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.thicknessSlider:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+/* Webkit (Chrome, Safari, Edge) border-radius fix for gradient track */
+.thicknessSlider::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  border-radius: 3px;
+  background: var(--bg-app);
+}
+
+.thicknessSlider:not(:disabled)::-webkit-slider-runnable-track {
+  background: var(--avatar-accent, linear-gradient(135deg, #8e44ad 0%, #b75edd 100%));
+}
+
+.thicknessSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  margin-top: -5px;
+  /* Centers thumb on 6px track */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: none;
+  transition: transform 0.1s ease;
+}
+
+.thicknessSlider:not(:disabled):hover::-webkit-slider-thumb {
+  transform: scale(1.15);
+}
+
+/* Firefox */
+.thicknessSlider::-moz-range-track {
+  width: 100%;
+  height: 6px;
+  cursor: pointer;
+  border-radius: 3px;
+  background: var(--bg-app);
+}
+
+.thicknessSlider:not(:disabled)::-moz-range-track {
+  background: var(--avatar-accent, linear-gradient(135deg, #8e44ad 0%, #b75edd 100%));
+}
+
+.thicknessSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: #ffffff;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  border: none;
+  transition: transform 0.1s ease;
+}
+
+.thicknessSlider:not(:disabled):hover::-moz-range-thumb {
+  transform: scale(1.15);
 }
 
 .autoSaveNotice {

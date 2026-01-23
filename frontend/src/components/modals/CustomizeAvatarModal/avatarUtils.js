@@ -45,3 +45,13 @@ export function saveBorderPreference(showBorder) {
   localStorage.setItem(STORAGE_KEYS.SHOW_AVATAR_BORDER, showBorder);
   window.dispatchEvent(new Event('storage'));
 }
+
+export function getBorderThickness() {
+  const stored = localStorage.getItem(STORAGE_KEYS.AVATAR_BORDER_THICKNESS);
+  return stored !== null ? parseInt(stored, 10) : 2;
+}
+
+export function saveBorderThickness(thickness) {
+  localStorage.setItem(STORAGE_KEYS.AVATAR_BORDER_THICKNESS, thickness);
+  window.dispatchEvent(new Event('storage'));
+}

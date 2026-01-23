@@ -7,6 +7,8 @@ import {
 import styles from "./AccountRow.module.css";
 import EditAliasModal from "./modals/EditAliasModal";
 import { useAvatarCache } from "../context/AvatarCacheContext";
+import { getBorderPreference } from "./modals/CustomizeAvatarModal/avatarUtils";
+import { useEffect } from "react";
 
 export default function AccountRow({
   session,
@@ -15,7 +17,16 @@ export default function AccountRow({
   onDeleteSession,
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
+  const [showBorder, setShowBorder] = useState(getBorderPreference);
   const { cacheVersion } = useAvatarCache();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setShowBorder(getBorderPreference());
+    };
+    window.addEventListener("storage", handleStorageChange);
+    return () => window.removeEventListener("storage", handleStorageChange);
+  }, []);
 
   const displayName =
     session?.alias || session?.username || session?.userId;
@@ -48,7 +59,10 @@ export default function AccountRow({
         <div className={styles.avatarWrapper}>
           <div
             className={styles.avatar}
-            style={session?.avatarColor ? { background: session.avatarColor } : {}}
+            style={{
+              background: session?.avatarColor || undefined,
+              padding: showBorder ? '2px' : 0
+            }}
           >
             {session?.avatarImage ? (
               <img

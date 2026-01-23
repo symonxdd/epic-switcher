@@ -6,7 +6,9 @@ import {
   getThumbnailUrl,
   getFirstVisibleChar,
   getBorderPreference,
-  saveBorderPreference
+  saveBorderPreference,
+  getBorderThickness,
+  saveBorderThickness
 } from './avatarUtils';
 import { useAvatarCache } from '../../../context/AvatarCacheContext';
 
@@ -17,6 +19,7 @@ export default function AvatarPreview({
   onViewFullImage
 }) {
   const [showBorder, setShowBorder] = useState(getBorderPreference);
+  const [borderThickness, setBorderThickness] = useState(getBorderThickness);
   const { cacheVersion } = useAvatarCache();
 
   const hasImage = currentImage && currentImage !== "";
@@ -28,19 +31,21 @@ export default function AvatarPreview({
     saveBorderPreference(newVal);
   };
 
+  const handleThicknessChange = (e) => {
+    const newVal = parseInt(e.target.value, 10);
+    setBorderThickness(newVal);
+    saveBorderThickness(newVal);
+  };
+
   return (
     <div className={styles.modalLeftColumn}>
-      {hasImage && (
-        <div className={styles.showBorderToggleSpacer} aria-hidden="true">
-          <label className={styles.toggleLabel}>placeholder</label>
-          <div className={styles.switchPlaceholder}></div>
-        </div>
-      )}
-
       <div className={styles.avatarPreviewContainer}>
         <div
           className={`${styles.currentAvatar} ${(!showBorder || !hasImage) ? styles.currentAvatarNoBorder : ''} ${hasImage ? styles.clickableAvatar : ''}`}
-          style={{ background: gradient }}
+          style={{
+            background: gradient,
+            padding: showBorder && hasImage ? `${borderThickness}px` : undefined
+          }}
           onClick={() => {
             if (hasImage && onViewFullImage) {
               onViewFullImage();
@@ -66,18 +71,37 @@ export default function AvatarPreview({
       </div>
 
       {hasImage && (
-        <div className={styles.showBorderToggle} style={{ '--avatar-accent': gradient }}>
-          <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
-          <label className={styles.switch}>
+        <>
+          <div className={styles.showBorderToggle} style={{ '--avatar-accent': gradient }}>
+            <label htmlFor="showBorderToggle" className={styles.toggleLabel}>Show border</label>
+            <label className={styles.switch}>
+              <input
+                id="showBorderToggle"
+                type="checkbox"
+                checked={showBorder}
+                onChange={handleToggleBorder}
+              />
+              <span className={styles.slider}></span>
+            </label>
+          </div>
+
+          <div className={styles.thicknessSliderContainer} style={{ '--avatar-accent': gradient }}>
+            <div className={styles.thicknessSliderHeader}>
+              <label htmlFor="thicknessSlider" className={styles.toggleLabel}>Border thickness</label>
+              <span className={styles.thicknessValue}>{borderThickness}px</span>
+            </div>
             <input
-              id="showBorderToggle"
-              type="checkbox"
-              checked={showBorder}
-              onChange={handleToggleBorder}
+              id="thicknessSlider"
+              type="range"
+              min="1"
+              max="8"
+              value={borderThickness}
+              onChange={handleThicknessChange}
+              className={styles.thicknessSlider}
+              disabled={!showBorder}
             />
-            <span className={styles.slider}></span>
-          </label>
-        </div>
+          </div>
+        </>
       )}
     </div>
   );
