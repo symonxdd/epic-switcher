@@ -11,7 +11,7 @@ import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
 import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 const CHEEKY_MESSAGES = [
-  "Nice try! Settings are mandatory for your sanity. 😉",
+  "Nice try! Settings are mandatory for your sanity. 🤨",
   "Forbidden! Without settings, who even are you? 🕵️",
   "Access Denied: You're trying to hide the most powerful page. ⚡",
   "I don't think so! You'd be lost without me. ✨",
@@ -156,10 +156,6 @@ function Settings() {
                     checked={showSidebarAccountCount}
                     onChange={(e) => {
                       setShowSidebarAccountCount(e.target.checked);
-                      toast.success(
-                        e.target.checked ? "Count visible" : "Count hidden",
-                        { id: "show-sidebar-count" }
-                      );
                     }}
                   />
                   <span className={styles.slider}></span>
@@ -202,7 +198,7 @@ function Settings() {
                   { id: 'sidebar-logo', label: 'Show Logo' },
                   { id: '/manage', label: 'Show Manage' },
                   { id: '/faq', label: 'Show FAQ' },
-                  { id: '/how-it-works', label: 'Show "How it works"' },
+                  { id: '/how-it-works', label: 'Show \'How it works\'' },
                   { id: '/settings', label: 'Show Settings' }
                 ].map(item => (
                   <div key={item.id} className={styles.toggleRow}>
@@ -220,15 +216,13 @@ function Settings() {
                             } while (newIndex === lastCheekyIndexRef.current);
 
                             lastCheekyIndexRef.current = newIndex;
-                            toast.error(CHEEKY_MESSAGES[newIndex], { id: "cheeky-settings" });
+                            toast(CHEEKY_MESSAGES[newIndex], {
+                              id: "cheeky-settings",
+                              icon: "⚠️"
+                            });
                             return;
                           }
                           toggleSidebarItem(item.id);
-                          const isCurrentlyVisible = !hiddenSidebarItems.includes(item.id);
-                          toast.success(
-                            isCurrentlyVisible ? `${item.label.replace('Show ', '')} hidden` : `${item.label.replace('Show ', '')} visible`,
-                            { id: `sidebar-${item.id}` }
-                          );
                         }}
                       />
                       <span className={styles.slider}></span>
