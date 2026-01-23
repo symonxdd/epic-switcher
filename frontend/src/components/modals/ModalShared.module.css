@@ -57,7 +57,7 @@
 .modalNote,
 .modalUsername,
 .modalUserId {
-  font-size: 0.85rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   text-align: left;
   padding: 0 28px;
@@ -65,7 +65,7 @@
 }
 
 .modalNote {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   margin-top: 1.2rem;
   margin-bottom: 0;
 }
@@ -94,7 +94,7 @@
 .secondaryButton,
 .dangerButton,
 .dangerPrimaryButton {
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 600;
   padding: 0.7rem 1rem;
   border-radius: 15px;
@@ -372,7 +372,7 @@
 }
 
 .previewLabel {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
   font-weight: 500;
 }
@@ -385,7 +385,7 @@
 }
 
 .galleryLabel {
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
   font-weight: 500;
   text-align: left;
@@ -676,7 +676,7 @@
 }
 
 .confirmDeleteText {
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   color: var(--text-secondary);
   margin: 1.5rem 0;
   padding: 0 1.5rem;
@@ -764,7 +764,7 @@
 }
 
 .toggleLabel {
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   color: var(--text-secondary);
   font-weight: 600;
   user-select: none;
