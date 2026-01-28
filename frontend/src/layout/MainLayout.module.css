@@ -40,7 +40,7 @@
 .contentTopNav {
   flex: 1;
   background-color: var(--bg-surface);
-  padding: 2rem 2rem 0;
+  padding: 0;
   overflow-y: auto;
   position: relative;
   /* Resetting borders and radius from .content */
@@ -54,6 +54,16 @@
   -ms-overflow-style: none;
 }
 
+.contentWrapper {
+  max-width: 720px;
+  width: 100%;
+  margin: 0 auto;
+  min-height: 100%;
+  padding: 2rem 0;
+  /* Vertical padding only, horiz handled by max-width */
+  box-sizing: border-box;
+}
+
 .contentTopNav::-webkit-scrollbar {
   display: none;
 }
@@ -61,4 +71,9 @@
 /* Hide PageHeader when in TopNav mode */
 .contentTopNav :global(header) {
   display: none;
+}
+
+/* New style for TopBar in Top Nav mode */
+.topBarTopNav {
+  background-color: var(--bg-surface);
 }

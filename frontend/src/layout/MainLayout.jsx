@@ -28,7 +28,7 @@ function MainLayout({ children }) {
 
   return (
     <div className={styles.appContainer}>
-      <TopBar />
+      <TopBar className={isTopNav ? styles.topBarTopNav : ''} />
 
       {/* TopNav rendered conditionally, but could also be hidden via CSS if strictly needed. 
           Given it's lightweight, conditional is okay, but user wanted strict no-lag for SIDEBAR. 
@@ -44,7 +44,13 @@ function MainLayout({ children }) {
           className={isTopNav ? styles.contentTopNav : styles.content}
           ref={contentRef}
         >
-          {children}
+          {isTopNav ? (
+            <div className={styles.contentWrapper}>
+              {children}
+            </div>
+          ) : (
+            children
+          )}
         </main>
       </div>
 

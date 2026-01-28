@@ -1,12 +1,12 @@
 import styles from './TopBar.module.css';
 import { WindowMinimise, WindowToggleMaximise, Quit } from '../../wailsjs/runtime/runtime';
 
-function TopBar() {
+function TopBar({ className }) {
   const isDev = import.meta.env.MODE === 'development';
   const title = `Epic Switcher${isDev ? ' (dev)' : ''}`;
 
   return (
-    <div className={styles.topBar} onDoubleClick={WindowToggleMaximise}>
+    <div className={`${styles.topBar} ${className || ''}`} onDoubleClick={WindowToggleMaximise}>
       <div className={styles.title}>{title}</div>
 
       <div className={styles.winControls}>
