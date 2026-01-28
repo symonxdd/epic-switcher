@@ -7,7 +7,7 @@ import appLogo from '../assets/images/app-logo.png';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 import { SupportCoffee } from './SupportCoffee';
 
-function Sidebar() {
+function Sidebar({ style }) {
   const { sessions, isLoading } = useContext(SessionContext);
   const [showCounter, setShowCounter] = useState(false);
   const [hiddenItems, setHiddenItems] = useState([]);
@@ -39,7 +39,7 @@ function Sidebar() {
   }, []);
 
   return (
-    <aside className={styles.sidebar}>
+    <aside className={styles.sidebar} style={style}>
       <div className={styles.topGroup}>
         {!hiddenItems.includes('sidebar-logo') && (
           <div className={styles.logoContainer}>

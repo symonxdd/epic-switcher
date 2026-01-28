@@ -41,6 +41,9 @@ function Settings() {
     return localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED) === "true";
   });
   const [showDismissModal, setShowDismissModal] = useState(false);
+  const [layoutMode, setLayoutMode] = useState(() => {
+    return localStorage.getItem(STORAGE_KEYS.LAYOUT_MODE) || 'sidebar';
+  });
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
@@ -68,6 +71,9 @@ function Settings() {
 
       const storedSupportDismissed = localStorage.getItem(STORAGE_KEYS.SUPPORT_COFFEE_DISMISSED);
       setSupportDismissed(storedSupportDismissed === "true");
+
+      const storedLayoutMode = localStorage.getItem(STORAGE_KEYS.LAYOUT_MODE) || 'sidebar';
+      setLayoutMode(storedLayoutMode);
     };
 
     window.addEventListener("storage", handleSync);
@@ -147,6 +153,24 @@ function Settings() {
             <h5 className={styles.labelHeading}>Sidebar</h5>
 
             <div className={styles.subGroupItems}>
+              <div className={styles.toggleRow}>
+                <label htmlFor="layoutModeToggle" className={styles.toggleLabel}>Use top navigation</label>
+                <label className={styles.switch}>
+                  <input
+                    id="layoutModeToggle"
+                    type="checkbox"
+                    checked={layoutMode === 'top-nav'}
+                    onChange={(e) => {
+                      const newMode = e.target.checked ? 'top-nav' : 'sidebar';
+                      setLayoutMode(newMode);
+                      localStorage.setItem(STORAGE_KEYS.LAYOUT_MODE, newMode);
+                      window.dispatchEvent(new Event("storage"));
+                    }}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
+
               <div className={styles.toggleRow}>
                 <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count</label>
                 <label className={styles.switch}>

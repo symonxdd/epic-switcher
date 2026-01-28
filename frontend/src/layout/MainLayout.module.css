@@ -35,3 +35,30 @@
   display: none;
   /* Chrome, Safari and Opera */
 }
+
+/* Top Navigation Mode Styles */
+.contentTopNav {
+  flex: 1;
+  background-color: var(--bg-surface);
+  padding: 2rem 2rem 0;
+  overflow-y: auto;
+  position: relative;
+  /* Resetting borders and radius from .content */
+  /* Resetting borders slightly differently to avoid color flickering default */
+  border-top-left-radius: 0;
+  border-left: 1px solid transparent;
+  border-top: 1px solid transparent;
+
+  /* Hide scrollbar but keep functionality */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.contentTopNav::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide PageHeader when in TopNav mode */
+.contentTopNav :global(header) {
+  display: none;
+}

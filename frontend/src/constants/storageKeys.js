@@ -6,4 +6,5 @@ export const STORAGE_KEYS = {
   SHOW_SIDEBAR_ACCOUNT_COUNT: "show_sidebar_account_count",
   SIDEBAR_HIDDEN_ITEMS: "sidebar_hidden_items",
   AVATAR_BORDER_THICKNESS: "avatar_border_thickness",
+  LAYOUT_MODE: "layout_mode",
 };
