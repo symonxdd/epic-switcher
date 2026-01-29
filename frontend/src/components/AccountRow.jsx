@@ -17,7 +17,7 @@ export default function AccountRow({
   onDeleteSession,
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
-  const [showBorder, setShowBorder] = useState(getBorderPreference);
+  const [showBorder, setShowBorder] = useState(getBorderPreference());
   const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
@@ -58,7 +58,7 @@ export default function AccountRow({
       <div className={styles.listItem}>
         <div className={styles.avatarWrapper}>
           <div
-            className={styles.avatar}
+            className={`${styles.avatar} ${!showBorder ? styles.avatarNoBorder : ""}`}
             style={{
               background: session?.avatarColor || undefined,
               padding: showBorder ? '2px' : 0

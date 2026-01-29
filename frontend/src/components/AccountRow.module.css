@@ -51,6 +51,11 @@
   user-select: none;
   overflow: hidden;
   padding: 2px;
+  transition: all 0.2s ease;
+}
+
+.avatarNoBorder {
+  padding: 0;
 }
 
 /* ---- Active Badge ---- */
@@ -140,8 +145,8 @@
   flex-shrink: 0;
 }
 
-.avatar:has(img) {
-  background: none;
+.avatarNoBorder:has(img) {
+  background: none !important;
 }
 
 .customAvatarImage {
