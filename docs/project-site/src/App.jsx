@@ -5,6 +5,7 @@ import { FAQ } from './components/sections/FAQ';
 import { Contact } from './components/sections/Contact';
 import { Downloads } from './components/sections/Downloads';
 import { Footer } from './components/sections/Footer';
+import { Motivation } from './components/sections/Motivation';
 import { SupportCoffee } from './components/sections/SupportCoffee';
 import { ScrollToTop } from './components/sections/ScrollToTop';
 import { ThemeProvider } from './components/ThemeProvider';
@@ -16,6 +17,7 @@ function App() {
         <Header />
         <main>
           <Hero />
+          <Motivation />
           <Downloads />
           <FAQ />
           <Contact />

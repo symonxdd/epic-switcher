@@ -7,6 +7,8 @@ import { SiGithub } from '@icons-pack/react-simple-icons';
 
 const navItems = [
   { label: 'Home', href: '#home' },
+  { label: 'Screens', href: '#screens' },
+  { label: 'Why', href: '#why' },
   { label: 'Downloads', href: '#downloads' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },

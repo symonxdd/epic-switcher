@@ -143,10 +143,11 @@ export const Hero = () => {
         </div>
 
         <motion.div
+          id="screens"
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="mt-20"
+          className="mt-20 scroll-mt-24"
         >
           <Carousel />
         </motion.div>
