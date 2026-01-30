@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Download, X } from 'lucide-react';
-import { Carousel } from './Carousel';
+import { Screenshots } from './Screenshots';
 import { useLatestRelease } from '../../hooks/useLatestRelease';
 
 export const Hero = () => {
@@ -149,7 +149,7 @@ export const Hero = () => {
           transition={{ delay: 0.2, duration: 0.8 }}
           className="mt-20 scroll-mt-24"
         >
-          <Carousel />
+          <Screenshots />
         </motion.div>
       </div>
     </section>
