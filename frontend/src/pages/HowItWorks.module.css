@@ -20,14 +20,14 @@
 }
 
 .bulletList {
-  list-style-type: disc;
+  list-style-type: none;
   list-style-position: outside;
-  padding-left: 1.25rem;
+  padding-left: 0;
   margin: 0;
 }
 
 .bulletList li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 1rem;
 }
 
 .bulletList li:last-child {
@@ -203,10 +203,8 @@
   align-items: center;
   gap: 0.35rem;
   font-size: 0.83rem;
-  /* smaller text */
   color: var(--text-secondary);
   white-space: nowrap;
-  /* prevents awkward wrapping within one label */
   line-height: normal;
 }
 
