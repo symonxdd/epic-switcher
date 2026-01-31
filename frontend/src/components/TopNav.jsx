@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './TopNav.module.css';
 import { STORAGE_KEYS } from '../constants/storageKeys';
+import appLogo from '../assets/images/app-logo.png';
 
 function TopNav() {
   const [hiddenItems, setHiddenItems] = useState([]);
@@ -47,6 +48,11 @@ function TopNav() {
             <NavLink
               key={item.path}
               to={item.path}
+              onClick={(e) => {
+                if (window.location.pathname === item.path) {
+                  e.preventDefault();
+                }
+              }}
               className={({ isActive }) =>
                 isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
               }
@@ -56,6 +62,8 @@ function TopNav() {
             </NavLink>
           ))}
       </div>
+
+      <div className={styles.spacer} />
     </nav>
   );
 }

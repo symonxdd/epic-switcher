@@ -171,20 +171,22 @@ function Settings() {
                 </label>
               </div>
 
-              <div className={styles.toggleRow}>
-                <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count</label>
-                <label className={styles.switch}>
-                  <input
-                    id="showSidebarCountToggle"
-                    type="checkbox"
-                    checked={showSidebarAccountCount}
-                    onChange={(e) => {
-                      setShowSidebarAccountCount(e.target.checked);
-                    }}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </div>
+              {layoutMode !== 'top-nav' && (
+                <div className={styles.toggleRow}>
+                  <label htmlFor="showSidebarCountToggle" className={styles.toggleLabel}>Show account count</label>
+                  <label className={styles.switch}>
+                    <input
+                      id="showSidebarCountToggle"
+                      type="checkbox"
+                      checked={showSidebarAccountCount}
+                      onChange={(e) => {
+                        setShowSidebarAccountCount(e.target.checked);
+                      }}
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              )}
 
               <div className={styles.toggleRow}>
                 <label htmlFor="supportNoticeToggle" className={styles.toggleLabel}>Support notice</label>

@@ -1,8 +1,11 @@
 .topNav {
   width: 100%;
   background-color: var(--bg-surface);
-  /* border-bottom: 1px solid var(--border-subtle); */
-  padding: 0 1rem;
+  padding: 0 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 56px;
 }
 
 .navContainer {
@@ -10,9 +13,6 @@
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  height: 48px;
-  max-width: 1200px;
-  margin: 0 auto;
 }
 
 .navItem {
@@ -31,7 +31,5 @@
 
 .active {
   color: var(--text-primary);
+  cursor: default;
 }
-
-/* Optional: Add a subtle indicator for active item if desired, 
-   currently just text color as per "clean header" request */

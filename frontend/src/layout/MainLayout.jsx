@@ -7,6 +7,7 @@ import { Toaster } from 'react-hot-toast';
 
 import TopNav from '../components/TopNav';
 import { STORAGE_KEYS } from '../constants/storageKeys';
+import { SupportCoffee } from '../components/SupportCoffee';
 
 function MainLayout({ children }) {
   const { pathname } = useLocation();
@@ -53,6 +54,12 @@ function MainLayout({ children }) {
           )}
         </main>
       </div>
+
+      {isTopNav && pathname !== '/faq' && (
+        <div className={styles.floatingCoffee}>
+          <SupportCoffee />
+        </div>
+      )}
 
       {/* Global toast container */}
       <Toaster
