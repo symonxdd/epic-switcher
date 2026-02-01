@@ -34,8 +34,7 @@ function TopNav() {
   const navItems = [
     { path: '/accounts', label: 'Accounts' },
     { path: '/manage', label: 'Manage' },
-    { path: '/faq', label: 'FAQ' },
-    { path: '/how-it-works', label: 'How it works' },
+    { path: '/transparency', label: 'Transparency' },
     { path: '/settings', label: 'Settings' },
   ];
 

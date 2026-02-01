@@ -44,9 +44,9 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="pt-0 pb-20 bg-background dark:bg-[#0A0A0A] scroll-mt-20">
+    <section id="contact" className="py-16 bg-background dark:bg-[#0A0A0A] scroll-mt-20">
       <div className="container mx-auto px-6 max-w-2xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

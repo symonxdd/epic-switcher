@@ -8,13 +8,13 @@ export const Downloads = () => {
   const { downloadUrl } = useLatestRelease();
 
   return (
-    <section id="downloads" className="py-24">
+    <section id="downloads" className="py-16">
       <div className="container mx-auto px-6">
-        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground px-8 py-16 md:px-16 md:py-24 relative overflow-hidden shadow-none selection:bg-primary-foreground/20 selection:text-primary-foreground">
+        <div className="max-w-6xl mx-auto rounded-[32px] bg-primary text-primary-foreground px-8 py-12 md:px-16 md:py-16 relative overflow-hidden shadow-none selection:bg-primary-foreground/20 selection:text-primary-foreground">
           {/* Decorative elements - Subtle Glow */}
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary-foreground/10 rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="relative z-10 grid md:grid-cols-2 gap-16 items-center">
+          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ready to simplify your Epic Gaming?</h2>
               <p className="text-primary-foreground/70 text-lg mb-12 leading-relaxed max-w-lg">
@@ -46,17 +46,19 @@ export const Downloads = () => {
               </div>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
-              {[
-                { icon: Zap, title: "Zero Install", desc: "Just run the .exe" },
-                { icon: ShieldCheck, title: "Open Source", desc: "Transparency by default" },
-              ].map((feature, i) => (
-                <div key={i} className="p-8 bg-background rounded-[24px] text-foreground">
-                  <feature.icon className="w-10 h-10 mb-6 text-foreground/80" />
-                  <h3 className="text-xl font-bold mb-2">{feature.title}</h3>
-                  <p className="text-sm opacity-90 leading-relaxed">{feature.desc}</p>
-                </div>
-              ))}
+            <div className="flex justify-center md:justify-end">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[400px] w-full">
+                {[
+                  { icon: Zap, title: "Zero Install", desc: "Just run the .exe" },
+                  { icon: ShieldCheck, title: "Open Source", desc: "Transparency by default" },
+                ].map((feature, i) => (
+                  <div key={i} className="aspect-square flex flex-col items-center justify-center text-center p-6 bg-background rounded-[24px] text-foreground shadow-sm">
+                    <feature.icon className="w-8 h-8 mb-4 text-foreground/80" />
+                    <h3 className="text-lg font-bold mb-1">{feature.title}</h3>
+                    <p className="text-xs opacity-80 leading-relaxed">{feature.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>

@@ -4,7 +4,7 @@
   flex-direction: column;
   min-height: 100%;
   color: var(--text-primary);
-  padding: 0 0 32px;
+  padding: 2rem 0 32px;
 }
 
 /* --- Responsive Layout for Groups --- */

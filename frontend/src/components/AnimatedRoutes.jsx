@@ -2,7 +2,6 @@ import { Routes, Route, Navigate, useLocation } from 'react-router-dom';
 import { AnimatePresence } from 'framer-motion';
 import Accounts from '../pages/Accounts';
 import Manage from '../pages/Manage';
-import HowItWorks from '../pages/HowItWorks';
 import Transparency from '../pages/Transparency';
 import Settings from '../pages/Settings';
 import PageTransition from './PageTransition';

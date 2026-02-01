@@ -223,8 +223,7 @@ function Settings() {
                 {[
                   { id: 'sidebar-logo', label: 'Show Logo' },
                   { id: '/manage', label: 'Show Manage' },
-                  { id: '/faq', label: 'Show FAQ' },
-                  { id: '/how-it-works', label: 'Show \'How it works\'' },
+                  { id: '/transparency', label: 'Show Transparency' },
                   { id: '/settings', label: 'Show Settings' }
                 ].map(item => (
                   <div key={item.id} className={styles.toggleRow}>

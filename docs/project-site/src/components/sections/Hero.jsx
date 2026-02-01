@@ -36,7 +36,7 @@ export const Hero = () => {
   };
 
   return (
-    <section id="home" className="pt-24 pb-0 overflow-hidden">
+    <section id="home" className="pt-20 pb-0 overflow-hidden">
       <div className="container mx-auto px-6 text-center">
         <div className="max-w-4xl mx-auto mb-0">
           <motion.div
@@ -147,7 +147,7 @@ export const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="mt-20 scroll-mt-24"
+          className="mt-12 scroll-mt-24"
         >
           <Screenshots />
         </motion.div>

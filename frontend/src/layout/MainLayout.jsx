@@ -55,7 +55,7 @@ function MainLayout({ children }) {
         </main>
       </div>
 
-      {isTopNav && pathname !== '/faq' && (
+      {isTopNav && pathname !== '/transparency' && (
         <div className={styles.floatingCoffee}>
           <SupportCoffee />
         </div>

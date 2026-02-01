@@ -19,7 +19,7 @@
   border-top-left-radius: 16px;
   border-left: 1px solid var(--border-subtle);
   border-top: 1px solid var(--border-subtle);
-  padding: 2rem 2rem 0;
+  padding: 0 2rem 2rem;
   overflow-y: auto;
   transition: background-color 0.3s, border 0.3s;
   position: relative;

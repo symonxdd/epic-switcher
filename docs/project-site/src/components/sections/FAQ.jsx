@@ -39,9 +39,9 @@ const faqItems = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="pt-0 pb-20 bg-background scroll-mt-20">
+    <section id="faq" className="py-16 bg-background scroll-mt-20">
       <div className="container mx-auto px-6 max-w-3xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}

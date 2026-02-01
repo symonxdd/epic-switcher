@@ -1,7 +1,7 @@
 import React from 'react';
 import PageHeader from '../components/PageHeader';
 import styles from './Transparency.module.css';
-import { FaInfoCircle, FaLock, FaGithub, FaGlobe, FaShieldAlt, FaRobot, FaExternalLinkAlt } from 'react-icons/fa';
+import { FaInfoCircle, FaLock, FaGithub, FaGlobe, FaShieldAlt, FaRobot, FaExternalLinkAlt, FaQuestionCircle } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { OpenDirectory } from '../../wailsjs/go/services/SystemService';
 import { BrowserOpenURL } from '../../wailsjs/runtime';
@@ -185,7 +185,7 @@ function Transparency() {
 
         {/* FAQ Section */}
         <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}>Frequently Asked Questions</h2>
+          <h2 className={styles.sectionTitle}><FaQuestionCircle /> Frequently Asked Questions</h2>
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((item, index) => (
               <AccordionItem key={index} value={`item-${index}`} className={styles.accordionItem}>

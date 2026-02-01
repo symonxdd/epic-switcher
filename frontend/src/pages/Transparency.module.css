@@ -1,9 +1,7 @@
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  overflow-y: auto;
-  padding: 0 1rem 2rem 1rem;
+  padding: 2rem 1rem 2rem 1rem;
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
@@ -207,20 +205,20 @@
 }
 
 .disclaimer {
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
-  margin-top: 2rem;
-  padding: 1rem;
-  background: var(--bg-card);
-  border-radius: 12px;
-  border: 1px dashed var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.72rem;
+  margin-top: 3rem;
+  padding: 0 1.5rem;
+  text-align: center;
+  opacity: 0.8;
 }
 
 .footer {
   text-align: center;
-  padding-top: 2rem;
-  font-size: 0.75rem;
-  color: var(--text-tertiary);
+  padding: 2rem 0 0;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.8;
 }
 
 .heart {
