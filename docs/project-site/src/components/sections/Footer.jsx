@@ -4,11 +4,11 @@ import { SiGithub } from '@icons-pack/react-simple-icons';
 
 export const Footer = () => {
   return (
-    <footer id="contact" className="py-12">
+    <footer className="py-12">
       <div className="container mx-auto px-6">
         <div className="flex flex-col md:flex-row justify-center items-center gap-6 md:gap-12 text-sm text-muted-foreground/60">
           <div className="flex items-center gap-1.5">
-            Made with <Heart className="w-3.5 h-3.5 text-red-400 fill-red-400" />
+            Made with <Heart className="w-3.5 h-3.5 text-purple-500 fill-purple-500" />
           </div>
 
           <span className="leading-none">

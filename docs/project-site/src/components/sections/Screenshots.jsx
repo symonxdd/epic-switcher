@@ -12,6 +12,7 @@ const screenshots = [
 
 export const Screenshots = () => {
   const [index, setIndex] = useState(0);
+  const [direction, setDirection] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
   const progress = useMotionValue(0);
@@ -22,6 +23,7 @@ export const Screenshots = () => {
       setIsPaused(!isPaused);
       return;
     }
+    setDirection(newIndex > index ? 1 : -1);
     setIndex(newIndex);
     setIsPaused(false);
     progress.set(0);
@@ -36,12 +38,36 @@ export const Screenshots = () => {
       duration: remainingDuration / 1000,
       ease: "linear",
       onComplete: () => {
+        setDirection(1); // Auto-play always slides forward
         handleIndexChange((index + 1) % screenshots.length);
       }
     });
 
     return () => controls.stop();
   }, [index, isHovering, isPaused, progress, handleIndexChange]);
+
+  const variants = {
+    enter: (direction) => ({
+      x: direction > 0 ? '100%' : '-100%',
+      scale: 1.1,
+      filter: 'blur(10px)',
+      opacity: 0,
+    }),
+    center: {
+      zIndex: 1,
+      x: 0,
+      scale: 1,
+      filter: 'blur(0px)',
+      opacity: 1,
+    },
+    exit: (direction) => ({
+      zIndex: 0,
+      x: direction < 0 ? '100%' : '-100%',
+      scale: 0.95,
+      filter: 'blur(5px)',
+      opacity: 0,
+    }),
+  };
 
   return (
     <div
@@ -50,19 +76,26 @@ export const Screenshots = () => {
       <div className="relative max-w-[960px] mx-auto z-10">
         {/* Main Image Container */}
         <div
-          className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl shadow-[0_0_50px_-12px_rgba(0,0,0,0.5)] border border-white/5"
+          className="relative aspect-[16/10] w-full overflow-hidden rounded-3xl border border-white/5"
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
         >
-          <AnimatePresence>
+          <AnimatePresence initial={false} custom={direction}>
             <motion.img
               key={index}
               src={screenshots[index].src}
               alt={screenshots[index].title}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1, ease: "easeInOut" }}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{
+                x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                scale: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
+                filter: { duration: 0.4 },
+                opacity: { duration: 0.4 }
+              }}
               className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
             />
           </AnimatePresence>

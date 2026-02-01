@@ -44,7 +44,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-background dark:bg-[#0A0A0A] scroll-mt-20">
+    <section id="contact" className="py-16 bg-background dark:bg-[#0A0A0A] scroll-mt-24">
       <div className="container mx-auto px-6 max-w-2xl">
         <div className="text-center mb-12">
           <motion.div
@@ -52,7 +52,7 @@ export const Contact = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold tracking-tight mb-4">Slide into my DMs</h2>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Slide into my DMs</h2>
             <p className="text-muted-foreground text-lg">
               No cap, if you found a bug or just wanna vibe about the project, drop a message below. I gotchu. 🤙
             </p>

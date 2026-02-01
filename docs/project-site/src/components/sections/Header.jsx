@@ -1,22 +1,70 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { useLatestRelease } from '../../hooks/useLatestRelease';
 import { ThemeToggle } from '../ThemeToggle';
 import { SiGithub } from '@icons-pack/react-simple-icons';
+import { cn } from '@/lib/utils';
 
 const navItems = [
-  { label: 'Home', href: '#home' },
   { label: 'Screens', href: '#screens' },
-  { label: 'Why', href: '#why' },
-  { label: 'Trust', href: '#transparency' },
-  { label: 'Downloads', href: '#downloads' },
+  { label: 'Motivation', href: '#motivation' },
+  { label: 'Transparency', href: '#transparency' },
   { label: 'FAQ', href: '#faq' },
   { label: 'Contact', href: '#contact' },
 ];
 
 export const Header = () => {
   const { downloadUrl } = useLatestRelease();
+  const [activeSection, setActiveSection] = useState('');
+
+  useEffect(() => {
+    // Keep track of all intersecting sections
+    const intersectingSections = new Set();
+
+    const observerOptions = {
+      root: null,
+      rootMargin: '-10% 0px -45% 0px', // More robust zone for various section sizes
+      threshold: 0,
+    };
+
+    const handleIntersect = (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          intersectingSections.add(entry.target.id);
+        } else {
+          intersectingSections.delete(entry.target.id);
+        }
+      });
+
+      // Priority list of sections in order of appearance
+      const orderedIds = ['home', 'screens', 'motivation', 'transparency', 'downloads', 'faq', 'contact'];
+
+      // Find the "deepest" intersecting section
+      let currentActive = '';
+      for (const id of orderedIds) {
+        if (intersectingSections.has(id)) {
+          currentActive = id;
+        }
+      }
+
+      if (currentActive) {
+        setActiveSection(currentActive);
+      }
+    };
+
+    const observer = new IntersectionObserver(handleIntersect, observerOptions);
+
+    // Observe all sections
+    const allSectionIds = ['#home', ...navItems.map(i => i.href), '#downloads'];
+    allSectionIds.forEach((selector) => {
+      const element = document.querySelector(selector);
+      if (element) observer.observe(element);
+    });
+
+    return () => observer.disconnect();
+  }, []);
+
   const scrollTo = (href) => {
     const element = document.querySelector(href);
     if (element) {
@@ -30,7 +78,7 @@ export const Header = () => {
       animate={{ y: 0, opacity: 1 }}
       transition={{
         duration: 0.6,
-        ease: [0.22, 1, 0.36, 1] // Custom cubic-bezier for a smooth, premium feel
+        ease: [0.22, 1, 0.36, 1]
       }}
       className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b"
     >
@@ -48,7 +96,12 @@ export const Header = () => {
             <button
               key={item.label}
               onClick={() => scrollTo(item.href)}
-              className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
+              className={cn(
+                "text-sm font-medium transition-colors",
+                activeSection === item.href.replace('#', '')
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
+              )}
             >
               {item.label}
             </button>

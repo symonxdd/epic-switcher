@@ -16,9 +16,9 @@ export const Downloads = () => {
 
           <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
             <div>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ready to simplify your Epic Gaming?</h2>
+              <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ready to switch?</h2>
               <p className="text-primary-foreground/70 text-lg mb-12 leading-relaxed max-w-lg">
-                Download the latest version of Epic Switcher and start managing your sessions like a pro. No installation required.
+                Download the latest version of Epic Switcher. No installation required.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-5">

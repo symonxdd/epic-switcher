@@ -5,7 +5,7 @@ import { FaShieldAlt } from 'react-icons/fa';
 
 export const Transparency = () => {
   return (
-    <section id="transparency" className="py-16 bg-background scroll-mt-20">
+    <section id="transparency" className="py-16 bg-background scroll-mt-24">
       <div className="container mx-auto px-6">
         <div className="max-w-4xl mx-auto">
           <motion.div
@@ -16,7 +16,7 @@ export const Transparency = () => {
           >
             <h2 className="text-3xl font-bold tracking-tight mb-4">Trust & Transparency</h2>
             <p className="text-muted-foreground text-lg">
-              Because your security is non-negotiable.
+              Because security is non-negotiable.
             </p>
           </motion.div>
 

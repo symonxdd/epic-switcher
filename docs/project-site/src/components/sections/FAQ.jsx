@@ -39,7 +39,7 @@ const faqItems = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="py-16 bg-background scroll-mt-20">
+    <section id="faq" className="py-16 bg-background scroll-mt-24">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="text-center mb-12">
           <motion.div
@@ -47,7 +47,7 @@ export const FAQ = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="text-4xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
+            <h2 className="text-3xl font-bold tracking-tight mb-4">Frequently Asked Questions</h2>
             <p className="text-muted-foreground text-lg">Everything you need to know about Epic Switcher.</p>
           </motion.div>
         </div>
