@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaUserAlt, FaCog, FaLayerGroup, FaInfoCircle, FaQuestionCircle } from 'react-icons/fa';
+import { FaUserAlt, FaCog, FaLayerGroup, FaShieldAlt } from 'react-icons/fa';
 import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
@@ -82,31 +82,17 @@ function Sidebar({ style }) {
 
       <div className={styles.bottomGroup}>
         <div className={styles['sidebar-bottom']}>
-          {!hiddenItems.includes('/faq') && (
+          {!hiddenItems.includes('/transparency') && (
             <NavLink
-              to="/faq"
+              to="/transparency"
               className={({ isActive }) =>
                 isActive
                   ? `${styles['sidebar-item']} ${styles.active}`
                   : styles['sidebar-item']
               }
             >
-              <FaQuestionCircle className={styles.icon} />
-              <span>FAQ</span>
-            </NavLink>
-          )}
-
-          {!hiddenItems.includes('/how-it-works') && (
-            <NavLink
-              to="/how-it-works"
-              className={({ isActive }) =>
-                isActive
-                  ? `${styles['sidebar-item']} ${styles.active}`
-                  : styles['sidebar-item']
-              }
-            >
-              <FaInfoCircle className={styles.icon} />
-              <span>How it works</span>
+              <FaShieldAlt className={styles.icon} />
+              <span>Transparency</span>
             </NavLink>
           )}
 
