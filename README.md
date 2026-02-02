@@ -79,7 +79,7 @@ Epic Switcher started the same way most of my projects do: I needed it.
 
 I regularly had to switch between multiple Epic Games accounts, and the official launcher makes this slower and more annoying than it should be. Logging out, logging back in, re-entering credentials, and often having to enter a 2FA code every time quickly became frustrating.
 
-Existing solutions were either over-engineered, had outdated UIs, or were bundled with features I didn’t want. I just wanted something:
+Existing solutions were either over-engineered, had outdated UIs, or were bundled with features I didn't want. I just wanted something:
 
 - Fast
 - Minimal

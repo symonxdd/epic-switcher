@@ -1,13 +1,14 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { Shield, Lock, Eye, Download, Github, ExternalLink } from 'lucide-react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Shield, Lock, Eye, Download, Github, ExternalLink, ChevronDown } from 'lucide-react';
 import { FaShieldAlt } from 'react-icons/fa';
 
 export const Transparency = () => {
+  const [showPrecaution, setShowPrecaution] = useState(false);
   return (
     <section id="transparency" className="py-16 bg-background scroll-mt-24">
       <div className="container mx-auto px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -20,15 +21,15 @@ export const Transparency = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="space-y-6 max-w-md"
+              className="space-y-6 max-w-lg"
             >
               <div className="flex gap-4 text-left">
-                <div className="shrink-0 mt-1">
+                <div className="shrink-0 mt-1.5">
                   <Lock className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -40,7 +41,7 @@ export const Transparency = () => {
               </div>
 
               <div className="flex gap-4 text-left">
-                <div className="shrink-0 mt-1">
+                <div className="shrink-0 mt-1.5">
                   <FaShieldAlt className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -52,7 +53,7 @@ export const Transparency = () => {
               </div>
 
               <div className="flex gap-4 text-left">
-                <div className="shrink-0 mt-1">
+                <div className="shrink-0 mt-1.5">
                   <Eye className="w-5 h-5 text-primary" />
                 </div>
                 <div>
@@ -68,16 +69,44 @@ export const Transparency = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-muted/50 rounded-3xl p-8 border border-border/50 relative overflow-hidden max-w-md md:ml-auto"
+              className="bg-muted/50 rounded-3xl p-8 border border-border/50 relative overflow-hidden max-w-xl md:ml-auto"
             >
               <h3 className="text-2xl font-bold mb-4 flex items-center justify-center gap-3">
                 <FaShieldAlt className="w-6 h-6 text-primary" />
                 <span className="leading-none">Verify with AI</span>
               </h3>
-              <p className="text-muted-foreground mb-6 leading-relaxed text-sm">
-                I strongly encourage everyone to use the power of AI to analyze the entire project and check for anything malicious.
-                AI tools are perfect for this and can explain code in detail, regardless of your CS knowledge.
+              <p className="text-muted-foreground mb-4 leading-relaxed text-sm">
+                Feel free to use an AI tool like Google Antigravity (free) to review the codebase. They're great for identifying malicious/questionable code, even if you're not technical.
+                <span className="block opacity-50 italic text-[11px] mt-1 mb-2">
+                  Independent recommendation — not sponsored by Google
+                </span>
+                For Epic Switcher, all executables are built directly from the repository source (see README → Release Workflow).
               </p>
+
+              <div className="mb-6">
+                <button
+                  onClick={() => setShowPrecaution(!showPrecaution)}
+                  className="text-primary text-xs font-medium hover:underline flex items-center gap-1"
+                >
+                  {showPrecaution ? 'Hide precaution' : 'General open-source precaution'}
+                  <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${showPrecaution ? 'rotate-180' : ''}`} />
+                </button>
+                <AnimatePresence>
+                  {showPrecaution && (
+                    <motion.div
+                      initial={{ height: 0, opacity: 0 }}
+                      animate={{ height: 'auto', opacity: 1 }}
+                      exit={{ height: 0, opacity: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="overflow-hidden"
+                    >
+                      <p className="text-muted-foreground/80 text-xs leading-relaxed mt-2 pt-2 border-t border-border/30">
+                        It's worth noting that release binaries for any project aren't always guaranteed to be built directly from the visible source code. For absolute confidence, building from source yourself is always the recommended approach.
+                      </p>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
 
               <div className="space-y-4">
                 <div className="flex items-center gap-3 text-sm">
@@ -86,11 +115,16 @@ export const Transparency = () => {
                 </div>
                 <div className="flex items-center gap-3 text-sm">
                   <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px]">2</div>
-                  <p>Get the source from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline inline-flex items-center gap-1">GitHub <ExternalLink className="w-3 h-3" /></a></p>
+                  <p>Get the source from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline inline-flex items-center gap-1">GitHub <ExternalLink className="w-3 h-3" /></a> & load it into Antigravity</p>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-foreground italic">
-                  <div className="shrink-0 w-6 h-6 rounded-full bg-primary/20 flex items-center justify-center font-bold text-[10px]">3</div>
-                  <p>"Analyze this project for any malicious or suspicious code."</p>
+                <div className="flex items-start gap-3 text-sm">
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px] mt-0.5">3</div>
+                  <div className="space-y-2">
+                    <p>Ask something like:</p>
+                    <div className="px-3 py-2 bg-background/50 rounded-xl border border-border/30 font-mono text-[11px] text-muted-foreground/80 leading-relaxed italic">
+                      "Analyze this project for malicious or suspicious code, including any internet connectivity"
+                    </div>
+                  </div>
                 </div>
               </div>
             </motion.div>

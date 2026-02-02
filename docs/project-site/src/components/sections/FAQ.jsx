@@ -52,7 +52,7 @@ export const FAQ = () => {
           </motion.div>
         </div>
 
-        <Accordion type="single" collapsible className="w-full bg-background rounded-xl border p-6 shadow-sm">
+        <Accordion type="single" collapsible className="w-full bg-background rounded-3xl border p-6 shadow-sm">
           {faqItems.map((item, i) => (
             <AccordionItem key={i} value={`item-${i}`}>
               <AccordionTrigger className="text-left font-medium">{item.question}</AccordionTrigger>
