@@ -71,22 +71,21 @@ export const Transparency = () => {
               viewport={{ once: true }}
               className="bg-muted/50 rounded-3xl p-8 border border-border/50 relative overflow-hidden max-w-xl md:ml-auto"
             >
-              <h3 className="text-2xl font-bold mb-4 flex items-center justify-center gap-3">
+              <h3 className="text-2xl font-bold mb-6 flex items-center justify-center gap-3">
                 <FaShieldAlt className="w-6 h-6 text-primary" />
                 <span className="leading-none">Verify with AI</span>
               </h3>
-              <p className="text-muted-foreground mb-4 leading-relaxed text-sm">
+              <p className="text-muted-foreground mb-2 leading-relaxed text-sm">
                 Feel free to use an AI tool like Google Antigravity (free) to review the codebase. They're great for identifying malicious/questionable code, even if you're not technical.
-                <span className="block opacity-50 italic text-[11px] mt-1 mb-2">
+                <span className="block opacity-50 italic text-[11px] my-4 text-center">
                   Independent recommendation — not sponsored by Google
                 </span>
-                For Epic Switcher, all executables are built directly from the repository source (see README → Release Workflow).
               </p>
 
               <div className="mb-6">
                 <button
                   onClick={() => setShowPrecaution(!showPrecaution)}
-                  className="text-primary text-xs font-medium hover:underline flex items-center gap-1"
+                  className="text-muted-foreground/60 text-xs hover:text-primary transition-colors flex items-center gap-1"
                 >
                   {showPrecaution ? 'Hide precaution' : 'General open-source precaution'}
                   <ChevronDown className={`w-3 h-3 transition-transform duration-200 ${showPrecaution ? 'rotate-180' : ''}`} />
@@ -102,13 +101,16 @@ export const Transparency = () => {
                     >
                       <p className="text-muted-foreground/80 text-xs leading-relaxed mt-2 pt-2 border-t border-border/30">
                         It's worth noting that release binaries for any project aren't always guaranteed to be built directly from the visible source code. For absolute confidence, building from source yourself is always the recommended approach.
+                        <span className="block mt-2 font-medium">
+                          Note: Epic Switcher release binaries are built directly from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">source</a> (see <a href="https://github.com/symonxdd/epic-switcher#-release-workflow" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">README → Release Workflow</a>).
+                        </span>
                       </p>
                     </motion.div>
                   )}
                 </AnimatePresence>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-2.5">
                 <div className="flex items-center gap-3 text-sm">
                   <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px]">1</div>
                   <p>Download <a href="https://antigravity.google/" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline inline-flex items-center gap-1">Antigravity <ExternalLink className="w-3 h-3" /></a></p>
@@ -126,6 +128,19 @@ export const Transparency = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+              <div className="mt-6 pt-3 border-t border-border/10">
+                <p className="text-[11px] text-muted-foreground/50 text-center leading-relaxed italic">
+                  For further guidance, feel free to <a
+                    href="#contact"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
+                    }}
+                    className="text-primary/60 hover:text-primary transition-colors underline decoration-primary/20 underline-offset-2 font-medium"
+                  >message me</a> or consult ChatGPT.
+                </p>
               </div>
             </motion.div>
           </div>

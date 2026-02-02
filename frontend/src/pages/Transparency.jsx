@@ -76,7 +76,7 @@ function Transparency() {
         <div className={styles.sectionContainer}>
           <h2 className={styles.sectionTitle}><FaInfoCircle /> How it works</h2>
 
-          <div className={styles.guideItem}>
+          <div className={styles.guideItemCompact}>
             <div className={styles.guideDot}></div>
             <p className={styles.paragraph} style={{ margin: 0 }}>
               The Epic Games Launcher persists the active login session to a file called{' '}
@@ -88,7 +88,7 @@ function Transparency() {
             </p>
           </div>
 
-          <div className={styles.guideItem}>
+          <div className={styles.guideItemCompact}>
             <div className={styles.guideDot}></div>
             <p className={styles.paragraph} style={{ margin: 0 }}>
               Epic Switcher reads this file, extracts the session key, and saves it
@@ -100,7 +100,7 @@ function Transparency() {
             </p>
           </div>
 
-          <div className={styles.guideItem}>
+          <div className={styles.guideItemCompact}>
             <div className={styles.guideDot}></div>
             <p className={styles.paragraph} style={{ margin: 0 }}>
               When swapping accounts, it simply overwrites the session key in{' '}

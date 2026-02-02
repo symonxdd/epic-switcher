@@ -13,7 +13,7 @@ const faqItems = [
   },
   {
     question: "How does it work?",
-    answer: "Epic Switcher automates the switching process by managing your session files. Instead of logging you out, it safely 'sets aside' your current session and swaps it with another stored session by updating the local EpicLoginSession.ini file. This keeps your accounts active and ready to use without re-authentication when you switch back."
+    answer: "When you want to switch accounts, the app saves your current session into a local file and swaps in the session for your other account. This tells the Epic Games Launcher to use the new session instead of your old one, letting you jump between accounts instantly without having to log in manually every time."
   },
   {
     question: "Is it safe to use?",
