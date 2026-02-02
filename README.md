@@ -75,9 +75,11 @@ Thanks for supporting open-source software! 💙
 
 ## 💡 Motivation
 
-Epic Switcher started the same way most of my projects do: I needed it.
+Epic Switcher started the same way most of my projects do: **I, or people around me needed it.**
 
-I regularly had to switch between multiple Epic Games accounts, and the official launcher makes this slower and more annoying than it should be. Logging out, logging back in, re-entering credentials, and often having to enter a 2FA code every time quickly became frustrating.
+Not too long ago, my siblings and I used to play Fortnite together. At some point, I gave her my main Fortnite account since I wasn't playing much anymore, which meant I had to make a separate account to play with them.
+
+Aside from Fortnite (which I don't really play anymore), I'm really into Rocket League, and that's on my main account — the one I gave her. So I was constantly switching between Epic Games accounts, and the official launcher makes that way slower and more annoying than it should be. Logging out, logging back in, re-entering credentials, and dealing with 2FA almost every time got frustrating fast.
 
 Existing solutions were either over-engineered, had outdated UIs, or were bundled with features I didn't want. I just wanted something:
 
@@ -85,7 +87,7 @@ Existing solutions were either over-engineered, had outdated UIs, or were bundle
 - Minimal
 - One-click
 
-So I built Epic Switcher for myself and the people around me. Once it proved useful, I open-sourced it in case it helps others with the same problem.
+So I built Epic Switcher. Once it proved useful, I open-sourced it in case it helps others with the same problem.
 
 <br/>
 
