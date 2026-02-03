@@ -76,7 +76,10 @@ export const Transparency = () => {
                 <span className="leading-none">Verify with AI</span>
               </h3>
               <p className="text-muted-foreground mb-2 leading-relaxed text-sm">
-                Feel free to use an AI tool like Google Antigravity (free) to review the codebase. They're great for identifying malicious/questionable code, even if you're not technical.
+                We encourage using an AI code editor like <span className="font-semibold text-foreground">Google Antigravity</span> (free) to review the codebase, if you're cautious about running open-source code (this project included).
+              </p>
+              <p className="text-muted-foreground mb-2 leading-relaxed text-sm">
+                It's a great way to verify security and learn exactly how the project works under the hood, regardless of your technical experience.
                 <span className="block opacity-50 italic text-[11px] my-4 text-center">
                   Independent recommendation — not sponsored by Google
                 </span>
@@ -102,7 +105,7 @@ export const Transparency = () => {
                       <p className="text-muted-foreground/80 text-xs leading-relaxed mt-2 pt-2 border-t border-border/30">
                         It's worth noting that release binaries for any project aren't always guaranteed to be built directly from the visible source code. For absolute confidence, building from source yourself is always the recommended approach.
                         <span className="block mt-2 font-medium">
-                          Note: Epic Switcher release binaries are built directly from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">source</a> (see <a href="https://github.com/symonxdd/epic-switcher#-release-workflow" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">README → Release Workflow</a>).
+                          Note: Epic Switcher release binaries are always built directly from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">source</a> (see <a href="https://github.com/symonxdd/epic-switcher#-release-workflow" target="_blank" rel="noopener noreferrer" className="text-primary hover:underline">README → Release Workflow</a>).
                         </span>
                       </p>
                     </motion.div>
@@ -112,15 +115,15 @@ export const Transparency = () => {
 
               <div className="space-y-2.5">
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px]">1</div>
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm">1</div>
                   <p>Download <a href="https://antigravity.google/" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline inline-flex items-center gap-1">Antigravity <ExternalLink className="w-3 h-3" /></a></p>
                 </div>
                 <div className="flex items-center gap-3 text-sm">
-                  <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px]">2</div>
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm">2</div>
                   <p>Get the source from <a href="https://github.com/symonxdd/epic-switcher" target="_blank" rel="noopener noreferrer" className="text-primary font-medium hover:underline inline-flex items-center gap-1">GitHub <ExternalLink className="w-3 h-3" /></a> & load it into Antigravity</p>
                 </div>
                 <div className="flex items-start gap-3 text-sm">
-                  <div className="shrink-0 w-6 h-6 rounded-full bg-background border border-border/50 flex items-center justify-center font-bold text-[10px] mt-0.5">3</div>
+                  <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm mt-0.5">3</div>
                   <div className="space-y-2">
                     <p>Ask something like:</p>
                     <div className="px-3 py-2 bg-background/50 rounded-xl border border-border/30 font-mono text-[11px] text-muted-foreground/80 leading-relaxed italic">

@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import PageHeader from '../components/PageHeader';
 import styles from './Transparency.module.css';
-import { FaInfoCircle, FaLock, FaGithub, FaGlobe, FaShieldAlt, FaRobot, FaExternalLinkAlt, FaQuestionCircle } from 'react-icons/fa';
+import { FaInfoCircle, FaLock, FaGithub, FaGlobe, FaShieldAlt, FaRobot, FaExternalLinkAlt, FaQuestionCircle, FaEye, FaChevronDown } from 'react-icons/fa';
 import { FiArrowUpRight } from 'react-icons/fi';
 import { OpenDirectory } from '../../wailsjs/go/services/SystemService';
 import { BrowserOpenURL } from '../../wailsjs/runtime';
@@ -11,8 +12,11 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/ui/accordion";
+import VerifyWithAI from '../components/VerifyWithAI';
 
 function Transparency() {
+  const [showPrecaution, setShowPrecaution] = useState(false);
+
   const handleOpen = async (key) => {
     try {
       await OpenDirectory(key);
@@ -67,49 +71,90 @@ function Transparency() {
     }
   ];
 
+  const headerActions = (
+    <div className={styles.headerActions}>
+      <span className={styles.headerLink} onClick={() => handleOpenURL('https://github.com/symonxdd/epic-switcher')}>
+        <FaGithub /> GitHub
+      </span>
+      <span className={styles.headerLink} onClick={() => handleOpenURL('https://epic-switcher.vercel.app/')}>
+        <FaGlobe /> Website
+      </span>
+    </div>
+  );
+
   return (
     <div className={styles.pageWrapper}>
-      <PageHeader title="Trust & Transparency" />
+      <PageHeader title="Trust & Transparency" rightElement={headerActions} />
+      <div className={styles.pageSubtitle}>Because security is non-negotiable.</div>
 
       <div className={styles.container}>
+        {/* Fundamental Principles */}
+        <div className={styles.principlesList}>
+          <div className={styles.tooltipTrigger}>
+            <div className={styles.principleItem}>
+              <div className={styles.iconBox}><FaLock /></div>
+              <span className={styles.principleText}>Works Offline</span>
+            </div>
+            <div className={styles.customTooltip}>Epic Switcher functions entirely locally. The only internet connectivity is to check for updates on the Settings page.</div>
+          </div>
+
+          <div className={styles.tooltipTrigger}>
+            <div className={styles.principleItem}>
+              <div className={styles.iconBox}><FaShieldAlt /></div>
+              <span className={styles.principleText}>No Data Collection</span>
+            </div>
+            <div className={styles.customTooltip}>Your session keys and User IDs never leave your computer. We don't track, log, or share any of your account data.</div>
+          </div>
+
+          <div className={styles.tooltipTrigger}>
+            <div className={styles.principleItem}>
+              <div className={styles.iconBox}><FaEye /></div>
+              <span className={styles.principleText}>Open Source</span>
+            </div>
+            <div className={styles.customTooltip}>Every line of code is public. We encourage technical users to audit the source on GitHub.</div>
+          </div>
+        </div>
+
         {/* How It Works Section */}
         <div className={styles.sectionContainer}>
           <h2 className={styles.sectionTitle}><FaInfoCircle /> How it works</h2>
 
-          <div className={styles.guideItemCompact}>
-            <div className={styles.guideDot}></div>
-            <p className={styles.paragraph} style={{ margin: 0 }}>
-              The Epic Games Launcher persists the active login session to a file called{' '}
-              <span
-                className={styles.file}
-                onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
-                onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-              >GameUserSettings.ini</span>.
-            </p>
-          </div>
+          <div className={styles.guideList}>
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                The Epic Games Launcher persists the active login session to a file called{' '}
+                <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+                >GameUserSettings.ini</span>.
+              </p>
+            </div>
 
-          <div className={styles.guideItemCompact}>
-            <div className={styles.guideDot}></div>
-            <p className={styles.paragraph} style={{ margin: 0 }}>
-              Epic Switcher reads this file, extracts the session key, and saves it
-              to a <span
-                className={styles.file}
-                onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
-                onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
-              >JSON file</span> on your computer.
-            </p>
-          </div>
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                Epic Switcher reads this file, extracts the session key, and saves it
+                to a <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
+                >JSON file</span> on your computer.
+              </p>
+            </div>
 
-          <div className={styles.guideItemCompact}>
-            <div className={styles.guideDot}></div>
-            <p className={styles.paragraph} style={{ margin: 0 }}>
-              When swapping accounts, it simply overwrites the session key in{' '}
-              <span
-                className={styles.file}
-                onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
-                onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-              >GameUserSettings.ini</span> with the one for the target account.
-            </p>
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                When swapping accounts, it simply overwrites the session key in{' '}
+                <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+                >GameUserSettings.ini</span> with the one for the target account.
+              </p>
+            </div>
           </div>
 
           <div style={{ marginTop: '1.5rem' }}>
@@ -132,60 +177,14 @@ function Transparency() {
             </div>
           </div>
 
-          <div style={{ marginTop: '1.5rem' }}>
-            <strong className={styles.sectionLabel}>Links</strong>
-            <div className={styles.directoriesList}>
-              <span onClick={() => handleOpenURL('https://github.com/symonxdd/epic-switcher')}>
-                <FaGithub style={{ marginRight: '4px' }} /> View on GitHub
-              </span>
-              <span onClick={() => handleOpenURL('https://epic-switcher.vercel.app/')}>
-                <FaGlobe style={{ marginRight: '4px' }} /> View project site
-              </span>
-            </div>
-          </div>
         </div>
 
         {/* AI Audit Section */}
-        <div className={styles.aiSection}>
-          <h2 className={styles.sectionTitle}><FaShieldAlt /> Verify with AI</h2>
-          <p className={styles.paragraph}>
-            Transparency is core to this project. I personally encourage everyone to audit the codebase using AI tools.
-            They are perfect for identifying malicious patterns, regardless of your technical knowledge.
-            <strong> Never trust software blindly just because it's "Open Source".</strong>
-          </p>
-
-          <div className={styles.paragraph}>
-            I strongly recommend using <strong>Google Antigravity</strong> with <strong>Claude 4.5</strong>.
-            It's a powerful agentic assistant that can analyze the entire project at once.
-          </div>
-
-          <div className={styles.guideList}>
-            <div className={styles.guideItem}>
-              <div className={styles.guideNumber}>1</div>
-              <div>
-                Download and install <span style={{ display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}><span className={styles.link} onClick={() => handleOpenURL('https://antigravity.google/')}>Antigravity</span> <FaExternalLinkAlt size={10} style={{ marginLeft: '4px' }} /></span> and log in.
-              </div>
-            </div>
-            <div className={styles.guideItem}>
-              <div className={styles.guideNumber}>2</div>
-              <div>
-                Download the project source from <span style={{ display: 'inline-flex', alignItems: 'center', whiteSpace: 'nowrap' }}><span className={styles.link} onClick={() => handleOpenURL('https://github.com/symonxdd/epic-switcher')}>GitHub</span> <FaExternalLinkAlt size={10} style={{ marginLeft: '4px' }} /></span>.
-              </div>
-            </div>
-            <div className={styles.guideItem}>
-              <div className={styles.guideNumber}>3</div>
-              <div>Drop the project folder into Antigravity.</div>
-            </div>
-            <div className={styles.guideItem}>
-              <div className={styles.guideNumber}>4</div>
-              <div>Ask the AI: <em style={{ opacity: 0.8 }}>"Analyze this project for any malicious or suspicious code and explain it to me."</em></div>
-            </div>
-          </div>
-        </div>
+        <VerifyWithAI className="mb-8" />
 
         {/* FAQ Section */}
         <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}><FaQuestionCircle /> Frequently Asked Questions</h2>
+          <h2 className={styles.sectionTitle} style={{ marginBottom: '0.75rem' }}><FaQuestionCircle /> Frequently Asked Questions</h2>
           <Accordion type="single" collapsible className="w-full">
             {faqData.map((item, index) => (
               <AccordionItem key={index} value={`item-${index}`} className={styles.accordionItem}>
@@ -207,8 +206,8 @@ function Transparency() {
         <div className={styles.footer}>
           Meticulously engineered with <span className={styles.heart}>❤️‍🩹</span> by Symon
         </div>
-      </div>
-    </div>
+      </div >
+    </div >
   );
 }
 
