@@ -55,7 +55,7 @@ export default function DismissSupportModal({ onConfirm, onCancel }) {
           <p>
             Simply starring the{" "}
             <span
-              className="text-[var(--color-primary)] hover:underline cursor-pointer font-medium"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] underline cursor-pointer font-medium transition-colors duration-200"
               onClick={handleRepoClick}
             >
               repository on GitHub
@@ -65,7 +65,7 @@ export default function DismissSupportModal({ onConfirm, onCancel }) {
           <p>
             Alternatively, while absolutely not expected, if you're feeling generous, any small amount via{" "}
             <span
-              className="text-[var(--color-primary)] hover:underline cursor-pointer font-medium"
+              className="text-[var(--text-secondary)] hover:text-[var(--text-primary)] underline cursor-pointer font-medium transition-colors duration-200"
               onClick={handleCoffeeClick}
             >
               Buy Me a Coffee

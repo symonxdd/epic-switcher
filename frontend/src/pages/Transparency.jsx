@@ -88,6 +88,69 @@ function Transparency() {
       <div className={styles.pageSubtitle}>Because security is non-negotiable.</div>
 
       <div className={styles.container}>
+        {/* How It Works Section */}
+        <div className={styles.sectionContainer}>
+          <h2 className={styles.sectionTitle}><FaInfoCircle /> How it works</h2>
+
+          <div className={styles.guideList}>
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                Epic Games Launcher persists the active login session to a file called{' '}
+                <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+                >GameUserSettings.ini</span>.
+              </p>
+            </div>
+
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                Epic Switcher reads this file, extracts the session key, and stores it
+                to a <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
+                >JSON file</span> on your computer.
+              </p>
+            </div>
+
+            <div className={styles.guideItem}>
+              <div className={styles.guideDot}></div>
+              <p className={styles.paragraph} style={{ margin: 0 }}>
+                When swapping accounts, it simply overwrites the session key in{' '}
+                <span
+                  className={styles.file}
+                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
+                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
+                >GameUserSettings.ini</span> with the one for the target account.
+              </p>
+            </div>
+          </div>
+
+          <div style={{ marginTop: '1rem' }}>
+            <strong className={styles.sectionLabel}>Accessed directories</strong>
+            <div className={styles.directoriesList}>
+              <span id="appDataBtn" onClick={() => handleOpen('appData')}>
+                This app's data <FiArrowUpRight className={styles.directoryIcon} />
+              </span>
+              <span id="sessionFileBtn" onClick={() => handleOpen('sessionFile')}>
+                Epic active session file <FiArrowUpRight className={styles.directoryIcon} />
+              </span>
+              <span className={styles.tooltipTrigger} id="sessionFileBtn" onClick={() => handleOpen('logs')} style={{ border: 'none', background: 'none', padding: 0 }}>
+                <span className={styles.directoryButton} style={{ margin: 0 }}>
+                  Epic logs <FiArrowUpRight className={styles.directoryIcon} />
+                </span>
+                <div className={styles.customTooltip}>
+                  Epic Switcher reads the launcher's logs to automatically discover usernames for your accounts, as there is no other way to extract them directly.
+                </div>
+              </span>
+            </div>
+          </div>
+        </div>
+
         {/* Fundamental Principles */}
         <div className={styles.principlesList}>
           <div className={styles.tooltipTrigger}>
@@ -113,70 +176,6 @@ function Transparency() {
             </div>
             <div className={styles.customTooltip}>Every line of code is public. We encourage technical users to audit the source on GitHub.</div>
           </div>
-        </div>
-
-        {/* How It Works Section */}
-        <div className={styles.sectionContainer}>
-          <h2 className={styles.sectionTitle}><FaInfoCircle /> How it works</h2>
-
-          <div className={styles.guideList}>
-            <div className={styles.guideItem}>
-              <div className={styles.guideDot}></div>
-              <p className={styles.paragraph} style={{ margin: 0 }}>
-                The Epic Games Launcher persists the active login session to a file called{' '}
-                <span
-                  className={styles.file}
-                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
-                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-                >GameUserSettings.ini</span>.
-              </p>
-            </div>
-
-            <div className={styles.guideItem}>
-              <div className={styles.guideDot}></div>
-              <p className={styles.paragraph} style={{ margin: 0 }}>
-                Epic Switcher reads this file, extracts the session key, and saves it
-                to a <span
-                  className={styles.file}
-                  onMouseEnter={() => handleFileRefHover('appDataBtn', true)}
-                  onMouseLeave={() => handleFileRefHover('appDataBtn', false)}
-                >JSON file</span> on your computer.
-              </p>
-            </div>
-
-            <div className={styles.guideItem}>
-              <div className={styles.guideDot}></div>
-              <p className={styles.paragraph} style={{ margin: 0 }}>
-                When swapping accounts, it simply overwrites the session key in{' '}
-                <span
-                  className={styles.file}
-                  onMouseEnter={() => handleFileRefHover('sessionFileBtn', true)}
-                  onMouseLeave={() => handleFileRefHover('sessionFileBtn', false)}
-                >GameUserSettings.ini</span> with the one for the target account.
-              </p>
-            </div>
-          </div>
-
-          <div style={{ marginTop: '1.5rem' }}>
-            <strong className={styles.sectionLabel}>Accessed directories</strong>
-            <div className={styles.directoriesList}>
-              <span id="appDataBtn" onClick={() => handleOpen('appData')}>
-                This app's data <FiArrowUpRight className={styles.directoryIcon} />
-              </span>
-              <span id="sessionFileBtn" onClick={() => handleOpen('sessionFile')}>
-                Epic active session file <FiArrowUpRight className={styles.directoryIcon} />
-              </span>
-              <span className={styles.tooltipTrigger} id="sessionFileBtn" onClick={() => handleOpen('logs')} style={{ border: 'none', background: 'none', padding: 0 }}>
-                <span className={styles.directoryButton} style={{ margin: 0 }}>
-                  Epic logs <FiArrowUpRight className={styles.directoryIcon} />
-                </span>
-                <div className={styles.customTooltip}>
-                  Epic Switcher reads the launcher's logs to automatically discover usernames for your accounts, as there is no other way to extract them directly.
-                </div>
-              </span>
-            </div>
-          </div>
-
         </div>
 
         {/* AI Audit Section */}
