@@ -31,6 +31,28 @@
   transition: border-color 0.2s ease;
 }
 
+/* --- Reset Button --- */
+.resetButton {
+  width: fit-content;
+  background-color: var(--background-tertiary, transparent);
+  color: var(--text-primary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-family: Nunito, sans-serif;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.resetButton:hover {
+  background-color: var(--btn-ghost-hover);
+  border-color: var(--border-strong);
+}
+
+.resetButton:active {
+  opacity: 0.8;
+}
+
 .settingsColumn {
   display: flex;
   flex-direction: column;
@@ -182,27 +204,7 @@
   /* Tighter spacing for related items */
 }
 
-/* --- Reset Button --- */
-.resetButton {
-  width: fit-content;
-  background-color: var(--background-tertiary, transparent);
-  color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
-  border-radius: 24px;
-  padding: 6px 12px;
-  font-size: 0.85rem;
-  font-family: Nunito, sans-serif;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
-}
 
-.resetButton:hover {
-  background-color: var(--btn-ghost-hover);
-  border-color: var(--border-strong);
-}
-
-.resetButton:active {
-  opacity: 0.8;
-}
 
 /* --- Generic Action Buttons (like View on GitHub) --- */
 .actionButton {

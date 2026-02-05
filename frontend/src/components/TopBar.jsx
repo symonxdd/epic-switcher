@@ -1,5 +1,6 @@
 import styles from './TopBar.module.css';
 import { WindowMinimise, WindowToggleMaximise, Quit } from '../../wailsjs/runtime/runtime';
+import { ThemeToggle } from './ThemeToggle';
 
 function TopBar({ className }) {
   const title = "Epic Switcher";
@@ -7,7 +8,7 @@ function TopBar({ className }) {
   return (
     <div className={`${styles.topBar} ${className || ''}`} onDoubleClick={WindowToggleMaximise}>
       <div className={styles.titleContainer}>
-        {/* <div className={styles.title}>{title}</div> */}
+        <ThemeToggle className={styles.themeToggle} />
       </div>
 
       <div className={styles.winControls}>

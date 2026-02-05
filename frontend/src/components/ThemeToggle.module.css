@@ -1,0 +1,30 @@
+.toggleBtn {
+  position: relative;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s ease;
+  color: var(--text-secondary);
+  --wails-draggable: no-drag;
+}
+
+.toggleBtn:hover {
+  background: var(--bg-card-active);
+  color: var(--text-primary);
+}
+
+.iconContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon {
+  display: block;
+}

@@ -13,8 +13,11 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  pointer-events: none;
   margin-top: 2px;
+}
+
+.themeToggle {
+  margin-left: 0.25rem;
 }
 
 .smallLogo {

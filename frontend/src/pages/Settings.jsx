@@ -292,39 +292,26 @@ function Settings() {
                 Reset hints
               </button>
             </div>
-          </div>
 
-          {/* --- Theme Selector --- */}
-          <div className={styles.settingsGroup}>
-            <h5 className={styles.labelHeading}>Theme</h5>
-
-            <div className={styles.btnGroup}>
-              {["light", "dark", "system"].map((option) => (
-                <button
-                  key={option}
-                  className={`${styles.btn} ${theme === option ? styles.active : ""}`}
-                  onClick={() => setTheme(option)}
-                >
-                  {option.charAt(0).toUpperCase() + option.slice(1)}
-                </button>
-              ))}
+            <div className={styles.subGroupItems}>
+              {currentTheme === "dark" && (
+                <div className={styles.toggleRow}>
+                  <label htmlFor="trueBlackToggle" className={styles.toggleLabel}>Enable True Black</label>
+                  <label className={styles.switch}>
+                    <input
+                      id="trueBlackToggle"
+                      type="checkbox"
+                      checked={trueBlack}
+                      onChange={(e) => setTrueBlack(e.target.checked)}
+                    />
+                    <span className={styles.slider}></span>
+                  </label>
+                </div>
+              )}
             </div>
-
-            {currentTheme === "dark" && (
-              <div className={styles.trueBlackToggle}>
-                <label htmlFor="trueBlackToggle" className={styles.toggleLabel}>Enable True Black</label>
-                <label className={styles.switch}>
-                  <input
-                    id="trueBlackToggle"
-                    type="checkbox"
-                    checked={trueBlack}
-                    onChange={(e) => setTrueBlack(e.target.checked)}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </div>
-            )}
           </div>
+
+
         </div>
       </div>
 
