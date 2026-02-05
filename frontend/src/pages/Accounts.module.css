@@ -254,7 +254,11 @@
   font-size: 0.75rem;
   font-weight: 700;
   flex-shrink: 0;
-  transition: max-width 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+  transition:
+    max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   line-height: 1;
@@ -276,7 +280,9 @@
   display: flex;
   align-items: center;
   margin-top: -1px;
-  transition: opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transition:
+    opacity 0.4s ease,
+    margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   flex-shrink: 0;
 }
