@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaShieldAlt, FaExternalLinkAlt, FaChevronDown } from 'react-icons/fa';
+import { FiArrowUpRight } from 'react-icons/fi';
 import { BrowserOpenURL } from '../../wailsjs/runtime';
 
 const VerifyWithAI = ({ className }) => {
@@ -21,16 +22,20 @@ const VerifyWithAI = ({ className }) => {
         <span className="leading-none">Verify with AI</span>
       </h3>
 
-      <p className="opacity-80 mb-2 leading-relaxed text-sm">
-        We encourage using an AI code editor like <span className="font-semibold text-white dark:text-black">Google Antigravity</span> (free) to review the codebase, if you're cautious about running open-source code (this project included).
+      <p className="text-white/80 dark:text-black/80 mb-2 leading-relaxed text-sm">
+        We encourage using an AI code editor like <span className="relative group inline-block cursor-default underline decoration-dotted decoration-current/40 hover:decoration-current/80 underline-offset-4 transition-all">
+          <span className="font-medium text-white dark:text-black">Google Antigravity</span>
+          <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-48 p-2.5 bg-white dark:bg-[#1A1A1A] text-black dark:text-white text-[10px] shadow-2xl leading-snug opacity-0 group-hover:opacity-100 pointer-events-none transition-all duration-200 rounded-xl border border-black/10 dark:border-white/10 z-[100] text-center italic">
+            Independent recommendation — not sponsored by Google
+            <span className="absolute top-full left-1/2 -translate-x-1/2 border-8 border-transparent border-t-white dark:border-t-[#1A1A1A]"></span>
+          </span>
+        </span> (free) to review the codebase, if you're cautious about running open-source code (this project included).
       </p>
-      <p className="opacity-80 mb-2 leading-relaxed text-sm">
+      <p className="text-white/80 dark:text-black/80 mb-2 leading-relaxed text-sm">
         It's a great way to verify security and learn exactly how the project works under the hood, regardless of your technical experience.
       </p>
 
-      <span className="block text-[11px] opacity-60 italic my-4 text-center">
-        Independent recommendation — not sponsored by Google
-      </span>
+
 
       <div className="mb-6">
         <button
@@ -66,29 +71,43 @@ const VerifyWithAI = ({ className }) => {
 
       <div className="space-y-[0.4rem]">
         <div className="flex items-center gap-3 text-sm">
-          <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm">1</div>
-          <p>
+          <div className="shrink-0 w-6 h-6 rounded-full bg-white dark:bg-black flex items-center justify-center font-bold text-[10px] text-black dark:text-white shadow-sm leading-none">1</div>
+          <span className="leading-none">
             Download <span className="text-white/90 dark:text-black/90 font-medium underline underline-offset-4 decoration-current/25 hover:decoration-current/60 cursor-pointer inline-flex items-center gap-1" onClick={() => handleOpenURL('https://antigravity.google/')}>
               Antigravity <FaExternalLinkAlt className="w-2.5 h-2.5" />
             </span>
-          </p>
+          </span>
         </div>
         <div className="flex items-center gap-3 text-sm">
-          <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm">2</div>
-          <p>
+          <div className="shrink-0 w-6 h-6 rounded-full bg-white dark:bg-black flex items-center justify-center font-bold text-[10px] text-black dark:text-white shadow-sm leading-none">2</div>
+          <span className="leading-none">
             Get the source from <span className="text-white/90 dark:text-black/90 font-medium underline underline-offset-4 decoration-current/25 hover:decoration-current/60 cursor-pointer inline-flex items-center gap-1" onClick={() => handleOpenURL('https://github.com/symonxdd/epic-switcher')}>
               GitHub <FaExternalLinkAlt className="w-2.5 h-2.5" />
             </span> & load it into Antigravity
-          </p>
+          </span>
         </div>
         <div className="flex flex-col gap-1.5 text-sm">
           <div className="flex items-center gap-3">
-            <div className="shrink-0 w-6 h-6 rounded-full bg-primary flex items-center justify-center font-bold text-[10px] text-primary-foreground shadow-sm">3</div>
-            <p>Ask something like:</p>
+            <div className="shrink-0 w-6 h-6 rounded-full bg-white dark:bg-black flex items-center justify-center font-bold text-[10px] text-black dark:text-white shadow-sm leading-none">3</div>
+            <span className="leading-none">Ask something like:</span>
           </div>
-          <div className="ml-9 px-3 py-2 bg-white/5 dark:bg-black/5 rounded-xl border border-white/10 dark:border-black/10 font-mono text-[11px] opacity-70 leading-relaxed italic">
-            "Analyze this project for malicious or suspicious code, including any internet connectivity"
+          <div
+            className="ml-9 px-3 py-2 rounded-xl border font-mono text-[11px] leading-relaxed italic"
+            style={{
+              backgroundColor: 'var(--prompt-bg)',
+              borderColor: 'var(--prompt-border)'
+            }}
+          >
+            <span className="opacity-70">
+              "Analyze this project for malicious or suspicious code, including any internet connectivity"
+            </span>
           </div>
+          <style dangerouslySetInnerHTML={{
+            __html: `
+            :root { --prompt-bg: #1C1C1C; --prompt-border: #262626; }
+            [data-theme="dark"] { --prompt-bg: #F2F2F2 !important; --prompt-border: #E5E5E5 !important; }
+            .dark { --prompt-bg: #F2F2F2 !important; --prompt-border: #E5E5E5 !important; }
+          `}} />
         </div>
       </div>
 
@@ -96,7 +115,7 @@ const VerifyWithAI = ({ className }) => {
         <p className="text-[11px] text-center leading-relaxed italic">
           <span className="opacity-60">For further guidance, feel free to </span>
           <span
-            className="text-white/70 dark:text-black/70 underline underline-offset-4 decoration-current/25 hover:decoration-current/60 transition-colors cursor-pointer font-medium"
+            className="text-white/50 dark:text-black/50 hover:text-white dark:hover:text-black underline underline-offset-4 decoration-current/25 hover:decoration-current/60 transition-all cursor-pointer font-medium"
             onClick={() => handleOpenURL('https://epic-switcher.vercel.app/#contact')}
           >message me</span>
           <span className="opacity-60"> or consult ChatGPT.</span>

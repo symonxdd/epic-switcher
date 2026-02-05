@@ -66,6 +66,11 @@
   flex-wrap: wrap;
 }
 
+/* Specifically for the tooltips in the Fundamentals section */
+.principlesList .customTooltip {
+  bottom: 100%;
+}
+
 .principleItem {
   display: flex;
   align-items: center;
@@ -154,6 +159,11 @@
   flex-wrap: wrap;
 }
 
+/* Specifically for the tooltip on the 'Epic logs' button */
+.directoriesList .customTooltip {
+  bottom: 135%;
+}
+
 .directoriesList span,
 .directoryButton {
   display: inline-flex;
@@ -239,7 +249,8 @@
 }
 
 .accordionTrigger:hover {
-  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .accordionContent {
@@ -305,9 +316,19 @@
   transform: translateY(-1px);
 }
 
+:global([data-theme="dark"]) .headerLink:hover {
+  color: var(--text-primary);
+  background-color: rgba(255, 255, 255, 0.08);
+  border-color: rgba(255, 255, 255, 0.12);
+}
+
 .headerLink:active {
   transform: translateY(0);
   background-color: color-mix(in srgb, var(--color-primary) 12%, transparent);
+}
+
+:global([data-theme="dark"]) .headerLink:active {
+  background-color: rgba(255, 255, 255, 0.12);
 }
 
 /* Tooltips */

@@ -12,6 +12,7 @@ function Sidebar({ style }) {
   const [showCounter, setShowCounter] = useState(false);
   const [hiddenItems, setHiddenItems] = useState([]);
   const sessionCount = sessions?.length ?? 0;
+  const isDev = import.meta.env.MODE === 'development';
 
   useEffect(() => {
     const handleSync = () => {
@@ -44,10 +45,12 @@ function Sidebar({ style }) {
         {!hiddenItems.includes('sidebar-logo') && (
           <div className={styles.logoContainer}>
             <img src={appLogo} alt="App logo" className={styles.logoImage} />
-            <span className={styles.logoText}>Epic Switcher</span>
+            <div className={styles.logoTextContainer}>
+              <span className={styles.logoText}>Epic Switcher</span>
+              {isDev && <span className={styles.devIndicator}>(dev)</span>}
+            </div>
           </div>
         )}
-
         <div className={styles['sidebar-top']}>
           <NavLink
             to="/accounts"

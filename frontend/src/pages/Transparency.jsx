@@ -51,7 +51,7 @@ function Transparency() {
     },
     {
       question: "Will I get banned for using this?",
-      answer: "No. Epic Switcher simply automates a process that you could do manually by editing a text file. It is not a cheat, and it doesn't give you any unfair advantage in games. It simply helps you manage multiple accounts more easily."
+      answer: "Epic Switcher simply automates a process that you could do manually by editing a text file. It is not a cheat, and it doesn't give you any unfair advantage in games. It simply helps you manage multiple accounts more easily."
     },
     {
       question: "Where is my account data stored?",
