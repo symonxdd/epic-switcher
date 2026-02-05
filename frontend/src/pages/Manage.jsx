@@ -3,7 +3,6 @@ import PageHeader from "../components/PageHeader";
 import { SessionContext } from "../context/SessionContext";
 import { AuthContext } from "../context/AuthContext";
 import toast from "react-hot-toast";
-import HintMessage from "../components/HintMessage";
 import DeleteSessionModal from "../components/modals/DeleteSessionModal";
 import styles from "./Manage.module.css";
 import AccountRow from "../components/AccountRow";
@@ -99,8 +98,6 @@ export default function Manage() {
           )}
         </>
       )}
-
-      {sessions.length > 0 && <HintMessage />}
 
       {deleteTarget && (
         <DeleteSessionModal

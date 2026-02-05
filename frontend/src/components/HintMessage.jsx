@@ -31,7 +31,6 @@ export default function HintMessage() {
         </div>
       </div>
 
-      {/* Tooltip wrapper for the close button */}
       <div className={styles.closeTooltipWrapper}>
         <button
           className={styles.dismissButton}
@@ -40,9 +39,6 @@ export default function HintMessage() {
         >
           <HiX />
         </button>
-        <div className={styles.tooltip}>
-          Bye bye
-        </div>
       </div>
     </div>
   );

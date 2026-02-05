@@ -4,7 +4,7 @@
   min-height: 100%;
   padding-top: 2rem;
   /* Normalized to match Manage.jsx */
-  padding-bottom: 32px;
+  padding-bottom: 80px;
 }
 
 :global([data-layout="top-nav"]) .pageWrapper {

@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Sidebar from '../components/Sidebar';
 import TopBar from '../components/TopBar';
 import styles from './MainLayout.module.css';
@@ -8,6 +9,7 @@ import { Toaster } from 'react-hot-toast';
 import TopNav from '../components/TopNav';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 import { SupportCoffee } from '../components/SupportCoffee';
+import HintMessage from '../components/HintMessage';
 
 function MainLayout({ children }) {
   const { pathname } = useLocation();
@@ -55,6 +57,32 @@ function MainLayout({ children }) {
           )}
         </main>
       </div>
+
+      <AnimatePresence>
+        {(pathname === '/accounts' || pathname === '/manage') && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
+            style={{
+              position: 'fixed',
+              bottom: '24px',
+              left: isTopNav ? '0' : '230px', // Offset for sidebar width
+              right: '0',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              zIndex: 1000,
+              pointerEvents: 'none'
+            }}
+          >
+            <div style={{ pointerEvents: 'auto' }}>
+              <HintMessage />
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {isTopNav && pathname !== '/transparency' && (
         <div className={styles.floatingCoffee}>

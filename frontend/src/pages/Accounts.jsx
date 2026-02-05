@@ -10,7 +10,6 @@ import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from '
 import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
-import HintMessage from "../components/HintMessage";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
@@ -332,7 +331,6 @@ export default function Accounts() {
       )
       }
 
-      {sessions.length > 0 && <HintMessage />}
 
       {
         showAvatarModal && (
