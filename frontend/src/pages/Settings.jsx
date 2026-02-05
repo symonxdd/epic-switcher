@@ -9,6 +9,11 @@ import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
 import { BrowserOpenURL } from '../../wailsjs/runtime';
+import {
+  HiOutlineGift,
+  HiOutlineSquares2X2,
+  HiOutlineAdjustmentsHorizontal
+} from "react-icons/hi2";
 
 const CHEEKY_MESSAGES = [
   "Nice try! Settings are mandatory for your sanity. 🤨",
@@ -150,7 +155,10 @@ function Settings() {
         <div className={styles.settingsColumn}>
           {/* --- Sidebar Settings --- */}
           <div className={styles.settingsGroup}>
-            <h5 className={styles.labelHeading}>Sidebar</h5>
+            <h5 className={styles.labelHeading}>
+              <HiOutlineSquares2X2 className={styles.headingIcon} />
+              Interface
+            </h5>
 
             <div className={styles.subGroupItems}>
 
@@ -241,29 +249,15 @@ function Settings() {
               </div>
             </div>
           </div>
-
-          {/* --- Update Available Notice --- */}
-          {remoteVersion && isRemoteVersionNewer(remoteVersion, currentVersion) && (
-            <div className={styles.settingsGroup}>
-              <h5 className={styles.labelHeading}>
-                New update ready
-                <span className={styles.versionSubtext}>v{remoteVersion}</span>
-              </h5>
-              <button
-                className={styles.actionButton}
-                onClick={handleOpenGithubRelease}
-              >
-                <FaGithub />
-                View on GitHub
-              </button>
-            </div>
-          )}
         </div>
 
         <div className={styles.settingsColumn}>
           {/* --- General Settings --- */}
           <div className={styles.settingsGroup}>
-            <h5 className={styles.labelHeading}>General</h5>
+            <h5 className={styles.labelHeading}>
+              <HiOutlineAdjustmentsHorizontal className={styles.headingIcon} />
+              General
+            </h5>
 
             <div className={styles.btnGroup}>
               <button
@@ -295,7 +289,25 @@ function Settings() {
             </div>
           </div>
 
-
+          {/* --- Update Available Notice --- */}
+          {remoteVersion && isRemoteVersionNewer(remoteVersion, currentVersion) && (
+            <div className={styles.settingsGroup}>
+              <h5 className={styles.labelHeading}>
+                <HiOutlineGift className={styles.giftIcon} />
+                <div className={styles.updateTitleGroup}>
+                  New update ready
+                  <span className={styles.versionSubtext}>v{remoteVersion}</span>
+                </div>
+              </h5>
+              <button
+                className={styles.actionButton}
+                onClick={handleOpenGithubRelease}
+              >
+                <FaGithub />
+                View on GitHub
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
@@ -342,7 +354,7 @@ function Settings() {
           />
         )}
       </AnimatePresence>
-    </div>
+    </div >
   );
 }
 
