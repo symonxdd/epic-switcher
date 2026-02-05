@@ -1,11 +1,15 @@
 .pageWrapper {
   display: flex;
   flex-direction: column;
-  padding: 2rem 1rem 2rem 1rem;
+  padding: 2rem 0 2rem 0;
   scrollbar-width: none;
   /* Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
+}
+
+:global([data-layout="top-nav"]) .pageWrapper {
+  padding-top: 0 !important;
 }
 
 .pageWrapper::-webkit-scrollbar {
@@ -35,10 +39,14 @@
 .pageSubtitle {
   text-align: left;
   color: var(--text-secondary);
-  margin-top: -1rem;
   margin-bottom: 1.5rem;
-  font-size: 0.95rem;
-  opacity: 0.8;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-top: -0.75rem;
+}
+
+:global([data-layout="top-nav"]) .pageSubtitle {
+  margin-top: 0;
 }
 
 .sectionTitle {

@@ -5,6 +5,10 @@
   padding: 2rem 0 80px;
 }
 
+:global([data-layout="top-nav"]) .pageWrapper {
+  padding-top: 0 !important;
+}
+
 .noSessionsMessage {
   text-align: center;
   margin-top: 50px;
@@ -13,11 +17,33 @@
 }
 
 .description {
-  margin-bottom: 24px;
   font-size: 0.9rem;
   color: var(--text-secondary);
   line-height: 1.5;
+  line-height: 1.5;
 }
+
+:global([data-layout="top-nav"]) .description {
+  margin-top: 0;
+}
+
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* Aligns description text with button */
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: -0.75rem;
+}
+
+/* Remove separate margin-bottom from description since container handles it */
+.description {
+  margin-bottom: 0;
+  /* ... existing styles ... */
+}
+
+
 
 .addButton {
   display: flex;
@@ -71,6 +97,11 @@
   border-radius: 8px;
 }
 
-.listContainer::-webkit-scrollbar-thumb:hover {
-  background: var(--text-secondary);
+
+.mobileAddBtn {
+  display: none;
+}
+
+:global([data-layout="top-nav"]) .mobileAddBtn {
+  display: flex;
 }

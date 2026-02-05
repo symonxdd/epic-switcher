@@ -1,11 +1,17 @@
 .topNav {
   width: 100%;
-  background-color: var(--bg-surface);
+  background-color: color-mix(in srgb, var(--bg-surface) 60%, transparent);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   padding: 0 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
   height: 56px;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  border-bottom: 1px solid color-mix(in srgb, var(--border-subtle) 60%, transparent);
 }
 
 .navContainer {
@@ -18,8 +24,10 @@
 .navItem {
   color: var(--text-secondary);
   text-decoration: none;
+  color: var(--text-secondary);
+  text-decoration: none;
   font-size: 0.9rem;
-  font-weight: 500;
+  font-weight: 600;
   transition: color 0.2s ease;
   position: relative;
   padding: 0.5rem 0;

@@ -47,11 +47,7 @@ function Transparency() {
   const faqData = [
     {
       question: "Is Epic Switcher safe to use?",
-      answer: "Yes. Epic Switcher is safe because it only manages local file data on your computer. It never touches the internet to share info (except for update checks) or talk to Epic's servers. By automating a process you could technically do by hand in a text editor, it maintains a small, secure footprint on your system."
-    },
-    {
-      question: "Will I get banned for using this?",
-      answer: "Epic Switcher simply automates a process that you could do manually by editing a text file. It is not a cheat, and it doesn't give you any unfair advantage in games. It simply helps you manage multiple accounts more easily."
+      answer: "Yes. Epic Switcher is safe because it only manages local file data on your computer. It never touches the internet (except for Epic Switcher update checks) or talks to Epic's servers. By automating a process you could technically do by hand in a text editor, it maintains a small, secure footprint on your system."
     },
     {
       question: "Where is my account data stored?",
@@ -59,7 +55,7 @@ function Transparency() {
     },
     {
       question: "I accidentally logged out in the Epic Games Launcher. What now?",
-      answer: "Don't worry! Simply log back into the Epic Games Launcher and come back to Epic Switcher. The app will automatically detect your session and refresh the session key for you."
+      answer: "Don't worry. Simply log back into the Epic Games Launcher and come back to Epic Switcher. The app will automatically detect your session and refresh the session key for you."
     },
     {
       question: "Why was I logged out after some time?",

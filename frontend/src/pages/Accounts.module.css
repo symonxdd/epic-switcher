@@ -273,6 +273,7 @@
 
   background-color: #2a2a2a;
   z-index: 15;
+  padding-right: 12px;
 }
 
 .activeAccountBadge span {
@@ -285,6 +286,7 @@
     margin-left 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   flex-shrink: 0;
+  will-change: opacity, margin-left;
 }
 
 .activeAccountBadge:hover span {

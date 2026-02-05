@@ -63,8 +63,18 @@ export default function Manage() {
         }
       />
 
-      <div className={styles.description}>
-        Add new accounts, set nicknames, and delete unused sessions.
+      <div className={styles.headerRow}>
+        <div className={styles.description}>
+          Add new accounts, set nicknames, and delete unused sessions.
+        </div>
+        {/* Mobile/TopNav Add Button - Visible when Header is hidden */}
+        <button
+          className={`${styles.addButton} ${styles.mobileAddBtn}`}
+          onClick={() => setShowAddModal(true)}
+        >
+          <HiPlus />
+          <span>Add</span>
+        </button>
       </div>
 
       {!isLoading && (

@@ -7,6 +7,10 @@
   padding: 2rem 0 32px;
 }
 
+:global([data-layout="top-nav"]) .settingsContainer {
+  padding-top: 0 !important;
+}
+
 /* --- Responsive Layout for Groups --- */
 .settingsGrid {
   display: flex;
@@ -15,6 +19,8 @@
   align-items: flex-start;
   padding-bottom: 24px;
 }
+
+
 
 /* --- Shared Group Styling --- */
 .settingsGroup {

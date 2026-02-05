@@ -36,7 +36,7 @@ function MainLayout({ children }) {
       {/* TopNav rendered conditionally, but could also be hidden via CSS if strictly needed. 
           Given it's lightweight, conditional is okay, but user wanted strict no-lag for SIDEBAR. 
           The Sidebar is the heavy one. */}
-      {isTopNav && <TopNav />}
+      {/* TopNav moved inside main for proper scrolling overlap */}
 
       <div className={styles.mainLayout}>
         {/* CRITICAL: Keep Sidebar mounted ALWAYS to prevent re-mount lag/animation replay */}
@@ -49,9 +49,12 @@ function MainLayout({ children }) {
           ref={contentRef}
         >
           {isTopNav ? (
-            <div className={styles.contentWrapper}>
-              {children}
-            </div>
+            <>
+              <TopNav />
+              <div className={styles.contentWrapper}>
+                {children}
+              </div>
+            </>
           ) : (
             children
           )}
