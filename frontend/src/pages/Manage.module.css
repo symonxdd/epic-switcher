@@ -61,6 +61,10 @@
   font-family: inherit;
 }
 
+:global([data-theme="dark"]) .addButton {
+  border-color: var(--border-strong);
+}
+
 .addButton:hover {
   background: var(--btn-ghost-hover, rgba(255, 255, 255, 0.1));
   color: var(--text-primary);
