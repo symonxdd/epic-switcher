@@ -42,6 +42,7 @@ function MainLayout({ children }) {
 
         <main
           id="main-content"
+          data-layout={layoutMode}
           className={isTopNav ? styles.contentTopNav : styles.content}
           ref={contentRef}
         >

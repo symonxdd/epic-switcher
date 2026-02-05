@@ -33,13 +33,13 @@ export const LayoutToggle = ({ className }) => {
       onDoubleClick={(e) => e.stopPropagation()}
       className={`${styles.toggleBtn} ${className || ""}`}
       aria-label="Toggle layout mode"
-      title={layoutMode === 'sidebar' ? "Switch to Top Navigation" : "Switch to Sidebar"}
+      title={layoutMode === 'sidebar' ? "Switch to top navigation" : "Switch to side navigation"}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={layoutMode}
-          initial={{ scale: 0.8, opacity: 0, rotate: layoutMode === 'sidebar' ? 0 : 90 }}
-          animate={{ scale: 1, opacity: 1, rotate: layoutMode === 'sidebar' ? 0 : 90 }}
+          initial={{ scale: 0.8, opacity: 0, rotate: layoutMode === 'sidebar' ? 90 : 0 }}
+          animate={{ scale: 1, opacity: 1, rotate: layoutMode === 'sidebar' ? 90 : 0 }}
           exit={{ scale: 0.8, opacity: 0 }}
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className={styles.iconContainer}

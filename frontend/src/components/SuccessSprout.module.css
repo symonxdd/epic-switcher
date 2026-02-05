@@ -1,0 +1,15 @@
+.sproutContainer {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  pointer-events: none;
+  z-index: 10;
+  margin-left: 8px;
+}
+
+.leafIcon {
+  color: #10B981;
+  filter: drop-shadow(0 2px 4px rgba(16, 185, 129, 0.2));
+  font-size: 1.1rem;
+}

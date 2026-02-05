@@ -16,6 +16,7 @@ import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 import { useAvatarCache } from '../context/AvatarCacheContext';
 import { getBorderThickness } from '../components/modals/CustomizeAvatarModal/avatarUtils';
+import SuccessSprout from '../components/SuccessSprout';
 
 export default function Accounts() {
   const location = useLocation();
@@ -36,6 +37,7 @@ export default function Accounts() {
     return stored !== null ? stored === 'true' : true;
   });
   const [borderThickness, setBorderThickness] = useState(getBorderThickness);
+  const [lastSwitchedId, setLastSwitchedId] = useState(null);
   const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
@@ -66,8 +68,14 @@ export default function Accounts() {
   async function handleSwitchAccount(session) {
     try {
       await SwitchAccount(session);
-      toast.success(`Switched to account: ${session.alias || session.username || session.userId}`, { id: "switch-account" });
+      // toast.success(`Switched to account: ${session.alias || session.username || session.userId}`, { id: "switch-account" });
       setActiveLoginSession(session);
+      setLastSwitchedId(session.userId);
+
+      // Reset after animation
+      setTimeout(() => {
+        setLastSwitchedId(null);
+      }, 2500);
     } catch (err) {
       console.error(err);
       toast.error("Failed to switch account.", { id: "switch-account-error" });
@@ -210,6 +218,7 @@ export default function Accounts() {
                       <div className={styles.activeAccountInfo}>
                         <div className={styles.activeAccountName}>
                           {activeSession.alias || activeSession.username || activeSession.userId}
+                          {lastSwitchedId === activeSession.userId && <SuccessSprout key={activeSession.userId} />}
                         </div>
 
                         {isNewSession && (
