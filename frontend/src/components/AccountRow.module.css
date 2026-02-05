@@ -83,12 +83,17 @@
   display: flex;
   align-items: center;
   margin-left: 20px;
+  /* Use row-reverse to keep the icon anchored on the right visually and physically */
+  flex-direction: row-reverse;
   justify-content: flex-start;
+  /* With row-reverse, start is the right side */
+  /* Keep icon on the right side */
   gap: 0;
   min-width: 32px;
   max-width: 32px;
   height: 32px;
-  padding: 0px 6px 1px 6px;
+  padding: 0 7px;
+  /* Enough room for 1.1rem icon (~17.6px) in 32px width */
   background-color: #222;
   border: 1px solid #444;
   border-radius: 20px;
@@ -96,18 +101,29 @@
   font-size: 0.75rem;
   font-weight: 700;
   flex-shrink: 0;
-  transition: max-width 0.4s cubic-bezier(0.19, 1, 0.22, 1), background-color 0.3s ease, box-shadow 0.3s ease;
+
+  /* Refined smooth transitions without padding shift */
+  transition:
+    max-width 0.5s cubic-bezier(0.4, 0, 0.2, 1),
+    background-color 0.3s ease,
+    box-shadow 0.3s ease;
+
   z-index: 10;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   line-height: 1;
   cursor: default;
   overflow: hidden;
   white-space: nowrap;
+
+  /* Anchor to the right to expand leftwards smoothly */
+  transform-origin: right center;
+  will-change: max-width;
+  backface-visibility: hidden;
 }
 
 .activeAccountBadge:hover {
-  max-width: 300px;
-  padding-right: 8px;
+  max-width: 165px;
+  /* Compact and stable expansion */
   background-color: #2a2a2a;
 }
 
@@ -116,13 +132,13 @@
   display: flex;
   align-items: center;
   margin-top: -1px;
-  transition: opacity 0.3s ease, margin-left 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  transition: opacity 0.4s ease, margin-right 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   white-space: nowrap;
   flex-shrink: 0;
 }
 
 .activeAccountBadge:hover span {
-  margin-left: 8px;
+  margin-right: 8px;
   opacity: 1;
 }
 
@@ -143,6 +159,8 @@
 .activeAccountBadge svg {
   font-size: 1.1rem;
   flex-shrink: 0;
+  transform: translateY(-1px);
+  /* Nudge up for perfect visual centering */
 }
 
 .avatarNoBorder:has(img) {
