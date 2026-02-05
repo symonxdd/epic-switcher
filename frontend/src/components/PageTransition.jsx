@@ -5,7 +5,7 @@ const pageVariants = {
   initial: {
     opacity: 0,
     y: 10,
-    scale: 0.99
+    scale: 1
   },
   in: {
     opacity: 1,
@@ -19,7 +19,7 @@ const pageVariants = {
   out: {
     opacity: 0,
     y: -10,
-    scale: 0.99,
+    scale: 1,
     transition: {
       duration: 0.25,
       ease: 'easeOut'

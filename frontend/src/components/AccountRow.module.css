@@ -121,6 +121,11 @@
   backface-visibility: hidden;
 }
 
+/* Fix for Top Nav mode centering (User feedback) */
+:global([data-layout="top-nav"]) .activeAccountBadge {
+  padding: 0 6px 0 8px;
+}
+
 .activeAccountBadge:hover {
   max-width: 165px;
   /* Compact and stable expansion */
@@ -161,6 +166,11 @@
   flex-shrink: 0;
   transform: translateY(-1px);
   /* Nudge up for perfect visual centering */
+}
+
+/* Remove transform for Top Nav mode as it looks "too much up" there */
+:global([data-layout="top-nav"]) .activeAccountBadge svg {
+  transform: none;
 }
 
 .avatarNoBorder:has(img) {
