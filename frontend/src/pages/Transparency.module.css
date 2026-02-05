@@ -269,18 +269,7 @@
   opacity: 0.8;
 }
 
-.footer {
-  text-align: center;
-  padding: 2rem 0 0;
-  font-size: 0.7rem;
-  color: var(--text-secondary);
-  opacity: 0.8;
-}
 
-.heart {
-  color: var(--color-primary);
-  margin: 0 2px;
-}
 
 .headerActions {
   display: flex;

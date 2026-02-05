@@ -153,23 +153,7 @@ function Settings() {
             <h5 className={styles.labelHeading}>Sidebar</h5>
 
             <div className={styles.subGroupItems}>
-              <div className={styles.toggleRow}>
-                <label htmlFor="layoutModeToggle" className={styles.toggleLabel}>Use top navigation</label>
-                <label className={styles.switch}>
-                  <input
-                    id="layoutModeToggle"
-                    type="checkbox"
-                    checked={layoutMode === 'top-nav'}
-                    onChange={(e) => {
-                      const newMode = e.target.checked ? 'top-nav' : 'sidebar';
-                      setLayoutMode(newMode);
-                      localStorage.setItem(STORAGE_KEYS.LAYOUT_MODE, newMode);
-                      window.dispatchEvent(new Event("storage"));
-                    }}
-                  />
-                  <span className={styles.slider}></span>
-                </label>
-              </div>
+
 
               {layoutMode !== 'top-nav' && (
                 <div className={styles.toggleRow}>
@@ -330,6 +314,18 @@ function Settings() {
         <div className={styles.footerBottom}>
           Powered by React, Go & Wails
         </div>
+
+        <div className={styles.signature}>
+          <div className={styles.tooltipTrigger}>
+            <span className={styles.dictionaryLink}>Meticulously</span>
+            <div className={styles.customTooltip}>
+              <span className={styles.tooltipType}>(adverb)</span> — in a way that shows great attention to detail; very thoroughly.
+              <br />
+              <small style={{ opacity: 0.7, marginTop: '4px', display: 'block' }}>Synonyms: thoroughly, precisely</small>
+            </div>
+          </div> engineered with <span className={styles.heart}>❤️‍🩹</span> by Symon
+        </div>
+
       </div>
 
       <AnimatePresence>

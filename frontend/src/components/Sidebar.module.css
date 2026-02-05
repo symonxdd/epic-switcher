@@ -98,13 +98,13 @@
 .sidebar-item:hover {
   background: var(--bg-card-active);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-strong);
 }
 
 .sidebar-item.active {
   background: var(--bg-card-active);
   color: var(--text-primary);
-  border: 1px solid var(--border-subtle);
+  border: 1px solid var(--border-strong);
 }
 
 .icon {

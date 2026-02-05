@@ -273,14 +273,69 @@
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
-  gap: 2px;
+  gap: 8px;
 }
 
 .footerTop,
-.footerBottom {
+.footerBottom,
+.signature {
   font-size: 0.77rem;
   color: var(--text-secondary);
   font-weight: 400;
   opacity: 1;
   letter-spacing: normal;
+}
+
+.heart {
+  color: var(--color-primary);
+  margin: 0 2px;
+}
+
+/* Tooltips */
+.tooltipTrigger {
+  position: relative;
+  display: inline-block;
+  cursor: default;
+}
+
+.customTooltip {
+  position: absolute;
+  bottom: 125%;
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  width: 260px;
+  padding: 10px 14px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  color: var(--text-primary);
+  font-size: 0.75rem;
+  line-height: 1.4;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.25s ease;
+  z-index: 1000;
+  backdrop-filter: blur(8px);
+}
+
+.tooltipTrigger:hover .customTooltip {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+.tooltipType {
+  font-style: italic;
+  margin-right: 4px;
+}
+
+.dictionaryLink {
+  text-decoration: underline dotted color-mix(in srgb, currentColor 40%, transparent);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease;
+}
+
+.dictionaryLink:hover {
+  text-decoration-color: currentColor;
 }

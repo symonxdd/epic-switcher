@@ -1,6 +1,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
-import { FaUserAlt, FaCog, FaLayerGroup, FaShieldAlt } from 'react-icons/fa';
+import { FaRegUser, FaUserAlt, FaCog, FaListUl, FaShieldAlt } from 'react-icons/fa';
 import { SessionContext } from '../context/SessionContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
@@ -76,7 +76,7 @@ function Sidebar({ style }) {
                   : styles['sidebar-item']
               }
             >
-              <FaLayerGroup className={styles.icon} />
+              <FaListUl className={styles.icon} />
               <span>Manage</span>
             </NavLink>
           )}

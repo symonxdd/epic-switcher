@@ -202,9 +202,7 @@ function Transparency() {
           <strong>Disclaimer:</strong> No specific policies are known to restrict the automation of local Epic Games Launcher configuration files; however, usage is at the user's own discretion.
         </div>
 
-        <div className={styles.footer}>
-          Meticulously engineered with <span className={styles.heart}>❤️‍🩹</span> by Symon
-        </div>
+
       </div >
     </div >
   );

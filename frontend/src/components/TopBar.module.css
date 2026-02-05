@@ -3,6 +3,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+  background-color: var(--bg-app);
+  transition: background-color var(--transition-speed);
   align-items: flex-start;
   padding: 6px 0.75rem 0 0.75rem;
   user-select: none;
@@ -16,7 +18,7 @@
   margin-top: 2px;
 }
 
-.themeToggle {
+.topBtn {
   margin-left: 0.25rem;
 }
 

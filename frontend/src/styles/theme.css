@@ -44,11 +44,11 @@
   --color-primary-hover: #a81e11;
 
   /* Background Surfaces */
-  --bg-app: #101010;
+  --bg-app: #060606;
   --bg-surface: #0A0A0A;
-  --bg-card: #101010;
-  --bg-card-hover: #2f2f2f;
-  --bg-card-active: #161616;
+  --bg-card: #0c0c0c;
+  --bg-card-hover: #1a1a1a;
+  --bg-card-active: #121212;
   --bg-toast: #101010;
   --bg-tab-bar: #202020;
   --bg-avatar-active: color-mix(in srgb, var(--text-primary) 12%, var(--bg-card));
@@ -61,8 +61,8 @@
   --text-header: #e9e9e9;
 
   /* Borders & Dividers */
-  --border-subtle: #232323;
-  --border-strong: #3d3d3d;
+  --border-subtle: #161616;
+  --border-strong: #2a2a2a;
 
   /* Interactive Elements */
   --btn-primary-bg: #212121;
