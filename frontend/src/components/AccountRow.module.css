@@ -92,7 +92,7 @@
   min-width: 32px;
   max-width: 32px;
   height: 32px;
-  padding: 0 7px;
+  padding: 0 6px 0 8px;
   /* Enough room for 1.1rem icon (~17.6px) in 32px width */
   background-color: #222;
   border: 1px solid #444;
@@ -121,10 +121,7 @@
   backface-visibility: hidden;
 }
 
-/* Fix for Top Nav mode centering (User feedback) */
-:global([data-layout="top-nav"]) .activeAccountBadge {
-  padding: 0 6px 0 8px;
-}
+
 
 .activeAccountBadge:hover {
   max-width: 165px;
@@ -164,12 +161,6 @@
 .activeAccountBadge svg {
   font-size: 1.1rem;
   flex-shrink: 0;
-  transform: translateY(-1px);
-  /* Nudge up for perfect visual centering */
-}
-
-/* Remove transform for Top Nav mode as it looks "too much up" there */
-:global([data-layout="top-nav"]) .activeAccountBadge svg {
   transform: none;
 }
 
