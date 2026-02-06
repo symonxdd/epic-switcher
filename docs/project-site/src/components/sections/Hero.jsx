@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Download } from 'lucide-react';
 import { Screenshots } from './Screenshots';
 import { useLatestRelease } from '../../hooks/useLatestRelease';
+import { MilestoneBadge } from '../MilestoneBadge';
 
 export const Hero = () => {
   const { downloadUrl } = useLatestRelease();
@@ -10,7 +11,8 @@ export const Hero = () => {
   return (
     <section id="home" className="pt-20 pb-0 overflow-hidden">
       <div className="mx-auto text-center px-0 sm:px-6">
-        <div className="max-w-4xl mx-auto mb-0 px-6 sm:px-0">
+        <div className="max-w-4xl mx-auto mb-0 px-6 sm:px-0 relative">
+          {/* <MilestoneBadge /> */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
