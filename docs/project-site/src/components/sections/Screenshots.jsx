@@ -3,14 +3,22 @@ import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion'
 import { Pause, Play } from 'lucide-react';
 
 const screenshots = [
-  { id: 1, src: '/screenshots/accounts.png', lightSrc: '/screenshots/accounts-light.png', title: 'Accounts' },
+  {
+    id: 1,
+    title: 'Accounts',
+    variants: [
+      { name: 'Sidebar', dark: '/screenshots/accounts.png', light: '/screenshots/accounts-light.png' },
+      { name: 'Top Nav', dark: '/screenshots/accounts-top-layout.png', light: '/screenshots/accounts-light-top-layout.png' }
+    ]
+  },
   { id: 2, src: '/screenshots/customize-avatar.png', title: 'Customize Avatar' },
-  { id: 3, src: '/screenshots/manage.png', title: 'Manage' },
-  { id: 4, src: '/screenshots/add-session.png', title: 'Add Session' },
-  { id: 5, src: '/screenshots/edit-nickname.png', title: 'Edit Nickname' },
-  { id: 6, src: '/screenshots/delete-session.png', title: 'Delete Session' },
-  { id: 7, src: '/screenshots/transparency.png', title: 'Trust & Transparency' },
-  { id: 8, src: '/screenshots/settings-update-notice.png', title: 'Settings' },
+  { id: 3, src: '/screenshots/crop-image.png', title: 'Crop Image' },
+  { id: 4, src: '/screenshots/manage.png', title: 'Manage' },
+  { id: 5, src: '/screenshots/add-session.png', title: 'Add Session' },
+  { id: 6, src: '/screenshots/edit-nickname.png', title: 'Edit Nickname' },
+  { id: 7, src: '/screenshots/delete-session.png', title: 'Delete Session' },
+  { id: 8, src: '/screenshots/transparency.png', title: 'Trust & Transparency' },
+  { id: 9, src: '/screenshots/settings-update-notice.png', title: 'Settings' },
 ];
 
 const DURATION = 5000;
@@ -18,6 +26,7 @@ const SLIDER_INITIAL_POS = 62;
 
 export const Screenshots = () => {
   const [index, setIndex] = useState(0);
+  const [variationIndex, setVariationIndex] = useState(0);
   const [direction, setDirection] = useState(0);
   const [isHovering, setIsHovering] = useState(false);
   const [isPaused, setIsPaused] = useState(false);
@@ -32,9 +41,10 @@ export const Screenshots = () => {
     }
     setDirection(newIndex > index ? 1 : -1);
     setIndex(newIndex);
+    setVariationIndex(0); // Reset variation when switching main image
     setIsPaused(false);
     progress.set(0);
-    setSliderPosition(SLIDER_INITIAL_POS); // Reset slider on change
+    setSliderPosition(SLIDER_INITIAL_POS);
   }, [index, isPaused, progress]);
 
   // Handle Comparison Slider Interaction
@@ -72,7 +82,7 @@ export const Screenshots = () => {
   }, [isDragging, handleSliderMove]);
 
   useEffect(() => {
-    if (isHovering || isPaused) return;
+    if (isHovering || isPaused || isDragging) return;
 
     const remainingDuration = DURATION * (1 - progress.get());
 
@@ -86,7 +96,7 @@ export const Screenshots = () => {
     });
 
     return () => controls.stop();
-  }, [index, isHovering, isPaused, progress, handleIndexChange]);
+  }, [index, isHovering, isPaused, isDragging, progress, handleIndexChange]);
 
   const variants = {
     enter: (direction) => ({
@@ -111,7 +121,12 @@ export const Screenshots = () => {
     }),
   };
 
-  const hasVariant = screenshots[index].lightSrc;
+  const currentScreen = screenshots[index];
+  const activeVariant = currentScreen.variants ? currentScreen.variants[variationIndex] : null;
+  const darkSrc = activeVariant ? activeVariant.dark : currentScreen.src;
+  const lightSrc = activeVariant ? activeVariant.light : (currentScreen.lightSrc || null);
+  const hasVariant = !!lightSrc;
+  const hasMultipleLayouts = currentScreen.variants && currentScreen.variants.length > 1;
 
   return (
     <div
@@ -136,14 +151,14 @@ export const Screenshots = () => {
         >
           {/* This invisible image forces the container to the correct aspect ratio of the current slide */}
           <img
-            src={screenshots[index].src}
+            src={darkSrc}
             className="w-full h-auto opacity-0 pointer-events-none select-none"
             aria-hidden="true"
             draggable="false"
           />
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
-              key={index}
+              key={`${index}-${variationIndex}`}
               custom={direction}
               variants={variants}
               initial="enter"
@@ -159,8 +174,8 @@ export const Screenshots = () => {
             >
               {/* Dark Mode (Base) */}
               <img
-                src={screenshots[index].src}
-                alt={screenshots[index].title}
+                src={darkSrc}
+                alt={currentScreen.title}
                 className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                 draggable="false"
               />
@@ -169,8 +184,8 @@ export const Screenshots = () => {
               {hasVariant && (
                 <>
                   <img
-                    src={screenshots[index].lightSrc}
-                    alt={`${screenshots[index].title} Light Mode`}
+                    src={lightSrc}
+                    alt={`${currentScreen.title} Light Mode`}
                     style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                     className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-none"
                     draggable="false"
@@ -192,6 +207,38 @@ export const Screenshots = () => {
               )}
             </motion.div>
           </AnimatePresence>
+
+          {/* Layout Switcher (Floating Switch) */}
+          {hasMultipleLayouts && (
+            <div
+              className="absolute bottom-6 left-1/2 -translate-x-1/2 z-[20] flex p-1.5 bg-background/30 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl transition-all hover:bg-background/40"
+              onMouseDown={(e) => e.stopPropagation()} // Prevent slider drag when clicking buttons
+              onTouchStart={(e) => e.stopPropagation()}
+            >
+              {currentScreen.variants.map((variant, i) => (
+                <button
+                  key={variant.name}
+                  onClick={() => {
+                    setVariationIndex(i);
+                    setIsPaused(true); // Pause when interacting with variants
+                  }}
+                  className={`relative px-5 py-2 text-[11px] font-bold uppercase tracking-wider transition-all duration-300 rounded-full z-10 ${variationIndex === i
+                    ? 'text-foreground'
+                    : 'text-foreground/40 hover:text-foreground/60'
+                    }`}
+                >
+                  {variationIndex === i && (
+                    <motion.div
+                      layoutId="layout-pill"
+                      className="absolute inset-0 bg-white/10 border border-white/10 rounded-full -z-10"
+                      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                    />
+                  )}
+                  {variant.name}
+                </button>
+              ))}
+            </div>
+          )}
         </div>
 
 
@@ -199,6 +246,7 @@ export const Screenshots = () => {
         <div className="flex justify-center gap-4 mt-8 px-4">
           {screenshots.map((screen, i) => {
             const isActive = i === index;
+            const thumbSrc = screen.variants ? screen.variants[0].dark : screen.src;
             return (
               <div key={screen.id} className="flex-1 min-w-0 max-w-[160px] flex flex-col items-center">
                 <button
@@ -209,13 +257,14 @@ export const Screenshots = () => {
                     }`}
                 >
                   <img
-                    src={screen.src}
+                    src={thumbSrc}
                     alt={screen.title}
                     className="w-full h-full object-cover"
+                    draggable="false"
                   />
 
                   {/* Active Progress Bar */}
-                  {isActive && (
+                  {isActive && !isPaused && !isHovering && !isDragging && (
                     <div className="absolute bottom-0 left-0 right-0 h-1 bg-black/40 backdrop-blur-[2px]">
                       <motion.div
                         style={{ scaleX: progress }}
