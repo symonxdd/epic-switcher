@@ -125,6 +125,7 @@ export const Screenshots = () => {
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onMouseDown={hasVariant ? (e) => {
+            e.preventDefault();
             setIsDragging(true);
             updateSliderPosition(e.clientX);
           } : undefined}
@@ -138,6 +139,7 @@ export const Screenshots = () => {
             src={screenshots[index].src}
             className="w-full h-auto opacity-0 pointer-events-none select-none"
             aria-hidden="true"
+            draggable="false"
           />
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
@@ -160,6 +162,7 @@ export const Screenshots = () => {
                 src={screenshots[index].src}
                 alt={screenshots[index].title}
                 className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
+                draggable="false"
               />
 
               {/* Light Mode (Revealed) */}
@@ -170,6 +173,7 @@ export const Screenshots = () => {
                     alt={`${screenshots[index].title} Light Mode`}
                     style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                     className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-none"
+                    draggable="false"
                   />
 
                   {/* Slider Handle */}
