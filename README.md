@@ -11,7 +11,7 @@
 <br/>
 
 <div align="center">
-  <img src="./docs/screens/accounts-page.png" alt="Main screen" width="869">
+  <img src="./docs/screens/accounts.png" alt="Main screen" width="869">
 </div>
 
 ## 📥 Downloads
@@ -93,33 +93,43 @@ So I built Epic Switcher. Once it proved useful, I open-sourced it in case it he
 
 ## 🖼️ Screens  
 
-### Accounts page
-![accounts-page](./docs/screens/accounts-page-with-add-button.png)
+### Accounts
+![accounts](./docs/screens/accounts.png)
 
 <br/>
 
-### Add Session modal
-![add-account-modal](./docs/screens/add-account-modal.png)
+### Customize avatar
+![customize-avatar](./docs/screens/customize-avatar.png)
 
 <br/>
 
-### Manage page
-![manage-page](./docs/screens/manage-page-with-hint.png)
+### Manage
+![manage](./docs/screens/manage.png)
 
 <br/>
 
-### Delete Session modal
-![delete-session-modal](./docs/screens/delete-session-modal.png) 
+### Add session
+![add-session](./docs/screens/add-session.png)
 
 <br/>
 
-### How it Works page
-![/how-it-works](./docs/screens/how-it-works-page.png) 
+### Edit nickname
+![edit-nickname](./docs/screens/edit-nickname.png)
 
 <br/>
 
-### Settings page
-![settings-page](./docs/screens/settings-page-with-update-notice.png) 
+### Delete session
+![delete-session](./docs/screens/delete-session.png) 
+
+<br/>
+
+### Trust & Transparency
+![how-it-works](./docs/screens/transparency.png) 
+
+<br/>
+
+### Settings
+![settings](./docs/screens/settings-update-notice.png) 
 
 <br/>
 
