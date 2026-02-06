@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
+import { createPortal } from "react-dom";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   HiOutlineCheckCircle,
   HiOutlinePencil,
@@ -18,6 +20,9 @@ export default function AccountRow({
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
   const [showBorder, setShowBorder] = useState(getBorderPreference());
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
+  const triggerRef = useRef(null);
   const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
@@ -52,6 +57,22 @@ export default function AccountRow({
     e.stopPropagation();
     onDeleteSession?.(session.userId);
   };
+
+  const handleMouseEnter = () => {
+    if (triggerRef.current) {
+      const rect = triggerRef.current.getBoundingClientRect();
+      setTooltipPos({
+        top: Math.round(rect.top),
+        left: Math.round(rect.left + rect.width / 2),
+      });
+      setShowTooltip(true);
+    }
+  };
+
+  const handleMouseLeave = () => {
+    setShowTooltip(false);
+  };
+
 
   return (
     <div className={styles.rowWrapper}>
@@ -89,12 +110,41 @@ export default function AccountRow({
         <div className={styles.actionsWrapper}>
           <>
             {isActive && (
-              <div className={styles.activeAccountBadge}>
-                <HiOutlineCheckCircle />
-                <span>Currently logged in</span>
+              <div
+                className={styles.tooltipTrigger}
+                onMouseEnter={handleMouseEnter}
+                onMouseLeave={handleMouseLeave}
+                ref={triggerRef}
+              >
+                <div className={styles.activeIndicator}>
+                  <HiOutlineCheckCircle />
+                </div>
+                {createPortal(
+                  <AnimatePresence>
+                    {showTooltip && (
+                      <motion.div
+                        className={styles.portalTooltip}
+                        initial={{ opacity: 0, x: "-50%", y: 4 }}
+                        animate={{ opacity: 1, x: "-50%", y: 0 }}
+                        exit={{ opacity: 0, x: "-50%", y: 4 }}
+                        transition={{
+                          duration: 0.25,
+                          ease: [0.4, 0, 0.2, 1],
+                          opacity: { duration: 0.15 }
+                        }}
+                        style={{
+                          top: `${tooltipPos.top - 42}px`, // Fixed height + small gap
+                          left: `${tooltipPos.left}px`,
+                        }}
+                      >
+                        Currently logged in
+                      </motion.div>
+                    )}
+                  </AnimatePresence>,
+                  document.body
+                )}
               </div>
             )}
-
 
             <button
               type="button"
