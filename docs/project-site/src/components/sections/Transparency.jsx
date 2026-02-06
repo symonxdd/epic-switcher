@@ -21,12 +21,12 @@ export const Transparency = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="space-y-6 max-w-lg"
+              className="space-y-6 max-w-lg mx-auto lg:mx-0"
             >
               <div className="flex gap-4 text-left">
                 <div className="shrink-0 mt-1.5">
@@ -69,7 +69,7 @@ export const Transparency = () => {
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="bg-white dark:bg-[#141414] text-black dark:text-white/90 rounded-3xl p-8 border border-border/50 relative overflow-hidden max-w-xl md:ml-auto shadow-sm"
+              className="bg-white dark:bg-[#141414] text-black dark:text-white/90 rounded-3xl p-8 border border-border/50 relative overflow-hidden max-w-xl mx-auto lg:ml-auto shadow-sm"
             >
               <h3 className="text-2xl font-bold mb-6 flex items-center justify-center gap-3">
                 <FaShieldAlt className="w-6 h-6 text-black dark:text-white" />

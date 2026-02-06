@@ -14,7 +14,7 @@ export const Downloads = () => {
           {/* Decorative elements - Subtle Glow */}
           <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/2 w-[500px] h-[500px] bg-primary-foreground/10 rounded-full blur-[120px] pointer-events-none" />
 
-          <div className="relative z-10 grid md:grid-cols-2 gap-12 items-center">
+          <div className="relative z-10 grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold tracking-tight mb-8">Ready to switch?</h2>
               <p className="text-primary-foreground/70 text-lg mb-12 leading-relaxed max-w-lg">
@@ -46,16 +46,16 @@ export const Downloads = () => {
               </div>
             </div>
 
-            <div className="flex justify-center md:justify-end">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-[400px] w-full">
+            <div className="flex justify-center lg:justify-end">
+              <div className="grid grid-cols-2 gap-3 sm:gap-6 max-w-[280px] sm:max-w-[400px] w-full">
                 {[
                   { icon: Zap, title: "Zero Install", desc: "Just run the .exe" },
-                  { icon: ShieldCheck, title: "Open Source", desc: "Transparency by default" },
+                  { icon: ShieldCheck, title: "Open Source", desc: "Transparency" },
                 ].map((feature, i) => (
-                  <div key={i} className="aspect-square flex flex-col items-center justify-center text-center p-6 bg-background rounded-[24px] text-foreground shadow-sm">
-                    <feature.icon className="w-8 h-8 mb-4 text-foreground/80" />
-                    <h3 className="text-lg font-bold mb-1">{feature.title}</h3>
-                    <p className="text-xs opacity-80 leading-relaxed">{feature.desc}</p>
+                  <div key={i} className="aspect-square flex flex-col items-center justify-center text-center p-3 sm:p-4 bg-background rounded-[20px] sm:rounded-[24px] text-foreground shadow-sm">
+                    <feature.icon className="w-6 h-6 sm:w-8 sm:h-8 mb-2 text-foreground/80" />
+                    <h3 className="text-sm sm:text-lg font-bold mb-0.5 sm:mb-1">{feature.title}</h3>
+                    <p className="text-[11px] sm:text-sm font-medium opacity-100 leading-tight sm:leading-relaxed text-foreground/70">{feature.desc}</p>
                   </div>
                 ))}
               </div>

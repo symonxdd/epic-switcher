@@ -132,11 +132,11 @@ export const Screenshots = () => {
     <div
       className="relative w-full pb-12 pt-0"
     >
-      <div className="relative max-w-[960px] mx-auto z-10">
+      <div className="relative max-w-[960px] mx-auto z-10 sm:px-4">
         {/* Main Image Container */}
         <div
           id="slider-container"
-          className={`relative w-full overflow-hidden rounded-lg border border-white/5 ${hasVariant ? 'cursor-ew-resize' : ''}`}
+          className={`relative w-full overflow-hidden rounded-none sm:rounded-lg border-y sm:border border-white/5 ${hasVariant ? 'cursor-ew-resize' : ''}`}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
           onMouseDown={hasVariant ? (e) => {
@@ -241,18 +241,17 @@ export const Screenshots = () => {
           )}
         </div>
 
-
         {/* Thumbnails Container */}
-        <div className="flex justify-center gap-4 mt-8 px-4">
+        <div className="flex sm:justify-center gap-3 mt-6 px-0 sm:px-4 overflow-x-auto py-4 thin-scrollbar snap-x snap-mandatory touch-pan-x sm:cursor-default">
           {screenshots.map((screen, i) => {
             const isActive = i === index;
             const thumbSrc = screen.variants ? screen.variants[0].dark : screen.src;
             return (
-              <div key={screen.id} className="flex-1 min-w-0 max-w-[160px] flex flex-col items-center">
+              <div key={screen.id} className={`flex-none w-32 sm:flex-1 sm:max-w-[160px] flex flex-col items-center snap-center ${i === 0 ? 'ml-4 sm:ml-0' : ''} ${i === screenshots.length - 1 ? 'mr-4 sm:mr-0' : ''}`}>
                 <button
                   onClick={() => handleIndexChange(i)}
-                  className={`group relative w-full aspect-video rounded-xl overflow-hidden transition-all duration-500 border-2 ${isActive
-                    ? 'border-transparent z-20 shadow-lg'
+                  className={`group relative w-full aspect-video rounded-sm overflow-hidden transition-all duration-500 border-2 ${isActive
+                    ? 'border-white/50 z-20 shadow-lg scale-105'
                     : 'border-white/10 hover:border-white/30 grayscale hover:grayscale-0'
                     }`}
                 >

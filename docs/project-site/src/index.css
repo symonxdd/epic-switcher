@@ -121,6 +121,30 @@
   --sidebar-ring: oklch(0.556 0 0);
 }
 
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility thin-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary) transparent;
+  &::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 10px;
+    opacity: 0.5;
+  }
+}
+
 @layer base {
   * {
     @apply border-border outline-ring/50;

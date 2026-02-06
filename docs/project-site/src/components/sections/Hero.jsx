@@ -9,14 +9,14 @@ export const Hero = () => {
 
   return (
     <section id="home" className="pt-20 pb-0 overflow-hidden">
-      <div className="container mx-auto px-6 text-center">
-        <div className="max-w-4xl mx-auto mb-0">
+      <div className="mx-auto text-center px-0 sm:px-6">
+        <div className="max-w-4xl mx-auto mb-0 px-6 sm:px-0">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h1 className="text-3xl md:text-6xl font-bold tracking-tight mb-4 pb-4 pt-12 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
+            <h1 className="text-4xl md:text-6xl font-bold tracking-tight mb-4 pb-4 pt-12 bg-gradient-to-b from-foreground to-foreground/70 bg-clip-text text-transparent">
               Switch Epic Accounts <br className="hidden md:block" /> Seamlessly
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed mb-4">
@@ -48,7 +48,7 @@ export const Hero = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.2, duration: 0.8 }}
-          className="mt-0 scroll-mt-24"
+          className="mt-0 scroll-mt-24 w-full"
         >
           <Screenshots />
         </motion.div>
