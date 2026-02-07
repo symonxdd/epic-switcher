@@ -10,7 +10,7 @@ export const Motivation = () => {
   ];
 
   return (
-    <section id="motivation" className="py-16 bg-background scroll-mt-24">
+    <section id="motivation" className="py-16 bg-background scroll-mt-16">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <motion.div

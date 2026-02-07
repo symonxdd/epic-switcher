@@ -39,7 +39,7 @@ const faqItems = [
 
 export const FAQ = () => {
   return (
-    <section id="faq" className="py-16 bg-background scroll-mt-24">
+    <section id="faq" className="py-16 bg-background scroll-mt-16">
       <div className="container mx-auto px-6 max-w-3xl">
         <div className="text-center mb-12">
           <motion.div

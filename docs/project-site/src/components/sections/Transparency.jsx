@@ -6,7 +6,7 @@ import { FaShieldAlt } from 'react-icons/fa';
 export const Transparency = () => {
   const [showPrecaution, setShowPrecaution] = useState(false);
   return (
-    <section id="transparency" className="py-16 bg-background scroll-mt-24">
+    <section id="transparency" className="py-16 bg-background scroll-mt-16">
       <div className="container mx-auto px-6">
         <div className="max-w-5xl mx-auto">
           <motion.div
