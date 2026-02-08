@@ -168,7 +168,7 @@ export const Contact = () => {
                     <div className="flex items-center gap-2 animate-in fade-in slide-in-from-bottom-1 duration-300">
                       <Copy className="w-3.5 h-3.5 text-muted-foreground group-hover:text-foreground transition-colors" />
                       <span className="text-xs text-muted-foreground group-hover:text-foreground transition-colors">
-                        Or just copy my email address
+                        Or copy my email address
                       </span>
                     </div>
                   )}

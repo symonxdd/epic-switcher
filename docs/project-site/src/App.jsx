@@ -10,6 +10,7 @@ import { Transparency } from './components/sections/Transparency';
 import { SupportCoffee } from './components/sections/SupportCoffee';
 import { ScrollToTop } from './components/sections/ScrollToTop';
 import { ThemeProvider } from './components/ThemeProvider';
+import { EmojiReactions } from './components/EmojiReactions';
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Contact />
         </main>
         <SupportCoffee />
+        <EmojiReactions />
         <ScrollToTop />
         <Footer />
       </div>
