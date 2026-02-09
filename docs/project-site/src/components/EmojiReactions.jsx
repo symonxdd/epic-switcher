@@ -1,13 +1,89 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { REACTION_EMOJIS } from '@/lib/emoji-config';
+
+const EmojiButton = ({ emoji, isExpanded, count, hasReacted, isLastReaction, apiAvailable, handleReact }) => {
+  const handleClick = (e) => {
+    e.stopPropagation();
+    // On mobile, if not expanded, let the container handle the expansion tap.
+    if (window.innerWidth < 768 && !isExpanded) return;
+    handleReact(emoji.char);
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      disabled={hasReacted || !apiAvailable}
+      className={`group relative flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 whitespace-nowrap ${hasReacted && isExpanded
+        ? 'cursor-default'
+        : 'hover:bg-black/5 dark:hover:bg-white/5 active:scale-90'
+        }`}
+    >
+      {/* Selection highlight fade */}
+      <AnimatePresence>
+        {hasReacted && isExpanded && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, delay: 0.1 }}
+            className="absolute inset-0 bg-primary/10 dark:bg-white/10 rounded-full"
+          />
+        )}
+      </AnimatePresence>
+
+      <span
+        className={`text-xl relative z-10 transition-transform duration-300 ${!hasReacted && apiAvailable && 'group-hover:scale-125'
+          }`}
+      >
+        {emoji.char}
+      </span>
+
+      <AnimatePresence>
+        {count > 0 && (
+          <motion.span
+            key={count}
+            initial={{ opacity: 0 }}
+            animate={{
+              opacity: isExpanded ? 1 : 0,
+              width: isExpanded ? 'auto' : 0,
+              marginLeft: isExpanded ? 1 : -8
+            }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+            className={`text-xs font-bold font-mono overflow-hidden relative z-10 ${hasReacted
+              ? 'text-primary dark:text-white'
+              : 'text-muted-foreground'
+              }`}
+          >
+            {count}
+          </motion.span>
+        )}
+      </AnimatePresence>
+
+      {/* Pop effect on click */}
+      {isLastReaction && (
+        <motion.div
+          initial={{ scale: 0, opacity: 1 }}
+          animate={{ scale: 2, opacity: 0 }}
+          transition={{ duration: 0.5 }}
+          className="absolute inset-0 pointer-events-none flex items-center justify-center z-20"
+        >
+          <div className="w-4 h-4 rounded-full bg-primary/20 blur-sm" />
+        </motion.div>
+      )}
+    </button>
+  );
+};
 
 export const EmojiReactions = () => {
   const [counts, setCounts] = useState({});
   const [userReactions, setUserReactions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [apiAvailable, setApiAvailable] = useState(true);
-  const [isHovered, setIsHovered] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(false);
+  const containerRef = useRef(null);
+  const scrollRef = useRef(null);
 
   useEffect(() => {
     // Load counts from API
@@ -39,6 +115,34 @@ export const EmojiReactions = () => {
     fetchCounts();
   }, []);
 
+  // Reset scroll position on collapse
+  useEffect(() => {
+    if (!isExpanded && scrollRef.current) {
+      scrollRef.current.scrollLeft = 0;
+    }
+  }, [isExpanded]);
+
+  // Handle outside clicks/taps to collapse on mobile
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (containerRef.current && !containerRef.current.contains(event.target)) {
+        if (isExpanded) {
+          setIsExpanded(false);
+        }
+      }
+    };
+
+    if (isExpanded) {
+      document.addEventListener('mousedown', handleClickOutside);
+      document.addEventListener('touchstart', handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
+  }, [isExpanded]);
+
   const handleReact = async (char) => {
     if (userReactions.includes(char)) return;
 
@@ -63,123 +167,43 @@ export const EmojiReactions = () => {
     }
   };
 
-  const EmojiButton = ({ emoji, index, isHovered }) => {
-    const hasReacted = userReactions.includes(emoji.char);
-    const count = counts[emoji.char] || 0;
-
-    return (
-      <button
-        onClick={() => handleReact(emoji.char)}
-        disabled={hasReacted || !apiAvailable}
-        className={`group relative flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 whitespace-nowrap ${hasReacted && isHovered
-          ? 'cursor-default'
-          : 'hover:bg-black/5 dark:hover:bg-white/5 active:scale-90'
-          }`}
-      >
-        {/* Selection highlight fade */}
-        <AnimatePresence>
-          {hasReacted && isHovered && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.3, delay: 0.1 }}
-              className="absolute inset-0 bg-primary/10 dark:bg-white/10 rounded-full"
-            />
-          )}
-        </AnimatePresence>
-
-        <span
-          className={`text-xl relative z-10 transition-transform duration-300 ${!hasReacted && apiAvailable && 'group-hover:scale-125'
-            }`}
-        >
-          {emoji.char}
-        </span>
-
-        <AnimatePresence mode="wait">
-          {count > 0 && (
-            <motion.span
-              key={count}
-              initial={{ opacity: 0 }}
-              animate={{
-                opacity: isHovered ? 1 : 0,
-                width: isHovered ? 'auto' : 0,
-                marginLeft: isHovered ? 0 : -8
-              }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
-              className={`text-xs font-bold font-mono overflow-hidden relative z-10 ${hasReacted
-                ? 'text-primary dark:text-white'
-                : 'text-muted-foreground'
-                }`}
-            >
-              {count}
-            </motion.span>
-          )}
-        </AnimatePresence>
-
-        {/* Pop effect on click */}
-        {hasReacted && userReactions[userReactions.length - 1] === emoji.char && (
-          <motion.div
-            initial={{ scale: 0, opacity: 1 }}
-            animate={{ scale: 2, opacity: 0 }}
-            transition={{ duration: 0.5 }}
-            className="absolute inset-0 pointer-events-none flex items-center justify-center z-20"
-          >
-            <div className="w-4 h-4 rounded-full bg-primary/20 blur-sm" />
-          </motion.div>
-        )}
-      </button>
-    );
+  const handleMobileToggle = () => {
+    if (window.innerWidth < 768) {
+      setIsExpanded(!isExpanded);
+    }
   };
 
   return (
     <motion.div
+      ref={containerRef}
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1.5, duration: 0.8, ease: "circOut" }}
       className="fixed bottom-8 left-8 z-[100]"
     >
-      {/* Desktop version with hover */}
       <div
-        className="hidden md:block relative w-fit"
-        onMouseLeave={() => setIsHovered(false)}
+        className="relative w-fit"
+        onMouseLeave={() => window.innerWidth >= 768 && setIsExpanded(false)}
+        onClick={handleMobileToggle}
       >
         {/* Title - Tab Style */}
         <motion.div
           initial={false}
           animate={{
-            opacity: isHovered ? 1 : 0,
-            y: isHovered ? 1 : 10,
-            scale: isHovered ? 1 : 0.95,
+            opacity: isExpanded ? 1 : 0,
+            y: isExpanded ? 1 : 10,
+            scale: isExpanded ? 1 : 0.95,
             x: '-50%'
           }}
           transition={{
-            duration: isHovered ? 0.3 : 0.2,
-            delay: isHovered ? 0.35 : 0,
+            duration: isExpanded ? 0.3 : 0.2,
+            delay: isExpanded ? 0.35 : 0,
             ease: "easeOut"
           }}
           className="absolute bottom-full left-1/2 z-0 w-fit flex flex-col items-center"
         >
           <div className="relative px-6 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 border-b-0 rounded-t-2xl shadow-sm flex items-center justify-center">
-            {/* Left Inverted Corner */}
-            <div
-              className="absolute bottom-0 -left-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
-              style={{
-                maskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)',
-                WebkitMaskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)'
-              }}
-            />
-            {/* Right Inverted Corner */}
-            <div
-              className="absolute bottom-0 -right-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
-              style={{
-                maskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)',
-                WebkitMaskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)'
-              }}
-            />
-
-            <span className="text-[10px] font-bold uppercase tracking-widest text-black/60 dark:text-white/50 whitespace-nowrap leading-none mt-0.5">
+            <span className="text-xs font-semibold text-black/70 dark:text-foreground/80 group-hover:text-primary transition-colors tracking-tight whitespace-nowrap leading-none mt-0.5">
               Let us know your thoughts
             </span>
           </div>
@@ -189,55 +213,39 @@ export const EmojiReactions = () => {
         <motion.div
           initial={false}
           animate={{
-            width: isHovered ? 'auto' : '64px'
+            width: isExpanded ? 'auto' : '64px'
           }}
           transition={{
             duration: 0.35,
-            delay: isHovered ? 0 : 0.2,
+            delay: isExpanded ? 0 : 0.2,
             ease: [0.25, 0.1, 0.25, 1]
           }}
-          onMouseEnter={() => setIsHovered(true)}
-          className="relative z-10 bg-white/60 dark:bg-black/40 backdrop-blur-2xl border border-black/10 dark:border-border/50 rounded-full shadow-2xl overflow-hidden"
+          onMouseEnter={() => window.innerWidth >= 768 && setIsExpanded(true)}
+          className="relative z-10 bg-white/60 dark:bg-black/40 backdrop-blur-2xl border border-black/10 dark:border-border/50 rounded-full shadow-2xl overflow-hidden max-w-[calc(100vw-64px)]"
         >
-          <div className="flex items-center gap-1 p-1.5">
-            {REACTION_EMOJIS.map((emoji, index) => (
-              <EmojiButton key={emoji.char} emoji={emoji} index={index} isHovered={isHovered} />
+          <div
+            ref={scrollRef}
+            className={`flex items-center gap-1 p-1.5 overflow-x-auto scrollbar-hide ${!isExpanded ? 'pointer-events-none' : 'pointer-events-auto'}`}
+            style={{
+              msOverflowStyle: 'none',
+              scrollbarWidth: 'none',
+              WebkitOverflowScrolling: 'touch'
+            }}
+          >
+            {REACTION_EMOJIS.map((emoji) => (
+              <EmojiButton
+                key={emoji.char}
+                emoji={emoji}
+                isExpanded={isExpanded}
+                count={counts[emoji.char] || 0}
+                hasReacted={userReactions.includes(emoji.char)}
+                isLastReaction={userReactions[userReactions.length - 1] === emoji.char}
+                apiAvailable={apiAvailable}
+                handleReact={handleReact}
+              />
             ))}
           </div>
         </motion.div>
-      </div>
-
-      {/* Mobile version - always expanded */}
-      <div className="md:hidden block relative w-fit mt-12">
-        {/* Title - Tab Style for Mobile */}
-        <div className="absolute bottom-full left-1/2 -translate-x-1/2 px-6 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 border-b-0 rounded-t-2xl flex items-center justify-center">
-          {/* Left Inverted Corner */}
-          <div
-            className="absolute bottom-0 -left-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
-            style={{
-              maskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)',
-              WebkitMaskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)'
-            }}
-          />
-          {/* Right Inverted Corner */}
-          <div
-            className="absolute bottom-0 -right-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
-            style={{
-              maskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)',
-              WebkitMaskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)'
-            }}
-          />
-          <span className="text-[10px] font-bold uppercase tracking-widest text-black/60 dark:text-white/50 whitespace-nowrap leading-none mt-0.5">
-            Let us know your thoughts
-          </span>
-        </div>
-
-        {/* Emoji bar */}
-        <div className="flex items-center gap-1 p-1.5 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 rounded-full shadow-2xl">
-          {REACTION_EMOJIS.map((emoji, index) => (
-            <EmojiButton key={emoji.char} emoji={emoji} index={index} isHovered={true} />
-          ))}
-        </div>
       </div>
     </motion.div>
   );
