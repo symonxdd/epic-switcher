@@ -1,7 +1,8 @@
 {
   "name": "wails-release-helper",
   "scripts": {
-    "release": "node release.js"
+    "release": "node release.js",
+    "vercel:dev": "vercel dev"
   },
   "devDependencies": {
     "@types/node": "^25.0.9",
