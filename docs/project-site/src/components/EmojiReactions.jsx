@@ -39,19 +39,18 @@ const EmojiButton = ({ emoji, isExpanded, count, hasReacted, isLastReaction, api
         {emoji.char}
       </span>
 
-      <AnimatePresence>
+      <AnimatePresence mode="wait">
         {count > 0 && (
           <motion.span
-            key={count}
+            layout
             initial={{ opacity: 0 }}
-            animate={{
-              opacity: isExpanded ? 1 : 0,
-              width: isExpanded ? 'auto' : 0,
-              marginLeft: isExpanded ? 1 : -8
-            }}
+            animate={{ opacity: isExpanded ? 1 : 0 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-            className={`text-xs font-bold font-mono overflow-hidden relative z-10 ${hasReacted
+            transition={{
+              opacity: { duration: 0.2 },
+              layout: { duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }
+            }}
+            className={`text-xs font-bold font-mono overflow-hidden relative z-10 ml-1 ${hasReacted
               ? 'text-primary dark:text-white'
               : 'text-muted-foreground'
               }`}
@@ -211,6 +210,7 @@ export const EmojiReactions = () => {
 
         {/* Emoji bar */}
         <motion.div
+          layout
           initial={false}
           animate={{
             width: isExpanded ? 'auto' : '64px'
@@ -225,7 +225,7 @@ export const EmojiReactions = () => {
         >
           <div
             ref={scrollRef}
-            className={`flex items-center gap-1 p-1.5 overflow-x-auto scrollbar-hide ${!isExpanded ? 'pointer-events-none' : 'pointer-events-auto'}`}
+            className={`flex items-center gap-1 p-1.5 overflow-x-auto overflow-y-hidden scrollbar-hide ${!isExpanded ? 'pointer-events-none' : 'pointer-events-auto'}`}
             style={{
               msOverflowStyle: 'none',
               scrollbarWidth: 'none',
