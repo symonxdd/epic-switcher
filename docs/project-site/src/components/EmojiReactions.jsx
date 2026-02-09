@@ -107,7 +107,7 @@ export const EmojiReactions = () => {
                 marginLeft: isHovered ? 0 : -8
               }}
               exit={{ opacity: 0 }}
-              transition={{ duration: 0.2, ease: "easeInOut" }}
+              transition={{ duration: 0.4, delay: 0.2, ease: "easeInOut" }}
               className={`text-xs font-bold font-mono overflow-hidden relative z-10 ${hasReacted
                 ? 'text-primary dark:text-white'
                 : 'text-muted-foreground'
@@ -142,46 +142,62 @@ export const EmojiReactions = () => {
     >
       {/* Desktop version with hover */}
       <div
-        className="hidden md:block w-fit"
+        className="hidden md:block relative w-fit"
         onMouseLeave={() => setIsHovered(false)}
       >
-        {/* Title - shows on hover */}
+        {/* Title - Tab Style */}
         <motion.div
           initial={false}
           animate={{
             opacity: isHovered ? 1 : 0,
-            height: isHovered ? 'auto' : 0,
-            width: isHovered ? 'auto' : '64px',
-            marginBottom: isHovered ? 0 : -8
+            y: isHovered ? 1 : 10,
+            scale: isHovered ? 1 : 0.95,
+            x: '-50%'
           }}
-          transition={{ duration: 0.25, ease: "easeInOut" }}
-          className="overflow-hidden"
+          transition={{
+            duration: isHovered ? 0.3 : 0.2,
+            delay: isHovered ? 0.35 : 0,
+            ease: "easeOut"
+          }}
+          className="absolute bottom-full left-1/2 z-0 w-fit flex flex-col items-center"
         >
-          <div
-            className="px-4 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-md border border-black/5 dark:border-white/10 shadow-sm"
-            style={{
-              borderTopLeftRadius: '12px',
-              borderTopRightRadius: '12px',
-              borderBottomLeftRadius: '4px',
-              borderBottomRightRadius: '4px',
-              borderBottom: 'none'
-            }}
-          >
-            <span className="text-xs font-semibold text-black/70 dark:text-foreground/80 tracking-tight whitespace-nowrap">
+          <div className="relative px-6 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 border-b-0 rounded-t-2xl shadow-sm flex items-center justify-center">
+            {/* Left Inverted Corner */}
+            <div
+              className="absolute bottom-0 -left-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
+              style={{
+                maskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)',
+                WebkitMaskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)'
+              }}
+            />
+            {/* Right Inverted Corner */}
+            <div
+              className="absolute bottom-0 -right-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
+              style={{
+                maskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)',
+                WebkitMaskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)'
+              }}
+            />
+
+            <span className="text-[10px] font-bold uppercase tracking-widest text-black/60 dark:text-white/50 whitespace-nowrap leading-none mt-0.5">
               Let us know your thoughts
             </span>
           </div>
         </motion.div>
 
-        {/* Emoji bar with smooth width transition */}
+        {/* Emoji bar */}
         <motion.div
           initial={false}
           animate={{
             width: isHovered ? 'auto' : '64px'
           }}
-          transition={{ duration: 0.35, ease: [0.25, 0.1, 0.25, 1] }}
+          transition={{
+            duration: 0.35,
+            delay: isHovered ? 0 : 0.2,
+            ease: [0.25, 0.1, 0.25, 1]
+          }}
           onMouseEnter={() => setIsHovered(true)}
-          className="bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 rounded-full shadow-2xl overflow-hidden"
+          className="relative z-10 bg-white/60 dark:bg-black/40 backdrop-blur-2xl border border-black/10 dark:border-border/50 rounded-full shadow-2xl overflow-hidden"
         >
           <div className="flex items-center gap-1 p-1.5">
             {REACTION_EMOJIS.map((emoji, index) => (
@@ -192,19 +208,26 @@ export const EmojiReactions = () => {
       </div>
 
       {/* Mobile version - always expanded */}
-      <div className="md:hidden block">
-        {/* Title */}
-        <div
-          className="px-4 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-md border border-black/5 dark:border-white/10 shadow-sm"
-          style={{
-            borderTopLeftRadius: '12px',
-            borderTopRightRadius: '12px',
-            borderBottomLeftRadius: '4px',
-            borderBottomRightRadius: '4px',
-            borderBottom: 'none'
-          }}
-        >
-          <span className="text-xs font-semibold text-black/70 dark:text-foreground/80 tracking-tight whitespace-nowrap">
+      <div className="md:hidden block relative w-fit mt-12">
+        {/* Title - Tab Style for Mobile */}
+        <div className="absolute bottom-full left-1/2 -translate-x-1/2 px-6 py-2 bg-white/40 dark:bg-black/20 backdrop-blur-xl border border-black/10 dark:border-border/50 border-b-0 rounded-t-2xl flex items-center justify-center">
+          {/* Left Inverted Corner */}
+          <div
+            className="absolute bottom-0 -left-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
+            style={{
+              maskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)',
+              WebkitMaskImage: 'radial-gradient(circle at 0 0, transparent 12px, black 12.5px)'
+            }}
+          />
+          {/* Right Inverted Corner */}
+          <div
+            className="absolute bottom-0 -right-3 w-3 h-3 bg-white/40 dark:bg-black/20 backdrop-blur-xl"
+            style={{
+              maskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)',
+              WebkitMaskImage: 'radial-gradient(circle at 100% 0, transparent 12px, black 12.5px)'
+            }}
+          />
+          <span className="text-[10px] font-bold uppercase tracking-widest text-black/60 dark:text-white/50 whitespace-nowrap leading-none mt-0.5">
             Let us know your thoughts
           </span>
         </div>
