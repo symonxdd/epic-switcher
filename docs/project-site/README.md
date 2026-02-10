@@ -67,13 +67,13 @@ npm install && npm run dev
 
 Testing the serverless function in `api/reactions.js` and its Redis integration requires the Vercel CLI and access to the project’s Vercel account.
 
-From the **repository root**, run:
+From the **repository root**:
 
 ```bash
 vercel dev
 ```
 
-If the project isn't [linked](https://vercel.com/docs/cli/project-linking) yet, the CLI will prompt you automatically and pull required environment variables.
+If the project isn't [linked](https://vercel.com/docs/cli/project-linking) yet, the CLI will prompt to link it and pull required environment variables.
 
 `vercel dev` runs the local Vite dev server alongside a local API handler that imitates the Vercel deployment environment.
 
