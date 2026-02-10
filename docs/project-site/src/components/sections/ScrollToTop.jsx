@@ -43,7 +43,7 @@ export const ScrollToTop = () => {
           }}
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          className="fixed bottom-32 right-8 z-[100]"
+          className="fixed bottom-32 right-8 z-40"
         >
           <Button
             variant="ghost"

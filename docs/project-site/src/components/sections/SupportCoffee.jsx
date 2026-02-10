@@ -8,7 +8,7 @@ export const SupportCoffee = () => {
       initial={{ opacity: 0, scale: 0.8 }}
       animate={{ opacity: 1, scale: 1 }}
       transition={{ delay: 1, duration: 0.5 }}
-      className="fixed bottom-8 right-8 z-[100]"
+      className="fixed bottom-8 right-8 z-40"
     >
       <a
         href="https://buymeacoffee.com/symonxd"

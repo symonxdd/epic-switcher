@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Shield, Lock, Eye, Download, Github, ExternalLink, ChevronDown } from 'lucide-react';
 import { FaShieldAlt } from 'react-icons/fa';
 
-export const Transparency = () => {
+export const Transparency = ({ onOpenReadme }) => {
   const [showPrecaution, setShowPrecaution] = useState(false);
   return (
     <section id="transparency" className="py-16 bg-background scroll-mt-16">
@@ -57,10 +57,17 @@ export const Transparency = () => {
                   <Eye className="w-5 h-5 text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-xl mb-1">Open Source</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
+                  <h3 className="font-semibold text-xl mb-1 text-foreground">Open Source</h3>
+                  <p className="text-muted-foreground text-sm leading-relaxed mb-3">
                     Every line of code is public. We encourage technical users to audit the source on GitHub.
                   </p>
+                  <button
+                    onClick={() => onOpenReadme('app')}
+                    className="group flex items-center gap-2 text-xs font-medium text-primary hover:text-primary/80 transition-all bg-primary/10 hover:bg-primary/15 px-3 py-1.5 rounded-lg border border-primary/20"
+                  >
+                    <Github className="w-3.5 h-3.5" />
+                    <span>View README</span>
+                  </button>
                 </div>
               </div>
             </motion.div>

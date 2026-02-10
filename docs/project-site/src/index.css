@@ -1,7 +1,14 @@
 @import "tailwindcss";
+@plugin "@tailwindcss/typography";
 @import "tw-animate-css";
 
 @custom-variant dark (&:is(.dark *));
+
+/* Standard fix for layout shift on fixed elements when Radix UI/Shadcn locks scroll */
+body[data-scroll-locked] .fixed,
+body[data-scroll-locked] header {
+  padding-right: var(--removed-body-scroll-bar-size) !important;
+}
 
 .no-transitions *,
 .no-transitions *:before,
@@ -49,6 +56,20 @@
   --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
+}
+
+html,
+body {
+  height: 100%;
+}
+
+html {
+  background-color: var(--background);
+  color-scheme: light;
+}
+
+.dark html {
+  color-scheme: dark;
 }
 
 :root {
@@ -123,6 +144,7 @@
 
 @utility no-scrollbar {
   scrollbar-width: none;
+
   &::-webkit-scrollbar {
     display: none;
   }
@@ -131,13 +153,16 @@
 @utility thin-scrollbar {
   scrollbar-width: thin;
   scrollbar-color: var(--primary) transparent;
+
   &::-webkit-scrollbar {
     width: 4px;
     height: 4px;
   }
+
   &::-webkit-scrollbar-track {
     background: transparent;
   }
+
   &::-webkit-scrollbar-thumb {
     background: var(--primary);
     border-radius: 10px;
@@ -152,17 +177,6 @@
 
   body {
     @apply bg-background text-foreground;
-    background-image: radial-gradient(circle at 80% 0%,
-        oklch(0.85 0.12 240 / 30%) 0%,
-        transparent 45%);
-    background-attachment: fixed;
-    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
-  }
-
-  .dark body {
-    background-image: radial-gradient(circle at 80% 0%,
-        oklch(0.35 0.15 250 / 40%) 0%,
-        transparent 50%);
   }
 
   /* Ensure card backgrounds and borders also transition smoothly */
@@ -175,4 +189,66 @@
   .bg-secondary {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease, background-image 0.3s ease;
   }
+}
+
+/* GitHub Alerts Styling */
+.markdown-alert {
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border-left: 0.25rem solid;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.markdown-alert-note {
+  border-color: oklch(0.6 0.2 250);
+  background-color: oklch(0.6 0.2 250 / 5%);
+}
+
+.markdown-alert-note .markdown-alert-title {
+  color: oklch(0.6 0.2 250);
+}
+
+.markdown-alert-tip {
+  border-color: oklch(0.6 0.2 150);
+  background-color: oklch(0.6 0.2 150 / 5%);
+}
+
+.markdown-alert-tip .markdown-alert-title {
+  color: oklch(0.6 0.2 150);
+}
+
+.markdown-alert-important {
+  border-color: oklch(0.6 0.2 300);
+  background-color: oklch(0.6 0.2 300 / 5%);
+}
+
+.markdown-alert-important .markdown-alert-title {
+  color: oklch(0.6 0.2 300);
+}
+
+.markdown-alert-warning {
+  border-color: oklch(0.7 0.2 60);
+  background-color: oklch(0.7 0.2 60 / 5%);
+}
+
+.markdown-alert-warning .markdown-alert-title {
+  color: oklch(0.7 0.2 60);
+}
+
+.markdown-alert-caution {
+  border-color: oklch(0.6 0.2 20);
+  background-color: oklch(0.6 0.2 20 / 5%);
+}
+
+.markdown-alert-caution .markdown-alert-title {
+  color: oklch(0.6 0.2 20);
 }

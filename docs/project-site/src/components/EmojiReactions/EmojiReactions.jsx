@@ -106,7 +106,7 @@ export const EmojiReactions = () => {
       initial={{ x: -100, opacity: 0 }}
       animate={{ x: 0, opacity: 1 }}
       transition={{ delay: 1.5, duration: 0.8, ease: "circOut" }}
-      className="fixed bottom-8 left-8 z-[100]"
+      className="fixed bottom-8 left-8 z-40"
     >
       <div
         className="relative w-fit"
