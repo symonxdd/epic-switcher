@@ -12,7 +12,7 @@ export const EmojiButton = ({ emoji, isExpanded, count, hasReacted, isLastReacti
   return (
     <button
       onClick={handleClick}
-      disabled={hasReacted || !apiAvailable}
+      disabled={hasReacted || (!apiAvailable && window.location.hostname !== 'localhost')}
       className={`group relative flex items-center gap-2 px-3 py-2 rounded-full transition-all duration-300 whitespace-nowrap ${hasReacted && isExpanded
         ? 'cursor-default'
         : 'hover:bg-black/5 dark:hover:bg-white/5 active:scale-90'

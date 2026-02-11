@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { REACTION_EMOJIS } from '@/lib/emoji-config';
 import { EmojiButton } from './EmojiButton';
+import { logServerlessDisabled, logServerlessConnectionFailed } from '@/lib/dev-logs';
 
 export const EmojiReactions = () => {
   const [counts, setCounts] = useState({});
@@ -18,16 +19,24 @@ export const EmojiReactions = () => {
       try {
         const response = await fetch('/api/reactions');
         const contentType = response.headers.get("content-type");
+
         if (!response.ok || !contentType || !contentType.includes("application/json")) {
           setApiAvailable(false);
+          if (window.location.hostname === 'localhost') {
+            logServerlessDisabled();
+          }
           return;
         }
+
         const data = await response.json();
         if (data.counts) {
           setCounts(data.counts);
         }
       } catch (error) {
         setApiAvailable(false);
+        if (window.location.hostname === 'localhost') {
+          logServerlessConnectionFailed();
+        }
       } finally {
         setIsLoading(false);
       }
