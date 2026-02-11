@@ -56,7 +56,7 @@ export const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 bg-background dark:bg-[#0A0A0A] scroll-mt-16">
+    <section id="contact" className="py-16 bg-background scroll-mt-16">
       <div className="container mx-auto px-6 max-w-2xl">
         <div className="text-center mb-12">
           <motion.div
@@ -74,7 +74,7 @@ export const Contact = () => {
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-card dark:bg-[#121212] border dark:border-white/5 rounded-3xl p-6 md:py-8 md:px-8 shadow-sm"
+          className="bg-background border dark:border-white/5 rounded-3xl p-6 md:py-8 md:px-8 shadow-sm"
         >
           {status === 'success' ? (
             <div className="text-center py-12">
@@ -99,7 +99,7 @@ export const Contact = () => {
                     name="user_name"
                     placeholder=""
                     required
-                    className="bg-background/50 dark:bg-black/40 border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 h-11 rounded-xl transition-colors"
+                    className="bg-background/50 dark:bg-white/[0.02] border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 h-11 rounded-xl transition-colors"
                   />
                 </div>
 
@@ -111,7 +111,7 @@ export const Contact = () => {
                     type="email"
                     placeholder=""
                     required
-                    className="bg-background/50 dark:bg-black/40 border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 h-11 rounded-xl transition-colors"
+                    className="bg-background/50 dark:bg-white/[0.02] border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 h-11 rounded-xl transition-colors"
                   />
                 </div>
 
@@ -122,7 +122,7 @@ export const Contact = () => {
                     name="message"
                     placeholder=""
                     required
-                    className="min-h-[140px] bg-background/50 dark:bg-black/40 border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 resize-none rounded-xl p-4 transition-colors"
+                    className="min-h-[140px] bg-background/50 dark:bg-white/[0.02] border-input focus-visible:ring-0 focus-visible:ring-offset-0 focus-visible:border-primary/50 resize-none rounded-xl p-4 transition-colors"
                   />
                 </div>
 

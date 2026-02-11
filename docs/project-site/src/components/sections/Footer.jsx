@@ -32,6 +32,18 @@ export const Footer = ({ onOpenReadme }) => {
             </a>
           </span>
 
+          <span className="leading-none text-center md:text-left">
+            Proudly hosted by{" "}
+            <a
+              href="https://vercel.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-foreground transition-all border-b border-transparent hover:border-foreground/20 leading-none inline-block align-baseline"
+            >
+              Vercel
+            </a>
+          </span>
+
           <div className="flex items-center gap-10">
             <button
               onClick={() => onOpenReadme('site')}

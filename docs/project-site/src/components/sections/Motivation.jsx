@@ -81,14 +81,14 @@ export const Motivation = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: 0.6 }}
-              className="lg:col-span-5 xl:col-span-4 bg-muted/30 rounded-3xl p-8 border border-border/50 backdrop-blur-sm space-y-6"
+              className="lg:col-span-5 xl:col-span-4 bg-muted/10 dark:bg-white/[0.03] rounded-3xl p-8 border border-border/40 dark:border-white/5 backdrop-blur-md space-y-6"
             >
               <h3 className="text-lg font-bold text-foreground">Core Philosophy</h3>
               <div className="space-y-4">
                 {points.map((point, index) => (
                   <div
                     key={index}
-                    className="flex items-center gap-4 p-4 bg-background/60 rounded-2xl border border-border/40 shadow-sm"
+                    className="flex items-center gap-4 p-4 bg-background/40 dark:bg-black/40 rounded-2xl border border-border/40 dark:border-white/5 shadow-sm"
                   >
                     <div className="p-2.5 rounded-xl bg-primary/10 text-primary border border-primary/10">
                       <point.icon className="w-5 h-5" />
