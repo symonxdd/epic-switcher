@@ -12,9 +12,10 @@ export const MarkdownRenderer = ({ content }) => {
                    prose-headings:font-bold prose-headings:tracking-tight prose-headings:mb-2 prose-headings:mt-4 prose-h2:mt-2 first:prose-headings:mt-0
                    prose-a:text-primary
                    prose-code:bg-muted prose-code:px-1 prose-code:py-0.5 prose-code:rounded-md prose-code:before:content-none prose-code:after:content-none
-                   prose-pre:bg-[#1A1A1A] dark:prose-pre:bg-[#111] prose-pre:border prose-pre:border-border/50
+                   prose-pre:bg-[#f5f5f5] prose-pre:text-[#374151] dark:prose-pre:bg-[#111] dark:prose-pre:text-[#e5e5e5] prose-pre:border prose-pre:border-border/50 [&_pre_code]:bg-transparent
                    prose-img:rounded-2xl prose-img:shadow-sm
-                   prose-ul:my-2 prose-li:my-0.5 prose-ol:my-2">
+                   prose-ul:my-2 prose-li:my-0.5 prose-ol:my-2
+                   [&_summary]:mb-4">
       <ReactMarkdown
         remarkPlugins={[remarkGfm, remarkGithubAlerts]}
         rehypePlugins={[rehypeRaw]}

@@ -239,7 +239,6 @@ This project is built with:
 
 ### Credits 
 - Logo symbol by [Epicons](https://www.svgrepo.com/svg/355688/user-a-solid) from [SVGRepo](https://www.svgrepo.com/)
-- Demo screenshot background by [Unsplash](https://unsplash.com/photos/a-close-up-of-a-cell-phone-with-a-purple-background-Cp4dn8_6Y5I)
 
 <div align="center">
   <sub>Made with 💛 by Symon</sub>

@@ -8,20 +8,17 @@ import {
 } from "@/components/ui/sheet";
 import { MarkdownRenderer } from './MarkdownRenderer';
 import { FileText, Monitor, Globe } from 'lucide-react';
-import { motion, AnimatePresence } from 'framer-motion';
 
 import rootReadmeRaw from "../../../../README.md?raw";
 import siteReadmeRaw from "../../README.md?raw";
 
 export const ReadmeViewer = ({ isOpen, onOpenChange, initialTab = 'app' }) => {
   const [activeTab, setActiveTab] = useState(initialTab);
-  const [prevTab, setPrevTab] = useState(initialTab);
 
   // Sync activeTab with initialTab when the sheet opens
   useEffect(() => {
     if (isOpen) {
       setActiveTab(initialTab);
-      setPrevTab(initialTab);
     }
   }, [isOpen, initialTab]);
 
@@ -35,10 +32,8 @@ export const ReadmeViewer = ({ isOpen, onOpenChange, initialTab = 'app' }) => {
     const layoutText = layoutIndex !== -1 ? rootReadmeRaw.substring(layoutIndex) : "";
 
     let combined = `${warningText}\n\n${layoutText}`;
-    // Replace image paths with GitHub raw URLs
-    combined = combined.replace(/\.\/docs\/screens\//g, 'https://raw.githubusercontent.com/symonxdd/epic-switcher/main/docs/screens/');
-    // Remove syntax highlighting from the project layout code block
-    combined = combined.replace(/```[\s\S]*?epic-switcher\//g, '```text\nepic-switcher/');
+    // Rewrite relative image paths to use public assets
+    combined = combined.replace(/\.\/docs\/screens\//g, '/screenshots/');
     return combined;
   }, []);
 
@@ -64,24 +59,17 @@ export const ReadmeViewer = ({ isOpen, onOpenChange, initialTab = 'app' }) => {
     },
   ];
 
-  const activeIndex = tabs.findIndex(t => t.id === activeTab);
-  const prevIndex = tabs.findIndex(t => t.id === prevTab);
-  const direction = activeIndex > prevIndex ? 1 : -1;
-
-  const currentTab = tabs.find(t => t.id === activeTab);
-  const currentContent = currentTab?.content || '';
-
   const handleTabChange = (id) => {
-    setPrevTab(activeTab);
     setActiveTab(id);
   };
 
   return (
     <Sheet open={isOpen} onOpenChange={onOpenChange}>
       <SheetContent
-        className="w-full sm:max-w-4xl overflow-y-auto pt-0 selection:bg-primary selection:text-primary-foreground !gap-0"
+        className="w-full sm:max-w-4xl overflow-hidden pt-0 selection:bg-primary selection:text-primary-foreground !gap-0 flex flex-col"
       >
-        <div className="px-12 mx-auto">
+        {/* Pinned header area — never scrolls */}
+        <div className="flex-shrink-0 px-12">
           <SheetHeader className="pt-6 pb-2 mb-0">
             <SheetTitle className="text-2xl font-bold tracking-tight">Documentation Viewer</SheetTitle>
             <SheetDescription className="text-sm">
@@ -89,8 +77,8 @@ export const ReadmeViewer = ({ isOpen, onOpenChange, initialTab = 'app' }) => {
             </SheetDescription>
           </SheetHeader>
 
-          {/* Minimalist Sticky Tab Switcher */}
-          <div className="sticky top-0 z-50 pt-5 pb-3 bg-background/80 backdrop-blur-xl border-b border-border/50 mb-4 transition-all">
+          {/* Tab Switcher */}
+          <div className="pt-5 pb-3 border-b border-border/50">
             <div className="flex w-fit mx-auto p-1 bg-muted/40 rounded-xl border border-border/50 backdrop-blur-md">
               {tabs.map((tab) => {
                 const Icon = tab.icon;
@@ -110,26 +98,26 @@ export const ReadmeViewer = ({ isOpen, onOpenChange, initialTab = 'app' }) => {
               })}
             </div>
           </div>
+        </div>
 
-          <div className="pb-20 relative overflow-x-hidden">
-            <AnimatePresence mode="wait" initial={false} custom={direction}>
-              <motion.div
-                key={activeTab}
-                custom={direction}
-                initial={{ opacity: 0, x: direction * 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: direction * -20 }}
-                transition={{ duration: 0.2, ease: "easeInOut" }}
-              >
+        {/* Content area — each tab has its own independent scroll container */}
+        <div className="flex-1 min-h-0 relative">
+          {tabs.map((tab) => (
+            <div
+              key={tab.id}
+              className="absolute inset-0 overflow-y-auto px-12"
+              style={{ display: activeTab === tab.id ? 'block' : 'none' }}
+            >
+              <div className="pb-20 pt-4">
                 <div className="mb-8 flex justify-center">
-                  <span className="text-xs font-medium tracking-tight text-muted-foreground/60 bg-muted/20 px-3 py-1.5 rounded-full border border-border/50">
-                    {currentTab?.description}
+                  <span className="text-xs font-medium tracking-tight text-muted-foreground bg-muted/50 px-3 py-1.5 rounded-full border border-border/50">
+                    {tab.description}
                   </span>
                 </div>
-                <MarkdownRenderer content={currentContent} />
-              </motion.div>
-            </AnimatePresence>
-          </div>
+                <MarkdownRenderer content={tab.content} />
+              </div>
+            </div>
+          ))}
         </div>
       </SheetContent>
     </Sheet>
