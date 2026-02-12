@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
-import { Pause, Play } from 'lucide-react';
+import { Pause, Play, Expand } from 'lucide-react';
+import { ScreenshotLightbox } from '../ScreenshotLightbox';
 
 const screenshots = [
   {
@@ -32,17 +33,18 @@ export const Screenshots = () => {
   const [isPaused, setIsPaused] = useState(false);
   const [sliderPosition, setSliderPosition] = useState(SLIDER_INITIAL_POS);
   const [isDragging, setIsDragging] = useState(false);
+  const [isLightboxOpen, setIsLightboxOpen] = useState(false);
   const progress = useMotionValue(0);
 
-  const handleIndexChange = useCallback((newIndex) => {
+  const handleIndexChange = useCallback((newIndex, shouldResume = true) => {
     if (newIndex === index) {
-      setIsPaused(!isPaused);
+      if (shouldResume) setIsPaused(!isPaused);
       return;
     }
     setDirection(newIndex > index ? 1 : -1);
     setIndex(newIndex);
     setVariationIndex(0); // Reset variation when switching main image
-    setIsPaused(false);
+    if (shouldResume) setIsPaused(false);
     progress.set(0);
     setSliderPosition(SLIDER_INITIAL_POS);
   }, [index, isPaused, progress]);
@@ -136,9 +138,18 @@ export const Screenshots = () => {
         {/* Main Image Container */}
         <div
           id="slider-container"
-          className={`relative w-full overflow-hidden rounded-none sm:rounded-lg border-y sm:border border-white/5 ${hasVariant ? 'cursor-ew-resize' : ''}`}
+          className={`group relative w-full overflow-hidden rounded-none sm:rounded-lg border-y sm:border border-white/5 ${hasVariant ? 'cursor-ew-resize' : ''}`}
           onMouseEnter={() => setIsHovering(true)}
           onMouseLeave={() => setIsHovering(false)}
+          onClick={(e) => {
+            if (isDragging) return;
+            // Only open lightbox from main area if it's NOT a comparison slider
+            if (hasVariant) return;
+            // Only open lightbox if not clicking variant buttons or slider handle
+            if (e.target.closest('button')) return;
+            setIsLightboxOpen(true);
+            setIsPaused(true);
+          }}
           onMouseDown={hasVariant ? (e) => {
             e.preventDefault();
             setIsDragging(true);
@@ -165,10 +176,10 @@ export const Screenshots = () => {
               animate="center"
               exit="exit"
               transition={{
-                x: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                scale: { duration: 0.6, ease: [0.16, 1, 0.3, 1] },
-                filter: { duration: 0.4 },
-                opacity: { duration: 0.4 }
+                x: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                scale: { duration: 0.45, ease: [0.16, 1, 0.3, 1] },
+                filter: { duration: 0.3 },
+                opacity: { duration: 0.3 }
               }}
               className="absolute inset-0 w-full h-full"
             >
@@ -239,10 +250,29 @@ export const Screenshots = () => {
               ))}
             </div>
           )}
+
+          {/* Expand Hint (Desktop) */}
+          {isHovering && (
+            <div className="absolute top-4 right-4 z-20 hidden sm:block">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsLightboxOpen(true);
+                  setIsPaused(true);
+                }}
+                onMouseDown={(e) => e.stopPropagation()}
+                onTouchStart={(e) => e.stopPropagation()}
+                className="p-2 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-white/70 hover:text-white hover:bg-black/60 transition-colors"
+                title="View fullscreen"
+              >
+                <Expand className="w-4 h-4" />
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Thumbnails Container */}
-        <div className="flex sm:justify-center gap-3 mt-6 px-0 sm:px-4 overflow-x-auto py-4 thin-scrollbar snap-x snap-mandatory touch-pan-x sm:cursor-default">
+        <div className="flex sm:justify-center gap-3 mt-6 px-0 sm:px-4 overflow-x-auto py-6 thin-scrollbar snap-x snap-mandatory touch-pan-x sm:cursor-default">
           {screenshots.map((screen, i) => {
             const isActive = i === index;
             const thumbSrc = screen.variants ? screen.variants[0].dark : screen.src;
@@ -250,7 +280,7 @@ export const Screenshots = () => {
               <div key={screen.id} className={`flex-none w-32 sm:flex-1 sm:max-w-[160px] flex flex-col items-center snap-center ${i === 0 ? 'ml-4 sm:ml-0' : ''} ${i === screenshots.length - 1 ? 'mr-4 sm:mr-0' : ''}`}>
                 <button
                   onClick={() => handleIndexChange(i)}
-                  className={`group relative w-full aspect-video rounded-sm overflow-hidden transition-all duration-500 border-2 ${isActive
+                  className={`group relative w-full aspect-video rounded-sm overflow-hidden transition-all duration-500 border-2 [backface-visibility:hidden] transform-gpu ${isActive
                     ? 'border-white/50 z-20 shadow-lg scale-105'
                     : 'border-white/10 hover:border-white/30 grayscale hover:grayscale-0'
                     }`}
@@ -300,6 +330,16 @@ export const Screenshots = () => {
           })}
         </div>
       </div>
+
+      <ScreenshotLightbox
+        isOpen={isLightboxOpen}
+        onClose={() => setIsLightboxOpen(false)}
+        screenshots={screenshots}
+        currentIndex={index}
+        onIndexChange={handleIndexChange}
+        variationIndex={variationIndex}
+        direction={direction}
+      />
     </div>
   );
 };
