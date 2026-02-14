@@ -169,7 +169,7 @@ export const Screenshots = () => {
           />
           <AnimatePresence initial={false} custom={direction}>
             <motion.div
-              key={`${index}-${variationIndex}`}
+              key={index} // Key only off the screenshot index for main transition
               custom={direction}
               variants={variants}
               initial="enter"
@@ -183,39 +183,50 @@ export const Screenshots = () => {
               }}
               className="absolute inset-0 w-full h-full"
             >
-              {/* Light Mode (Base) */}
-              <img
-                src={lightSrc || darkSrc}
-                alt={`${currentScreen.title} Light Mode`}
-                className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
-                draggable="false"
-              />
-
-              {/* Dark Mode (Revealed) */}
-              {hasVariant && (
-                <>
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={variationIndex}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute inset-0 w-full h-full"
+                >
+                  {/* Light Mode (Base) */}
                   <img
-                    src={darkSrc}
-                    alt={currentScreen.title}
-                    style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
-                    className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-none"
+                    src={lightSrc || darkSrc}
+                    alt={`${currentScreen.title} Light Mode`}
+                    className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                     draggable="false"
                   />
 
-                  {/* Slider Handle */}
-                  <div
-                    className="absolute top-0 bottom-0 z-10 w-px bg-white/50 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)]"
-                    style={{ left: `${sliderPosition}%` }}
-                  >
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl">
-                      <div className="flex gap-1">
-                        <div className="w-0.5 h-3 bg-white/60 rounded-full" />
-                        <div className="w-0.5 h-3 bg-white/60 rounded-full" />
+                  {/* Dark Mode (Revealed) */}
+                  {hasVariant && (
+                    <>
+                      <img
+                        src={darkSrc}
+                        alt={currentScreen.title}
+                        style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
+                        className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-none"
+                        draggable="false"
+                      />
+
+                      {/* Slider Handle */}
+                      <div
+                        className="absolute top-0 bottom-0 z-10 w-px bg-white/50 backdrop-blur-sm shadow-[0_0_15px_rgba(255,255,255,0.3)]"
+                        style={{ left: `${sliderPosition}%` }}
+                      >
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center shadow-xl">
+                          <div className="flex gap-1">
+                            <div className="w-0.5 h-3 bg-white/60 rounded-full" />
+                            <div className="w-0.5 h-3 bg-white/60 rounded-full" />
+                          </div>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                </>
-              )}
+                    </>
+                  )}
+                </motion.div>
+              </AnimatePresence>
             </motion.div>
           </AnimatePresence>
 
