@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback, useState } from 'react';
+import React, { useEffect, useCallback, useState, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Sun, Moon } from 'lucide-react';
@@ -14,6 +14,29 @@ export const ScreenshotLightbox = ({
 }) => {
   const [viewMode, setViewMode] = useState('dark');
   const currentScreen = screenshots[currentIndex];
+
+  const lightboxThumbnailsRef = useRef(null);
+
+  useEffect(() => {
+    if (isOpen && lightboxThumbnailsRef.current) {
+      // Small delay to ensure Portal is rendered and layout is ready
+      const timer = setTimeout(() => {
+        const container = lightboxThumbnailsRef.current;
+        const activeThumb = container.children[currentIndex];
+        if (activeThumb && window.innerWidth < 1024) { // Focus on mobile/tablet
+          const containerWidth = container.offsetWidth;
+          const thumbOffset = activeThumb.offsetLeft;
+          const thumbWidth = activeThumb.offsetWidth;
+
+          container.scrollTo({
+            left: thumbOffset - (containerWidth / 2) + (thumbWidth / 2),
+            behavior: 'smooth'
+          });
+        }
+      }, 50);
+      return () => clearTimeout(timer);
+    }
+  }, [currentIndex, isOpen]);
 
   const getSrc = (screen) => {
     if (screen.variants) {
@@ -187,7 +210,10 @@ export const ScreenshotLightbox = ({
             className="flex-none w-full bg-gradient-to-t from-black via-black/80 to-transparent pt-10 pb-12 overflow-hidden"
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="flex gap-4 overflow-x-auto max-w-full no-scrollbar px-10 sm:px-20 py-4 items-center justify-center">
+            <div
+              ref={lightboxThumbnailsRef}
+              className="flex gap-4 overflow-x-auto max-w-full no-scrollbar px-10 sm:px-20 py-4 items-center sm:justify-center snap-x snap-proximity"
+            >
               {screenshots.map((screen, i) => {
                 const isActive = i === currentIndex;
                 const thumbSrc = getSrc(screen);
@@ -196,8 +222,8 @@ export const ScreenshotLightbox = ({
                     <button
                       onClick={() => onIndexChange(i, false)}
                       className={`relative w-24 h-14 sm:w-32 sm:h-18 rounded-sm overflow-hidden border-2 transition-all duration-300 [backface-visibility:hidden] transform-gpu ${isActive
-                          ? 'border-white/50 scale-105 shadow-xl grayscale-0 z-20'
-                          : 'border-white/10 grayscale hover:grayscale-0 hover:border-white/30'
+                        ? 'border-white/50 scale-105 shadow-xl grayscale-0 z-20'
+                        : 'border-white/10 grayscale hover:grayscale-0 hover:border-white/30'
                         }`}
                     >
                       <img

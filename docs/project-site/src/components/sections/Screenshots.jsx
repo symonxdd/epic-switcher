@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion, AnimatePresence, useMotionValue, animate } from 'framer-motion';
 import { Pause, Play, Expand } from 'lucide-react';
 import { ScreenshotLightbox } from '../ScreenshotLightbox';
@@ -99,6 +99,25 @@ export const Screenshots = () => {
 
     return () => controls.stop();
   }, [index, isHovering, isPaused, isDragging, progress, handleIndexChange]);
+
+  const thumbnailsRef = useRef(null);
+
+  useEffect(() => {
+    if (thumbnailsRef.current) {
+      const container = thumbnailsRef.current;
+      const activeThumb = container.children[index];
+      if (activeThumb) {
+        const containerWidth = container.offsetWidth;
+        const thumbOffset = activeThumb.offsetLeft;
+        const thumbWidth = activeThumb.offsetWidth;
+
+        container.scrollTo({
+          left: thumbOffset - (containerWidth / 2) + (thumbWidth / 2),
+          behavior: 'smooth'
+        });
+      }
+    }
+  }, [index]);
 
   const variants = {
     enter: (direction) => ({
@@ -283,7 +302,10 @@ export const Screenshots = () => {
         </div>
 
         {/* Thumbnails Container */}
-        <div className="flex sm:justify-center gap-3 mt-6 px-0 sm:px-4 overflow-x-auto py-6 thin-scrollbar snap-x snap-mandatory touch-pan-x sm:cursor-default">
+        <div
+          ref={thumbnailsRef}
+          className="flex sm:justify-center gap-3 mt-6 px-0 sm:px-4 overflow-x-auto py-6 thin-scrollbar snap-x snap-proximity sm:cursor-default"
+        >
           {screenshots.map((screen, i) => {
             const isActive = i === index;
             const thumbSrc = screen.variants ? screen.variants[0].dark : screen.src;
