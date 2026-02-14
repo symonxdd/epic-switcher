@@ -183,20 +183,20 @@ export const Screenshots = () => {
               }}
               className="absolute inset-0 w-full h-full"
             >
-              {/* Dark Mode (Base) */}
+              {/* Light Mode (Base) */}
               <img
-                src={darkSrc}
-                alt={currentScreen.title}
+                src={lightSrc || darkSrc}
+                alt={`${currentScreen.title} Light Mode`}
                 className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none"
                 draggable="false"
               />
 
-              {/* Light Mode (Revealed) */}
+              {/* Dark Mode (Revealed) */}
               {hasVariant && (
                 <>
                   <img
-                    src={lightSrc}
-                    alt={`${currentScreen.title} Light Mode`}
+                    src={darkSrc}
+                    alt={currentScreen.title}
                     style={{ clipPath: `inset(0 ${100 - sliderPosition}% 0 0)` }}
                     className="absolute inset-0 w-full h-full object-cover select-none pointer-events-none transition-none"
                     draggable="false"
