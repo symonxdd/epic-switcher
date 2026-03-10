@@ -1,6 +1,5 @@
 import { useEffect, useContext, useState } from 'react';
 import { useLocation } from "react-router-dom";
-import { motion } from 'framer-motion';
 import PageHeader from '../components/PageHeader';
 import { AuthContext } from '../context/AuthContext';
 import { SessionContext } from '../context/SessionContext';
@@ -13,9 +12,7 @@ import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
-import DiagnosticsModal from '../components/modals/DiagnosticsModal/DiagnosticsModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
-import { SetLastError } from '../../wailsjs/go/services/DiagnosticService';
 import { useAvatarCache } from '../context/AvatarCacheContext';
 import { getBorderThickness } from '../components/modals/CustomizeAvatarModal/avatarUtils';
 import SuccessSprout from '../components/SuccessSprout';
@@ -34,7 +31,6 @@ export default function Accounts() {
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
-  const [showDiagnosticsModal, setShowDiagnosticsModal] = useState(false);
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
@@ -42,7 +38,6 @@ export default function Accounts() {
   const [borderThickness, setBorderThickness] = useState(getBorderThickness);
   const [lastSwitchedId, setLastSwitchedId] = useState(null);
   const { cacheVersion } = useAvatarCache();
-
 
   useEffect(() => {
     checkLoginStatus();
@@ -82,8 +77,7 @@ export default function Accounts() {
       }, 2500);
     } catch (err) {
       console.error(err);
-      await SetLastError(err.toString());
-      toast.error("Failed to switch account. Check Diagnostics for details.", { id: "switch-account-error" });
+      toast.error("Failed to switch account.", { id: "switch-account-error" });
     }
   }
 
@@ -158,19 +152,6 @@ export default function Accounts() {
 
   return (
     <div className={styles.pageWrapper}>
-      <PageHeader
-        title="Accounts"
-        rightElement={
-          <button
-            className={styles.toggleBtn}
-            onClick={() => setShowDiagnosticsModal(true)}
-            title="System Diagnostics"
-            style={{ padding: '6px 12px', background: 'rgba(255,255,255,0.05)' }}
-          >
-            <span style={{ fontSize: '0.8rem', fontWeight: 'bold' }}>Diagnostics</span>
-          </button>
-        }
-      />
 
       {!isLoading && (
         <>
@@ -268,24 +249,22 @@ export default function Accounts() {
                       <div className={styles.subtitle}>{accountsLabel}</div>
                     </div>
 
-                    <div className={styles.viewToggle}>
-                      {nonActiveAccountsCount >= 2 && (
-                        <>
-                          <button
-                            className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
-                            onClick={() => setViewMode('list')}
-                          >
-                            <HiViewList />
-                          </button>
-                          <button
-                            className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
-                            onClick={() => setViewMode('grid')}
-                          >
-                            <HiViewGrid />
-                          </button>
-                        </>
-                      )}
-                    </div>
+                    {nonActiveAccountsCount >= 2 && (
+                      <div className={styles.viewToggle}>
+                        <button
+                          className={`${styles.toggleBtn} ${viewMode === 'list' ? styles.activeToggle : ''}`}
+                          onClick={() => setViewMode('list')}
+                        >
+                          <HiViewList />
+                        </button>
+                        <button
+                          className={`${styles.toggleBtn} ${viewMode === 'grid' ? styles.activeToggle : ''}`}
+                          onClick={() => setViewMode('grid')}
+                        >
+                          <HiViewGrid />
+                        </button>
+                      </div>
+                    )}
                   </div>
 
                   <div
@@ -376,12 +355,6 @@ export default function Accounts() {
               ));
             }}
           />
-        )
-      }
-
-      {
-        showDiagnosticsModal && (
-          <DiagnosticsModal onClose={() => setShowDiagnosticsModal(false)} />
         )
       }
     </div >
