@@ -13,10 +13,12 @@ import (
 
 const rememberMePrefix = "[RememberMe]\nEnable=True\nData="
 
-type SwitchService struct{}
+type SwitchService struct {
+	diag *DiagnosticService
+}
 
-func NewSwitchService() *SwitchService {
-	return &SwitchService{}
+func NewSwitchService(diag *DiagnosticService) *SwitchService {
+	return &SwitchService{diag: diag}
 }
 
 // SwitchAccount replaces the current Epic Games session file with a new one,
@@ -34,6 +36,7 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 			fmt.Println("ℹ️ Epic Games Launcher was already closed, continuing...")
 			launcherWasRunning = false
 		} else {
+			s.diag.SetLastError(fmt.Sprintf("failed to close Epic Games Launcher: %v", err))
 			return fmt.Errorf("failed to close Epic Games Launcher: %w", err)
 		}
 	} else {
@@ -53,7 +56,9 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 		for {
 			select {
 			case <-timeout:
-				return fmt.Errorf("timeout waiting for Epic Games Launcher to close")
+				err := fmt.Errorf("timeout waiting for Epic Games Launcher to close")
+				s.diag.SetLastError(err.Error())
+				return err
 			case <-ticker.C:
 				checkCmd := helper.NewCommand("tasklist", "/FI", "IMAGENAME eq EpicGamesLauncher.exe")
 				output, _ := checkCmd.Output()
@@ -68,23 +73,45 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 
 	// 3️⃣ Write the new session file
 	path := utils.GetEpicLoginSessionPath()
+	fmt.Printf("🔹 Preparing to write session to path: '%s'\n", path)
+	if path == "" {
+		fmt.Println("❌ Error: GetEpicLoginSessionPath returned an empty string. The path could not be resolved.")
+		return fmt.Errorf("epic login session path is empty")
+	}
+
 	content := fmt.Sprintf("%s%s", rememberMePrefix, session.LoginToken)
 	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
-		return fmt.Errorf("failed to write session file: %w", err)
+		fmt.Printf("❌ Error writing session file to '%s': %v\n", path, err)
+		s.diag.SetLastError(fmt.Sprintf("failed to write session file at %s: %v", path, err))
+		return fmt.Errorf("failed to write session file at %s: %w", path, err)
 	}
-	fmt.Println("✅ New session written to:", path)
+	fmt.Println("✅ New session written successfully to:", path)
 
 	// 4️⃣ Relaunch Epic Games Launcher
 	launcherPath := utils.GetEpicLauncherPath()
-	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
+	fmt.Printf("🔹 Preparing to re-launch Epic Games Launcher from path: '%s'\n", launcherPath)
+	if launcherPath == "" {
+		fmt.Println("❌ Error: GetEpicLauncherPath returned an empty string.")
+		return fmt.Errorf("epic launcher path is empty")
+	}
+
+	if _, err := os.Stat(launcherPath); err != nil {
+		fmt.Printf("❌ Error: Launcher executable not found or inaccessible at '%s': %v\n", launcherPath, err)
+		s.diag.SetLastError(fmt.Sprintf("launcher executable not found at %s: %v", launcherPath, err))
+		return fmt.Errorf("launcher executable not found at %s: %w", launcherPath, err)
+	}
 
 	startCmd := helper.NewCommand(launcherPath, "-silent")
 	startCmd.Stdout = os.Stdout
 	startCmd.Stderr = os.Stderr
 
+	fmt.Println("🔹 Executing launch command...")
 	if err := startCmd.Start(); err != nil {
-		return fmt.Errorf("failed to relaunch Epic Games Launcher: %w", err)
+		fmt.Printf("❌ Error: Failed to relaunch Epic Games Launcher: %v\n", err)
+		s.diag.SetLastError(fmt.Sprintf("failed to relaunch Epic Games Launcher at %s: %v", launcherPath, err))
+		return fmt.Errorf("failed to relaunch Epic Games Launcher at %s: %w", launcherPath, err)
 	}
 	fmt.Println("✅ Epic Games Launcher started successfully.")
 	return nil
+
 }

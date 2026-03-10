@@ -21,7 +21,8 @@ func main() {
 	authService := services.NewAuthService()
 	sessionStore := services.NewSessionStore()
 	logReader := services.NewLogReaderService()
-	switchService := services.NewSwitchService()
+	diagnosticService := services.NewDiagnosticService()
+	switchService := services.NewSwitchService(diagnosticService)
 	systemService := services.NewSystemService()
 	updateService := services.NewUpdateService()
 	avatarService := services.NewAvatarService()
@@ -52,6 +53,7 @@ func main() {
 			systemService,
 			updateService,
 			avatarService,
+			diagnosticService,
 		},
 	})
 

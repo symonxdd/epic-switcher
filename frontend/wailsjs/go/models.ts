@@ -31,6 +31,44 @@ export namespace models {
 
 export namespace services {
 	
+	export class DiagnosticData {
+	    os: string;
+	    architecture: string;
+	    localAppData: string;
+	    programFilesX86: string;
+	    epicLauncherExe: string;
+	    epicLauncherExists: boolean;
+	    sessionFileWindows: string;
+	    sessionFileWindowsExists: boolean;
+	    sessionFileWindowsEditor: string;
+	    sessionFileWindowsEditorExists: boolean;
+	    epicGamesRunning: boolean;
+	    epicDataDir: string;
+	    epicDataDirExists: boolean;
+	    lastError: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new DiagnosticData(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.os = source["os"];
+	        this.architecture = source["architecture"];
+	        this.localAppData = source["localAppData"];
+	        this.programFilesX86 = source["programFilesX86"];
+	        this.epicLauncherExe = source["epicLauncherExe"];
+	        this.epicLauncherExists = source["epicLauncherExists"];
+	        this.sessionFileWindows = source["sessionFileWindows"];
+	        this.sessionFileWindowsExists = source["sessionFileWindowsExists"];
+	        this.sessionFileWindowsEditor = source["sessionFileWindowsEditor"];
+	        this.sessionFileWindowsEditorExists = source["sessionFileWindowsEditorExists"];
+	        this.epicGamesRunning = source["epicGamesRunning"];
+	        this.epicDataDir = source["epicDataDir"];
+	        this.epicDataDirExists = source["epicDataDirExists"];
+	        this.lastError = source["lastError"];
+	    }
+	}
 	export class GitHubRelease {
 	    tag_name: string;
 	    html_url: string;
