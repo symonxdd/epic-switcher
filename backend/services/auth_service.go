@@ -63,12 +63,11 @@ func (a *AuthService) DetectNewLoginSession() (*models.LoginSession, error) {
 		return nil, err // means no user is logged in or invalid token
 	}
 
-	// --- Check against stored sessions ---
 	store := NewSessionStore()
 	sessions, _ := store.LoadSessions()
 	for _, s := range sessions {
 		if s.UserID == session.UserID {
-			// Already known → no need to prompt
+			_ = store.addOrUpdate(*session) // refresh stored token
 			return nil, nil
 		}
 	}

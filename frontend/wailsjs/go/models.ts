@@ -31,6 +31,46 @@ export namespace models {
 
 export namespace services {
 	
+	export class DiagnosticInfo {
+	    os: string;
+	    architecture: string;
+	    localAppData: string;
+	    programFiles: string;
+	    programFilesX86: string;
+	    epicLauncherExe: string;
+	    epicLauncherExists: boolean;
+	    sessionFile: string;
+	    sessionFileExists: boolean;
+	    epicDataDir: string;
+	    epicDataDirExists: boolean;
+	    epicLogsDir: string;
+	    epicLogsDirExists: boolean;
+	    epicGamesRunning: boolean;
+	    lastError?: string;
+	
+	    static createFrom(source: any = {}) {
+	        return new DiagnosticInfo(source);
+	    }
+	
+	    constructor(source: any = {}) {
+	        if ('string' === typeof source) source = JSON.parse(source);
+	        this.os = source["os"];
+	        this.architecture = source["architecture"];
+	        this.localAppData = source["localAppData"];
+	        this.programFiles = source["programFiles"];
+	        this.programFilesX86 = source["programFilesX86"];
+	        this.epicLauncherExe = source["epicLauncherExe"];
+	        this.epicLauncherExists = source["epicLauncherExists"];
+	        this.sessionFile = source["sessionFile"];
+	        this.sessionFileExists = source["sessionFileExists"];
+	        this.epicDataDir = source["epicDataDir"];
+	        this.epicDataDirExists = source["epicDataDirExists"];
+	        this.epicLogsDir = source["epicLogsDir"];
+	        this.epicLogsDirExists = source["epicLogsDirExists"];
+	        this.epicGamesRunning = source["epicGamesRunning"];
+	        this.lastError = source["lastError"];
+	    }
+	}
 	export class GitHubRelease {
 	    tag_name: string;
 	    html_url: string;

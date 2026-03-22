@@ -30,12 +30,36 @@ func GetEpicLogsPath() string {
 }
 
 // Returns the path to the Epic Games Launcher executable.
+// Checks multiple candidate locations since the launcher may be installed
+// in either Program Files or Program Files (x86), and in Win64 or Win32.
 func GetEpicLauncherPath() string {
-	programFiles := os.Getenv("ProgramFiles(x86)")
-	if programFiles == "" {
-		programFiles = `C:\Program Files (x86)` // fallback for unusual setups
+	programFiles := os.Getenv("ProgramFiles")
+	programFilesX86 := os.Getenv("ProgramFiles(x86)")
+
+	var roots []string
+	if programFiles != "" {
+		roots = append(roots, programFiles)
 	}
-	return filepath.Join(programFiles, "Epic Games", "Launcher", "Portal", "Binaries", "Win32", "EpicGamesLauncher.exe")
+	if programFilesX86 != "" && programFilesX86 != programFiles {
+		roots = append(roots, programFilesX86)
+	}
+	if len(roots) == 0 {
+		roots = []string{`C:\Program Files`, `C:\Program Files (x86)`}
+	}
+
+	binDirs := []string{"Win64", "Win32"}
+
+	for _, root := range roots {
+		for _, binDir := range binDirs {
+			candidate := filepath.Join(root, "Epic Games", "Launcher", "Portal", "Binaries", binDir, "EpicGamesLauncher.exe")
+			if _, err := os.Stat(candidate); err == nil {
+				return candidate
+			}
+		}
+	}
+
+	// Fallback: return the most common path even if not found
+	return filepath.Join(roots[0], "Epic Games", "Launcher", "Portal", "Binaries", "Win64", "EpicGamesLauncher.exe")
 }
 
 // Returns the path to the Epic Games Launcher Data folder.

@@ -77,7 +77,8 @@ export default function Accounts() {
       }, 2500);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to switch account.", { id: "switch-account-error" });
+      const detail = typeof err === 'string' ? err : err?.message || '';
+      toast.error(detail ? `Switch failed: ${detail}` : "Failed to switch account.", { id: "switch-account-error" });
     }
   }
 

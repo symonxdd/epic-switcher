@@ -271,6 +271,37 @@
   }
 }
 
+/* --- Diagnostics Section --- */
+.diagnosticsSection {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 16px;
+}
+
+.diagnosticsToggle {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-subtle);
+  border-radius: 24px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  font-family: Nunito, sans-serif;
+  cursor: pointer;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.diagnosticsToggle:hover {
+  color: var(--text-primary);
+  border-color: var(--text-secondary);
+}
+
+.diagnosticsToggle svg {
+  font-size: 0.95rem;
+}
+
 /* --- Footer Section --- */
 .appFooter {
   margin-top: auto;

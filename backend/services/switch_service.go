@@ -3,6 +3,7 @@ package services
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -11,36 +12,34 @@ import (
 	"epic-games-account-switcher/backend/utils"
 )
 
-const rememberMePrefix = "[RememberMe]\nEnable=True\nData="
-
 type SwitchService struct{}
 
 func NewSwitchService() *SwitchService {
 	return &SwitchService{}
 }
 
-// SwitchAccount replaces the current Epic Games session file with a new one,
-// after closing and restarting the launcher.
+// SwitchAccount backs up the current session, restores the target account's
+// ini file and registry AccountId, clears Epic caches, and relaunches the launcher.
 func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
-	fmt.Println("🔹 Closing Epic Games Launcher before switching accounts...")
+	fmt.Println("Closing Epic Games Launcher...")
 
-	// 1️⃣ Kill the Epic Games Launcher
+	// Kill the Epic Games Launcher
 	killCmd := helper.NewCommand("taskkill", "/IM", "EpicGamesLauncher.exe", "/F")
-	err := killCmd.Run()
+	killOutput, err := killCmd.CombinedOutput()
 	launcherWasRunning := true
 	if err != nil {
-		errStr := err.Error()
-		if strings.Contains(errStr, "not found") || strings.Contains(errStr, "exit status 128") {
-			fmt.Println("ℹ️ Epic Games Launcher was already closed, continuing...")
+		combined := string(killOutput) + " " + err.Error()
+		if strings.Contains(combined, "not found") || strings.Contains(combined, "exit status 128") || strings.Contains(combined, "exit status 1") {
+			fmt.Println("Epic Games Launcher was not running, continuing...")
 			launcherWasRunning = false
 		} else {
-			return fmt.Errorf("failed to close Epic Games Launcher: %w", err)
+			return fmt.Errorf("failed to close Epic Games Launcher: %s", strings.TrimSpace(string(killOutput)))
 		}
 	} else {
-		fmt.Println("✅ Epic Games Launcher closed.")
+		fmt.Println("Epic Games Launcher closed.")
 	}
 
-	// 2️⃣ Only wait for the process to exit if it was running
+	// Wait for the process to fully exit
 	if launcherWasRunning {
 		startWait := time.Now()
 		const maxWait = 8 * time.Second
@@ -63,28 +62,147 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 			}
 		}
 		elapsed := time.Since(startWait)
-		fmt.Printf("✅ Epic Games Launcher process confirmed exited (waited %v)\n", elapsed.Round(time.Millisecond))
+		fmt.Printf("Epic Games Launcher exited (waited %v)\n", elapsed.Round(time.Millisecond))
 	}
 
-	// 3️⃣ Write the new session file
-	path := utils.GetEpicLoginSessionPath()
-	content := fmt.Sprintf("%s%s", rememberMePrefix, session.LoginToken)
-	if err := os.WriteFile(path, []byte(content), 0644); err != nil {
-		return fmt.Errorf("failed to write session file: %w", err)
+	// Save current account's ini file so we can switch back later
+	iniPath := utils.GetEpicLoginSessionPath()
+	currentAccountID := readRegistryAccountID()
+	if currentAccountID != "" && currentAccountID != session.UserID {
+		backupPath := getIniBackupPath(currentAccountID)
+		if data, err := os.ReadFile(iniPath); err == nil {
+			os.MkdirAll(filepath.Dir(backupPath), 0755)
+			os.WriteFile(backupPath, data, 0644)
+			fmt.Println("Saved current account ini to:", backupPath)
+		}
 	}
-	fmt.Println("✅ New session written to:", path)
 
-	// 4️⃣ Relaunch Epic Games Launcher
+	// Restore the target account's saved ini, or fall back to token replacement
+	targetBackup := getIniBackupPath(session.UserID)
+	if data, err := os.ReadFile(targetBackup); err == nil {
+		// We have a saved full ini for this account — restore it
+		if err := os.WriteFile(iniPath, data, 0644); err != nil {
+			return fmt.Errorf("failed to restore session file: %w", err)
+		}
+		fmt.Println("Restored saved ini from:", targetBackup)
+	} else {
+		if err := updateTokenInIni(iniPath, session.LoginToken); err != nil {
+			return fmt.Errorf("failed to update session file: %w", err)
+		}
+		fmt.Println("Updated token in:", iniPath)
+	}
+
+	// Update the registry AccountId to match the target account
+	if err := writeRegistryAccountID(session.UserID); err != nil {
+		fmt.Printf("Warning: failed to update registry AccountId: %v\n", err)
+	} else {
+		fmt.Println("Registry AccountId set to:", session.UserID)
+	}
+
+	clearEpicCaches()
+
+	// Relaunch Epic Games Launcher
 	launcherPath := utils.GetEpicLauncherPath()
-	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
+	fmt.Println("Re-launching Epic Games Launcher:", launcherPath)
 
-	startCmd := helper.NewCommand(launcherPath, "-silent")
-	startCmd.Stdout = os.Stdout
-	startCmd.Stderr = os.Stderr
+	startCmd := helper.NewCommand("cmd", "/C", "start", "", launcherPath)
 
 	if err := startCmd.Start(); err != nil {
 		return fmt.Errorf("failed to relaunch Epic Games Launcher: %w", err)
 	}
-	fmt.Println("✅ Epic Games Launcher started successfully.")
+	fmt.Println("Epic Games Launcher started.")
 	return nil
+}
+
+// getIniBackupPath returns the path where a full ini backup is stored per account.
+func getIniBackupPath(userID string) string {
+	return filepath.Join(utils.GetAppDataPath(), "ini_backups", userID+".ini")
+}
+
+// readRegistryAccountID reads the current Epic AccountId from the Windows registry.
+func readRegistryAccountID() string {
+	cmd := helper.NewCommand("reg", "query", `HKCU\Software\Epic Games\Unreal Engine\Identifiers`, "/v", "AccountId")
+	output, err := cmd.Output()
+	if err != nil {
+		return ""
+	}
+	// Parse "AccountId    REG_SZ    <value>"
+	for _, line := range strings.Split(string(output), "\n") {
+		line = strings.TrimSpace(line)
+		if strings.Contains(line, "AccountId") {
+			parts := strings.Fields(line)
+			if len(parts) >= 3 {
+				return parts[len(parts)-1]
+			}
+		}
+	}
+	return ""
+}
+
+// writeRegistryAccountID sets the Epic AccountId in the Windows registry.
+func writeRegistryAccountID(accountID string) error {
+	cmd := helper.NewCommand("reg", "add", `HKCU\Software\Epic Games\Unreal Engine\Identifiers`, "/v", "AccountId", "/t", "REG_SZ", "/d", accountID, "/f")
+	output, err := cmd.CombinedOutput()
+	if err != nil {
+		return fmt.Errorf("%s: %w", strings.TrimSpace(string(output)), err)
+	}
+	return nil
+}
+
+// clearEpicCaches removes Epic's cached session/overlay data.
+func clearEpicCaches() {
+	cachePaths := []string{
+		filepath.Join(os.Getenv("LOCALAPPDATA"), "Epic Games", "Epic Online Services", "UI Helper", "Cache", "Cache"),
+		filepath.Join(os.Getenv("LOCALAPPDATA"), "Epic Games", "Epic Online Services", "UI Helper", "Cache", "GPUCache"),
+		filepath.Join(os.Getenv("LOCALAPPDATA"), "Epic Games", "EOSOverlay", "BrowserCache", "Cache"),
+	}
+	for _, p := range cachePaths {
+		if _, err := os.Stat(p); err == nil {
+			os.RemoveAll(p)
+			fmt.Println("Cleared cache:", p)
+		}
+	}
+}
+
+// updateTokenInIni updates the Data= line in the [RememberMe] section of the ini file.
+func updateTokenInIni(iniPath string, token string) error {
+	existing, err := os.ReadFile(iniPath)
+	if err != nil {
+		// File doesn't exist — write a fresh one
+		content := ";METADATA=(Diff=true, UseCommands=true)\r\n[RememberMe]\r\nEnable=True\r\nData=" + token + "\r\n"
+		return os.WriteFile(iniPath, []byte(content), 0644)
+	}
+
+	fileContent := string(existing)
+	lines := strings.Split(fileContent, "\n")
+	inRememberMe := false
+	found := false
+	for i, line := range lines {
+		trimmed := strings.TrimSpace(line)
+		if trimmed == "[RememberMe]" {
+			inRememberMe = true
+			continue
+		}
+		if strings.HasPrefix(trimmed, "[") && trimmed != "[RememberMe]" {
+			inRememberMe = false
+			continue
+		}
+		if inRememberMe && strings.HasPrefix(trimmed, "Data=") {
+			lines[i] = "Data=" + token
+			found = true
+			break
+		}
+	}
+
+	if !found {
+		// Insert Data= after Enable=True
+		for i, line := range lines {
+			if strings.TrimSpace(line) == "Enable=True" {
+				lines = append(lines[:i+1], append([]string{"Data=" + token}, lines[i+1:]...)...)
+				break
+			}
+		}
+	}
+
+	return os.WriteFile(iniPath, []byte(strings.Join(lines, "\n")), 0644)
 }

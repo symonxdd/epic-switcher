@@ -102,42 +102,33 @@ func (s *SessionStore) UpdateAvatarColor(userID string, avatarColor string) erro
 }
 
 func (s *SessionStore) addOrUpdate(session models.LoginSession) error {
-	// 1. Load all sessions currently stored in JSON
 	sessions, _ := s.LoadSessions()
 
 	found := false
 	for i, sItem := range sessions {
-		// 2. Check if the same UserID already exists
 		if sItem.UserID == session.UserID {
-
-			// 3. Only update fields that were previously empty
+			// Always refresh the token (sessions expire)
+			if session.LoginToken != "" {
+				sessions[i].LoginToken = session.LoginToken
+			}
 			if sItem.Username == "" && session.Username != "" {
 				sessions[i].Username = session.Username
 			}
-			if sItem.LoginToken == "" && session.LoginToken != "" {
-				sessions[i].LoginToken = session.LoginToken
-			}
-
-			// 4. Update alias if user changed it
 			if session.Alias != "" {
 				sessions[i].Alias = session.Alias
 			}
-
-			// 5. Update timestamp
 			sessions[i].UpdatedAt = time.Now().Format(time.RFC3339)
 			found = true
 			break
 		}
 	}
 
-	// 6. If no existing session found, add it as new
 	if !found {
 		session.CreatedAt = time.Now().Format(time.RFC3339)
 		session.UpdatedAt = time.Now().Format(time.RFC3339)
 		sessions = append(sessions, session)
 	}
 
-	// 7. Save everything back to JSON
 	return s.SaveSessions(sessions)
 }
 

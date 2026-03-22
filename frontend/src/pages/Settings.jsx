@@ -8,11 +8,13 @@ import { STORAGE_KEYS } from "../constants/storageKeys";
 import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
+import { GetDiagnostics } from "../../wailsjs/go/services/SystemService";
 import { BrowserOpenURL } from '../../wailsjs/runtime';
 import {
   HiOutlineGift,
   HiOutlineSquares2X2,
-  HiOutlineAdjustmentsHorizontal
+  HiOutlineAdjustmentsHorizontal,
+  HiOutlineWrenchScrewdriver
 } from "react-icons/hi2";
 
 const CHEEKY_MESSAGES = [
@@ -309,6 +311,27 @@ function Settings() {
             </div>
           )}
         </div>
+      </div>
+
+      {/* --- Diagnostics --- */}
+      <div className={styles.diagnosticsSection}>
+        <button
+          className={styles.diagnosticsToggle}
+          onClick={async () => {
+            try {
+              const diag = await GetDiagnostics();
+              const json = JSON.stringify(diag, null, 2);
+              await navigator.clipboard.writeText(json);
+              toast.success("Diagnostics copied to clipboard", { id: "diag-copy" });
+            } catch (err) {
+              console.error(err);
+              toast.error("Failed to get diagnostics", { id: "diag-error" });
+            }
+          }}
+        >
+          <HiOutlineWrenchScrewdriver />
+          Copy diagnostics to clipboard
+        </button>
       </div>
 
       <div className={styles.appFooter}>
