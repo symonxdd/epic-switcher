@@ -58,7 +58,7 @@ export default function Manage() {
             onClick={() => setShowAddModal(true)}
           >
             <HiPlus />
-            <span>Add</span>
+            <span>Add account</span>
           </button>
         }
       />
@@ -73,7 +73,7 @@ export default function Manage() {
           onClick={() => setShowAddModal(true)}
         >
           <HiPlus />
-          <span>Add</span>
+          <span>Add account</span>
         </button>
       </div>
 
