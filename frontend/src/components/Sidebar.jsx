@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from 'react';
 import { NavLink } from 'react-router-dom';
 import { FaRegUser, FaUserAlt, FaCog, FaListUl, FaShieldAlt } from 'react-icons/fa';
 import { SessionContext } from '../context/SessionContext';
+import { AuthContext } from '../context/AuthContext';
 import styles from './Sidebar.module.css';
 import appLogo from '../assets/images/app-logo.png';
 import { STORAGE_KEYS } from '../constants/storageKeys';
@@ -9,6 +10,7 @@ import { SupportCoffee } from './SupportCoffee';
 
 function Sidebar({ style }) {
   const { sessions, isLoading } = useContext(SessionContext);
+  const { isSwitchingAccount } = useContext(AuthContext);
   const [showCounter, setShowCounter] = useState(false);
   const [hiddenItems, setHiddenItems] = useState([]);
   const sessionCount = sessions?.length ?? 0;
@@ -70,11 +72,13 @@ function Sidebar({ style }) {
           {!hiddenItems.includes('/manage') && (
             <NavLink
               to="/manage"
+              onClick={(e) => {
+                if (isSwitchingAccount) e.preventDefault();
+              }}
               className={({ isActive }) =>
-                isActive
-                  ? `${styles['sidebar-item']} ${styles.active}`
-                  : styles['sidebar-item']
+                `${styles['sidebar-item']} ${isActive ? styles.active : ''} ${isSwitchingAccount ? styles.disabled : ''}`
               }
+              aria-disabled={isSwitchingAccount}
             >
               <FaListUl className={styles.icon} />
               <span>Manage</span>
