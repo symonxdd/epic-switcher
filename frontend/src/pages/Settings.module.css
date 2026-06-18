@@ -126,6 +126,19 @@
   cursor: pointer;
 }
 
+.toggleLabelGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.toggleSubLabel {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-secondary);
+}
+
 /* --- Switch Control (Material 3 style) --- */
 .switch {
   position: relative;
