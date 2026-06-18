@@ -26,7 +26,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
   }
 
   return (
-    <div className={styles.modalOverlay} style={{ zIndex: 6000 }}>
+    <div className={styles.modalOverlay} style={{ zIndex: 6000 }} onClick={onCancel}>
       {/* Increased width to accommodate the cropper comfortably */}
       <div className={`${styles.modal} ${styles.modalWide} ${styles.cropModal}`} onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
         <h3>Crop image</h3>
