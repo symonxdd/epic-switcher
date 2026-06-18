@@ -4,7 +4,7 @@ import PageHeader from '../components/PageHeader';
 import { AuthContext } from '../context/AuthContext';
 import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
-import { AddDetectedSession } from '../../wailsjs/go/services/AuthService';
+import { AddDetectedSession, MoveAsideActiveSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
 import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from 'react-icons/hi';
 import styles from './Accounts.module.css';
@@ -12,6 +12,7 @@ import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
+import AddAccountModal from '../components/modals/AddAccountModal';
 import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 import { useAvatarCache } from '../context/AvatarCacheContext';
 import { getBorderThickness } from '../components/modals/CustomizeAvatarModal/avatarUtils';
@@ -33,6 +34,7 @@ export default function Accounts() {
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
   const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [showAddModal, setShowAddModal] = useState(false);
   const [showBorder, setShowBorder] = useState(() => {
     const stored = localStorage.getItem(STORAGE_KEYS.SHOW_AVATAR_BORDER);
     return stored !== null ? stored === 'true' : true;
@@ -64,6 +66,17 @@ export default function Accounts() {
     setSessions(loaded || []);
     toast.success("Account added!", { id: "add-account" });
     setNewLoginSession(null);
+  }
+
+  async function handleAddMainAction() {
+    try {
+      await MoveAsideActiveSession();
+      toast.success("Epic Games Launcher restarted — log in with your other account.", { id: "move-aside-active-session" });
+      setShowAddModal(false);
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to move aside active session.", { id: "move-aside-error" });
+    }
   }
 
 
@@ -339,8 +352,15 @@ export default function Accounts() {
               {sessions.length > 0 && sessions.filter(s => s.userId !== activeUserId).length === 0 && (
                 <div className={styles.noOtherAccountsMessage}>
                   <div className={styles.noOtherAccountsText}>
-                    No other accounts available.
+                    You haven't added any other accounts yet.
                   </div>
+                  <button
+                    className={styles.addDetectedButton}
+                    onClick={() => setShowAddModal(true)}
+                  >
+                    <HiPlus />
+                    <span>Add account</span>
+                  </button>
                 </div>
               )}
             </>
@@ -372,6 +392,15 @@ export default function Accounts() {
                 s.userId === activeSession?.userId ? { ...s, avatarColor: color } : s
               ));
             }}
+          />
+        )
+      }
+
+      {
+        showAddModal && (
+          <AddAccountModal
+            onMoveAside={handleAddMainAction}
+            onCancel={() => setShowAddModal(false)}
           />
         )
       }
