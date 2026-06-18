@@ -1,11 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
 import styles from './TopNav.module.css';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 import appLogo from '../assets/images/app-logo.png';
+import { AuthContext } from '../context/AuthContext';
 
 function TopNav() {
   const [hiddenItems, setHiddenItems] = useState([]);
+  const { isSwitchingAccount } = useContext(AuthContext);
 
   useEffect(() => {
     const handleSync = () => {
@@ -43,23 +45,27 @@ function TopNav() {
       <div className={styles.navContainer}>
         {navItems
           .filter(item => !hiddenItems.includes(item.path))
-          .map((item) => (
-            <NavLink
-              key={item.path}
-              to={item.path}
-              onClick={(e) => {
-                if (window.location.pathname === item.path) {
-                  e.preventDefault();
+          .map((item) => {
+            const isManageDisabled = item.path === '/manage' && isSwitchingAccount;
+            return (
+              <NavLink
+                key={item.path}
+                to={item.path}
+                onClick={(e) => {
+                  if (window.location.pathname === item.path || isManageDisabled) {
+                    e.preventDefault();
+                  }
+                }}
+                className={({ isActive }) =>
+                  `${styles.navItem} ${isActive ? styles.active : ''} ${isManageDisabled ? styles.disabled : ''}`
                 }
-              }}
-              className={({ isActive }) =>
-                isActive ? `${styles.navItem} ${styles.active}` : styles.navItem
-              }
-              draggable="false"
-            >
-              {item.label}
-            </NavLink>
-          ))}
+                aria-disabled={isManageDisabled}
+                draggable="false"
+              >
+                {item.label}
+              </NavLink>
+            );
+          })}
       </div>
 
       <div className={styles.spacer} />

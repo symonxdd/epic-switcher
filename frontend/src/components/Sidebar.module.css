@@ -107,6 +107,12 @@
   border: 1px solid var(--border-strong);
 }
 
+.sidebar-item.disabled {
+  opacity: 0.4;
+  pointer-events: none;
+  cursor: default;
+}
+
 .icon {
   font-size: 18px;
   color: var(--text-secondary);

@@ -9,6 +9,7 @@ export function AuthProvider({ children }) {
   const [activeLoginSession, setActiveLoginSession] = useState(null);   // currently logged in account
   const [newLoginSession, setNewLoginSession] = useState(null);         // only if new account detected
   const [newLoginUsername, setNewLoginUsername] = useState("");
+  const [isSwitchingAccount, setIsSwitchingAccount] = useState(false);  // true while an account switch is in flight
 
   const checkLoginStatus = useCallback(async () => {
     try {
@@ -84,6 +85,8 @@ export function AuthProvider({ children }) {
         setNewLoginSession,
         newLoginUsername,
         checkLoginStatus,
+        isSwitchingAccount,
+        setIsSwitchingAccount,
       }}
     >
       {children}

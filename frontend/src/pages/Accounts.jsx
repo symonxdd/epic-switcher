@@ -27,6 +27,8 @@ export default function Accounts() {
     setNewLoginSession,
     newLoginUsername,
     checkLoginStatus,
+    isSwitchingAccount,
+    setIsSwitchingAccount,
   } = useContext(AuthContext);
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
@@ -37,6 +39,7 @@ export default function Accounts() {
   });
   const [borderThickness, setBorderThickness] = useState(getBorderThickness);
   const [lastSwitchedId, setLastSwitchedId] = useState(null);
+  const [switchingToId, setSwitchingToId] = useState(null);
   const { cacheVersion } = useAvatarCache();
 
   useEffect(() => {
@@ -65,6 +68,10 @@ export default function Accounts() {
 
 
   async function handleSwitchAccount(session) {
+    if (isSwitchingAccount) return;
+
+    setIsSwitchingAccount(true);
+    setSwitchingToId(session.userId);
     try {
       await SwitchAccount(session);
       // toast.success(`Switched to account: ${session.alias || session.username || session.userId}`, { id: "switch-account" });
@@ -78,6 +85,9 @@ export default function Accounts() {
     } catch (err) {
       console.error(err);
       toast.error("Failed to switch account.", { id: "switch-account-error" });
+    } finally {
+      setSwitchingToId(null);
+      setIsSwitchingAccount(false);
     }
   }
 
@@ -274,12 +284,14 @@ export default function Accounts() {
                       .filter(s => s.userId !== activeUserId)
                       .map((session) => {
                         const displayName = session.alias || session.username || session.userId;
+                        const isSwitchingToThis = switchingToId === session.userId;
 
                         return (
                           <div
                             key={session.userId}
-                            className={styles.listItem}
+                            className={`${styles.listItem} ${isSwitchingAccount ? styles.listItemDisabled : ''} ${isSwitchingToThis ? styles.listItemSwitching : ''}`}
                             onClick={() => handleSwitchAccount(session)}
+                            aria-disabled={isSwitchingAccount}
                           >
                             <div className={styles.avatarWrapper}>
                               <div
@@ -307,8 +319,12 @@ export default function Accounts() {
                               </div>
                             </div>
 
-                            <div className={styles.itemOverlay}>
-                              <span>click to switch</span>
+                            <div className={`${styles.itemOverlay} ${isSwitchingToThis ? styles.itemOverlayVisible : ''}`}>
+                              {isSwitchingToThis ? (
+                                <span className={styles.switchingSpinner} />
+                              ) : (
+                                <span>click to switch</span>
+                              )}
                             </div>
                           </div>
                         );
