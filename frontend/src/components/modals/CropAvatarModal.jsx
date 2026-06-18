@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react'
+import { useState, useCallback, useRef } from 'react'
 import Cropper from 'react-easy-crop'
 import styles from './ModalShared.module.css'
 
@@ -6,6 +6,8 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
+  const [isClosing, setIsClosing] = useState(false)
+  const closeCallbackRef = useRef(null)
 
   const onCropChange = (crop) => {
     setCrop(crop)
@@ -19,6 +21,18 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
     setCroppedAreaPixels(croppedAreaPixels)
   }, [])
 
+  const handleAnimationEnd = (e) => {
+    if (e.target !== e.currentTarget) return;
+    if (isClosing && closeCallbackRef.current) {
+      closeCallbackRef.current();
+    }
+  };
+
+  const handleCancel = () => {
+    closeCallbackRef.current = onCancel;
+    setIsClosing(true);
+  };
+
   const handleConfirm = () => {
     if (croppedAreaPixels) {
       onCropComplete(croppedAreaPixels)
@@ -26,7 +40,12 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
   }
 
   return (
-    <div className={styles.modalOverlay} style={{ zIndex: 6000 }} onClick={onCancel}>
+    <div
+      className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
+      style={{ zIndex: 6000 }}
+      onClick={handleCancel}
+      onAnimationEnd={handleAnimationEnd}
+    >
       {/* Increased width to accommodate the cropper comfortably */}
       <div className={`${styles.modal} ${styles.modalWide} ${styles.cropModal}`} onClick={(e) => e.stopPropagation()} style={{ maxWidth: '600px' }}>
         <h3>Crop image</h3>
@@ -64,7 +83,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
           </div>
 
           <div className={styles.modalButtonRow} style={{ marginTop: '0.25rem' }}>
-            <button className={styles.secondaryButton} onClick={onCancel} style={{ minWidth: '100px' }}>
+            <button className={styles.secondaryButton} onClick={handleCancel} style={{ minWidth: '100px' }}>
               Cancel
             </button>
             <button className={styles.primaryButton} onClick={handleConfirm} style={{ minWidth: '130px' }}>
