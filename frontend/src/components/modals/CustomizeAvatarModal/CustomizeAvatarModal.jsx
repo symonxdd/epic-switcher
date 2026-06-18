@@ -139,6 +139,11 @@ export default function CustomizeAvatarModal({
     <div
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
       onAnimationEnd={handleAnimationEnd}
+      onClick={(e) => {
+        // Only dismiss when the backdrop itself was clicked, not a nested
+        // overlay (lightbox, crop modal) that happens to live in this tree.
+        if (e.target === e.currentTarget) handleCancel();
+      }}
     >
       <div className={`${styles.modal} ${styles.modalWide}`} onClick={(e) => e.stopPropagation()}>
         <h3>Customize your avatar</h3>
