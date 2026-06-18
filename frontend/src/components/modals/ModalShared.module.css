@@ -98,7 +98,7 @@
   font-weight: 700;
   padding: 0.55rem 0.9rem;
   line-height: normal;
-  border-radius: 11px;
+  border-radius: 24px;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
@@ -714,7 +714,7 @@
   font-weight: 700;
   padding: 0.5rem 0.9rem;
   line-height: normal;
-  border-radius: 11px;
+  border-radius: 24px;
   cursor: default;
   display: inline-flex;
   align-items: center;
