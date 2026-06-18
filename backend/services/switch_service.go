@@ -136,8 +136,22 @@ func killAuxiliaryProcesses() {
 // exists and leaving every other section untouched. If the file doesn't
 // exist yet, a new one is created containing only the [RememberMe] section.
 func upsertRememberMeSection(path string, loginToken string) error {
+	return replaceRememberMeSection(path, []string{rememberMeSection, "Enable=True", "Data=" + loginToken})
+}
+
+// clearRememberMeSection disables auto-login by setting Enable=False and
+// blanking Data, using the same in-place replace as upsertRememberMeSection
+// so every other section of the ini file is left untouched.
+func clearRememberMeSection(path string) error {
+	return replaceRememberMeSection(path, []string{rememberMeSection, "Enable=False", "Data="})
+}
+
+// replaceRememberMeSection rewrites the [RememberMe] section's lines in the
+// ini file at path, replacing that section in place if it already exists
+// and leaving every other section untouched. If the file doesn't exist yet,
+// a new one is created containing only this section.
+func replaceRememberMeSection(path string, sectionLines []string) error {
 	newline := "\r\n"
-	sectionLines := []string{rememberMeSection, "Enable=True", "Data=" + loginToken}
 
 	existing, err := os.ReadFile(path)
 	if err != nil {
@@ -179,7 +193,8 @@ func upsertRememberMeSection(path string, loginToken string) error {
 		for len(result) > 0 && strings.TrimSpace(result[len(result)-1]) == "" {
 			result = result[:len(result)-1]
 		}
-		result = append(result, "", rememberMeSection, "Enable=True", "Data="+loginToken)
+		result = append(result, "")
+		result = append(result, sectionLines...)
 	} else {
 		result = append(result, lines[:sectionStart]...)
 		result = append(result, sectionLines...)
