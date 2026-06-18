@@ -39,6 +39,7 @@ export default function AddAccountModal({
     <div
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
       onAnimationEnd={handleAnimationEnd}
+      onClick={handleCancel}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
         <h3>Prepare to add account</h3>
