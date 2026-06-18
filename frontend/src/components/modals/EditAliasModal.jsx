@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import { createPortal } from 'react-dom';
-import { HiOutlineX, HiOutlineEmojiHappy } from 'react-icons/hi';
+import { HiOutlineX, HiOutlineEmojiHappy, HiOutlinePencil } from 'react-icons/hi';
 import styles from './ModalShared.module.css';
 
 import localStyles from './EditAliasModal.module.css';
@@ -43,7 +43,7 @@ export default function EditAliasModal({
       onClick={handleClose}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Edit nickname</h3>
+        <h3><HiOutlinePencil className={styles.modalTitleIcon} />Edit nickname</h3>
 
         <div className={localStyles.bodyContent}>
           <div className={localStyles.infoBlock}>

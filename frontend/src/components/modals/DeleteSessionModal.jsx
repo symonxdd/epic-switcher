@@ -1,4 +1,5 @@
 import { useState, useRef } from 'react';
+import { HiOutlineTrash } from 'react-icons/hi';
 import styles from "../modals/ModalShared.module.css";
 import { useAvatarCache } from "../../context/AvatarCacheContext";
 import { getFirstVisibleChar, getBorderPreference } from "./CustomizeAvatarModal/avatarUtils";
@@ -36,7 +37,7 @@ export default function DeleteSessionModal({ session, onConfirm, onCancel }) {
       onAnimationEnd={handleAnimationEnd}
     >
       <div className={styles.modal} onClick={(e) => e.stopPropagation()}>
-        <h3>Delete saved session</h3>
+        <h3><HiOutlineTrash className={styles.modalTitleIcon} />Delete saved session</h3>
 
         <div className={styles.modalNote}>
           <p>Are you sure you want to <strong>delete</strong> this saved session?</p>

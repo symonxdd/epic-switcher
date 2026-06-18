@@ -49,9 +49,15 @@
   display: flex;
   align-items: center;
   justify-content: flex-start;
+  gap: 10px;
   font-size: 1.1rem;
   border-top-left-radius: 14px;
   border-top-right-radius: 14px;
+}
+
+.modalTitleIcon {
+  font-size: 1.2rem;
+  flex-shrink: 0;
 }
 
 .modalNote,
