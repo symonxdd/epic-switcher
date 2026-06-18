@@ -228,6 +228,10 @@
   transform: scale(0.98);
 }
 
+.noScaleButton:active {
+  transform: none;
+}
+
 .activeAvatarWrapper {
   position: relative;
   width: fit-content;
