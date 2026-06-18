@@ -300,7 +300,7 @@ function Settings() {
               )}
 
               <div className={styles.toggleRow}>
-                <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Open Epic Games Launcher minimized</label>
+                <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Open Epic Games Launcher minimized on switch</label>
                 <label className={styles.switch}>
                   <input
                     id="launcherMinimizedToggle"
