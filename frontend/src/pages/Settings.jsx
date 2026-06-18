@@ -49,6 +49,10 @@ function Settings() {
   const [layoutMode, setLayoutMode] = useState(() => {
     return localStorage.getItem(STORAGE_KEYS.LAYOUT_MODE) || 'sidebar';
   });
+  const [launcherMinimizedOnSwitch, setLauncherMinimizedOnSwitch] = useState(() => {
+    const stored = localStorage.getItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH);
+    return stored !== null ? stored === "true" : true;
+  });
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
@@ -79,6 +83,9 @@ function Settings() {
 
       const storedLayoutMode = localStorage.getItem(STORAGE_KEYS.LAYOUT_MODE) || 'sidebar';
       setLayoutMode(storedLayoutMode);
+
+      const storedLauncherMinimized = localStorage.getItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH);
+      setLauncherMinimizedOnSwitch(storedLauncherMinimized !== null ? storedLauncherMinimized === "true" : true);
     };
 
     window.addEventListener("storage", handleSync);
@@ -95,6 +102,11 @@ function Settings() {
     localStorage.setItem(STORAGE_KEYS.SIDEBAR_HIDDEN_ITEMS, JSON.stringify(hiddenSidebarItems));
     window.dispatchEvent(new Event("storage"));
   }, [hiddenSidebarItems]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH, launcherMinimizedOnSwitch);
+    window.dispatchEvent(new Event("storage"));
+  }, [launcherMinimizedOnSwitch]);
 
   // --- Fetch latest GitHub version ---
   useEffect(() => {
@@ -286,6 +298,19 @@ function Settings() {
                   </label>
                 </div>
               )}
+
+              <div className={styles.toggleRow}>
+                <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Open launcher minimized after switching</label>
+                <label className={styles.switch}>
+                  <input
+                    id="launcherMinimizedToggle"
+                    type="checkbox"
+                    checked={launcherMinimizedOnSwitch}
+                    onChange={(e) => setLauncherMinimizedOnSwitch(e.target.checked)}
+                  />
+                  <span className={styles.slider}></span>
+                </label>
+              </div>
             </div>
           </div>
 
