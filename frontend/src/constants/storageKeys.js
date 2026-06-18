@@ -7,4 +7,5 @@ export const STORAGE_KEYS = {
   SIDEBAR_HIDDEN_ITEMS: "sidebar_hidden_items",
   AVATAR_BORDER_THICKNESS: "avatar_border_thickness",
   LAYOUT_MODE: "layout_mode",
+  LAUNCHER_MINIMIZED_ON_SWITCH: "launcher_minimized_on_switch",
 };

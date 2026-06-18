@@ -73,7 +73,9 @@ export default function Accounts() {
     setIsSwitchingAccount(true);
     setSwitchingToId(session.userId);
     try {
-      await SwitchAccount(session);
+      const stored = localStorage.getItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH);
+      const launchMinimized = stored !== null ? stored === 'true' : true;
+      await SwitchAccount(session, launchMinimized);
       // toast.success(`Switched to account: ${session.alias || session.username || session.userId}`, { id: "switch-account" });
       setActiveLoginSession(session);
       setLastSwitchedId(session.userId);

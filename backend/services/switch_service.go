@@ -32,8 +32,10 @@ func NewSwitchService() *SwitchService {
 }
 
 // SwitchAccount replaces the current Epic Games session file with a new one,
-// after closing and restarting the launcher.
-func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
+// after closing and restarting the launcher. When launchMinimized is true,
+// the launcher is relaunched with "-silent" (hidden/background); otherwise
+// it relaunches with its normal, visible window.
+func (s *SwitchService) SwitchAccount(session models.LoginSession, launchMinimized bool) error {
 	fmt.Println("🔹 Closing Epic Games Launcher before switching accounts...")
 
 	// 1️⃣ Force-kill the launcher. Epic Games Launcher doesn't respond to a
@@ -74,7 +76,12 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession) error {
 	launcherPath := utils.GetEpicLauncherPath()
 	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
 
-	startCmd := helper.NewCommand(launcherPath, "-silent")
+	launchArgs := []string{}
+	if launchMinimized {
+		launchArgs = append(launchArgs, "-silent")
+	}
+
+	startCmd := helper.NewCommand(launcherPath, launchArgs...)
 	startCmd.Stdout = os.Stdout
 	startCmd.Stderr = os.Stderr
 
