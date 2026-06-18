@@ -58,6 +58,7 @@
 .modalTitleIcon {
   font-size: 1.2rem;
   flex-shrink: 0;
+  margin-top: -2px;
 }
 
 .modalNote,
