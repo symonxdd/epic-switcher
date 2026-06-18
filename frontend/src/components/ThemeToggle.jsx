@@ -28,9 +28,9 @@ export const ThemeToggle = ({ className }) => {
           className={styles.iconContainer}
         >
           {currentTheme === "dark" ? (
-            <Sun size={18} className={styles.icon} />
-          ) : (
             <Moon size={18} className={styles.icon} />
+          ) : (
+            <Sun size={18} className={styles.icon} />
           )}
         </motion.div>
       </AnimatePresence>
