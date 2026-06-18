@@ -355,7 +355,7 @@ export default function Accounts() {
                     You haven't added any other accounts yet.
                   </div>
                   <button
-                    className={styles.addDetectedButton}
+                    className={`${styles.addDetectedButton} ${styles.noScaleButton}`}
                     onClick={() => setShowAddModal(true)}
                   >
                     <HiPlus />
