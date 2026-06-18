@@ -301,8 +301,12 @@ function Settings() {
 
               <div className={styles.toggleRow}>
                 <div className={styles.toggleLabelGroup}>
-                  <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Minimize on switch</label>
-                  <span className={styles.toggleSubLabel}>Epic Games Launcher opens minimized instead of in the foreground after switching accounts.</span>
+                  <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Minimize launcher on switch</label>
+                  <span className={styles.toggleSubLabel}>
+                    {launcherMinimizedOnSwitch
+                      ? "Epic Games Launcher opens minimized after switching accounts."
+                      : "Epic Games Launcher opens normally in the foreground after switching accounts."}
+                  </span>
                 </div>
                 <label className={styles.switch}>
                   <input
