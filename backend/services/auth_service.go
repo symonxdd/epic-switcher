@@ -144,7 +144,8 @@ func (a *AuthService) MoveAsideActiveSession() error {
 
 	fmt.Println("Confirmed Epic Games Launcher process has exited")
 
-	// 3️⃣ Clear the contents of the login session file
+	// 3️⃣ Disable auto-login in the session file, without touching any other
+	// launcher settings stored in the same ini file.
 	iniPath := utils.GetEpicLoginSessionPath()
 	if iniPath == "" {
 		fmt.Println("Error: Could not find Epic Games session path.")
@@ -157,7 +158,7 @@ func (a *AuthService) MoveAsideActiveSession() error {
 		return fmt.Errorf("cannot access session file: %w", err)
 	}
 
-	if err := os.WriteFile(iniPath, []byte(""), 0644); err != nil {
+	if err := clearRememberMeSection(iniPath); err != nil {
 		fmt.Printf("Error clearing session file: %v\n", err)
 		return fmt.Errorf("failed to clear session file: %w", err)
 	}
