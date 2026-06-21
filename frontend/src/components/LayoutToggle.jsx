@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Wind } from "lucide-react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import styles from "./LayoutToggle.module.css";
 
@@ -35,18 +35,13 @@ export const LayoutToggle = ({ className }) => {
       aria-label="Toggle layout mode"
       title={layoutMode === 'sidebar' ? "Switch to top navigation" : "Switch to side navigation"}
     >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={layoutMode}
-          initial={{ scale: 0.8, opacity: 0, rotate: layoutMode === 'sidebar' ? 90 : 0 }}
-          animate={{ scale: 1, opacity: 1, rotate: layoutMode === 'sidebar' ? 90 : 0 }}
-          exit={{ scale: 0.8, opacity: 0 }}
-          transition={{ duration: 0.3, ease: "easeInOut" }}
-          className={styles.iconContainer}
-        >
-          <Wind size={18} className={styles.icon} />
-        </motion.div>
-      </AnimatePresence>
+      <motion.div
+        animate={{ rotate: layoutMode === 'sidebar' ? 90 : 0 }}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+        className={styles.iconContainer}
+      >
+        <Wind size={18} className={styles.icon} />
+      </motion.div>
     </button>
   );
 };
