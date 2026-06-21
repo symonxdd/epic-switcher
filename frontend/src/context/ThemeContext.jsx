@@ -19,16 +19,33 @@ export function ThemeProvider({ children }) {
   const currentTheme =
     theme === "system" ? getSystemTheme() : theme;
 
+  // Briefly suspends all CSS transitions so theme/color-var changes apply
+  // instantly instead of animating (transition: all picks up var() changes too).
+  const applyWithoutTransitions = (apply) => {
+    const root = document.documentElement;
+    root.classList.add("theme-switching");
+    apply();
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => {
+        root.classList.remove("theme-switching");
+      });
+    });
+  };
+
   // Apply immediately to document
   useEffect(() => {
-    document.documentElement.setAttribute("data-theme", currentTheme);
+    applyWithoutTransitions(() => {
+      document.documentElement.setAttribute("data-theme", currentTheme);
+    });
     localStorage.setItem("theme", theme);
   }, [theme, currentTheme]);
 
   // Apply true black if enabled
   useEffect(() => {
     localStorage.setItem("trueBlack", trueBlack);
-    document.documentElement.setAttribute("data-true-black", trueBlack);
+    applyWithoutTransitions(() => {
+      document.documentElement.setAttribute("data-true-black", trueBlack);
+    });
   }, [trueBlack]);
 
   // React to system theme change in real time
@@ -36,10 +53,12 @@ export function ThemeProvider({ children }) {
     const media = window.matchMedia("(prefers-color-scheme: dark)");
     const handler = () => {
       if (theme === "system") {
-        document.documentElement.setAttribute(
-          "data-theme",
-          getSystemTheme()
-        );
+        applyWithoutTransitions(() => {
+          document.documentElement.setAttribute(
+            "data-theme",
+            getSystemTheme()
+          );
+        });
       }
     };
     media.addEventListener("change", handler);

@@ -1,3 +1,12 @@
+/* Suspends all CSS transitions while theme/data attributes are being swapped,
+   so color changes driven by CSS vars apply instantly instead of animating. */
+.theme-switching,
+.theme-switching *,
+.theme-switching *::before,
+.theme-switching *::after {
+  transition: none !important;
+}
+
 :root {
   /* --- Light theme --- */
   /* Brand & Accent */
