@@ -366,10 +366,12 @@
 }
 
 .addIcon {
-  font-size: 1.15rem;
+  font-size: 1rem;
   color: var(--text-secondary);
-  cursor: pointer;
+  cursor: default;
   flex-shrink: 0;
+  position: relative;
+  top: -0.5px;
   transition: color 0.15s ease, transform 0.12s ease;
 }
 
@@ -586,7 +588,7 @@
   left: 120%;
   transform: translateY(-50%);
   padding: 8px 12px;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
   line-height: 1.4;
   color: var(--text-primary);
   background: var(--bg-surface);
@@ -595,6 +597,7 @@
   white-space: normal;
   text-align: left;
   width: max-content;
+  max-width: 280px;
   z-index: 9999;
   margin-left: 4px;
   display: none;

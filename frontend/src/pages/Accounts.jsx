@@ -6,7 +6,7 @@ import { SessionContext } from '../context/SessionContext';
 import toast from 'react-hot-toast';
 import { AddDetectedSession, MoveAsideActiveSession } from '../../wailsjs/go/services/AuthService';
 import { LoadSessions } from '../../wailsjs/go/services/SessionStore';
-import { HiOutlineCheckCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from 'react-icons/hi';
+import { HiOutlineCheckCircle, HiOutlineInformationCircle, HiViewGrid, HiViewList, HiPlus, HiPencil } from 'react-icons/hi';
 import styles from './Accounts.module.css';
 import { ViewModeContext } from '../context/ViewModeContext';
 import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
@@ -272,6 +272,12 @@ export default function Accounts() {
                   <div className={styles.subtitleRow}>
                     <div className={styles.subtitleWithIcon}>
                       <div className={styles.subtitle}>{accountsLabel}</div>
+                      <div className={styles.addTooltipWrapper}>
+                        <HiOutlineInformationCircle className={styles.addIcon} />
+                        <div className={styles.tooltip}>
+                          Switching accounts will close and relaunch the Epic Games Launcher. This is required for the switch to work.
+                        </div>
+                      </div>
                     </div>
 
                     {nonActiveAccountsCount >= 2 && (
