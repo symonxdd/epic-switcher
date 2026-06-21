@@ -275,7 +275,7 @@ export default function Accounts() {
                       <div className={styles.addTooltipWrapper}>
                         <HiOutlineInformationCircle className={styles.addIcon} />
                         <div className={styles.tooltip}>
-                          Switching accounts will close and relaunch the Epic Games Launcher. This is required for the switch to work.
+                          Switching accounts <strong>will close and relaunch the Epic Games Launcher</strong>. This is required for the switch to work.
                         </div>
                       </div>
                     </div>
