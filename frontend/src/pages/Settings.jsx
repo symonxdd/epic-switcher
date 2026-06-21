@@ -384,6 +384,12 @@ function Settings() {
       </div>
 
       <div className={styles.appFooter}>
+        <div className={styles.footerBottom}>
+          Powered by React, Go, Wails & ☕
+        </div>
+
+        <span className={styles.footerSeparator}>—</span>
+
         <div className={styles.footerTop}>
           v{currentVersion} (
           {import.meta.env.MODE === "development" ? "dev" : "release"}
@@ -395,9 +401,7 @@ function Settings() {
           )
         </div>
 
-        <div className={styles.footerBottom}>
-          Powered by React, Go & Wails
-        </div>
+        <span className={styles.footerSeparator}>—</span>
 
         <div className={styles.signature}>
           <div className={styles.tooltipTrigger}>
