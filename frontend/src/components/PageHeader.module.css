@@ -15,3 +15,8 @@
   /* color: #b3b3b3; */
   line-height: 1.2;
 }
+
+.pageHeaderRight {
+  display: flex;
+  align-items: center;
+}
