@@ -342,10 +342,11 @@
 .appFooter {
   margin-top: auto;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  gap: 16px;
+  justify-content: center;
+  gap: 6px;
 }
 
 .footerTop,
@@ -356,6 +357,12 @@
   font-weight: 400;
   opacity: 1;
   letter-spacing: normal;
+}
+
+.footerSeparator {
+  font-size: 0.77rem;
+  color: var(--text-secondary);
+  opacity: 0.5;
 }
 
 .heart {
