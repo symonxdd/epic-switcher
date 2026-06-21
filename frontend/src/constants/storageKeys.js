@@ -8,4 +8,5 @@ export const STORAGE_KEYS = {
   AVATAR_BORDER_THICKNESS: "avatar_border_thickness",
   LAYOUT_MODE: "layout_mode",
   LAUNCHER_MINIMIZED_ON_SWITCH: "launcher_minimized_on_switch",
+  WINDOW_BUTTON_STYLE: "window_button_style",
 };

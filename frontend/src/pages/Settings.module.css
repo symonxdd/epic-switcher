@@ -193,6 +193,39 @@
   opacity: 0.9;
 }
 
+/* --- Window button style picker --- */
+.styleToggleGroup {
+  display: flex;
+  gap: 4px;
+  flex-shrink: 0;
+  background-color: color-mix(in srgb, var(--text-secondary) 8%, transparent);
+  border: 1px solid var(--border-subtle);
+  border-radius: 999px;
+  padding: 3px;
+}
+
+.styleToggleBtn {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.78rem;
+  font-weight: 500;
+  font-family: Nunito, sans-serif;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+
+.styleToggleBtn:hover {
+  color: var(--text-primary);
+}
+
+.styleToggleBtnActive {
+  background-color: var(--bg-card-active);
+  color: var(--text-primary);
+}
+
 /* --- Toggle Sub-groups --- */
 .toggleSubGroup {
   display: flex;
