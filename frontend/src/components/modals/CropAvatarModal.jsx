@@ -8,6 +8,7 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null)
   const [isClosing, setIsClosing] = useState(false)
   const closeCallbackRef = useRef(null)
+  const mouseDownOnOverlayRef = useRef(false)
 
   const onCropChange = (crop) => {
     setCrop(crop)
@@ -33,6 +34,16 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
     setIsClosing(true);
   };
 
+  const handleOverlayMouseDown = (e) => {
+    mouseDownOnOverlayRef.current = e.target === e.currentTarget;
+  };
+
+  const handleOverlayClick = (e) => {
+    if (mouseDownOnOverlayRef.current && e.target === e.currentTarget) {
+      handleCancel();
+    }
+  };
+
   const handleConfirm = () => {
     if (croppedAreaPixels) {
       onCropComplete(croppedAreaPixels)
@@ -43,7 +54,8 @@ export default function CropAvatarModal({ image, onCropComplete, onCancel }) {
     <div
       className={`${styles.modalOverlay} ${isClosing ? styles.closing : ''}`}
       style={{ zIndex: 6000 }}
-      onClick={handleCancel}
+      onMouseDown={handleOverlayMouseDown}
+      onClick={handleOverlayClick}
       onAnimationEnd={handleAnimationEnd}
     >
       {/* Increased width to accommodate the cropper comfortably */}
