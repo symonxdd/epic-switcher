@@ -87,3 +87,45 @@
   background-color: #d75f5b;
   /* slightly stronger red on hover */
 }
+
+/* ---- Windows 11-style controls ---- */
+.winControlsWindows {
+  display: flex;
+  align-items: stretch;
+  height: 32px;
+  margin-top: -6px;
+  margin-right: -0.75rem;
+  --wails-draggable: no-drag;
+}
+
+.winBtnWindows {
+  width: 46px;
+  height: 32px;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: default;
+  transition: background-color 0.12s ease;
+}
+
+.winBtnWindows:hover {
+  background-color: color-mix(in srgb, var(--text-primary) 8%, transparent);
+}
+
+.winBtnWindows:active {
+  background-color: color-mix(in srgb, var(--text-primary) 12%, transparent);
+}
+
+.closeWindows:hover {
+  background-color: #c42b1c;
+  color: #fff;
+}
+
+.closeWindows:active {
+  background-color: #a82316;
+  color: #fff;
+}

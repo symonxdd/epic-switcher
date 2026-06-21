@@ -53,6 +53,9 @@ function Settings() {
     const stored = localStorage.getItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH);
     return stored !== null ? stored === "true" : true;
   });
+  const [windowButtonStyle, setWindowButtonStyle] = useState(() => {
+    return localStorage.getItem(STORAGE_KEYS.WINDOW_BUTTON_STYLE) || "windows";
+  });
   const [remoteVersion, setRemoteVersion] = useState(null);
   const [remoteReleaseUrl, setRemoteReleaseUrl] = useState(null);
 
@@ -86,6 +89,8 @@ function Settings() {
 
       const storedLauncherMinimized = localStorage.getItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH);
       setLauncherMinimizedOnSwitch(storedLauncherMinimized !== null ? storedLauncherMinimized === "true" : true);
+
+      setWindowButtonStyle(localStorage.getItem(STORAGE_KEYS.WINDOW_BUTTON_STYLE) || "windows");
     };
 
     window.addEventListener("storage", handleSync);
@@ -107,6 +112,11 @@ function Settings() {
     localStorage.setItem(STORAGE_KEYS.LAUNCHER_MINIMIZED_ON_SWITCH, launcherMinimizedOnSwitch);
     window.dispatchEvent(new Event("storage"));
   }, [launcherMinimizedOnSwitch]);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEYS.WINDOW_BUTTON_STYLE, windowButtonStyle);
+    window.dispatchEvent(new Event("storage"));
+  }, [windowButtonStyle]);
 
   // --- Fetch latest GitHub version ---
   useEffect(() => {
@@ -191,6 +201,26 @@ function Settings() {
                   </label>
                 </div>
               )}
+
+              <div className={styles.toggleRow}>
+                <label className={styles.toggleLabel}>Window button style</label>
+                <div className={styles.styleToggleGroup}>
+                  <button
+                    type="button"
+                    className={`${styles.styleToggleBtn} ${windowButtonStyle === 'windows' ? styles.styleToggleBtnActive : ''}`}
+                    onClick={() => setWindowButtonStyle('windows')}
+                  >
+                    Windows
+                  </button>
+                  <button
+                    type="button"
+                    className={`${styles.styleToggleBtn} ${windowButtonStyle === 'macos' ? styles.styleToggleBtnActive : ''}`}
+                    onClick={() => setWindowButtonStyle('macos')}
+                  >
+                    macOS
+                  </button>
+                </div>
+              </div>
 
               <div className={styles.toggleRow}>
                 <label htmlFor="supportNoticeToggle" className={styles.toggleLabel}>Support notice</label>
