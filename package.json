@@ -5,10 +5,10 @@
     "vercel:dev": "vercel dev"
   },
   "devDependencies": {
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.9.8",
     "prompts": "^2.4.2"
   },
   "dependencies": {
-    "dotenv": "^16.5.0"
+    "dotenv": "^16.6.1"
   }
 }
