@@ -1,0 +1,70 @@
+version: 2
+
+updates:
+  # Go backend, ships inside the built .exe
+  - package-ecosystem: gomod
+    directory: /
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      go-modules:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Wails frontend, ships inside the built .exe
+  - package-ecosystem: npm
+    directory: /frontend
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    groups:
+      frontend-runtime:
+        dependency-type: production
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+      frontend-tooling:
+        dependency-type: development
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Public docs site
+  - package-ecosystem: npm
+    directory: /docs/project-site
+    schedule:
+      interval: weekly
+      day: monday
+    commit-message:
+      prefix: "chore(deps)"
+      prefix-development: "chore(deps-dev)"
+    groups:
+      docs-site:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  # Local release helper scripts
+  - package-ecosystem: npm
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(deps)"
+    groups:
+      release-helper:
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    commit-message:
+      prefix: "chore(ci)"
+    groups:
+      actions:
+        patterns: ["*"]
