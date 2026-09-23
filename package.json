@@ -5,7 +5,7 @@
     "vercel:dev": "vercel dev"
   },
   "devDependencies": {
-    "@types/node": "^25.9.8",
+    "@types/node": "^26.6.2",
     "prompts": "^2.4.2"
   },
   "dependencies": {
