@@ -38,6 +38,7 @@ type newLauncherAccessToken struct {
 type newLauncherAuthInfo struct {
 	Prod struct {
 		AccountInfo struct {
+			Email       string `json:"email"`
 			DisplayName string `json:"display_name"`
 		} `json:"account_info"`
 	} `json:"prod"`
@@ -84,6 +85,7 @@ func getNewLauncherLoginSession() (*models.LoginSession, error) {
 	return &models.LoginSession{
 		UserID:   token.AccountID,
 		Username: authInfo.Prod.AccountInfo.DisplayName,
+		Email:    authInfo.Prod.AccountInfo.Email,
 		NewLauncher: &models.NewLauncherLogin{
 			Credential:            base64.StdEncoding.EncodeToString(protectedCredential),
 			CredentialUserName:    cred.UserName,
@@ -256,6 +258,14 @@ func parseNewLauncherAuthInfo(encoded string) newLauncherAuthInfo {
 	}
 	_ = json.Unmarshal(data, &info)
 	return info
+}
+
+// newLauncherEmail returns the email from a saved login's auth.json.
+func newLauncherEmail(login *models.NewLauncherLogin) string {
+	if login == nil {
+		return ""
+	}
+	return parseNewLauncherAuthInfo(login.AuthFiles[newLauncherAuthInfoFile]).Prod.AccountInfo.Email
 }
 
 func unprotectNewLauncherCredential(login *models.NewLauncherLogin) ([]byte, error) {

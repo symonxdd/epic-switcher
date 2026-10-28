@@ -1,13 +1,17 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   HiOutlineCheckCircle,
+  HiOutlineHashtag,
+  HiOutlineMail,
   HiOutlinePencil,
   HiOutlineTrash,
 } from "react-icons/hi";
 import styles from "./AccountRow.module.css";
 import EditAliasModal from "./modals/EditAliasModal";
+import InfoPill from "./InfoPill";
+import { AuthContext } from "../context/AuthContext";
 import { useAvatarCache } from "../context/AvatarCacheContext";
 import { getBorderPreference } from "./modals/CustomizeAvatarModal/avatarUtils";
 import { useEffect } from "react";
@@ -24,6 +28,7 @@ export default function AccountRow({
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
   const triggerRef = useRef(null);
   const { cacheVersion } = useAvatarCache();
+  const { isNewLauncher } = useContext(AuthContext);
 
   useEffect(() => {
     const handleStorageChange = () => {
@@ -36,9 +41,11 @@ export default function AccountRow({
   const displayName =
     session?.alias || session?.username || session?.userId;
 
-  const metaLineValue = session?.alias
-    ? session?.username || session?.userId
-    : session?.userId;
+  // With a nickname set, the real username would otherwise not be shown anywhere
+  const showUsername = Boolean(session?.alias && session?.username);
+
+  // Only the new launcher provides emails, so with the legacy one the pill would never fill in
+  const showEmailPill = isNewLauncher || Boolean(session?.email);
 
   function getFirstVisibleChar(str) {
     if (!str) return "";
@@ -103,7 +110,19 @@ export default function AccountRow({
           </div>
 
           <div className={styles.inlineRow}>
-            <div className={`${styles.metaLine} ${styles.selectableText}`}>{metaLineValue}</div>
+            {showUsername && (
+              <div className={`${styles.metaLine} ${styles.selectableText}`}>{session.username}</div>
+            )}
+            <InfoPill icon={<HiOutlineHashtag />} label="ID" value={session?.userId} />
+            {showEmailPill && (
+              <InfoPill
+                icon={<HiOutlineMail />}
+                label="Email"
+                value={session?.email}
+                emptyValue="Email not known yet"
+                emptyHint="Log in to this account once in the new launcher"
+              />
+            )}
           </div>
         </div>
 

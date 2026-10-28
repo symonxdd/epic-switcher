@@ -32,6 +32,14 @@ func (s *SessionStore) LoadSessions() ([]models.LoginSession, error) {
 	}
 	var sessions []models.LoginSession
 	_ = json.Unmarshal(data, &sessions)
+
+	// The email comes from the saved new launcher login, so it follows that login
+	for i := range sessions {
+		if email := newLauncherEmail(sessions[i].NewLauncher); email != "" {
+			sessions[i].Email = email
+		}
+	}
+
 	return sessions, nil
 }
 

@@ -31,6 +31,7 @@ export namespace models {
 	    updated_at: string;
 	    avatarImage: string;
 	    avatarColor: string;
+	    email: string;
 	    newLauncher?: NewLauncherLogin;
 	
 	    static createFrom(source: any = {}) {
@@ -47,6 +48,7 @@ export namespace models {
 	        this.updated_at = source["updated_at"];
 	        this.avatarImage = source["avatarImage"];
 	        this.avatarColor = source["avatarColor"];
+	        this.email = source["email"];
 	        this.newLauncher = this.convertValues(source["newLauncher"], NewLauncherLogin);
 	    }
 	

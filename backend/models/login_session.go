@@ -10,6 +10,9 @@ type LoginSession struct {
 	AvatarImage string `json:"avatarImage"`
 	AvatarColor string `json:"avatarColor"`
 
+	// Only known for accounts that have been logged in to the new launcher
+	Email string `json:"email"`
+
 	// Saved login for the new Epic Games Launcher, empty until the account
 	// has been seen logged in to it
 	NewLauncher *NewLauncherLogin `json:"newLauncher,omitempty"`
