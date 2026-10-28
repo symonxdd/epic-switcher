@@ -593,7 +593,7 @@
   color: var(--text-primary);
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 6px;
+  border-radius: 12px;
   white-space: normal;
   text-align: left;
   width: max-content;

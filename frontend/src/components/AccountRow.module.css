@@ -94,7 +94,7 @@
   padding: 8px 12px;
   background: var(--bg-surface);
   border: 1px solid var(--border-subtle);
-  border-radius: 10px;
+  border-radius: 12px;
   color: var(--text-primary);
   font-size: 0.75rem;
   line-height: 1.3;
