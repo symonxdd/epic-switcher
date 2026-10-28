@@ -162,8 +162,7 @@
 }
 
 .activeAccountName {
-
-  font-size: 0.9rem;
+  font-size: 1.15rem;
   font-weight: 600;
   color: var(--text-primary);
   white-space: nowrap;
