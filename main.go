@@ -31,8 +31,8 @@ func main() {
 
 	err := wails.Run(&options.App{
 		Title:     "Epic Switcher",
-		Width:     960,
-		Height:    580,
+		Width:     1065,
+		Height:    630,
 		Frameless: true,
 		AssetServer: &assetserver.Options{
 			Assets:     assets,
