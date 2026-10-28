@@ -453,3 +453,137 @@
   flex-direction: column;
   line-height: 1.2;
 }
+/* --- Epic Games Launcher pill --- */
+.launcherPillWrapper {
+  position: relative;
+  display: inline-flex;
+  align-self: center;
+  margin-left: 10px;
+}
+
+.launcherPill {
+  display: inline-flex;
+  align-items: center;
+  height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  border: 1px solid;
+  font-family: inherit;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1;
+  /* Same centering fix as the ID and Email pills */
+  text-box: trim-both cap alphabetic;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.launcherPill:disabled {
+  cursor: default;
+}
+
+.launcherPill_new {
+  color: #1b5fc4;
+  background-color: rgba(37, 99, 235, 0.1);
+  border-color: rgba(37, 99, 235, 0.3);
+}
+
+.launcherPill_new:hover {
+  background-color: rgba(37, 99, 235, 0.18);
+}
+
+:global([data-theme="dark"]) .launcherPill_new {
+  color: #8cbcff;
+  background-color: rgba(59, 130, 246, 0.16);
+  border-color: rgba(59, 130, 246, 0.38);
+}
+
+:global([data-theme="dark"]) .launcherPill_new:hover {
+  background-color: rgba(59, 130, 246, 0.26);
+}
+
+.launcherPill_legacy {
+  color: var(--text-secondary);
+  background-color: color-mix(in srgb, var(--text-secondary) 12%, transparent);
+  border-color: color-mix(in srgb, var(--text-secondary) 28%, transparent);
+}
+
+.launcherPill_legacy:hover {
+  background-color: color-mix(in srgb, var(--text-secondary) 22%, transparent);
+}
+
+.launcherPill_missing {
+  color: var(--color-accent-red);
+  background-color: color-mix(in srgb, var(--color-accent-red) 12%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent-red) 35%, transparent);
+}
+
+/* Appears instantly, so no transition or animation on purpose */
+.launcherTip {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: -4px;
+  z-index: 100;
+  padding: 7px 11px;
+  border-radius: 12px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  white-space: nowrap;
+  pointer-events: none;
+  font-size: 0.72rem;
+  font-weight: 400;
+  letter-spacing: normal;
+  color: var(--text-secondary);
+}
+
+/* --- Info icon with an instant tooltip (same pattern as on the Accounts page) --- */
+.labelWithInfo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.infoTipWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.infoIcon {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  cursor: default;
+  flex-shrink: 0;
+  transition: color 0.15s ease;
+}
+
+.infoTipWrapper:hover .infoIcon {
+  color: var(--text-primary);
+}
+
+.infoTip {
+  position: absolute;
+  top: calc(100% + 6px);
+  /* Opens to the left of the icon, which sits near the window's right edge */
+  right: -8px;
+  z-index: 100;
+  display: none;
+  width: max-content;
+  max-width: 260px;
+  padding: 8px 12px;
+  font-size: 0.78rem;
+  font-weight: 400;
+  line-height: 1.4;
+  white-space: normal;
+  color: var(--text-primary);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.infoTipWrapper:hover .infoTip {
+  display: block;
+}

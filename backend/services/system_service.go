@@ -2,6 +2,7 @@ package services
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 	"path/filepath"
 	"runtime"
@@ -23,6 +24,17 @@ func (s *SystemService) IsNewLauncher() bool {
 	return utils.IsNewLauncher()
 }
 
+// GetLauncherKind returns "new", "legacy" or "missing" for the installed Epic Games Launcher.
+func (s *SystemService) GetLauncherKind() string {
+	if _, err := os.Stat(utils.GetEpicLauncherPath()); err != nil {
+		return "missing"
+	}
+	if utils.IsNewLauncher() {
+		return "new"
+	}
+	return "legacy"
+}
+
 // Opens a known folder or highlights a file in Explorer/Finder.
 func (s *SystemService) OpenDirectory(name string) error {
 	var targetPath string
@@ -34,6 +46,8 @@ func (s *SystemService) OpenDirectory(name string) error {
 		targetPath = utils.GetEpicLoginSessionPath()
 	case "logs":
 		targetPath = utils.GetEpicLogsPath()
+	case "launcher":
+		targetPath = utils.GetEpicLauncherPath()
 	default:
 		return fmt.Errorf("unknown directory key: %s", name)
 	}

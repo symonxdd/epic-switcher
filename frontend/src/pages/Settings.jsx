@@ -8,12 +8,22 @@ import { STORAGE_KEYS } from "../constants/storageKeys";
 import toast from "react-hot-toast";
 import { FaGithub } from "react-icons/fa";
 import { GetLatestVersion } from "../../wailsjs/go/services/UpdateService";
+import { GetLauncherKind, OpenDirectory } from "../../wailsjs/go/services/SystemService";
 import { BrowserOpenURL } from '../../wailsjs/runtime';
 import {
   HiOutlineGift,
   HiOutlineSquares2X2,
-  HiOutlineAdjustmentsHorizontal
+  HiOutlineAdjustmentsHorizontal,
+  HiOutlineComputerDesktop,
+  HiOutlineInformationCircle
 } from "react-icons/hi2";
+
+// Heading and pill for each launcher state GetLauncherKind can report
+const LAUNCHER_INFO = {
+  new: { heading: "Compatible with new launcher", pill: "NEW" },
+  legacy: { heading: "Compatible with legacy launcher", pill: "LEGACY" },
+  missing: { heading: "Epic Games Launcher", pill: "NOT FOUND" },
+};
 
 const CHEEKY_MESSAGES = [
   "Nice try! Settings are mandatory for your sanity. 🤨",
@@ -30,6 +40,15 @@ const CHEEKY_MESSAGES = [
 function Settings() {
   const { theme, setTheme, trueBlack, setTrueBlack, currentTheme } = useTheme();
   const lastCheekyIndexRef = useRef(-1);
+  const [launcherKind, setLauncherKind] = useState(null);
+  const [showLauncherTip, setShowLauncherTip] = useState(false);
+
+  useEffect(() => {
+    GetLauncherKind().then(setLauncherKind).catch(() => setLauncherKind(null));
+  }, []);
+
+  const launcherInfo = LAUNCHER_INFO[launcherKind];
+  const canOpenLauncher = launcherKind === "new" || launcherKind === "legacy";
   const [showSidebarAccountCount, setShowSidebarAccountCount] = useState(() => {
     return localStorage.getItem(STORAGE_KEYS.SHOW_SIDEBAR_ACCOUNT_COUNT) === "true";
   });
@@ -301,6 +320,36 @@ function Settings() {
               </div>
             </div>
           </div>
+
+          {/* --- Epic Games Launcher --- */}
+          {launcherInfo && (
+            <div className={styles.settingsGroup}>
+              <h5 className={styles.labelHeading}>
+                <HiOutlineComputerDesktop className={styles.headingIcon} />
+                {launcherInfo.heading}
+                <span
+                  className={styles.launcherPillWrapper}
+                  onMouseEnter={() => setShowLauncherTip(true)}
+                  onMouseLeave={() => setShowLauncherTip(false)}
+                >
+                  <button
+                    type="button"
+                    className={`${styles.launcherPill} ${styles[`launcherPill_${launcherKind}`]}`}
+                    onClick={() => canOpenLauncher && OpenDirectory("launcher")}
+                    onFocus={() => setShowLauncherTip(true)}
+                    onBlur={() => setShowLauncherTip(false)}
+                    disabled={!canOpenLauncher}
+                    aria-label={canOpenLauncher ? "Open install location" : "No Epic Games Launcher found"}
+                  >
+                    {launcherInfo.pill}
+                  </button>
+                  {showLauncherTip && canOpenLauncher && (
+                    <span className={styles.launcherTip}>Click to open install location</span>
+                  )}
+                </span>
+              </h5>
+            </div>
+          )}
         </div>
 
         <div className={styles.settingsColumn}>
@@ -341,7 +390,17 @@ function Settings() {
 
               <div className={styles.toggleRow}>
                 <div className={styles.toggleLabelGroup}>
-                  <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Minimize launcher after switch</label>
+                  <div className={styles.labelWithInfo}>
+                    <label htmlFor="launcherMinimizedToggle" className={styles.toggleLabel}>Minimize launcher after switch</label>
+                    {launcherKind === "new" && (
+                      <span className={styles.infoTipWrapper}>
+                        <HiOutlineInformationCircle className={styles.infoIcon} />
+                        <span className={styles.infoTip}>
+                          The new Epic Games Launcher can't start hidden, so it <strong>may show for a moment</strong> before it's minimized to the taskbar.
+                        </span>
+                      </span>
+                    )}
+                  </div>
                   <span className={styles.toggleSubLabel}>
                     {launcherMinimizedOnSwitch
                       ? "Epic Games Launcher opens minimized after switching accounts."
