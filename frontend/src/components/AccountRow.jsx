@@ -1,6 +1,5 @@
-import { useState, useRef, useContext } from "react";
+import { useState, useContext } from "react";
 import { createPortal } from "react-dom";
-import { motion, AnimatePresence } from "framer-motion";
 import {
   HiOutlineCheckCircle,
   HiOutlineHashtag,
@@ -29,9 +28,6 @@ export default function AccountRow({
   const [showAvatarModal, setShowAvatarModal] = useState(false);
   const { updateSessionLocally, selectAvatar, removeAvatar } = useContext(SessionContext);
   const [showBorder, setShowBorder] = useState(getBorderPreference());
-  const [showTooltip, setShowTooltip] = useState(false);
-  const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
-  const triggerRef = useRef(null);
   const { cacheVersion } = useAvatarCache();
   const { isNewLauncher } = useContext(AuthContext);
 
@@ -69,22 +65,6 @@ export default function AccountRow({
     e.stopPropagation();
     onDeleteSession?.(session.userId);
   };
-
-  const handleMouseEnter = () => {
-    if (triggerRef.current) {
-      const rect = triggerRef.current.getBoundingClientRect();
-      setTooltipPos({
-        top: Math.round(rect.top),
-        left: Math.round(rect.left + rect.width / 2),
-      });
-      setShowTooltip(true);
-    }
-  };
-
-  const handleMouseLeave = () => {
-    setShowTooltip(false);
-  };
-
 
   return (
     <div className={styles.rowWrapper}>
@@ -136,48 +116,17 @@ export default function AccountRow({
                 emptyHint="Log in to this account once in the new launcher"
               />
             )}
+            {isActive && (
+              <span className={styles.loggedInPill}>
+                <HiOutlineCheckCircle />
+                <span className={styles.loggedInLabel}>Logged in</span>
+              </span>
+            )}
           </div>
         </div>
 
         <div className={styles.actionsWrapper}>
           <>
-            {isActive && (
-              <div
-                className={styles.tooltipTrigger}
-                onMouseEnter={handleMouseEnter}
-                onMouseLeave={handleMouseLeave}
-                ref={triggerRef}
-              >
-                <div className={styles.activeIndicator}>
-                  <HiOutlineCheckCircle />
-                </div>
-                {createPortal(
-                  <AnimatePresence>
-                    {showTooltip && (
-                      <motion.div
-                        className={styles.portalTooltip}
-                        initial={{ opacity: 0, x: "-50%", y: 4 }}
-                        animate={{ opacity: 1, x: "-50%", y: 0 }}
-                        exit={{ opacity: 0, x: "-50%", y: 4 }}
-                        transition={{
-                          duration: 0.25,
-                          ease: [0.4, 0, 0.2, 1],
-                          opacity: { duration: 0.15 }
-                        }}
-                        style={{
-                          top: `${tooltipPos.top - 42}px`, // Fixed height + small gap
-                          left: `${tooltipPos.left}px`,
-                        }}
-                      >
-                        Currently logged in
-                      </motion.div>
-                    )}
-                  </AnimatePresence>,
-                  document.body
-                )}
-              </div>
-            )}
-
             <button
               type="button"
               className={`${styles.editAliasButton} ${session.alias ? styles.hasAlias : ""}`}
