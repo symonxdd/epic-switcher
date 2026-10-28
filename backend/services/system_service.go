@@ -44,6 +44,9 @@ func (s *SystemService) OpenDirectory(name string) error {
 		targetPath = utils.GetAppDataPath()
 	case "sessionFile":
 		targetPath = utils.GetEpicLoginSessionPath()
+		if utils.IsNewLauncher() {
+			targetPath = utils.GetNewLauncherAuthPath()
+		}
 	case "logs":
 		targetPath = utils.GetEpicLogsPath()
 	case "launcher":
