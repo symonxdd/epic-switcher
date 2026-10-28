@@ -1,2 +1,6 @@
 # Auto detect text files and perform LF normalization
 * text=auto
+
+# Wails generates these with LF line endings; keep them LF in the working
+# copy too, so a regenerate in `wails dev` does not show up as changes
+frontend/wailsjs/** text eol=lf
