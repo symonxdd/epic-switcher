@@ -1,5 +1,5 @@
 import { useState, useEffect, useContext } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import styles from './TopNav.module.css';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 import appLogo from '../assets/images/app-logo.png';
@@ -8,6 +8,7 @@ import { AuthContext } from '../context/AuthContext';
 function TopNav() {
   const [hiddenItems, setHiddenItems] = useState([]);
   const { isSwitchingAccount } = useContext(AuthContext);
+  const { pathname } = useLocation();
 
   useEffect(() => {
     const handleSync = () => {
@@ -52,7 +53,7 @@ function TopNav() {
                 key={item.path}
                 to={item.path}
                 onClick={(e) => {
-                  if (window.location.pathname === item.path || isManageDisabled) {
+                  if (pathname === item.path || isManageDisabled) {
                     e.preventDefault();
                   }
                 }}
