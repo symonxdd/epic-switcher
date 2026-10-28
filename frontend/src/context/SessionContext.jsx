@@ -1,6 +1,8 @@
 import { createContext, useState, useEffect } from 'react';
+import toast from 'react-hot-toast';
 import { SyncUsernames } from '../../wailsjs/go/services/LogReaderService';
 import { LoadSessions, UpdateAlias } from '../../wailsjs/go/services/SessionStore';
+import { SelectAndSaveAvatar, RemoveAvatar } from '../../wailsjs/go/services/AvatarService';
 
 export const SessionContext = createContext();
 
@@ -80,8 +82,41 @@ export function SessionProvider({ children }) {
     }
   }
 
+  // Merges fields into one session in local state, after the backend saved them
+  function updateSessionLocally(userId, fields) {
+    setSessions(prev =>
+      prev.map(session =>
+        session.userId === userId ? { ...session, ...fields } : session
+      )
+    );
+  }
+
+  // Avatar actions shared by the Accounts and Manage pages
+  async function selectAvatar(userId) {
+    try {
+      const filename = await SelectAndSaveAvatar(userId);
+      if (filename) {
+        updateSessionLocally(userId, { avatarImage: filename });
+        toast.success("Avatar updated!", { id: "avatar-success" });
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to update avatar.", { id: "avatar-error" });
+    }
+  }
+
+  async function removeAvatar(userId) {
+    try {
+      await RemoveAvatar(userId);
+      updateSessionLocally(userId, { avatarImage: "" });
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to clear avatar.", { id: "avatar-error" });
+    }
+  }
+
   return (
-    <SessionContext.Provider value={{ sessions, setSessions, isLoading, onAliasChange }}>
+    <SessionContext.Provider value={{ sessions, setSessions, isLoading, onAliasChange, updateSessionLocally, selectAvatar, removeAvatar }}>
       {children}
     </SessionContext.Provider>
   );

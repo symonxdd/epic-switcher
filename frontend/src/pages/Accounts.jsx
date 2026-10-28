@@ -13,14 +13,13 @@ import { SwitchAccount } from "../../wailsjs/go/services/SwitchService";
 import { STORAGE_KEYS } from "../constants/storageKeys";
 import CustomizeAvatarModal from '../components/modals/CustomizeAvatarModal';
 import AddAccountModal from '../components/modals/AddAccountModal';
-import { SelectAndSaveAvatar, RemoveAvatar } from "../../wailsjs/go/services/AvatarService";
 import { useAvatarCache } from '../context/AvatarCacheContext';
 import { getBorderThickness } from '../components/modals/CustomizeAvatarModal/avatarUtils';
 import SuccessSprout from '../components/SuccessSprout';
 
 export default function Accounts() {
   const location = useLocation();
-  const { sessions, setSessions, isLoading } = useContext(SessionContext);
+  const { sessions, setSessions, isLoading, updateSessionLocally, selectAvatar, removeAvatar } = useContext(SessionContext);
   const {
     activeLoginSession,
     setActiveLoginSession,
@@ -118,40 +117,15 @@ export default function Accounts() {
     setShowAvatarModal(true);
   }
 
+  // The modal stays open after these, so more changes can follow
   async function handleAvatarSelect() {
     if (!activeSession) return;
-    try {
-      const filename = await SelectAndSaveAvatar(activeSession.userId);
-      if (filename) {
-        // Update local state immediately
-        setSessions(prev => prev.map(s =>
-          s.userId === activeSession.userId ? { ...s, avatarImage: filename } : s
-        ));
-        toast.success("Avatar updated!", { id: "avatar-success" });
-      }
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to update avatar.", { id: "avatar-error" });
-    } finally {
-      // Modal remains open as requested
-    }
+    await selectAvatar(activeSession.userId);
   }
 
   async function handleAvatarRemove() {
     if (!activeSession) return;
-    try {
-      await RemoveAvatar(activeSession.userId);
-      // Update local state immediately
-      setSessions(prev => prev.map(s =>
-        s.userId === activeSession.userId ? { ...s, avatarImage: "" } : s
-      ));
-      // toast.success("Avatar cleared!", { id: "avatar-success" });
-    } catch (err) {
-      console.error(err);
-      toast.error("Failed to clear avatar.", { id: "avatar-error" });
-    } finally {
-      // Modal remains open as requested
-    }
+    await removeAvatar(activeSession.userId);
   }
 
   function getFirstVisibleChar(str) {
@@ -401,17 +375,8 @@ export default function Accounts() {
             onSelect={handleAvatarSelect}
             onRemove={handleAvatarRemove}
             onCancel={() => setShowAvatarModal(false)}
-            onAvatarChange={(filename) => {
-              setSessions(prev => prev.map(s =>
-                s.userId === activeSession?.userId ? { ...s, avatarImage: filename } : s
-              ));
-              // setShowAvatarModal(false); // Do not close automatically
-            }}
-            onColorChange={(color) => {
-              setSessions(prev => prev.map(s =>
-                s.userId === activeSession?.userId ? { ...s, avatarColor: color } : s
-              ));
-            }}
+            onAvatarChange={(filename) => updateSessionLocally(activeSession?.userId, { avatarImage: filename })}
+            onColorChange={(color) => updateSessionLocally(activeSession?.userId, { avatarColor: color })}
           />
         )
       }

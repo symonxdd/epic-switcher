@@ -7,11 +7,14 @@ import {
   HiOutlineMail,
   HiOutlinePencil,
   HiOutlineTrash,
+  HiPencil,
 } from "react-icons/hi";
 import styles from "./AccountRow.module.css";
 import EditAliasModal from "./modals/EditAliasModal";
+import CustomizeAvatarModal from "./modals/CustomizeAvatarModal";
 import InfoPill from "./InfoPill";
 import { AuthContext } from "../context/AuthContext";
+import { SessionContext } from "../context/SessionContext";
 import { useAvatarCache } from "../context/AvatarCacheContext";
 import { getBorderPreference } from "./modals/CustomizeAvatarModal/avatarUtils";
 import { useEffect } from "react";
@@ -23,6 +26,8 @@ export default function AccountRow({
   onDeleteSession,
 }) {
   const [showAliasModal, setShowAliasModal] = useState(false);
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const { updateSessionLocally, selectAvatar, removeAvatar } = useContext(SessionContext);
   const [showBorder, setShowBorder] = useState(getBorderPreference());
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipPos, setTooltipPos] = useState({ top: 0, left: 0 });
@@ -84,7 +89,12 @@ export default function AccountRow({
   return (
     <div className={styles.rowWrapper}>
       <div className={styles.listItem}>
-        <div className={styles.avatarWrapper}>
+        <button
+          type="button"
+          className={styles.avatarWrapper}
+          onClick={() => setShowAvatarModal(true)}
+          aria-label="Customize avatar"
+        >
           <div
             className={`${styles.avatar} ${!showBorder ? styles.avatarNoBorder : ""}`}
             style={{
@@ -101,8 +111,11 @@ export default function AccountRow({
             ) : (
               getFirstVisibleChar(displayName)
             )}
+            <div className={styles.avatarOverlay}>
+              <HiPencil />
+            </div>
           </div>
-        </div>
+        </button>
 
         <div className={styles.textBlock}>
           <div className={styles.inlineRow}>
@@ -193,6 +206,22 @@ export default function AccountRow({
           </>
         </div>
       </div>
+
+      {/* Portaled, as this row sits inside the list's grid */}
+      {showAvatarModal && createPortal(
+        <CustomizeAvatarModal
+          username={displayName}
+          userId={session.userId}
+          currentAvatarImage={session.avatarImage}
+          currentAvatarColor={session.avatarColor}
+          onSelect={() => selectAvatar(session.userId)}
+          onRemove={() => removeAvatar(session.userId)}
+          onCancel={() => setShowAvatarModal(false)}
+          onAvatarChange={(filename) => updateSessionLocally(session.userId, { avatarImage: filename })}
+          onColorChange={(color) => updateSessionLocally(session.userId, { avatarColor: color })}
+        />,
+        document.body
+      )}
     </div>
   );
 }

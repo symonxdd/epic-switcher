@@ -35,6 +35,32 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+  /* It's a button that opens the avatar editor */
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* Same hover overlay as the avatar on the Accounts page */
+.avatarOverlay {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  color: white;
+  font-size: 0.85rem;
+}
+
+.avatarWrapper:hover .avatarOverlay,
+.avatarWrapper:focus-visible .avatarOverlay {
+  opacity: 1;
 }
 
 .avatar {
