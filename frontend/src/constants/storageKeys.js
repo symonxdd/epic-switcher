@@ -9,4 +9,5 @@ export const STORAGE_KEYS = {
   LAYOUT_MODE: "layout_mode",
   LAUNCHER_MINIMIZED_ON_SWITCH: "launcher_minimized_on_switch",
   WINDOW_BUTTON_STYLE: "window_button_style",
+  SIDEBAR_WIDTH: "sidebar_width",
 };

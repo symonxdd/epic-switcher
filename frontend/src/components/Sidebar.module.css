@@ -1,5 +1,8 @@
 .sidebar {
-  width: 230px;
+  /* The width itself is set inline, as it can be dragged (Sidebar.jsx) */
+  width: 260px;
+  position: relative;
+  flex-shrink: 0;
   /* background-color: var(--bg-app); */
   background-color: var(--bg-app);
   display: flex;
@@ -151,4 +154,33 @@
 
 .coffeeContainer {
   width: 100%;
+}
+
+/* --- Resize handle on the right edge --- */
+.resizeHandle {
+  position: absolute;
+  top: 0;
+  right: -3px;
+  width: 6px;
+  height: 100%;
+  cursor: col-resize;
+  z-index: 10;
+  touch-action: none;
+}
+
+/* A thin line shows while hovering or dragging */
+.resizeHandle::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 2px;
+  width: 2px;
+  background: transparent;
+  transition: background 0.15s ease;
+}
+
+.resizeHandle:hover::after,
+.resizing::after {
+  background: var(--border-strong);
 }

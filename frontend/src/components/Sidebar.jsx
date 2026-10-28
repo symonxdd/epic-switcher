@@ -8,7 +8,20 @@ import appLogo from '../assets/images/app-logo.png';
 import { STORAGE_KEYS } from '../constants/storageKeys';
 import { SupportCoffee } from './SupportCoffee';
 
+// The sidebar can be dragged wider or narrower; these keep the logo, labels
+// and the coffee card fitting, and leave the content enough room
+const SIDEBAR_DEFAULT_WIDTH = 260;
+const SIDEBAR_MIN_WIDTH = 200;
+const SIDEBAR_MAX_WIDTH = 360;
+
+function readSidebarWidth() {
+  const stored = Number(localStorage.getItem(STORAGE_KEYS.SIDEBAR_WIDTH));
+  return stored >= SIDEBAR_MIN_WIDTH && stored <= SIDEBAR_MAX_WIDTH ? stored : SIDEBAR_DEFAULT_WIDTH;
+}
+
 function Sidebar({ style }) {
+  const [width, setWidth] = useState(readSidebarWidth);
+  const [isResizing, setIsResizing] = useState(false);
   const { sessions, isLoading } = useContext(SessionContext);
   const { isSwitchingAccount } = useContext(AuthContext);
   const [showCounter, setShowCounter] = useState(false);
@@ -41,8 +54,53 @@ function Sidebar({ style }) {
     return () => window.removeEventListener("storage", handleSync);
   }, []);
 
+  const handleResizeStart = (e) => {
+    e.preventDefault();
+    const startX = e.clientX;
+    const startWidth = width;
+    let latestWidth = startWidth;
+
+    setIsResizing(true);
+    document.body.style.cursor = 'col-resize';
+    document.body.style.userSelect = 'none';
+
+    const handleMove = (moveEvent) => {
+      latestWidth = Math.min(
+        SIDEBAR_MAX_WIDTH,
+        Math.max(SIDEBAR_MIN_WIDTH, Math.round(startWidth + moveEvent.clientX - startX))
+      );
+      setWidth(latestWidth);
+    };
+
+    const handleUp = () => {
+      window.removeEventListener('pointermove', handleMove);
+      window.removeEventListener('pointerup', handleUp);
+      document.body.style.cursor = '';
+      document.body.style.userSelect = '';
+      setIsResizing(false);
+      localStorage.setItem(STORAGE_KEYS.SIDEBAR_WIDTH, String(latestWidth));
+    };
+
+    window.addEventListener('pointermove', handleMove);
+    window.addEventListener('pointerup', handleUp);
+  };
+
+  // Double-click the handle to go back to the default width
+  const handleResizeReset = () => {
+    setWidth(SIDEBAR_DEFAULT_WIDTH);
+    localStorage.removeItem(STORAGE_KEYS.SIDEBAR_WIDTH);
+  };
+
   return (
-    <aside className={styles.sidebar} style={style}>
+    <aside className={styles.sidebar} style={{ ...style, width }}>
+      <div
+        className={`${styles.resizeHandle} ${isResizing ? styles.resizing : ''}`}
+        onPointerDown={handleResizeStart}
+        onDoubleClick={handleResizeReset}
+        role="separator"
+        aria-orientation="vertical"
+        aria-label="Resize sidebar"
+      />
       <div className={styles.topGroup}>
         {!hiddenItems.includes('sidebar-logo') && (
           <div className={styles.logoContainer}>
