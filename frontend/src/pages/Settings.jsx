@@ -18,11 +18,12 @@ import {
   HiOutlineInformationCircle
 } from "react-icons/hi2";
 
-// Heading and pill for each launcher state GetLauncherKind can report
+// Text and pill for each launcher state GetLauncherKind can report; a
+// linkText is shown as a link to linkUrl, right after the text
 const LAUNCHER_INFO = {
-  new: { heading: "Compatible with new launcher", pill: "NEW" },
-  legacy: { heading: "Compatible with legacy launcher", pill: "LEGACY" },
-  missing: { heading: "Epic Games Launcher", pill: "NOT FOUND" },
+  new: { text: "Compatible with Epic's ", linkText: "new launcher", linkUrl: "https://launcher.epicgames.com/", pill: "NEW" },
+  legacy: { text: "Compatible with Epic's legacy launcher", pill: "LEGACY" },
+  missing: { text: "Epic Games Launcher", pill: "NOT FOUND" },
 };
 
 const CHEEKY_MESSAGES = [
@@ -320,36 +321,6 @@ function Settings() {
               </div>
             </div>
           </div>
-
-          {/* --- Epic Games Launcher --- */}
-          {launcherInfo && (
-            <div className={styles.settingsGroup}>
-              <h5 className={styles.labelHeading}>
-                <HiOutlineComputerDesktop className={styles.headingIcon} />
-                {launcherInfo.heading}
-                <span
-                  className={styles.launcherPillWrapper}
-                  onMouseEnter={() => setShowLauncherTip(true)}
-                  onMouseLeave={() => setShowLauncherTip(false)}
-                >
-                  <button
-                    type="button"
-                    className={`${styles.launcherPill} ${styles[`launcherPill_${launcherKind}`]}`}
-                    onClick={() => canOpenLauncher && OpenDirectory("launcher")}
-                    onFocus={() => setShowLauncherTip(true)}
-                    onBlur={() => setShowLauncherTip(false)}
-                    disabled={!canOpenLauncher}
-                    aria-label={canOpenLauncher ? "Open install location" : "No Epic Games Launcher found"}
-                  >
-                    {launcherInfo.pill}
-                  </button>
-                  {showLauncherTip && canOpenLauncher && (
-                    <span className={styles.launcherTip}>Click to open install location</span>
-                  )}
-                </span>
-              </h5>
-            </div>
-          )}
         </div>
 
         <div className={styles.settingsColumn}>
@@ -442,37 +413,73 @@ function Settings() {
         </div>
       </div>
 
-      <div className={styles.appFooter}>
-        <div className={styles.footerBottom}>
-          Powered by React, Go, Wails & ☕
+      {/* --- Bottom of the page: launcher compatibility, then the footer --- */}
+      <div className={styles.pageBottom}>
+        {launcherInfo && (
+          <div className={styles.launcherNote}>
+            <HiOutlineComputerDesktop className={styles.launcherNoteIcon} />
+            <span>
+              {launcherInfo.text}
+              {launcherInfo.linkText && (
+                <button
+                  type="button"
+                  className={styles.launcherLink}
+                  onClick={() => BrowserOpenURL(launcherInfo.linkUrl)}
+                >
+                  {launcherInfo.linkText}
+                </button>
+              )}
+            </span>
+            <span
+              className={styles.launcherPillWrapper}
+              onMouseEnter={() => setShowLauncherTip(true)}
+              onMouseLeave={() => setShowLauncherTip(false)}
+            >
+              <button
+                type="button"
+                className={`${styles.launcherPill} ${styles[`launcherPill_${launcherKind}`]}`}
+                onClick={() => canOpenLauncher && OpenDirectory("launcher")}
+                onFocus={() => setShowLauncherTip(true)}
+                onBlur={() => setShowLauncherTip(false)}
+                disabled={!canOpenLauncher}
+                aria-label={canOpenLauncher ? "Open install location" : "No Epic Games Launcher found"}
+              >
+                {launcherInfo.pill}
+              </button>
+              {showLauncherTip && canOpenLauncher && (
+                <span className={styles.launcherTip}>Click to open install location</span>
+              )}
+            </span>
+          </div>
+        )}
+
+        <div className={styles.appFooter}>
+          <div className={styles.footerBottom}>
+            Powered by React, Go, Wails & ☕
+          </div>
+
+          <div className={styles.footerTop}>
+            v{currentVersion} (
+            {import.meta.env.MODE === "development" ? "dev" : "release"}
+            {remoteVersion
+              ? isUpToDate()
+                ? ", latest"
+                : ", update available"
+              : ""}
+            )
+          </div>
+
+          <div className={styles.signature}>
+            <div className={styles.tooltipTrigger}>
+              <span className={styles.dictionaryLink}>Meticulously</span>
+              <div className={styles.customTooltip}>
+                <span className={styles.tooltipType}>(adverb):</span> in a way that shows great attention to detail; very thoroughly.
+                <br />
+                <small style={{ opacity: 0.7, marginTop: '4px', display: 'block' }}>Synonyms: thoroughly, precisely</small>
+              </div>
+            </div> engineered with <span className={styles.heart}>❤️‍🩹</span> by Symon
+          </div>
         </div>
-
-        <span className={styles.footerSeparator}>—</span>
-
-        <div className={styles.footerTop}>
-          v{currentVersion} (
-          {import.meta.env.MODE === "development" ? "dev" : "release"}
-          {remoteVersion
-            ? isUpToDate()
-              ? ", latest"
-              : ", update available"
-            : ""}
-          )
-        </div>
-
-        <span className={styles.footerSeparator}>—</span>
-
-        <div className={styles.signature}>
-          <div className={styles.tooltipTrigger}>
-            <span className={styles.dictionaryLink}>Meticulously</span>
-            <div className={styles.customTooltip}>
-              <span className={styles.tooltipType}>(adverb)</span> — in a way that shows great attention to detail; very thoroughly.
-              <br />
-              <small style={{ opacity: 0.7, marginTop: '4px', display: 'block' }}>Synonyms: thoroughly, precisely</small>
-            </div>
-          </div> engineered with <span className={styles.heart}>❤️‍🩹</span> by Symon
-        </div>
-
       </div>
 
       <AnimatePresence>
