@@ -635,6 +635,19 @@
 
 
 
+/* Shown on accounts that need a one-time login in the new launcher */
+.needsLoginBadge {
+  flex-shrink: 0;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  white-space: nowrap;
+  color: var(--text-secondary);
+  background: color-mix(in srgb, var(--text-secondary) 10%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-secondary) 20%, transparent);
+}
+
 .metaLine {
   font-size: 0.8rem;
   color: var(--text-secondary);

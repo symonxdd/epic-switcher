@@ -30,6 +30,7 @@ export default function Accounts() {
     checkLoginStatus,
     isSwitchingAccount,
     setIsSwitchingAccount,
+    isNewLauncher,
   } = useContext(AuthContext);
 
   const { viewMode, setViewMode } = useContext(ViewModeContext);
@@ -60,7 +61,8 @@ export default function Accounts() {
   }, []);
 
   async function handleAccept() {
-    const sessionToSave = { ...newLoginSession, username: newLoginUsername || "" };
+    // The new launcher provides the username itself, the legacy one needs the log lookup
+    const sessionToSave = { ...newLoginSession, username: newLoginUsername || newLoginSession.username || "" };
     await AddDetectedSession(sessionToSave);
     const loaded = await LoadSessions();
     setSessions(loaded || []);
@@ -99,7 +101,13 @@ export default function Accounts() {
       }, 2500);
     } catch (err) {
       console.error(err);
-      toast.error("Failed to switch account.", { id: "switch-account-error" });
+      // Errors about the new launcher are written for the user, so show those as is
+      const message = String(err);
+      const isExplained = message.includes("new Epic Games Launcher");
+      toast.error(
+        isExplained ? message : "Failed to switch account.",
+        { id: "switch-account-error", duration: isExplained ? 10000 : undefined }
+      );
     } finally {
       setSwitchingToId(null);
       setIsSwitchingAccount(false);
@@ -306,6 +314,9 @@ export default function Accounts() {
                       .map((session) => {
                         const displayName = session.alias || session.username || session.userId;
                         const isSwitchingToThis = switchingToId === session.userId;
+                        // Accounts saved with the legacy launcher can't be switched to until
+                        // they've been logged in to the new one once
+                        const needsNewLauncherLogin = isNewLauncher && !session.newLauncher;
 
                         return (
                           <div
@@ -337,6 +348,9 @@ export default function Accounts() {
                             <div className={styles.textBlock}>
                               <div className={styles.inlineRow}>
                                 <div className={styles.displayName}>{displayName}</div>
+                                {needsNewLauncherLogin && (
+                                  <span className={styles.needsLoginBadge}>Log in once</span>
+                                )}
                               </div>
                             </div>
 
@@ -344,7 +358,7 @@ export default function Accounts() {
                               {isSwitchingToThis ? (
                                 <span className={styles.switchingSpinner} />
                               ) : (
-                                <span>click to switch</span>
+                                <span>{needsNewLauncherLogin ? "click to see how" : "click to switch"}</span>
                               )}
                             </div>
                           </div>

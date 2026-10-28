@@ -52,6 +52,21 @@ export function SessionProvider({ children }) {
     return () => window.removeEventListener('focus', handleFocus);
   }, []);
 
+  // Reload when the backend changed stored sessions outside this context
+  useEffect(() => {
+    async function handleSessionsUpdated() {
+      try {
+        const loaded = await LoadSessions();
+        setSessions(loaded || []);
+      } catch (err) {
+        console.error("❌ Failed to reload sessions:", err);
+      }
+    }
+
+    window.addEventListener('sessions-updated', handleSessionsUpdated);
+    return () => window.removeEventListener('sessions-updated', handleSessionsUpdated);
+  }, []);
+
   async function onAliasChange(userId, newAlias) {
     try {
       await UpdateAlias(userId, newAlias);

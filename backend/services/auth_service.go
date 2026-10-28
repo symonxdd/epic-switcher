@@ -24,6 +24,10 @@ func NewAuthService() *AuthService {
 // GetCurrentLoginSession reads Epic's session file and returns
 // the active session if someone is logged in, otherwise nil.
 func (a *AuthService) GetCurrentLoginSession() (*models.LoginSession, error) {
+	if utils.IsNewLauncher() {
+		return getNewLauncherLoginSession()
+	}
+
 	path := utils.GetEpicLoginSessionPath()
 	if path == "" {
 		return nil, fmt.Errorf("session (.ini) file not found")
@@ -144,23 +148,9 @@ func (a *AuthService) MoveAsideActiveSession() error {
 
 	fmt.Println("Confirmed Epic Games Launcher process has exited")
 
-	// 3️⃣ Disable auto-login in the session file, without touching any other
-	// launcher settings stored in the same ini file.
-	iniPath := utils.GetEpicLoginSessionPath()
-	if iniPath == "" {
-		fmt.Println("Error: Could not find Epic Games session path.")
-		return fmt.Errorf("could not find Epic Games session path")
-	}
-
-	// Check if file exists and is writable
-	if _, err := os.Stat(iniPath); err != nil {
-		fmt.Printf("Error accessing session file: %v\n", err)
-		return fmt.Errorf("cannot access session file: %w", err)
-	}
-
-	if err := clearRememberMeSection(iniPath); err != nil {
-		fmt.Printf("Error clearing session file: %v\n", err)
-		return fmt.Errorf("failed to clear session file: %w", err)
+	// 3️⃣ Log the launcher out on this PC only, keeping the login valid on Epic's side
+	if err := clearLauncherLogin(); err != nil {
+		return err
 	}
 
 	// 4️⃣ Re-launch the Epic Games Launcher
@@ -184,12 +174,49 @@ func (a *AuthService) MoveAsideActiveSession() error {
 	return nil
 }
 
+// clearLauncherLogin removes the launcher's saved login on this PC, so it
+// starts up logged out.
+func clearLauncherLogin() error {
+	if utils.IsNewLauncher() {
+		if err := clearNewLauncherLogin(); err != nil {
+			fmt.Printf("Error clearing new launcher login: %v\n", err)
+			return fmt.Errorf("failed to clear new launcher login: %w", err)
+		}
+		return nil
+	}
+
+	// Disable auto-login in the session file, without touching any other
+	// launcher settings stored in the same ini file.
+	iniPath := utils.GetEpicLoginSessionPath()
+	if iniPath == "" {
+		fmt.Println("Error: Could not find Epic Games session path.")
+		return fmt.Errorf("could not find Epic Games session path")
+	}
+
+	// Check if file exists and is writable
+	if _, err := os.Stat(iniPath); err != nil {
+		fmt.Printf("Error accessing session file: %v\n", err)
+		return fmt.Errorf("cannot access session file: %w", err)
+	}
+
+	if err := clearRememberMeSection(iniPath); err != nil {
+		fmt.Printf("Error clearing session file: %v\n", err)
+		return fmt.Errorf("failed to clear session file: %w", err)
+	}
+
+	return nil
+}
+
 // Compares the current session token with the stored one,
 // and updates it in login_sessions.json if it's different.
 func (a *AuthService) CheckAndRenewLoginToken() (bool, error) {
 	session, err := a.GetCurrentLoginSession()
 	if err != nil || session == nil {
 		return false, err
+	}
+
+	if utils.IsNewLauncher() {
+		return renewNewLauncherLogin(session)
 	}
 
 	store := NewSessionStore()

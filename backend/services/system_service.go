@@ -18,6 +18,11 @@ func NewSystemService() *SystemService {
 	return &SystemService{}
 }
 
+// IsNewLauncher reports whether the installed Epic Games Launcher is the new one.
+func (s *SystemService) IsNewLauncher() bool {
+	return utils.IsNewLauncher()
+}
+
 // Opens a known folder or highlights a file in Explorer/Finder.
 func (s *SystemService) OpenDirectory(name string) error {
 	var targetPath string

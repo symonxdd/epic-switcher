@@ -43,6 +43,12 @@ func getEpicLauncherPathPlatform() string {
 		return win32Path
 	}
 
+	// Check the new launcher's per-user install path
+	newLauncherPath := filepath.Join(os.Getenv("LOCALAPPDATA"), "Epic Games", "Launcher", "EpicGamesLauncher.exe")
+	if _, err := os.Stat(newLauncherPath); err == nil {
+		return newLauncherPath
+	}
+
 	// Final fallback
 	return win32Path
 }

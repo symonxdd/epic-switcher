@@ -33,11 +33,87 @@ func NewSwitchService() *SwitchService {
 
 // SwitchAccount replaces the current Epic Games session file with a new one,
 // after closing and restarting the launcher. When launchMinimized is true,
-// the launcher is relaunched with "-silent" (hidden/background); otherwise
+// the legacy launcher is relaunched with "-silent" (hidden/background) and
+// the new one is minimized to the taskbar once its window appears; otherwise
 // it relaunches with its normal, visible window.
 func (s *SwitchService) SwitchAccount(session models.LoginSession, launchMinimized bool) error {
-	fmt.Println("🔹 Closing Epic Games Launcher before switching accounts...")
+	isNewLauncher := utils.IsNewLauncher()
 
+	// Make sure the account can be switched to before closing the launcher
+	if isNewLauncher {
+		if _, err := loadNewLauncherLogin(session.UserID); err != nil {
+			return err
+		}
+	}
+
+	fmt.Println("🔹 Closing Epic Games Launcher before switching accounts...")
+	if err := closeLauncher(); err != nil {
+		return err
+	}
+
+	launchArgs := []string{}
+
+	if isNewLauncher {
+		// 3️⃣ Save the login being switched away from first, as the launcher
+		// may have replaced its tokens since it was last saved
+		if current, err := getNewLauncherLoginSession(); err == nil {
+			if _, err := renewNewLauncherLogin(current); err != nil {
+				fmt.Println("⚠️ Could not save the current login:", err)
+			}
+		}
+
+		login, err := loadNewLauncherLogin(session.UserID)
+		if err != nil {
+			return err
+		}
+		if err := restoreNewLauncherLogin(login); err != nil {
+			return fmt.Errorf("failed to restore new launcher login: %w", err)
+		}
+		fmt.Println("✅ New launcher login restored for:", session.UserID)
+	} else {
+		// 3️⃣ Merge the new session token into the existing session file instead
+		// of overwriting it, so unrelated launcher settings (e.g. Preferences) survive.
+		path := utils.GetEpicLoginSessionPath()
+		if err := upsertRememberMeSection(path, session.LoginToken); err != nil {
+			return fmt.Errorf("failed to write session file: %w", err)
+		}
+		fmt.Println("✅ New session written to:", path)
+
+		if launchMinimized {
+			launchArgs = append(launchArgs, "-silent")
+		}
+	}
+
+	// 4️⃣ Relaunch Epic Games Launcher
+	launcherPath := utils.GetEpicLauncherPath()
+	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
+
+	startCmd := helper.NewCommand(launcherPath, launchArgs...)
+	startCmd.Stdout = os.Stdout
+	startCmd.Stderr = os.Stderr
+
+	if err := startCmd.Start(); err != nil {
+		return fmt.Errorf("failed to relaunch Epic Games Launcher: %w", err)
+	}
+	fmt.Println("✅ Epic Games Launcher started successfully.")
+
+	// The new launcher has no way to start hidden, so minimize its window to
+	// the taskbar once it appears, without holding up the switch
+	if isNewLauncher && launchMinimized {
+		go func() {
+			if helper.MinimizeAppWindow(launcherPath, newLauncherWindowTimeout) {
+				fmt.Println("✅ Epic Games Launcher minimized to the taskbar.")
+			} else {
+				fmt.Println("⚠️ Epic Games Launcher window did not appear in time to minimize it.")
+			}
+		}()
+	}
+
+	return nil
+}
+
+// closeLauncher force-closes the launcher and its leftover helper processes.
+func closeLauncher() error {
 	// 1️⃣ Force-kill the launcher. Epic Games Launcher doesn't respond to a
 	// graceful taskkill request, so attempting one first only adds dead wait
 	// time before falling back to this anyway.
@@ -64,31 +140,6 @@ func (s *SwitchService) SwitchAccount(session models.LoginSession, launchMinimiz
 	// wait is needed before the OS has released their handles/sockets.
 	killAuxiliaryProcesses()
 
-	// 3️⃣ Merge the new session token into the existing session file instead
-	// of overwriting it, so unrelated launcher settings (e.g. Preferences) survive.
-	path := utils.GetEpicLoginSessionPath()
-	if err := upsertRememberMeSection(path, session.LoginToken); err != nil {
-		return fmt.Errorf("failed to write session file: %w", err)
-	}
-	fmt.Println("✅ New session written to:", path)
-
-	// 4️⃣ Relaunch Epic Games Launcher
-	launcherPath := utils.GetEpicLauncherPath()
-	fmt.Println("🔹 Re-launching Epic Games Launcher:", launcherPath)
-
-	launchArgs := []string{}
-	if launchMinimized {
-		launchArgs = append(launchArgs, "-silent")
-	}
-
-	startCmd := helper.NewCommand(launcherPath, launchArgs...)
-	startCmd.Stdout = os.Stdout
-	startCmd.Stderr = os.Stderr
-
-	if err := startCmd.Start(); err != nil {
-		return fmt.Errorf("failed to relaunch Epic Games Launcher: %w", err)
-	}
-	fmt.Println("✅ Epic Games Launcher started successfully.")
 	return nil
 }
 

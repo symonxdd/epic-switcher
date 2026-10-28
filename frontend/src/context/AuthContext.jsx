@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useCallback } from 'react';
 import { GetCurrentLoginSession, DetectNewLoginSession, CheckIfSessionIsNew, CheckAndRenewLoginToken } from '../../wailsjs/go/services/AuthService';
 import { GetUsernameForUserID } from '../../wailsjs/go/services/LogReaderService';
+import { IsNewLauncher } from '../../wailsjs/go/services/SystemService';
 
 export const AuthContext = createContext();
 
@@ -10,6 +11,11 @@ export function AuthProvider({ children }) {
   const [newLoginSession, setNewLoginSession] = useState(null);         // only if new account detected
   const [newLoginUsername, setNewLoginUsername] = useState("");
   const [isSwitchingAccount, setIsSwitchingAccount] = useState(false);  // true while an account switch is in flight
+  const [isNewLauncher, setIsNewLauncher] = useState(false);            // new Epic Games Launcher installed instead of the legacy one
+
+  useEffect(() => {
+    IsNewLauncher().then(setIsNewLauncher).catch(() => setIsNewLauncher(false));
+  }, []);
 
   const checkLoginStatus = useCallback(async () => {
     try {
@@ -19,7 +25,9 @@ export function AuthProvider({ children }) {
 
       // 0. renew login token if needed
       if (currentSession?.userId) {
-        await CheckAndRenewLoginToken();
+        const renewed = await CheckAndRenewLoginToken();
+        // Let SessionContext reload, e.g. so the "Log in once" label disappears
+        if (renewed) window.dispatchEvent(new Event('sessions-updated'));
       }
 
       // 1. detect current session
@@ -87,6 +95,7 @@ export function AuthProvider({ children }) {
         checkLoginStatus,
         isSwitchingAccount,
         setIsSwitchingAccount,
+        isNewLauncher,
       }}
     >
       {children}

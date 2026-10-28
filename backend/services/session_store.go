@@ -117,6 +117,9 @@ func (s *SessionStore) addOrUpdate(session models.LoginSession) error {
 			if sItem.LoginToken == "" && session.LoginToken != "" {
 				sessions[i].LoginToken = session.LoginToken
 			}
+			if sItem.NewLauncher == nil && session.NewLauncher != nil {
+				sessions[i].NewLauncher = session.NewLauncher
+			}
 
 			// 4. Update alias if user changed it
 			if session.Alias != "" {
