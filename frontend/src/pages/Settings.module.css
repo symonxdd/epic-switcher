@@ -339,30 +339,76 @@
 }
 
 /* --- Footer Section --- */
-.appFooter {
+/* Launcher line and footer, kept together at the bottom of the page */
+.pageBottom {
   margin-top: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.launcherNote {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+  font-size: 0.77rem;
+  color: var(--text-secondary);
+}
+
+/* Link inside the launcher line: a solid underline, as it opens a page
+   (a dotted one, like "Meticulously", means hover for an explanation) */
+.launcherLink {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  /* Blends in until hovered, with a faint underline as the only hint */
+  color: inherit;
+  cursor: pointer;
+  text-decoration: underline solid color-mix(in srgb, currentColor 25%, transparent);
+  text-underline-offset: 3px;
+  transition: color 0.2s ease, text-decoration-color 0.2s ease;
+}
+
+.launcherLink:hover {
+  color: var(--text-primary);
+  text-decoration-color: currentColor;
+}
+
+.launcherNoteIcon {
+  font-size: 0.9rem;
+  opacity: 0.8;
+  flex-shrink: 0;
+}
+
+.appFooter {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
 }
 
+/* Each footer part sits in its own small pill. Inline-block rather than
+   flex, as flex drops the spaces around the "Meticulously" link */
 .footerTop,
 .footerBottom,
 .signature {
+  display: inline-block;
+  line-height: 1.4;
+  padding: 4px 11px;
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--text-secondary) 7%, transparent);
+  border: 1px solid color-mix(in srgb, var(--text-secondary) 14%, transparent);
   font-size: 0.77rem;
   color: var(--text-secondary);
   font-weight: 400;
   opacity: 1;
   letter-spacing: normal;
-}
-
-.footerSeparator {
-  font-size: 0.77rem;
-  color: var(--text-secondary);
-  opacity: 0.5;
+  white-space: nowrap;
 }
 
 .heart {
@@ -391,6 +437,8 @@
   font-size: 0.75rem;
   line-height: 1.4;
   text-align: center;
+  /* The footer pill is nowrap, which would push the text out of the box */
+  white-space: normal;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   pointer-events: none;
   opacity: 0;
@@ -406,7 +454,6 @@
 
 .tooltipType {
   font-style: italic;
-  margin-right: 4px;
 }
 
 .dictionaryLink {
@@ -458,18 +505,18 @@
   position: relative;
   display: inline-flex;
   align-self: center;
-  margin-left: 10px;
+  margin-left: 2px;
 }
 
 .launcherPill {
   display: inline-flex;
   align-items: center;
-  height: 20px;
-  padding: 0 8px;
+  height: 17px;
+  padding: 0 7px;
   border-radius: 999px;
   border: 1px solid;
   font-family: inherit;
-  font-size: 0.66rem;
+  font-size: 0.6rem;
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1;
@@ -522,8 +569,10 @@
 /* Appears instantly, so no transition or animation on purpose */
 .launcherTip {
   position: absolute;
-  top: calc(100% + 8px);
-  left: -4px;
+  /* Opens upwards and centered, as the line sits at the bottom of the page */
+  bottom: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
   z-index: 100;
   padding: 7px 11px;
   border-radius: 12px;
