@@ -12,7 +12,7 @@ const pageVariants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.25,
+      duration: 0.15,
       ease: 'easeOut'
     }
   },
@@ -21,7 +21,7 @@ const pageVariants = {
     y: -10,
     scale: 1,
     transition: {
-      duration: 0.25,
+      duration: 0.15,
       ease: 'easeOut'
     }
   }
