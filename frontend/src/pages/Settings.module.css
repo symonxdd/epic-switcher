@@ -437,6 +437,8 @@
   font-size: 0.75rem;
   line-height: 1.4;
   text-align: center;
+  /* The footer pill is nowrap, which would push the text out of the box */
+  white-space: normal;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   pointer-events: none;
   opacity: 0;
